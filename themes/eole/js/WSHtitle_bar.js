@@ -1,4 +1,4 @@
-var colors = {};
+﻿var colors = {};
 
 var properties = {
 	panelName: 'WSHtitle_bar',
@@ -136,7 +136,7 @@ var btn = {
 var update_wallpaper = false;
 
 var ww = 0, wh = 0;
-var caption_title_default = "No sound - Nothing played";
+var caption_title_default = "沒有聲音 - 沒有播放任何內容";
 var caption_title = caption_title_default;
 
 var Settings_width = 102;
@@ -529,19 +529,19 @@ function build_buttons(){
 	} else {
 		btn_initialized = true;
 		buttons = {
-			Library: new JSButton(btn.left_m+btn.margin*0, btn.top_m, btn.width, btn.height, "Library", "Library", "", function () {
+			Library: new JSButton(btn.left_m+btn.margin*0, btn.top_m, btn.width, btn.height, "媒體櫃", "媒體櫃", "", function () {
 				main_panel_state.setValue(0);
 				get_colors();g_searchbox.adapt_look_to_layout();
 			}, false,false,images.library_img,images.library_img,0, false, false, true),
-			Playlists: new JSButton(btn.left_m+btn.width+btn.margin*1, btn.top_m, btn.width, btn.height, "Playlists", "Playlists", "", function () {
+			Playlists: new JSButton(btn.left_m+btn.width+btn.margin*1, btn.top_m, btn.width, btn.height, "播放清單", "播放清單", "", function () {
 				main_panel_state.setValue(1);
 				get_colors();g_searchbox.adapt_look_to_layout();
 			}, false,false,images.playlist_img,images.playlist_img,1, false, false, true),
-			Artist_Bio: new JSButton(btn.left_m+btn.width+btn.width+btn.margin*2, btn.top_m, btn.width, btn.height, "Now playing", "Now playing", "", function () {
+			Artist_Bio: new JSButton(btn.left_m+btn.width+btn.width+btn.margin*2, btn.top_m, btn.width, btn.height, "正在播放", "正在播放", "", function () {
 				main_panel_state.setValue(2);
 				get_colors();g_searchbox.adapt_look_to_layout();
 			}, false,false,images.artist_bio_img,images.artist_bio_img,2, false, false, true),
-			Visualization: new JSButton(btn.left_m+btn.width+btn.width+btn.width+btn.margin*3, btn.top_m, btn.width, btn.height, "Visualization", "Visualization", "", function () {
+			Visualization: new JSButton(btn.left_m+btn.width+btn.width+btn.width+btn.margin*3, btn.top_m, btn.width, btn.height, "視覺效果", "視覺效果", "", function () {
 				main_panel_state.setValue(3);
 				get_colors();g_searchbox.adapt_look_to_layout();
 			}, false,false,images.visualization_img,images.visualization_img,3, false, false, true),
@@ -1020,44 +1020,44 @@ function on_mouse_rbtn_up(x, y){
         var _screensaver = window.CreatePopupMenu();
         var idx;
 
-		_menu.AppendMenuItem(MF_STRING, 103, "Settings...");
+		_menu.AppendMenuItem(MF_STRING, 103, "設定...");
 		_menu.AppendMenuSeparator();
 
 		if(layout_state.isEqual(0)) {
-			_menu.AppendMenuItem(MF_STRING, 1, "Library");
-			_menu.AppendMenuItem(MF_STRING, 2, "Playlists");
-			_menu.AppendMenuItem(MF_STRING, 3, "Now playing");
-			if(properties.show_visualization) _menu.AppendMenuItem(MF_STRING, 4, "Visualization");
+			_menu.AppendMenuItem(MF_STRING, 1, "媒體櫃");
+			_menu.AppendMenuItem(MF_STRING, 2, "播放清單");
+			_menu.AppendMenuItem(MF_STRING, 3, "正在播放");
+			if(properties.show_visualization) _menu.AppendMenuItem(MF_STRING, 4, "視覺效果");
 			_menu.CheckMenuRadioItem(1, 4, (parseInt(main_panel_state.value)+1));
 			_menu.AppendMenuSeparator();
-			_screensaver.AppendMenuItem(MF_STRING, 8, "Activate Now");
+			_screensaver.AppendMenuItem(MF_STRING, 8, "立即啟用");
 			_screensaver.AppendMenuSeparator();
-			_screensaver.AppendMenuItem(MF_GRAYED, 0, "Screensaver:");
-			_screensaver.AppendMenuItem(MF_STRING, 9, "Enable");
+			_screensaver.AppendMenuItem(MF_GRAYED, 0, "螢幕保護程式:");
+			_screensaver.AppendMenuItem(MF_STRING, 9, "啟用");
 			_screensaver.CheckMenuItem(9,globalProperties.enable_screensaver);
-			_screensaver.AppendMenuItem(MF_STRING, 11, "Set time (current: "+Math.round(globalProperties.mseconds_before_screensaver/1000)+"s)");
-			_screensaver.AppendMenuItem(MF_STRING, 10, "Escape on mouse move");
+			_screensaver.AppendMenuItem(MF_STRING, 11, "設定閒置時間 (當前設定: "+Math.round(globalProperties.mseconds_before_screensaver/1000)+"秒)");
+			_screensaver.AppendMenuItem(MF_STRING, 10, "滑鼠移動時退出");
 			_screensaver.CheckMenuItem(10,globalProperties.escape_on_mouse_move);
 			_screensaver.AppendMenuSeparator();
-			_screensaver.AppendMenuItem(MF_STRING, 13, "Light theme");
-			_screensaver.AppendMenuItem(MF_STRING, 12, "Dark theme");
+			_screensaver.AppendMenuItem(MF_STRING, 13, "明亮主題");
+			_screensaver.AppendMenuItem(MF_STRING, 12, "灰暗主題");
 			_screensaver.CheckMenuRadioItem(12, 13, (properties.screensaver_dark_theme)?12:13);
-			_screensaver.AppendTo(_menu,MF_STRING, "Idle screen / Screensaver");
-			_menu.AppendMenuItem(MF_STRING, 6, "Compact player");
+			_screensaver.AppendTo(_menu,MF_STRING, "待機畫面 / 螢幕保護程式");
+			_menu.AppendMenuItem(MF_STRING, 6, "袖珍播放器");
 			if(g_uihacks.getFullscreenState())
-				_menu.AppendMenuItem(MF_STRING, 5, "Quit Fullscreen");
+				_menu.AppendMenuItem(MF_STRING, 5, "取消最大化");
 			else
-				_menu.AppendMenuItem(MF_STRING, 5, "Fullscreen");
+				_menu.AppendMenuItem(MF_STRING, 5, "最大化");
 		} else {
-			_menu.AppendMenuItem(MF_STRING, 7, "Switch to Main player");
+			_menu.AppendMenuItem(MF_STRING, 7, "切換到基本播放器");
 		}
 
 		if(utils.IsKeyPressed(VK_SHIFT)) {
 			_menu.AppendMenuSeparator();
-			_menu.AppendMenuItem(MF_STRING, 100, "Properties ");
-			_menu.AppendMenuItem(MF_STRING, 101, "Configure...");
+			_menu.AppendMenuItem(MF_STRING, 100, "屬性 ");
+			_menu.AppendMenuItem(MF_STRING, 101, "配置...");
             _menu.AppendMenuSeparator();
-			_menu.AppendMenuItem(MF_STRING, 102, "Reload");
+			_menu.AppendMenuItem(MF_STRING, 102, "重新載入");
 		}
         idx = _menu.TrackPopupMenu(x,y);
         switch(true) {
@@ -1097,7 +1097,7 @@ function on_mouse_rbtn_up(x, y){
                 break;
             case (idx == 11):
 				try {
-					new_mseconds_before_screensaver = utils.InputBox(window.ID, "Seconds of mouse inactivity before activation of the idle screen", "Idle screen", globalProperties.mseconds_before_screensaver/1000, true);
+					new_mseconds_before_screensaver = utils.InputBox(window.ID, "啟用待機畫面前滑鼠閒置的秒數", "待機畫面", globalProperties.mseconds_before_screensaver/1000, true);
 					if (!(new_mseconds_before_screensaver == "" || typeof new_mseconds_before_screensaver == 'undefined')) {
 						globalProperties.mseconds_before_screensaver = Number(new_mseconds_before_screensaver);
 						if(globalProperties.mseconds_before_screensaver<=0) globalProperties.mseconds_before_screensaver = 60;
@@ -1143,52 +1143,52 @@ function draw_settings_menu(x,y){
 		var _menu_button = window.CreatePopupMenu();
         var idx;
 
-		_menu.AppendMenuItem(MF_STRING, 1811, "Compact title bar");
+		_menu.AppendMenuItem(MF_STRING, 1811, "緊湊型標題欄");
 		_menu.CheckMenuItem(1811, compact_titlebar.isActive())
-		_menu.AppendMenuItem((compact_titlebar.isActive() && layout_state.isEqual(0))?MF_GRAYED:MF_STRING, 1800, "Display played track title on top");
+		_menu.AppendMenuItem((compact_titlebar.isActive() && layout_state.isEqual(0))?MF_GRAYED:MF_STRING, 1800, "在頂部顯示播放曲目名稱");
 		_menu.CheckMenuItem(1800, properties.tracktitle_ontop)
-		_menu.AppendMenuItem((compact_titlebar.isActive() && layout_state.isEqual(0))?MF_GRAYED:MF_STRING, 1809, "Played track title format...");
-		_menu.AppendMenuItem(MF_STRING, 1805, "Capitalize panel buttons text");
+		_menu.AppendMenuItem((compact_titlebar.isActive() && layout_state.isEqual(0))?MF_GRAYED:MF_STRING, 1809, "播放曲目名稱格式...");
+		_menu.AppendMenuItem(MF_STRING, 1805, "將面板按鈕文字大寫");
 		_menu.CheckMenuItem(1805, properties.toUpperCase)
-		_menu.AppendMenuItem(MF_STRING, 1810, "Mini main menu button");
+		_menu.AppendMenuItem(MF_STRING, 1810, "迷你主選單按鈕");
 		_menu.CheckMenuItem(1810, properties.mini_mainmenu_button)
 
-		_menu.AppendMenuItem(compact_titlebar.isActive() ? MF_GRAYED : MF_STRING, 1801, "Always show the search box");
+		_menu.AppendMenuItem(compact_titlebar.isActive() ? MF_GRAYED : MF_STRING, 1801, "始終顯示搜索框 ");
 		_menu.CheckMenuItem(1801, properties.alwaysShowSearch)
 
-		_menu.AppendMenuItem(MF_STRING, 1900, "Resume panel state on startup");
+		_menu.AppendMenuItem(MF_STRING, 1900, "啟動時恢復面板狀態 ");
 		_menu.CheckMenuItem(1900, properties.Remember_previous_state)
 
-		_menu.AppendMenuItem(MF_STRING, 1901, "Hide visualization panel");
+		_menu.AppendMenuItem(MF_STRING, 1901, "隱藏視覺效果面板 ");
 		_menu.CheckMenuItem(1901, !properties.show_visualization)
 
 		_menu.AppendMenuSeparator();
-		_menu_button.AppendMenuItem(MF_STRING, 1806, "Right sidebar visibility");
+		_menu_button.AppendMenuItem(MF_STRING, 1806, "右側邊欄可見性");
 		_menu_button.CheckMenuItem(1806, properties.showNowPlayingBtn);
-		_menu_button.AppendMenuItem(MF_STRING, 1807, "Right sidebar function");
+		_menu_button.AppendMenuItem(MF_STRING, 1807, "右側邊欄功能 ");
 		_menu_button.CheckMenuItem(1807, properties.showRightSidebarBtn);
-		_menu_button.AppendMenuItem(MF_STRING, 1802, "Idle screen");
+		_menu_button.AppendMenuItem(MF_STRING, 1802, "待機畫面");
 		_menu_button.CheckMenuItem(1802, properties.showIdleScreenBtn);
-		_menu_button.AppendMenuItem(MF_STRING, 1803, "Light switch");
+		_menu_button.AppendMenuItem(MF_STRING, 1803, "明亮主題開關");
 		_menu_button.CheckMenuItem(1803, properties.showLightswitchBtn);
-		_menu_button.AppendMenuItem(MF_STRING, 1804, "Fullscreen");
+		_menu_button.AppendMenuItem(MF_STRING, 1804, "最大化");
 		_menu_button.CheckMenuItem(1804, properties.showFullscreenBtn);
-		_menu_button.AppendTo(_menu,MF_STRING, "Buttons");
+		_menu_button.AppendTo(_menu,MF_STRING, "按鈕顯示");
 
-		_menu3.AppendMenuItem(MF_STRING, 2000, "Enable");
+		_menu3.AppendMenuItem(MF_STRING, 2000, "啟用");
 		_menu3.CheckMenuItem(2000, properties.showwallpaper);
-		_menu3.AppendMenuItem(MF_STRING, 2200, "Blur");
+		_menu3.AppendMenuItem(MF_STRING, 2200, "模糊化");
 		_menu3.CheckMenuItem(2200, properties.wallpaperblurred);
 
-		_menu3A.AppendMenuItem(MF_STRING, 2210, "Filling");
+		_menu3A.AppendMenuItem(MF_STRING, 2210, "填滿");
 		_menu3A.CheckMenuItem(2210, properties.wallpaperdisplay==0);
-		_menu3A.AppendMenuItem(MF_STRING, 2220, "Adjust");
+		_menu3A.AppendMenuItem(MF_STRING, 2220, "調整圖片符合視窗大小");
 		_menu3A.CheckMenuItem(2220, properties.wallpaperdisplay==1);
-		_menu3A.AppendMenuItem(MF_STRING, 2230, "Stretch");
+		_menu3A.AppendMenuItem(MF_STRING, 2230, "延展");
 		_menu3A.CheckMenuItem(2230, properties.wallpaperdisplay==2);
-		_menu3A.AppendTo(_menu3,MF_STRING, "Wallpaper size");
+		_menu3A.AppendTo(_menu3,MF_STRING, "壁紙尺寸");
 
-		_menu3.AppendTo(_menu,MF_STRING, "Background Wallpaper");
+		_menu3.AppendTo(_menu,MF_STRING, "背景壁紙");
 
         idx = _menu.TrackPopupMenu(x,y);
         switch(true) {
@@ -1361,13 +1361,13 @@ function draw_main_menu(x,y){
     var menuman5 = fb.CreateMainMenuManager();
     var menuman6 = fb.CreateMainMenuManager();
 
-    child1.AppendTo(basemenu, MF_STRING, "File");
-    child2.AppendTo(basemenu, MF_STRING, "Edit");
-    child3.AppendTo(basemenu, MF_STRING, "View");
-    child4.AppendTo(basemenu, MF_STRING, "Playback");
-    child5.AppendTo(basemenu, MF_STRING, "Library");
-    child6.AppendTo(basemenu, MF_STRING, "Help");
-	if(fb.IsPlaying) child7.AppendTo(basemenu, MF_STRING, "Now Playing");
+    child1.AppendTo(basemenu, MF_STRING, "檔案");
+    child2.AppendTo(basemenu, MF_STRING, "編輯");
+    child3.AppendTo(basemenu, MF_STRING, "檢視");
+    child4.AppendTo(basemenu, MF_STRING, "播放");
+    child5.AppendTo(basemenu, MF_STRING, "媒體櫃");
+    child6.AppendTo(basemenu, MF_STRING, "說明");
+	if(fb.IsPlaying) child7.AppendTo(basemenu, MF_STRING, "正在播放");
 
 	skin_settings_menu = window.CreatePopupMenu();
 	library_menu = window.CreatePopupMenu();
@@ -1502,13 +1502,13 @@ function draw_main_menu(x,y){
 	wallpaper_blur_global.AppendTo(appearance_menu,MF_STRING, "Wallpapers blur");
 
 	font_size = window.CreatePopupMenu();
-	font_size.AppendTo(skin_settings_menu,MF_STRING, "Font size");
-	font_size.AppendMenuItem(MF_STRING, 4012, "Increase");
-	font_size.AppendMenuItem(MF_STRING, 4013, "Decrease");
-	font_size.AppendMenuItem(MF_STRING, 4014, "Reset");
+	font_size.AppendTo(skin_settings_menu,MF_STRING, "字體大小");
+	font_size.AppendMenuItem(MF_STRING, 4012, "放大");
+	font_size.AppendMenuItem(MF_STRING, 4013, "縮小");
+	font_size.AppendMenuItem(MF_STRING, 4014, "重置");
 	font_size.AppendMenuSeparator();
-	font_size.AppendMenuItem(MF_DISABLED, 0, "Tip: Hold CTRL and use your");
-	font_size.AppendMenuItem(MF_DISABLED, 0, "mouse wheel over (almost) any panel!");
+	font_size.AppendMenuItem(MF_DISABLED, 0, "提示：");
+	font_size.AppendMenuItem(MF_DISABLED, 0, "按住Ctrl鍵，在（幾乎）任何面板上使用滑鼠滾輪！");
 
 	colors_menu = window.CreatePopupMenu();
 	colors_menu.AppendTo(skin_settings_menu,MF_STRING, "Colors");
@@ -1563,30 +1563,30 @@ function draw_main_menu(x,y){
 	mem_solicitation.AppendMenuItem(MF_STRING, 4026, "Reset images cache");
 	mem_solicitation.AppendTo(skin_settings_menu, MF_STRING, "Covers && Memory usage");*/
 
-	skin_settings_menu.AppendMenuItem(MF_STRING, 4029, "Covers && Memory usage");
-	skin_settings_menu.AppendMenuItem(MF_STRING, 4026, "Reset images cache");
+	skin_settings_menu.AppendMenuItem(MF_STRING, 4029, "封面和記憶體的使用方式");
+	skin_settings_menu.AppendMenuItem(MF_STRING, 4026, "重置圖片緩存");
 	skin_settings_menu.AppendMenuSeparator();
 
 	var ratingMenu = window.CreatePopupMenu();
-	ratingMenu.AppendMenuItem(MF_STRING, 4047, "Save to/Load from file tags");
-	ratingMenu.AppendMenuItem(MF_STRING, 4048, "Save to/Load from playback statistics database");
+	ratingMenu.AppendMenuItem(MF_STRING, 4047, "從 文件標籤 保存/載入");
+	ratingMenu.AppendMenuItem(MF_STRING, 4048, "從 播放統計資料庫(Playback Statistics) 保存/載入");
 		checked_item=0;
 		if (globalProperties.use_ratings_file_tags)
 			checked_item = 4047;
 		else
 			checked_item = 4048;
 	ratingMenu.CheckMenuRadioItem(4047, 4048, checked_item);
-	ratingMenu.AppendTo(skin_settings_menu, MF_STRING, "Ratings");
+	ratingMenu.AppendTo(skin_settings_menu, MF_STRING, "評等");
 
 	var schedulerMenu = window.CreatePopupMenu();
-	schedulerMenu.AppendMenuItem(MF_STRING, 3018, "Do nothing");
+	schedulerMenu.AppendMenuItem(MF_STRING, 3018, "什麼都不做");
 	schedulerMenu.AppendMenuSeparator();
-	schedulerMenu.AppendMenuItem(MF_STRING, 3019, "Stop after current");
-	schedulerMenu.AppendMenuItem(MF_STRING, 3020, "Hibernate after current");
-	schedulerMenu.AppendMenuItem(MF_STRING, 3021, "Shutdown after current");
+	schedulerMenu.AppendMenuItem(MF_STRING, 3019, "當前曲目播放完後 停止");
+	schedulerMenu.AppendMenuItem(MF_STRING, 3020, "當前曲目播放完後 休眠");
+	schedulerMenu.AppendMenuItem(MF_STRING, 3021, "當前曲目播放完後 關機");
 	schedulerMenu.AppendMenuSeparator();
-	schedulerMenu.AppendMenuItem(MF_STRING, 3022, "Hibernate after playlist");
-	schedulerMenu.AppendMenuItem(MF_STRING, 3023, "Shutdown after playlist");
+	schedulerMenu.AppendMenuItem(MF_STRING, 3022, "播放清單播放完後 休眠");
+	schedulerMenu.AppendMenuItem(MF_STRING, 3023, "播放清單播放完後 關機");
 		checked_item=0;
 		switch (true) {
 			case (scheduler.hibernate_after_current):
@@ -1609,42 +1609,42 @@ function draw_main_menu(x,y){
 				break;
 		}
 	schedulerMenu.CheckMenuRadioItem(3018, 3023, checked_item);
-	schedulerMenu.AppendTo(skin_settings_menu, MF_STRING, "Scheduler");
+	schedulerMenu.AppendTo(skin_settings_menu, MF_STRING, "排程");
 
-	_screensaver.AppendMenuItem(MF_STRING, 4015, "Activate Now");
+	_screensaver.AppendMenuItem(MF_STRING, 4015, "立即啟用");
 	_screensaver.AppendMenuSeparator();
-	_screensaver.AppendMenuItem(MF_GRAYED, 0, "Screensaver:");
-	_screensaver.AppendMenuItem(MF_STRING, 4016, "Enable");
+	_screensaver.AppendMenuItem(MF_GRAYED, 0, "螢幕保護程式:");
+	_screensaver.AppendMenuItem(MF_STRING, 4016, "啟用");
 	_screensaver.CheckMenuItem(4016,globalProperties.enable_screensaver);
-	_screensaver.AppendMenuItem(MF_STRING, 4018, "Set time (current: "+Math.round(globalProperties.mseconds_before_screensaver/1000)+"s)");
-	_screensaver.AppendMenuItem(MF_STRING, 4017, "Escape on mouse move");
+	_screensaver.AppendMenuItem(MF_STRING, 4018, "設定閒置時間 (當前設定: "+Math.round(globalProperties.mseconds_before_screensaver/1000)+"秒)");
+	_screensaver.AppendMenuItem(MF_STRING, 4017, "滑鼠移動時退出");
 	_screensaver.CheckMenuItem(4017,globalProperties.escape_on_mouse_move);
 
 	_screensaver.AppendMenuSeparator();
-	_screensaver.AppendMenuItem(MF_STRING, 4020, "Light theme");
-	_screensaver.AppendMenuItem(MF_STRING, 4019, "Dark theme");
+	_screensaver.AppendMenuItem(MF_STRING, 4020, "明亮主題");
+	_screensaver.AppendMenuItem(MF_STRING, 4019, "灰暗主題");
 	_screensaver.CheckMenuRadioItem(4019, 4020, (properties.screensaver_dark_theme)?4019:4020);
-	_screensaver.AppendTo(skin_settings_menu,MF_STRING, "Idle screen / Screensaver");
+	_screensaver.AppendTo(skin_settings_menu,MF_STRING, "待機畫面 / 螢幕保護程式");
 
 	if(layout_state.isEqual(0)) {
-		skin_settings_menu.AppendMenuItem(MF_STRING, 4010, "Compact player");
+		skin_settings_menu.AppendMenuItem(MF_STRING, 4010, "袖珍播放器");
 		if(g_uihacks.getFullscreenState())
-			skin_settings_menu.AppendMenuItem(MF_STRING, 4009, "Quit Fullscreen");
+			skin_settings_menu.AppendMenuItem(MF_STRING, 4009, "離開最大化");
 		else
-			skin_settings_menu.AppendMenuItem(MF_STRING, 4009, "Fullscreen");
+			skin_settings_menu.AppendMenuItem(MF_STRING, 4009, "最大化");
 	} else {
-		skin_settings_menu.AppendMenuItem(MF_STRING, 4011, "Main player");
+		skin_settings_menu.AppendMenuItem(MF_STRING, 4011, "基本播放器");
 	}
 	skin_settings_menu.AppendMenuSeparator();
 	skin_settings_menu.AppendMenuItem(MF_GRAYED, 0, "Eole v"+globalProperties.theme_version);
 
-	skin_settings_menu.AppendTo(basemenu, MF_STRING, "Skin settings");
+	skin_settings_menu.AppendTo(basemenu, MF_STRING, "Skin 介面設定");
 
     menuman1.Init("file");
     menuman2.Init("edit");
     menuman3.Init("View");
     menuman4.Init("playback");
-    menuman5.Init("library");
+    menuman5.Init("Library");
     menuman6.Init("help");
 
     menuman1.BuildMenu(child1, 1001, 200);
@@ -2552,7 +2552,7 @@ oSearch = function() {
 		}
 	};
 	this.on_init = function() {
-		this.inputbox = new oInputbox(this.w, this.h, "", "Search...", colors.search_txt , 0, 0, colors.selected_bg, g_launchSearch, "g_searchbox", undefined, "g_font.min1");
+		this.inputbox = new oInputbox(this.w, this.h, "", "搜尋...", colors.search_txt , 0, 0, colors.selected_bg, g_launchSearch, "g_searchbox", undefined, "g_font.min1");
         this.inputbox.autovalidation = properties.autosearch;
 		this.adapt_look_to_layout();
     };
@@ -2644,19 +2644,19 @@ function draw_searchHistory_menu(x, y) {
 	if (typeof x == "undefined") x=ww;
 	if (typeof y == "undefined") y=30;
 
-    basemenu.AppendMenuItem(MF_GRAYED, 0, "Search history :");
+    basemenu.AppendMenuItem(MF_GRAYED, 0, "搜索歷史記錄 :");
 	basemenu.AppendMenuSeparator();
 
 	for (var i = g_searchHistory.historyList.length-1; i >=0; i--) {
 		basemenu.AppendMenuItem(MF_STRING, i+1, g_searchHistory.historyList[i][0].replace("&","&&"));
 	}
 	if(g_searchHistory.historyList.length==0) {
-		basemenu.AppendMenuItem(MF_GRAYED, 0, "The search history is empty");
+		basemenu.AppendMenuItem(MF_GRAYED, 0, "搜索歷史記錄是空的");
 	} else {
 		basemenu.AppendMenuSeparator();
-		basemenu.AppendMenuItem(MF_STRING, properties.searchHistory_max_items+10, "Clear history");
+		basemenu.AppendMenuItem(MF_STRING, properties.searchHistory_max_items+10, "清除歷史記錄");
 	}
-	basemenu.AppendMenuItem(MF_STRING, 1000, "Search as you type");
+	basemenu.AppendMenuItem(MF_STRING, 1000, "輸入時同時搜尋");
 	basemenu.CheckMenuItem(1000, properties.autosearch);
 	
     idx = 0;
