@@ -529,26 +529,26 @@ function build_buttons(){
 	} else {
 		btn_initialized = true;
 		buttons = {
-			Library: new JSButton(btn.left_m+btn.margin*0, btn.top_m, btn.width, btn.height, "媒體櫃", "媒體櫃", "", function () {
+			Library: new JSButton(btn.left_m+btn.margin*0, btn.top_m, btn.width, btn.height, "媒體櫃", "Library", "", function () {
 				main_panel_state.setValue(0);
 				get_colors();g_searchbox.adapt_look_to_layout();
 			}, false,false,images.library_img,images.library_img,0, false, false, true),
-			Playlists: new JSButton(btn.left_m+btn.width+btn.margin*1, btn.top_m, btn.width, btn.height, "播放清單", "播放清單", "", function () {
+			Playlists: new JSButton(btn.left_m+btn.width+btn.margin*1, btn.top_m, btn.width, btn.height, "播放清單", "Playlists", "", function () {
 				main_panel_state.setValue(1);
 				get_colors();g_searchbox.adapt_look_to_layout();
 			}, false,false,images.playlist_img,images.playlist_img,1, false, false, true),
-			Artist_Bio: new JSButton(btn.left_m+btn.width+btn.width+btn.margin*2, btn.top_m, btn.width, btn.height, "正在播放", "正在播放", "", function () {
+			Artist_Bio: new JSButton(btn.left_m+btn.width+btn.width+btn.margin*2, btn.top_m, btn.width, btn.height, "正在播放", "Now playing", "", function () {
 				main_panel_state.setValue(2);
 				get_colors();g_searchbox.adapt_look_to_layout();
 			}, false,false,images.artist_bio_img,images.artist_bio_img,2, false, false, true),
-			Visualization: new JSButton(btn.left_m+btn.width+btn.width+btn.width+btn.margin*3, btn.top_m, btn.width, btn.height, "視覺效果", "視覺效果", "", function () {
+			Visualization: new JSButton(btn.left_m+btn.width+btn.width+btn.width+btn.margin*3, btn.top_m, btn.width, btn.height, "視覺效果", "Visualization", "", function () {
 				main_panel_state.setValue(3);
 				get_colors();g_searchbox.adapt_look_to_layout();
 			}, false,false,images.visualization_img,images.visualization_img,3, false, false, true),
-			NowPlaying: new JSButton(-38, btn.top_m, btn.width_small_btns, btn.height, "", "nowplaying", "Hide/show right sidebar", function () {
+			NowPlaying: new JSButton(-38, btn.top_m, btn.width_small_btns, btn.height, "", "nowplaying", "隱藏/顯示右側邊欄", function () {
 				toggleNowPlayingState();
 			}, false, false,images.nowplaying_off_icon,images.nowplaying_off_icon,-1, false, false, true),
-			RightSidebar: new JSButton(-38, btn.top_m, btn.width_small_btns, btn.height, "", "rightsidebar", "Hide/show track infos", function () {
+			RightSidebar: new JSButton(-38, btn.top_m, btn.width_small_btns, btn.height, "", "rightsidebar", "隱藏/顯示曲目資料", function () {
 				if(getNowPlayingState()==1) {
 					toggleTrackInfosState();
 				} else {
@@ -561,19 +561,19 @@ function build_buttons(){
 					}, 100);*/
 				}
 			}, false, false,images.nowplaying_off_icon,images.nowplaying_off_icon,-1, false, false, true),
-			Lightswitch: new JSButton(-38, btn.top_m, btn.width_small_btns, btn.height, "", "lightswitch", "Dark/light switch"+"\n"+"(double click to switch globally)", false, function () {
+			Lightswitch: new JSButton(-38, btn.top_m, btn.width_small_btns, btn.height, "", "lightswitch", "灰暗/明亮 切換"+"\n"+"(雙擊即可進行全局切換)", false, function () {
 				previous_darkvalue = properties.darklayout;				
 				Lightswitch();
 			}, function () {
 				Lightswitch(true,!previous_darkvalue);
 			}, images.lightswitch_img,images.lightswitch_img,-1, false, false, true),
-			Fullscreen: new JSButton(-112, btn.top_m, btn.width_small_btns, btn.height, "", "fullscreen", "Fullscreen", function () {
+			Fullscreen: new JSButton(-112, btn.top_m, btn.width_small_btns, btn.height, "", "fullscreen", "最大化", function () {
 				g_uihacks.toggleFullscreen();
 			}, false,false,images.fullscreen_img,images.fullscreen_img,-1, false, false, true),
-			Idle: new JSButton(-74, btn.top_m, btn.width_small_btns, btn.height, "", "idle", "Show idle screen", function () {
+			Idle: new JSButton(-74, btn.top_m, btn.width_small_btns, btn.height, "", "idle", "顯示待機畫面", function () {
 				screensaver_state.setValue(1);g_panel.on_size_changed();
 			}, false,false,images.idle_img,images.idle_img,-1, false, false, true),
-			ShowSearch: new JSButton(-150, btn.top_m, btn.width_small_btns, btn.height, "", "search", "Show search input", function () {
+			ShowSearch: new JSButton(-150, btn.top_m, btn.width_small_btns, btn.height, "", "search", "顯示搜索輸入", function () {
 				toggleSearch();
 				g_cursor.setCursor(IDC_ARROW,2);
 			}, false,false,images.search_toggle_img,images.search_toggle_img,-1, false, false, true),
@@ -584,7 +584,7 @@ function build_buttons(){
 			Close: new JSButton(-45, 0, 45, 29, "", "close", "", false, function () {
 				fb.Exit();
 			},false,images.nowplaying_on_hover_icon,images.nowplaying_on_hover_icon_hover,-1,false,RGB(232,17,35),true),
-			Max: new JSButton(-90, 0, 45, 29, "", "max", "Maximize / Main player", false, function () {
+			Max: new JSButton(-90, 0, 45, 29, "", "max", "最大化 / 標準播放器", false, function () {
 				if(layout_state.isEqual(1)){
 					toggleLayoutMode();get_colors();g_searchbox.adapt_look_to_layout();
 					this.changeState(ButtonStates.normal);
@@ -595,7 +595,7 @@ function build_buttons(){
 						g_uihacks.setMainWindowState(WindowState.Normal);
 				}
 			},false,images.max_icon,images.max_icon,-1,false,colors.titlebar_btn_hover_bg,true),
-			Mini: new JSButton(-135, 0, 45, 29, "", "mini", "Mini player", false, function () {
+			Mini: new JSButton(-135, 0, 45, 29, "", "mini", "袖珍播放器", false, function () {
 				toggleLayoutMode();get_colors();g_searchbox.adapt_look_to_layout();
 			},false,images.mini_icon,images.mini_icon,-1,false,colors.titlebar_btn_hover_bg,true),
 			Reduce: new JSButton(-180, 0, 45, 29, "", "reduce", "", false, function () {
@@ -1049,7 +1049,7 @@ function on_mouse_rbtn_up(x, y){
 			else
 				_menu.AppendMenuItem(MF_STRING, 5, "最大化");
 		} else {
-			_menu.AppendMenuItem(MF_STRING, 7, "切換到基本播放器");
+			_menu.AppendMenuItem(MF_STRING, 7, "切換到標準播放器");
 		}
 
 		if(utils.IsKeyPressed(VK_SHIFT)) {
@@ -1379,78 +1379,78 @@ function draw_main_menu(x,y){
 	basemenu.AppendMenuSeparator();
 
 	wallpaper_visibility = window.CreatePopupMenu();
-	wallpaper_visibility.AppendMenuItem(MF_STRING, 4005, "Enable");
-	wallpaper_visibility.AppendMenuItem(MF_STRING, 4006, "Disable");
+	wallpaper_visibility.AppendMenuItem(MF_STRING, 4005, "啟用");
+	wallpaper_visibility.AppendMenuItem(MF_STRING, 4006, "關閉");
 	wallpaper_blur = window.CreatePopupMenu();
-	wallpaper_blur.AppendMenuItem(MF_STRING, 4007, "Enable");
-	wallpaper_blur.AppendMenuItem(MF_STRING, 4008, "Disable");
+	wallpaper_blur.AppendMenuItem(MF_STRING, 4007, "啟用");
+	wallpaper_blur.AppendMenuItem(MF_STRING, 4008, "關閉");
 
 	nowplaying = window.CreatePopupMenu();
 	var now_playing_state = getNowPlayingState();
-	if(now_playing_state==1) nowplaying.AppendMenuItem(MF_STRING, 4027, "Hide");
-	else nowplaying.AppendMenuItem(MF_STRING, 4027, "Show");
+	if(now_playing_state==1) nowplaying.AppendMenuItem(MF_STRING, 4027, "隱藏");
+	else nowplaying.AppendMenuItem(MF_STRING, 4027, "顯示");
 	nowplaying.AppendMenuSeparator();
-	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4030, "Increase width");
-	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4031, "Decrease width");
-	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4033, "Custom width...");
-	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4032, "Reset");
+	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4030, "增加寬度");
+	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4031, "減少寬度");
+	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4033, "自定義寬度...");
+	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4032, "重置");
 
 	if(layout_state.isEqual(1)){
-		minimode_menu.AppendTo(skin_settings_menu,MF_STRING, "Panel layout");
-		minimode_menu.AppendMenuItem(MF_STRING, 3990, "Dark theme");
+		minimode_menu.AppendTo(skin_settings_menu,MF_STRING, "面板版面設計");
+		minimode_menu.AppendMenuItem(MF_STRING, 3990, "灰暗主題");
 		minimode_menu.CheckMenuItem(3990, properties.minimode_dark_theme);
-		wallpaper_visibility.AppendTo(minimode_menu,MF_STRING, "Wallpapers visibility");
-		wallpaper_blur.AppendTo(minimode_menu,MF_STRING, "Wallpapers blur");
+		wallpaper_visibility.AppendTo(minimode_menu,MF_STRING, "壁紙可見性");
+		wallpaper_blur.AppendTo(minimode_menu,MF_STRING, "壁紙模糊");
 	} else if(main_panel_state.isEqual(0)){
-		library_menu.AppendTo(skin_settings_menu,MF_STRING, "Panel layout");
-		nowplaying.AppendTo(library_menu,MF_STRING, "Right playlist");
+		library_menu.AppendTo(skin_settings_menu,MF_STRING, "面板版面設計");
+		nowplaying.AppendTo(library_menu,MF_STRING, "右側邊欄播放清單");
 		left_menu = window.CreatePopupMenu();
-		left_menu.AppendTo(library_menu,MF_STRING, "Left menu");
-		if(libraryfilter_state.isActive()) left_menu.AppendMenuItem(MF_STRING, 4028, "Hide");
-		else left_menu.AppendMenuItem(MF_STRING, 4028, "Show");
+		left_menu.AppendTo(library_menu,MF_STRING, "右側邊欄選單");
+		if(libraryfilter_state.isActive()) left_menu.AppendMenuItem(MF_STRING, 4028, "隱藏");
+		else left_menu.AppendMenuItem(MF_STRING, 4028, "顯示");
 		left_menu.AppendMenuSeparator();
-		left_menu.AppendMenuItem((libraryfilter_state.isActive()?MF_STRING:MF_GRAYED), 4034, "Increase width");
-		left_menu.AppendMenuItem((libraryfilter_state.isActive()?MF_STRING:MF_GRAYED), 4035, "Decrease width");
-		left_menu.AppendMenuItem((libraryfilter_state.isActive()?MF_STRING:MF_GRAYED), 4037, "Custom width...");
-		left_menu.AppendMenuItem((libraryfilter_state.isActive()?MF_STRING:MF_GRAYED), 4036, "Reset");
+		left_menu.AppendMenuItem((libraryfilter_state.isActive()?MF_STRING:MF_GRAYED), 4034, "增加寬度");
+		left_menu.AppendMenuItem((libraryfilter_state.isActive()?MF_STRING:MF_GRAYED), 4035, "減少寬度");
+		left_menu.AppendMenuItem((libraryfilter_state.isActive()?MF_STRING:MF_GRAYED), 4037, "自定義寬度...");
+		left_menu.AppendMenuItem((libraryfilter_state.isActive()?MF_STRING:MF_GRAYED), 4036, "重置");
 		library_menu.AppendMenuSeparator();
-		library_menu.AppendMenuItem(MF_STRING, 4000, "Dark theme");
+		library_menu.AppendMenuItem(MF_STRING, 4000, "灰暗主題");
 		library_menu.CheckMenuItem(4000, properties.library_dark_theme);
-		wallpaper_visibility.AppendTo(library_menu,MF_STRING, "Wallpapers visibility");
-		wallpaper_blur.AppendTo(library_menu,MF_STRING, "Wallpapers blur");
+		wallpaper_visibility.AppendTo(library_menu,MF_STRING, "壁紙可見性");
+		wallpaper_blur.AppendTo(library_menu,MF_STRING, "壁紙模糊");
 	} else if(main_panel_state.isEqual(1)){
-		playlists_menu.AppendTo(skin_settings_menu,MF_STRING, "Panel layout");
-		nowplaying.AppendTo(playlists_menu,MF_STRING, "Right playlist");
+		playlists_menu.AppendTo(skin_settings_menu,MF_STRING, "面板版面設計");
+		nowplaying.AppendTo(playlists_menu,MF_STRING, "右側邊欄播放清單");
 		playlistpanel_menu = window.CreatePopupMenu();
-		playlistpanel_menu.AppendTo(playlists_menu,MF_STRING, "Playlist panel");
-		playlistpanel_menu.AppendMenuItem(MF_STRING, 4038, "Increase width");
-		playlistpanel_menu.AppendMenuItem(MF_STRING, 4039, "Decrease width");
-		playlistpanel_menu.AppendMenuItem(MF_STRING, 4041, "Custom width...");
-		playlistpanel_menu.AppendMenuItem(MF_STRING, 4040, "Reset");
+		playlistpanel_menu.AppendTo(playlists_menu,MF_STRING, "播放列表");
+		playlistpanel_menu.AppendMenuItem(MF_STRING, 4038, "增加寬度");
+		playlistpanel_menu.AppendMenuItem(MF_STRING, 4039, "減少寬度");
+		playlistpanel_menu.AppendMenuItem(MF_STRING, 4041, "自定義寬度...");
+		playlistpanel_menu.AppendMenuItem(MF_STRING, 4040, "重置");
 		var FiltersMenu = window.CreatePopupMenu();
 		if(filters_panel_state.value>0)
-			FiltersMenu.AppendMenuItem(MF_STRING, 4990, "Hide");
+			FiltersMenu.AppendMenuItem(MF_STRING, 4990, "隱藏");
 		else
-			FiltersMenu.AppendMenuItem(MF_STRING, 4988, "Show");
-		FiltersMenu.AppendMenuItem(MF_STRING, 4992, "Increase height");
-		FiltersMenu.AppendMenuItem((filters_panel_state.isActive()? MF_STRING : MF_GRAYED), 4991, "Decrease height");
+			FiltersMenu.AppendMenuItem(MF_STRING, 4988, "顯示");
+		FiltersMenu.AppendMenuItem(MF_STRING, 4992, "增加高度");
+		FiltersMenu.AppendMenuItem((filters_panel_state.isActive()? MF_STRING : MF_GRAYED), 4991, "減少高度");
 		FiltersMenu.AppendMenuSeparator();
-		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "Enable 1st filter");
+		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "啟用第1個篩選器 - 類型");
 		FiltersMenu.CheckMenuItem(4993, (filter1_state.isActive()));
-		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "Enable 2nd filter");
+		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 藝術家");
 		FiltersMenu.CheckMenuItem(4994, (filter2_state.isActive()));
-		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4995, "Enable 3rd filter");
+		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4995, "啟用第3個篩選器 - 專輯");
 		FiltersMenu.CheckMenuItem(4995, (filter3_state.isActive()));
-		FiltersMenu.AppendTo(playlists_menu, MF_STRING, "Filters");
-		if(!filters_panel_state.isMaximumValue()) playlists_menu.AppendMenuItem(MF_STRING, 4996, "Hide bottom playlist");
-		else playlists_menu.AppendMenuItem(MF_STRING, 4997, "Show bottom playlist");
+		FiltersMenu.AppendTo(playlists_menu, MF_STRING, "篩選器");
+		if(!filters_panel_state.isMaximumValue()) playlists_menu.AppendMenuItem(MF_STRING, 4996, "隱藏底部播放列表");
+		else playlists_menu.AppendMenuItem(MF_STRING, 4997, "顯示底部播放列表");
 		playlists_menu.AppendMenuSeparator();
-		playlists_menu.AppendMenuItem(MF_STRING, 4001, "Dark theme");
+		playlists_menu.AppendMenuItem(MF_STRING, 4001, "灰暗主題");
 		playlists_menu.CheckMenuItem(4001, properties.playlists_dark_theme);
-		wallpaper_visibility.AppendTo(playlists_menu,MF_STRING, "Wallpapers visibility");
-		wallpaper_blur.AppendTo(playlists_menu,MF_STRING, "Wallpapers blur");
+		wallpaper_visibility.AppendTo(playlists_menu,MF_STRING, "壁紙可見性");
+		wallpaper_blur.AppendTo(playlists_menu,MF_STRING, "壁紙模糊");
 	} else if(main_panel_state.isEqual(2)){
-		bio_menu.AppendTo(skin_settings_menu,MF_STRING, "Panel layout");
+		bio_menu.AppendTo(skin_settings_menu,MF_STRING, "面板版面設計");
 
 		nowplaying.AppendTo(bio_menu,MF_STRING, "Right playlist");
 
@@ -1466,40 +1466,40 @@ function draw_main_menu(x,y){
 		}
 
 		bio_menu.AppendMenuSeparator();
-		bio_menu.AppendMenuItem(MF_STRING, 4002, "Dark theme");
+		bio_menu.AppendMenuItem(MF_STRING, 4002, "灰暗主題");
 		bio_menu.CheckMenuItem(4002, properties.bio_dark_theme);
-		wallpaper_visibility.AppendTo(bio_menu,MF_STRING, "Wallpapers visibility");
-		wallpaper_blur.AppendTo(bio_menu,MF_STRING, "Wallpapers blur");
+		wallpaper_visibility.AppendTo(bio_menu,MF_STRING, "壁紙可見性");
+		wallpaper_blur.AppendTo(bio_menu,MF_STRING, "壁紙模糊");
 	} else if(main_panel_state.isEqual(3)){
 		visu_menu.AppendTo(skin_settings_menu,MF_STRING, "Panel layout");
-		nowplaying.AppendTo(visu_menu,MF_STRING, "Right playlist");
+		nowplaying.AppendTo(visu_menu,MF_STRING, "右側邊欄播放清單");
 		visu_menu.AppendMenuSeparator();
-		visu_menu.AppendMenuItem(MF_STRING, 4003, "Dark theme");
+		visu_menu.AppendMenuItem(MF_STRING, 4003, "灰暗主題");
 		visu_menu.CheckMenuItem(4003, properties.visualization_dark_theme);
 	}
 
-	appearance_menu.AppendTo(skin_settings_menu, MF_STRING, "Global layout");
+	appearance_menu.AppendTo(skin_settings_menu, MF_STRING, "全局版面設計");
 	nowplayinglobal = window.CreatePopupMenu();
-	nowplayinglobal.AppendMenuItem(MF_STRING, 4072, "Hide");
-	nowplayinglobal.AppendMenuItem(MF_STRING, 4073, "Show");
+	nowplayinglobal.AppendMenuItem(MF_STRING, 4072, "隱藏");
+	nowplayinglobal.AppendMenuItem(MF_STRING, 4073, "顯示");
 	nowplayinglobal.AppendMenuSeparator();
-	nowplayinglobal.AppendMenuItem(MF_STRING, 4030, "Increase width");
-	nowplayinglobal.AppendMenuItem(MF_STRING, 4031, "Decrease width");
-	nowplayinglobal.AppendMenuItem(MF_STRING, 4033, "Custom width...");
-	nowplayinglobal.AppendMenuItem(MF_STRING, 4032, "Reset");
-	nowplayinglobal.AppendTo(appearance_menu,MF_STRING, "Right playlist");
-	appearance_menu.AppendMenuItem(MF_STRING, 4046, "Enable resizable borders");
+	nowplayinglobal.AppendMenuItem(MF_STRING, 4030, "增加寬度");
+	nowplayinglobal.AppendMenuItem(MF_STRING, 4031, "減少寬度");
+	nowplayinglobal.AppendMenuItem(MF_STRING, 4033, "自定義寬度...");
+	nowplayinglobal.AppendMenuItem(MF_STRING, 4032, "重置");
+	nowplayinglobal.AppendTo(appearance_menu,MF_STRING, "右側邊欄播放清單");
+	appearance_menu.AppendMenuItem(MF_STRING, 4046, "啟用可調整大小的邊框");
 	appearance_menu.CheckMenuItem(4046, globalProperties.enableResizableBorders);
 
 	wallpaper_visibility_global = window.CreatePopupMenu();
-	wallpaper_visibility_global.AppendMenuItem(MF_STRING, 40051, "Enable");
-	wallpaper_visibility_global.AppendMenuItem(MF_STRING, 40061, "Disable");
+	wallpaper_visibility_global.AppendMenuItem(MF_STRING, 40051, "啟用");
+	wallpaper_visibility_global.AppendMenuItem(MF_STRING, 40061, "關閉");
 	wallpaper_blur_global = window.CreatePopupMenu();
-	wallpaper_blur_global.AppendMenuItem(MF_STRING, 40071, "Enable");
-	wallpaper_blur_global.AppendMenuItem(MF_STRING, 40081, "Disable");
+	wallpaper_blur_global.AppendMenuItem(MF_STRING, 40071, "啟用");
+	wallpaper_blur_global.AppendMenuItem(MF_STRING, 40081, "關閉");
 	appearance_menu.AppendMenuSeparator();
-	wallpaper_visibility_global.AppendTo(appearance_menu,MF_STRING, "Wallpapers visibility");
-	wallpaper_blur_global.AppendTo(appearance_menu,MF_STRING, "Wallpapers blur");
+	wallpaper_visibility_global.AppendTo(appearance_menu,MF_STRING, "壁紙可見性");
+	wallpaper_blur_global.AppendTo(appearance_menu,MF_STRING, "壁紙模糊");
 
 	font_size = window.CreatePopupMenu();
 	font_size.AppendTo(skin_settings_menu,MF_STRING, "字體大小");
@@ -1511,38 +1511,38 @@ function draw_main_menu(x,y){
 	font_size.AppendMenuItem(MF_DISABLED, 0, "按住Ctrl鍵，在（幾乎）任何面板上使用滑鼠滾輪！");
 
 	colors_menu = window.CreatePopupMenu();
-	colors_menu.AppendTo(skin_settings_menu,MF_STRING, "Colors");
+	colors_menu.AppendTo(skin_settings_menu,MF_STRING, "顏色");
 	main_panel = window.CreatePopupMenu();
-	main_panel.AppendTo(colors_menu,MF_STRING, "Main panel");
-	main_panel.AppendMenuItem(MF_STRING, 5001, "Pure white");
-	main_panel.AppendMenuItem(MF_STRING, 5002, "White and album art");
-	main_panel.AppendMenuItem(MF_STRING, 5003, "White and grey and album art");
+	main_panel.AppendTo(colors_menu,MF_STRING, "主要面板");
+	main_panel.AppendMenuItem(MF_STRING, 5001, "純白");
+	main_panel.AppendMenuItem(MF_STRING, 5002, "白色和專輯藝術");
+	main_panel.AppendMenuItem(MF_STRING, 5003, "白色和灰色和專輯藝術 ");
 	main_panel.AppendMenuSeparator();
-	main_panel.AppendMenuItem(MF_STRING, 5011, "Pure Dark");
-	main_panel.AppendMenuItem(MF_STRING, 5012, "Dark and album art");
-	main_panel.AppendMenuItem(MF_STRING, 5013, "Dark and coal and album art");
+	main_panel.AppendMenuItem(MF_STRING, 5011, "純黑");
+	main_panel.AppendMenuItem(MF_STRING, 5012, "黑暗和專輯藝術");
+	main_panel.AppendMenuItem(MF_STRING, 5013, "黑暗和煤炭和專輯藝術");
 	if(layout_state.isEqual(0)) var checked_item = (properties.darklayout?10:0);
 	else var checked_item = (properties.library_dark_theme?10:0);
 	main_panel.CheckMenuItem(5001+globalProperties.colorsMainPanel+checked_item, true);
 
 	mini_player = window.CreatePopupMenu();
-	mini_player.AppendTo(colors_menu,MF_STRING, "Mini player");
-	mini_player.AppendMenuItem(MF_STRING, 5201, "Pure white");
-	mini_player.AppendMenuItem(MF_STRING, 5202, "White and album art");
+	mini_player.AppendTo(colors_menu,MF_STRING, "袖珍播放器");
+	mini_player.AppendMenuItem(MF_STRING, 5201, "純白");
+	mini_player.AppendMenuItem(MF_STRING, 5202, "白色和專輯藝術");
 	mini_player.AppendMenuSeparator();
-	mini_player.AppendMenuItem(MF_STRING, 5203, "Pure Dark");
-	mini_player.AppendMenuItem(MF_STRING, 5204, "Dark and album art");
+	mini_player.AppendMenuItem(MF_STRING, 5203, "純黑");
+	mini_player.AppendMenuItem(MF_STRING, 5204, "黑暗和專輯藝術");
 	mini_player.CheckMenuItem(5201+globalProperties.colorsMiniPlayer+(properties.minimode_dark_theme?2:0), true);
 
 	control_bar = window.CreatePopupMenu();
-	control_bar.AppendTo(colors_menu,MF_STRING, "Control bar");
-	control_bar.AppendMenuItem(MF_STRING, 5101, "Pure white");
-	control_bar.AppendMenuItem(MF_STRING, 5102, "White and album art");
+	control_bar.AppendTo(colors_menu,MF_STRING, "控制欄");
+	control_bar.AppendMenuItem(MF_STRING, 5101, "純白");
+	control_bar.AppendMenuItem(MF_STRING, 5102, "白色和專輯藝術");
 	control_bar.AppendMenuSeparator();
-	control_bar.AppendMenuItem(MF_STRING, 5103, "Pure Dark");
-	control_bar.AppendMenuItem(MF_STRING, 5104, "Dark and album art");
+	control_bar.AppendMenuItem(MF_STRING, 5103, "純黑");
+	control_bar.AppendMenuItem(MF_STRING, 5104, "黑暗和專輯藝術");
 	control_bar.AppendMenuSeparator();
-	control_bar.AppendMenuItem(MF_STRING, 5105, "Adapt colors to Main panel");
+	control_bar.AppendMenuItem(MF_STRING, 5105, "將顏色適應主面板");
 	control_bar.CheckMenuItem(5101+globalProperties.colorsControls, true);
 
 	/*appearance_menu.AppendMenuItem(MF_STRING, 4025, "Enable disk cover cache");
@@ -1633,7 +1633,7 @@ function draw_main_menu(x,y){
 		else
 			skin_settings_menu.AppendMenuItem(MF_STRING, 4009, "最大化");
 	} else {
-		skin_settings_menu.AppendMenuItem(MF_STRING, 4011, "基本播放器");
+		skin_settings_menu.AppendMenuItem(MF_STRING, 4011, "標準播放器");
 	}
 	skin_settings_menu.AppendMenuSeparator();
 	skin_settings_menu.AppendMenuItem(MF_GRAYED, 0, "Eole v"+globalProperties.theme_version);
@@ -1644,7 +1644,7 @@ function draw_main_menu(x,y){
     menuman2.Init("edit");
     menuman3.Init("View");
     menuman4.Init("playback");
-    menuman5.Init("Library");
+    menuman5.Init("library");
     menuman6.Init("help");
 
     menuman1.BuildMenu(child1, 1001, 200);
@@ -2290,11 +2290,11 @@ oSearch = function() {
 		var gb;
         var button_size = 18;
 		this.images.search_icon = gdi.Image(theme_img_path  + "\\icons\\"+colors.icons_folder+"\\search_icon.png");
-		this.search_bt = new button(this.images.search_icon, this.images.search_icon, this.images.search_icon,"search_bt","Search whole library");
+		this.search_bt = new button(this.images.search_icon, this.images.search_icon, this.images.search_icon,"search_bt","搜尋整個媒體櫃");
 
 		this.images.search_history_icon = gdi.Image(theme_img_path  + "\\icons\\"+colors.icons_folder+"\\search_history.png");
 		this.images.search_history_hover_icon = gdi.Image(theme_img_path  + "\\icons\\"+colors.icons_folder+"\\search_history_hover.png");
-		this.search_history_bt = new button(this.images.search_history_icon, this.images.search_history_hover_icon, this.images.search_history_hover_icon,"search_history_bt","Search history");
+		this.search_history_bt = new button(this.images.search_history_icon, this.images.search_history_hover_icon, this.images.search_history_hover_icon,"search_history_bt","搜尋歷史紀錄");
 
         this.images.resetIcon_off = gdi.CreateImage(button_size, button_size);
         gb = this.images.resetIcon_off.GetGraphics();
