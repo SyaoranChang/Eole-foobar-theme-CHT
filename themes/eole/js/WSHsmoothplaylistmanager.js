@@ -1,4 +1,4 @@
-var properties = {
+﻿var properties = {
 	panelName: 'WSHsmoothplaylistmanager',
     defaultRowHeight: window.GetProperty("PROPERTY: Row Height", 46),
     enableDiskCache: window.GetProperty("COVER Disk Cache", true),
@@ -134,7 +134,7 @@ function renamePlaylist() {
 };
 function CreatePlaylist(pl_place, pl_name){
 	try {
-		result = utils.InputBox(window.ID, "Give your playlist a name.", "Create New Playlist", "New Playlist", true);
+		result = utils.InputBox(window.ID, "給你的播放清單取一個名字。", "新增新的播放清單", "新的播放清單", true);
 		if (result){
 			if (result == "") {
 				plman.CreatePlaylist(pl_place, "New Playlist");
@@ -147,7 +147,7 @@ function CreatePlaylist(pl_place, pl_name){
 }
 function CreateAutoPlaylist(pl_place, pl_name, query){
 	try {
-		result = utils.InputBox(window.ID, "Give your playlist a name.", "Create New Autoplaylist", "New Autoplaylist", true);
+		result = utils.InputBox(window.ID, "給你的播放清單取一個名字。", "新增新的自動播放清單", "新的自動播放清單", true);
 		if (result){
 			if (result == "") {
 				plman.CreateAutoPlaylist(pl_place, "New Autoplaylist", query);
@@ -293,7 +293,7 @@ oFilterBox = function() {
 	};
 	this.getImages();
 	this.on_init = function() {
-		this.inputbox = new oInputbox(cFilterBox.w, cFilterBox.h, "", "Playlists...", colors.normal_txt, 0, 0, colors.selected_bg, g_sendResponse, "brw", undefined, "g_font.plus1");
+		this.inputbox = new oInputbox(cFilterBox.w, cFilterBox.h, "", "播放清單...", colors.normal_txt, 0, 0, colors.selected_bg, g_sendResponse, "brw", undefined, "g_font.plus1");
         this.inputbox.autovalidation = true;
     };
 	this.on_init();
@@ -949,7 +949,7 @@ oBrowser = function(name) {
 
 		// draw Create playlist Button
 		 if(properties.showNewPlaylistButton) {
-			this.rows.push(new oPlaylist(-1, rowId, "Create Playlist"));
+			this.rows.push(new oPlaylist(-1, rowId, "新增播放清單"));
 			rowId++;
 		 }
 	
@@ -1692,46 +1692,46 @@ oBrowser = function(name) {
         var add_mode = (id == null || id < 0 || (this.rows[id] && this.rows[id].idx<0));
         var total = plman.PlaylistCount;
 
-		_menu.AppendMenuItem(MF_STRING, 1, "Settings...");
+		_menu.AppendMenuItem(MF_STRING, 1, "設定...");
 		_menu.AppendMenuSeparator();
 
         if(!add_mode) {
             var pl_idx = this.rows[id].idx;
-            _newplaylist.AppendTo(_menu, (g_filterbox.inputbox.text.length > 0 ? MF_GRAYED | MF_DISABLED : MF_STRING), "Insert ...");
+            _newplaylist.AppendTo(_menu, (g_filterbox.inputbox.text.length > 0 ? MF_GRAYED | MF_DISABLED : MF_STRING), "插入 ...");
         } else {
             id = this.rowsCount;
             var pl_idx = total;
-            _newplaylist.AppendTo(_menu, (g_filterbox.inputbox.text.length > 0 ? MF_GRAYED | MF_DISABLED : MF_STRING), "Add ...");
+            _newplaylist.AppendTo(_menu, (g_filterbox.inputbox.text.length > 0 ? MF_GRAYED | MF_DISABLED : MF_STRING), "加入 ...");
         };
-        _newplaylist.AppendMenuItem(MF_STRING, 100, "New Playlist");
-        _newplaylist.AppendMenuItem(MF_STRING, 101, "New Autoplaylist");
-        _autoplaylist.AppendTo(_newplaylist, MF_STRING, "Preset Playlists");
+        _newplaylist.AppendMenuItem(MF_STRING, 100, "新增播放清單");
+        _newplaylist.AppendMenuItem(MF_STRING, 101, "新增自動播放清單");
+        _autoplaylist.AppendTo(_newplaylist, MF_STRING, "預先定義自動播放清單");
         //_autoplaylist.AppendMenuItem(MF_STRING, 200, "Media Library (full)");
-        _autoplaylist.AppendMenuItem(MF_STRING, 205, "History (tracks played in the last weeks)");
-        _autoplaylist.AppendMenuItem(MF_STRING, 206, "Most Played tracks");
-        _autoplaylist.AppendMenuItem(MF_STRING, 207, "Top Rated tracks");
-        _autoplaylist.AppendMenuItem(MF_STRING, 210, "Newly added tracks");
+        _autoplaylist.AppendMenuItem(MF_STRING, 205, "歷史（過去幾周播放的曲目）");
+        _autoplaylist.AppendMenuItem(MF_STRING, 206, "播放次數最多的曲目");
+        _autoplaylist.AppendMenuItem(MF_STRING, 207, "評等最高的曲目");
+        _autoplaylist.AppendMenuItem(MF_STRING, 210, "新增加的曲目");
 		_autoplaylist.AppendMenuItem(MF_SEPARATOR, 0, "");
-        _autoplaylist.AppendMenuItem(MF_STRING, 211, "Radios");
-        _autoplaylist.AppendMenuItem(MF_STRING, 212, "External Files");
+        _autoplaylist.AppendMenuItem(MF_STRING, 211, "無線電廣播");
+        _autoplaylist.AppendMenuItem(MF_STRING, 212, "外部檔案");
         _autoplaylist.AppendMenuItem(MF_STRING, 213, "Podcasts");
         //_autoplaylist.AppendMenuItem(MF_SEPARATOR, 0, "");
         //_autoplaylist.AppendMenuItem(MF_STRING, 250, "Loved Tracks");
         _menu.AppendMenuItem(MF_SEPARATOR, 0, "");
-        _menu.AppendMenuItem(MF_STRING, 2, "Load a Playlist");
+        _menu.AppendMenuItem(MF_STRING, 2, "載入播放清單");
         if(!add_mode) {
-            _menu.AppendMenuItem(MF_STRING, 4, "Save this Playlist");
+            _menu.AppendMenuItem(MF_STRING, 4, "儲存播放清單");
             _menu.AppendMenuItem(MF_SEPARATOR, 0, "");
-            _menu.AppendMenuItem(MF_STRING, 5, "Duplicate this playlist");
+            _menu.AppendMenuItem(MF_STRING, 5, "複製播放清單");
 
-            _menu.AppendMenuItem(MF_STRING, 3, "Rename this playlist");
-            _menu.AppendMenuItem(MF_STRING, 8, "Delete this playlist");
+            _menu.AppendMenuItem(MF_STRING, 3, "重新命名播放清單");
+            _menu.AppendMenuItem(MF_STRING, 8, "移除播放清單");
 
 
             if(plman.IsAutoPlaylist(this.rows[id].idx)) {
                 _menu.AppendMenuItem(MF_SEPARATOR, 0, "");
-                _menu.AppendMenuItem(MF_STRING, 6, "Autoplaylist properties...");
-                _menu.AppendMenuItem(MF_STRING, 7, "Convert to a normal playlist");
+                _menu.AppendMenuItem(MF_STRING, 6, "自動播放清單內容...");
+                _menu.AppendMenuItem(MF_STRING, 7, "轉換到一般播放清單");
             };
 
         };
@@ -1908,18 +1908,18 @@ oBrowser = function(name) {
 
         var idx;
 
-        _menu.AppendMenuItem(MF_GRAYED, 0, "Display :");
+        _menu.AppendMenuItem(MF_GRAYED, 0, "顯示 :");
         _menu.AppendMenuSeparator();
 
-        _menu.AppendMenuItem(MF_STRING, 910, "Search bar");
+        _menu.AppendMenuItem(MF_STRING, 910, "搜索欄");
         _menu.CheckMenuItem(910, properties.showHeaderBar);
-        _menu.AppendMenuItem(MF_STRING, 911, "Create Playlist Button");
+        _menu.AppendMenuItem(MF_STRING, 911, "新增播放清單的按鈕");
         _menu.CheckMenuItem(911, properties.showNewPlaylistButton);
 
-		_menu.AppendMenuItem(MF_STRING, 912, "Items count");
+		_menu.AppendMenuItem(MF_STRING, 912, "項目數量");
 		_menu.CheckMenuItem(912, properties.drawItemsCounter);
 
-		_menu.AppendMenuItem(MF_STRING, 913, "Playlists Icons");
+		_menu.AppendMenuItem(MF_STRING, 913, "播放列表圖示");
 		_menu.CheckMenuItem(913, properties.showPlaylistIcons);
 		
 		//_menu.AppendMenuItem(MF_STRING, 914, "Sort playlists alphabetically");
@@ -1927,38 +1927,38 @@ oBrowser = function(name) {
 		
 		_menu.AppendMenuSeparator();
 
-		_rowHeight.AppendMenuItem(MF_STRING, 1000, "Increase");
-		_rowHeight.AppendMenuItem(MF_STRING, 1001, "Decrease");
+		_rowHeight.AppendMenuItem(MF_STRING, 1000, "增加");
+		_rowHeight.AppendMenuItem(MF_STRING, 1001, "減少");
 		_rowHeight.AppendMenuSeparator();
-		_rowHeight.AppendMenuItem(MF_DISABLED, 0, "Tip: Hold SHIFT and use your");
-		_rowHeight.AppendMenuItem(MF_DISABLED, 0, "mouse wheel over the panel!");
-		_rowHeight.AppendTo(_menu,MF_STRING, "Row height");
+		_rowHeight.AppendMenuItem(MF_DISABLED, 0, "提示：");
+		_rowHeight.AppendMenuItem(MF_DISABLED, 0, "按住SHIFT鍵，在面板上使用滑鼠滾輪！");
+		_rowHeight.AppendTo(_menu,MF_STRING, "行高");
 
 		var _panelWidth = window.CreatePopupMenu();
-		_panelWidth.AppendMenuItem(MF_STRING, 1030, "Increase width");
-		_panelWidth.AppendMenuItem(MF_STRING, 1031, "Decrease width");
-		_panelWidth.AppendMenuItem(MF_STRING, 1033, "Custom width...");
-		_panelWidth.AppendMenuItem(MF_STRING, 1032, "Reset");
-		_panelWidth.AppendTo(_menu,MF_STRING, "Panel width");
+		_panelWidth.AppendMenuItem(MF_STRING, 1030, "增加寬度");
+		_panelWidth.AppendMenuItem(MF_STRING, 1031, "減少寬度");
+		_panelWidth.AppendMenuItem(MF_STRING, 1033, "自定義寬度...");
+		_panelWidth.AppendMenuItem(MF_STRING, 1032, "重置");
+		_panelWidth.AppendTo(_menu,MF_STRING, "面板寬度");
 
-		_menu2.AppendMenuItem(MF_STRING, 200, "Enable");
+		_menu2.AppendMenuItem(MF_STRING, 200, "啟用");
 		_menu2.CheckMenuItem(200, properties.showwallpaper);
-		_menu2.AppendMenuItem(MF_STRING, 220, "Blur");
+		_menu2.AppendMenuItem(MF_STRING, 220, "模糊化");
 		_menu2.CheckMenuItem(220, properties.wallpaperblurred);
 
-		_menu2A.AppendMenuItem(MF_STRING, 221, "Filling");
+		_menu2A.AppendMenuItem(MF_STRING, 221, "填滿");
 		_menu2A.CheckMenuItem(221, properties.wallpaperdisplay==0);
-		_menu2A.AppendMenuItem(MF_STRING, 222, "Adjust");
+		_menu2A.AppendMenuItem(MF_STRING, 222, "調整圖片符合視窗大小");
 		_menu2A.CheckMenuItem(222, properties.wallpaperdisplay==1);
-		_menu2A.AppendMenuItem(MF_STRING, 223, "Stretch");
+		_menu2A.AppendMenuItem(MF_STRING, 223, "延展");
 		_menu2A.CheckMenuItem(223, properties.wallpaperdisplay==2);
-		_menu2A.AppendTo(_menu2,MF_STRING, "Wallpaper size");
+		_menu2A.AppendTo(_menu2,MF_STRING, "壁紙尺寸");
 		//_menu2.AppendMenuSeparator();
 		//_menu2.AppendMenuItem((!properties.showwallpaper ? MF_GRAYED | MF_DISABLED : MF_STRING), 210, "Default");
 		//_menu2.AppendMenuItem((!properties.showwallpaper ? MF_GRAYED | MF_DISABLED : MF_STRING), 211, "Playing Album Cover");
 		//_menu2.CheckMenuRadioItem(210, 211, properties.wallpapermode == 0 ? 211 : 210);
 
-		_menu2.AppendTo(_menu,MF_STRING, "Background Wallpaper");
+		_menu2.AppendTo(_menu,MF_STRING, "背景壁紙");
 
         //_menu.AppendMenuSeparator();
         //_menu.AppendMenuItem(MF_STRING, 991, "Panel Properties");
