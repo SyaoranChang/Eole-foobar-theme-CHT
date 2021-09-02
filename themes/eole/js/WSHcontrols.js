@@ -2379,7 +2379,7 @@ function moreMenu(x, y){
 			quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
 			quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的歌曲類型");
 			quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
-			quickSearchMenu.AppendTo(_moreMenu, MF_STRING, "快速搜索...");
+			quickSearchMenu.AppendTo(_moreMenu, MF_STRING, "快速搜尋...");
 			_moreMenu.AppendMenuSeparator();
 		}
 
@@ -2663,16 +2663,20 @@ function moreMenu(x, y){
 				fb.RunMainMenuCommand("檔案/開啟");
                 break;
             case (idx == 3026):
-				fb.RunMainMenuCommand("File/Open audio CD...");
+				//fb.RunMainMenuCommand("File/Open audio CD...");
+				fb.RunMainMenuCommand("檔案/開啟音樂CD");
                 break;
             case (idx == 3027):
-				fb.RunMainMenuCommand("File/Add files...");
+				//fb.RunMainMenuCommand("File/Add files...");
+				fb.RunMainMenuCommand("檔案/加入檔案");
                 break;
             case (idx == 3028):
-				fb.RunMainMenuCommand("File/Add folder...");
+				//fb.RunMainMenuCommand("File/Add folder...");
+				fb.RunMainMenuCommand("檔案/加入目錄.");
                 break;
             case (idx == 3029):
-				fb.RunMainMenuCommand("File/Add location...");
+				//fb.RunMainMenuCommand("File/Add location...");
+				fb.RunMainMenuCommand("檔案/加入位置...");
                 break;
             case (idx == 4017):
 				properties.displayEqualizer = !properties.displayEqualizer;
@@ -2966,7 +2970,7 @@ function draw_controls_menu(x,y){
 			_quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
 			_quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的歌曲類型");
 			_quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
-			_quickSearchMenu.AppendTo(_menu, MF_STRING, "快速搜索...");			
+			_quickSearchMenu.AppendTo(_menu, MF_STRING, "快速搜尋...");			
 			_menu.AppendMenuSeparator();
 			_menu.AppendMenuItem(MF_STRING, 2, "屬性");
 		}

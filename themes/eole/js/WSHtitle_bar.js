@@ -573,7 +573,7 @@ function build_buttons(){
 			Idle: new JSButton(-74, btn.top_m, btn.width_small_btns, btn.height, "", "idle", "顯示待機畫面", function () {
 				screensaver_state.setValue(1);g_panel.on_size_changed();
 			}, false,false,images.idle_img,images.idle_img,-1, false, false, true),
-			ShowSearch: new JSButton(-150, btn.top_m, btn.width_small_btns, btn.height, "", "search", "顯示搜索輸入", function () {
+			ShowSearch: new JSButton(-150, btn.top_m, btn.width_small_btns, btn.height, "", "search", "顯示搜尋輸入", function () {
 				toggleSearch();
 				g_cursor.setCursor(IDC_ARROW,2);
 			}, false,false,images.search_toggle_img,images.search_toggle_img,-1, false, false, true),
@@ -1153,7 +1153,7 @@ function draw_settings_menu(x,y){
 		_menu.AppendMenuItem(MF_STRING, 1810, "迷你主選單按鈕");
 		_menu.CheckMenuItem(1810, properties.mini_mainmenu_button)
 
-		_menu.AppendMenuItem(compact_titlebar.isActive() ? MF_GRAYED : MF_STRING, 1801, "始終顯示搜索框 ");
+		_menu.AppendMenuItem(compact_titlebar.isActive() ? MF_GRAYED : MF_STRING, 1801, "始終顯示搜尋框 ");
 		_menu.CheckMenuItem(1801, properties.alwaysShowSearch)
 
 		_menu.AppendMenuItem(MF_STRING, 1900, "啟動時恢復面板狀態 ");
@@ -1435,9 +1435,9 @@ function draw_main_menu(x,y){
 		FiltersMenu.AppendMenuItem(MF_STRING, 4992, "增加高度");
 		FiltersMenu.AppendMenuItem((filters_panel_state.isActive()? MF_STRING : MF_GRAYED), 4991, "減少高度");
 		FiltersMenu.AppendMenuSeparator();
-		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "啟用第1個篩選器 - 類型");
+		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "啟用第1個篩選器 - 歌曲類型");
 		FiltersMenu.CheckMenuItem(4993, (filter1_state.isActive()));
-		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 藝術家");
+		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 專輯演出者");
 		FiltersMenu.CheckMenuItem(4994, (filter2_state.isActive()));
 		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4995, "啟用第3個篩選器 - 專輯");
 		FiltersMenu.CheckMenuItem(4995, (filter3_state.isActive()));
@@ -2644,14 +2644,14 @@ function draw_searchHistory_menu(x, y) {
 	if (typeof x == "undefined") x=ww;
 	if (typeof y == "undefined") y=30;
 
-    basemenu.AppendMenuItem(MF_GRAYED, 0, "搜索歷史記錄 :");
+    basemenu.AppendMenuItem(MF_GRAYED, 0, "搜尋歷史記錄 :");
 	basemenu.AppendMenuSeparator();
 
 	for (var i = g_searchHistory.historyList.length-1; i >=0; i--) {
 		basemenu.AppendMenuItem(MF_STRING, i+1, g_searchHistory.historyList[i][0].replace("&","&&"));
 	}
 	if(g_searchHistory.historyList.length==0) {
-		basemenu.AppendMenuItem(MF_GRAYED, 0, "搜索歷史記錄是空的");
+		basemenu.AppendMenuItem(MF_GRAYED, 0, "搜尋歷史記錄是空的");
 	} else {
 		basemenu.AppendMenuSeparator();
 		basemenu.AppendMenuItem(MF_STRING, properties.searchHistory_max_items+10, "清除歷史記錄");

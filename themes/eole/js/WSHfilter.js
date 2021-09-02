@@ -673,7 +673,8 @@ oPlaylistManager = function(name) {
                         if(this.activeRow == 0) {
                             // send to a new playlist
                             this.drop_done = true;
-                            fb.RunMainMenuCommand("File/New playlist");
+                            //fb.RunMainMenuCommand("File/New playlist");
+							fb.RunMainMenuCommand("檔案/新增播放");
                             plman.InsertPlaylistItems(plman.PlaylistCount-1, 0, brw.metadblist_selection, false);
                         } else {
                             // send to selected (hover) playlist
@@ -3611,7 +3612,8 @@ oBrowser = function(name) {
 				this.showNowPlaying();
 				break;
 			case 2000:
-				fb.RunMainMenuCommand("File/New playlist");
+				//fb.RunMainMenuCommand("File/New playlist");
+				fb.RunMainMenuCommand("檔案/新增播放");
 				plman.InsertPlaylistItems(plman.PlaylistCount-1, 0, this.metadblist_selection, false);
 				break;
 			case 1001:
@@ -5034,22 +5036,27 @@ function on_key_down(vkey) {
 
                     };
                     if(vkey==70) { // CTRL+F
-                        fb.RunMainMenuCommand("Edit/Search");
+                        //fb.RunMainMenuCommand("Edit/Search");
+						fb.RunMainMenuCommand("編輯/搜尋");
                     };
                     if(vkey==73) { // CTRL+I
 
                     };
                     if(vkey==78) { // CTRL+N
-                        fb.RunMainMenuCommand("File/New playlist");
+                        //fb.RunMainMenuCommand("File/New playlist");
+						fb.RunMainMenuCommand("檔案/新增播放");
                     };
                     if(vkey==79) { // CTRL+O
-                        fb.RunMainMenuCommand("File/Open...");
+                        //fb.RunMainMenuCommand("File/Open...");
+						fb.RunMainMenuCommand("檔案/開啟");
                     };
                     if(vkey==80) { // CTRL+P
-                        fb.RunMainMenuCommand("File/Preferences");
+                        //fb.RunMainMenuCommand("File/Preferences");
+						fb.RunMainMenuCommand("檔案/設定");
                     };
                     if(vkey==83) { // CTRL+S
-                        fb.RunMainMenuCommand("File/Save playlist...");
+                        //fb.RunMainMenuCommand("File/Save playlist...");
+						fb.RunMainMenuCommand("File/儲存播放表.");
                     };
                     if(vkey==84) { // CTRL+T
                         properties.showHeaderBar = !properties.showHeaderBar;
@@ -5076,7 +5083,8 @@ function on_key_down(vkey) {
                 case KMask.alt:
                     switch(vkey) {
                     case 65: // ALT+A
-                        fb.RunMainMenuCommand("View/Always on Top");
+                        //fb.RunMainMenuCommand("View/Always on Top");
+						fb.RunMainMenuCommand("檢視/在最上層");
                         break;
                     case VK_ALT: // ALT key alone
                         break;

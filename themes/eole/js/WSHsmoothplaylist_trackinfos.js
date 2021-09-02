@@ -4104,7 +4104,7 @@ oBrowser = function(name) {
 		quickSearchMenu.AppendMenuItem(MF_STRING, 1031,"相同的專輯");
 		quickSearchMenu.AppendMenuItem(MF_STRING, 1032,"相同的歌曲類型");
 		quickSearchMenu.AppendMenuItem(MF_STRING, 1033,"相同的日期");
-		quickSearchMenu.AppendTo(_menu, MF_STRING, "快速搜索...");
+		quickSearchMenu.AppendTo(_menu, MF_STRING, "快速搜尋...");
 
 		_menu.AppendMenuSeparator();
 		_menu.AppendMenuItem(MF_STRING, 1034, "全選");
@@ -4373,7 +4373,7 @@ oBrowser = function(name) {
 
             _menu3.AppendTo(_menu,MF_STRING, "群組標頭");
 
-            _menu.AppendMenuItem(MF_STRING, 910, "搜索欄");
+            _menu.AppendMenuItem(MF_STRING, 910, "搜尋欄");
             _menu.CheckMenuItem(910, properties.showHeaderBar);
 
             _menu.AppendMenuSeparator();
@@ -6098,7 +6098,8 @@ function on_key_down(vkey) {
                         };
                     };
                     if(vkey==70) { // CTRL+F
-                        fb.RunMainMenuCommand("Edit/Search");
+                        //fb.RunMainMenuCommand("Edit/Search");
+						fb.RunMainMenuCommand("編輯/搜尋");
                     };
                     if(vkey==73) { // CTRL+I
 
@@ -6107,13 +6108,16 @@ function on_key_down(vkey) {
                         fb.RunMainMenuCommand("File/New playlist");
                     };
                     if(vkey==79) { // CTRL+O
-                        fb.RunMainMenuCommand("File/Open...");
+                        //fb.RunMainMenuCommand("File/Open...");
+						fb.RunMainMenuCommand("檔案/開啟");
                     };
                     if(vkey==80) { // CTRL+P
-                        fb.RunMainMenuCommand("File/Preferences");
+                        //fb.RunMainMenuCommand("File/Preferences");
+						fb.RunMainMenuCommand("檔案/設定");
                     };
                     if(vkey==83) { // CTRL+S
-                        fb.RunMainMenuCommand("File/Save playlist...");
+                        //fb.RunMainMenuCommand("File/Save playlist...");
+						fb.RunMainMenuCommand("File/儲存播放表.");
                     };
                     if(vkey==84) { // CTRL+T
 						setOneProperty("showHeaderBar",!properties.showHeaderBar);
@@ -6139,7 +6143,8 @@ function on_key_down(vkey) {
                 case KMask.alt:
                     switch(vkey) {
                     case 65: // ALT+A
-                        fb.RunMainMenuCommand("View/Always on Top");
+                        //fb.RunMainMenuCommand("View/Always on Top");
+						fb.RunMainMenuCommand("檢視/在最上層");
                         break;
                     case VK_ALT: // ALT key alone
                         break;
