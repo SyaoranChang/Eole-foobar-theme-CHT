@@ -1,4 +1,4 @@
-var colors = {};
+﻿var colors = {};
 var properties = {
 	panelName: 'WSHcontrols',
     enableDiskCache: window.GetProperty("COVER Disk Cache", true),
@@ -546,20 +546,20 @@ function build_buttons(){
 	nb_of_buttons_right+= (properties.displayOpen)?1:0;
 
 	buttons = {
-		Prev: new SimpleButton(button_left_m, button_top_m, 41, 41, "Prev", "Previous track" ,false, function () {
+		Prev: new SimpleButton(button_left_m, button_top_m, 41, 41, "Prev", "上一首" ,false, function () {
 			fb_play_from_playing(-1) //fb.Prev();
 			g_tooltip.Deactivate();
 		},false,prev_img,prev_img_hover),
-		Pause: new SimpleButton(button_sep_value+button_left_m, button_top_m, 41, 41, "Play", "Play / pause",false, function () {
+		Pause: new SimpleButton(button_sep_value+button_left_m, button_top_m, 41, 41, "Play", "播放 / 暫停",false, function () {
 			if(!fb.IsPlaying) fb.Play();
 			else fb.Pause();
 			g_tooltip.Deactivate();
 		},false,play_img,play_img_hover),
-		Next: new SimpleButton(button_sep_value*2+button_left_m, button_top_m, 41, 41, "Next", "Next track",false, function () {
+		Next: new SimpleButton(button_sep_value*2+button_left_m, button_top_m, 41, 41, "Next", "下一首",false, function () {
 			fb_play_from_playing(1) //fb.Next();
 			g_tooltip.Deactivate();
 		},false,next_img,next_img_hover),
-		Stop: new SimpleButton(button_sep_value*3+button_left_m, button_top_m, 41, 41, "Stop", "Stop playback",false, function () {
+		Stop: new SimpleButton(button_sep_value*3+button_left_m, button_top_m, 41, 41, "Stop", "停止播放",false, function () {
 			fb.Stop();
 			g_tooltip.Deactivate();
 		},false,stop_img,stop_img_hover)
@@ -568,7 +568,7 @@ function build_buttons(){
 		/*Volume: new SimpleButton(mini_btns.button_left_m, mini_btns.button_top_m, 15, 15, "Next", "",false, function () {
 			showVolumeSlider();
 		},false,mini_volume_img,mini_volume_img_hover),	*/
-		Prev: new SimpleButton(-75-mini_btns.button_width-2, mini_btns.button_top_m, 21, 21, "Prev", "Previous track",false, function () {
+		Prev: new SimpleButton(-75-mini_btns.button_width-2, mini_btns.button_top_m, 21, 21, "Prev", "上一首",false, function () {
 			fb_play_from_playing(-1) //fb.Prev();
 			g_tooltip.Deactivate();
 		},false,mini_prev_img,mini_prev_img_hover),
@@ -576,7 +576,7 @@ function build_buttons(){
 			if(!fb.IsPlaying) fb.Play();
 			else fb.Pause();
 		},false,mini_play_img,mini_play_img_hover),*/
-		Next: new SimpleButton(-75, mini_btns.button_top_m, 21, 21, "Next", "Next track",false, function () {
+		Next: new SimpleButton(-75, mini_btns.button_top_m, 21, 21, "Next", "下一首",false, function () {
 			fb_play_from_playing(1) //fb.Next();
 			g_tooltip.Deactivate();
 		},false,mini_next_img,mini_next_img_hover)
@@ -590,11 +590,11 @@ function build_buttons(){
 				moreMenu(window.Width, 15);
 				g_tooltip.Deactivate();
 		},false,false,more_img,more_img_hover),
-		Scheduler: new SimpleButton(-button_right_m-(button_width+button_padding)*(displayed_button++), buttons_right_top_m, button_width, 32, "Scheduler", "Stop / shutdown scheduler...", function () {
+		Scheduler: new SimpleButton(-button_right_m-(button_width+button_padding)*(displayed_button++), buttons_right_top_m, button_width, 32, "Scheduler", "停止 / 關機 排程...", function () {
 				schedulerMenu(window.Width-button_right_m-(button_width+button_padding)*(nb_of_buttons_right-schedulerPosition)-152, 15);
 				g_tooltip.Deactivate();
 		},false,false,shutdown_img,shutdown_img_hover),
-		Rating: new SimpleButton(-button_right_m-(button_width+button_padding)*(displayed_button++), buttons_right_top_m, button_width, 32, "Rating", "Rate current song", false, function () {
+		Rating: new SimpleButton(-button_right_m-(button_width+button_padding)*(displayed_button++), buttons_right_top_m, button_width, 32, "Rating", "為當前曲目評等", false, function () {
 			g_tooltip.Deactivate();
 			if(fb.IsPlaying) {
 				//draw_rating_menu(window.Width-button_right_m-(button_width+button_padding)*2+9, 15);
@@ -631,23 +631,24 @@ function build_buttons(){
 				}, 300);
 			}
 		},rating0_img,rating0_img_hover),
-		Equalizer: new SimpleButton(-button_right_m-(button_width+button_padding)*(displayed_button++), buttons_right_top_m, button_width, 32, "Equalizer", "Show equalizer",false, function () {
+		Equalizer: new SimpleButton(-button_right_m-(button_width+button_padding)*(displayed_button++), buttons_right_top_m, button_width, 32, "Equalizer", "顯示等化器",false, function () {
 			g_tooltip.Deactivate();
-			fb.RunMainMenuCommand("View/DSP/Equalizer");
+			//fb.RunMainMenuCommand("View/DSP/Equalizer");
+			fb.RunMainMenuCommand("檢視/DSP/等化器");
 		},false,equalizer_img,equalizer_img_hover),
-		Device: new SimpleButton(-button_right_m-(button_width+button_padding)*(displayed_button++), buttons_right_top_m, button_width, 32, "Device", "Output device && DSP presets", function () {
+		Device: new SimpleButton(-button_right_m-(button_width+button_padding)*(displayed_button++), buttons_right_top_m, button_width, 32, "Device", "輸出設備跟DSP預設", function () {
 			g_tooltip.Deactivate();
 			menuOutputAndDSP(window.Width-button_right_m-(button_width+button_padding)*1-130, 15);
 		},false,false,device_img,device_img_hover),		
-		Open: new SimpleButton(-button_right_m-(button_width+button_padding)*(displayed_button++), buttons_right_top_m, button_width, 32, "Open", "Open files...",false, function () {
+		Open: new SimpleButton(-button_right_m-(button_width+button_padding)*(displayed_button++), buttons_right_top_m, button_width, 32, "Open", "開啟檔案...",false, function () {
 			g_tooltip.Deactivate();
 			fb.AddFiles()
 		},false,open_img,open_img_hover),
-		playRandom: new SimpleButton(-button_right_m-(button_width+button_padding)*(displayed_button++), buttons_right_top_m, button_width, 32, "playRandom", "Play randomly a selection of tracks...", function () {
+		playRandom: new SimpleButton(-button_right_m-(button_width+button_padding)*(displayed_button++), buttons_right_top_m, button_width, 32, "playRandom", "隨機播放選擇的曲目...", function () {
 			g_tooltip.Deactivate();
 			randomPlayMenu(window.Width-button_right_m-(button_width+button_padding)*1-130, 15);
 		},false,false,random_img,random_img_hover),
-		Shuffle: new SimpleButton(-button_right_m-(button_width+button_padding)*(displayed_button++), buttons_right_top_m, button_width, 32, "Shuffle", "Shuffle on/off"+"\n"+"(double click to randomize playing playlist)",false, function () {
+		Shuffle: new SimpleButton(-button_right_m-(button_width+button_padding)*(displayed_button++), buttons_right_top_m, button_width, 32, "Shuffle", "隨機 開/關"+"\n"+"(雙擊來隨機化播放清單)",false, function () {
 			g_tooltip.Deactivate();
 			old_playback_order = plman.PlaybackOrder;
 			if(plman.PlaybackOrder!=4 && plman.PlaybackOrder!=3 && plman.PlaybackOrder!=5 && plman.PlaybackOrder!=6) plman.PlaybackOrder=4;
@@ -684,7 +685,7 @@ function build_buttons(){
 			}
 			g_tooltip.ActivateDelay(get_repeat_tooltip(), g_cursor.x+10, g_cursor.y+20, globalProperties.tooltip_button_delay, 1200, false, 'Repeat');
 		},false,repeat_img,repeat_img_hover),
-		Volume: new SimpleButton(-button_right_m-(button_width+button_padding)*(displayed_button++), buttons_right_top_m, button_width, 32, "Volume", "Volume (click to mute)",false, function () {
+		Volume: new SimpleButton(-button_right_m-(button_width+button_padding)*(displayed_button++), buttons_right_top_m, button_width, 32, "Volume", "音量（點擊可靜音）",false, function () {
 			g_tooltip.Deactivate();
 			fb.VolumeMute();
 		},false,volume1_img,volume1_img_hover),
@@ -2061,14 +2062,14 @@ function draw_menu() {
 
 	basemenu.AppendMenuSeparator();
 	var _schedulerMenu = window.CreatePopupMenu();
-	_schedulerMenu.AppendMenuItem(MF_STRING, 3018, "Do nothing");
+	_schedulerMenu.AppendMenuItem(MF_STRING, 3018, "什麼都不做");
 	_schedulerMenu.AppendMenuSeparator();
-	_schedulerMenu.AppendMenuItem(MF_STRING, 3019, "Stop after current");
-	_schedulerMenu.AppendMenuItem(MF_STRING, 3020, "Hibernate after current");
-	_schedulerMenu.AppendMenuItem(MF_STRING, 3021, "Shutdown after current");
+	_schedulerMenu.AppendMenuItem(MF_STRING, 3019, "當前曲目播放完後 停止");
+	_schedulerMenu.AppendMenuItem(MF_STRING, 3020, "當前曲目播放完後 休眠");
+	_schedulerMenu.AppendMenuItem(MF_STRING, 3021, "當前曲目播放完後 關機");
 	_schedulerMenu.AppendMenuSeparator();
-	_schedulerMenu.AppendMenuItem(MF_STRING, 3022, "Hibernate after playlist");
-	_schedulerMenu.AppendMenuItem(MF_STRING, 3023, "Shutdown after playlist");
+	_schedulerMenu.AppendMenuItem(MF_STRING, 3022, "播放清單播放完後 休眠");
+	_schedulerMenu.AppendMenuItem(MF_STRING, 3023, "播放清單播放完後 關機");
 	checked_item=0;
 	switch (true) {
 		case (scheduler.hibernate_after_current):
@@ -2091,7 +2092,7 @@ function draw_menu() {
 			break;
 	}
 	_schedulerMenu.CheckMenuRadioItem(3018, 3023, checked_item);
-	_schedulerMenu.AppendTo(basemenu, MF_STRING, "Scheduler");
+	_schedulerMenu.AppendTo(basemenu, MF_STRING, "排程");
 
 	library_menu = window.CreatePopupMenu();
 	playlists_menu = window.CreatePopupMenu();
@@ -2099,11 +2100,11 @@ function draw_menu() {
 	visu_menu = window.CreatePopupMenu();
 
 	wallpaper_visibility = window.CreatePopupMenu();
-	wallpaper_visibility.AppendMenuItem(MF_STRING, 4005, "Enable");
-	wallpaper_visibility.AppendMenuItem(MF_STRING, 4006, "Disable");
+	wallpaper_visibility.AppendMenuItem(MF_STRING, 4005, "啟用");
+	wallpaper_visibility.AppendMenuItem(MF_STRING, 4006, "關閉");
 	wallpaper_blur = window.CreatePopupMenu();
-	wallpaper_blur.AppendMenuItem(MF_STRING, 4007, "Enable");
-	wallpaper_blur.AppendMenuItem(MF_STRING, 4008, "Disable");
+	wallpaper_blur.AppendMenuItem(MF_STRING, 4007, "啟用");
+	wallpaper_blur.AppendMenuItem(MF_STRING, 4008, "關閉");
 
 	if(main_panel_state.isEqual(0)){
 		basemenu.AppendMenuSeparator();
@@ -2258,16 +2259,16 @@ function randomPlayMenu(x, y){
         var idx;
 
 		var checked_item_menu=3;
-		_menu.AppendMenuItem(MF_DISABLED, 0, "Play randomly:");
+		_menu.AppendMenuItem(MF_DISABLED, 0, "播放隨機化:");
 		_menu.AppendMenuSeparator();
-        _menu.AppendMenuItem(MF_STRING, 3, "Tracks");
+        _menu.AppendMenuItem(MF_STRING, 3, "曲目");
 			if(properties.random_function=='200_tracks') checked_item_menu=3;
-        _menu.AppendMenuItem(MF_STRING, 2, "Album");
+        _menu.AppendMenuItem(MF_STRING, 2, "專輯");
 			if(properties.random_function=='20_albums') checked_item_menu=2;
-        _menu.AppendMenuItem(MF_STRING, 5, "Artist");
+        _menu.AppendMenuItem(MF_STRING, 5, "專輯演出者");
 			if(properties.random_function=='1_artist') checked_item_menu=5;
 		var genreValue=parseInt(properties.random_function);
-			_menu.AppendMenuItem(MF_STRING, 4, "Genre");
+			_menu.AppendMenuItem(MF_STRING, 4, "歌曲類型");
 			if((genreValue >= 1000 && genreValue < 2001) || properties.random_function=='1_genre')	checked_item_menu=4;
 
 		_menu.CheckMenuRadioItem(2, 5, checked_item_menu);
@@ -2276,7 +2277,7 @@ function randomPlayMenu(x, y){
 
 		createGenrePopupMenu(false, -1, genrePopupMenu);
 
-		genrePopupMenu.AppendTo(_menu, MF_STRING, "A specific genre");
+		genrePopupMenu.AppendTo(_menu, MF_STRING, "特定歌曲類型");
 
         idx = _menu.TrackPopupMenu(x-(properties.displayDevice?100:0),y,0x0020);
         switch(true) {
@@ -2357,10 +2358,10 @@ function moreMenu(x, y){
 
 		var _moreMenu = window.CreatePopupMenu();
 		if(fb.IsPlaying) {
-			_moreMenu.AppendMenuItem(MF_STRING, 1, "Show now playing");
+			_moreMenu.AppendMenuItem(MF_STRING, 1, "顯示現在播放");
 			if(!properties.displayRating) {
 				var _ratingMenu = window.CreatePopupMenu();
-				_ratingMenu.AppendMenuItem(MF_STRING, 2001, "0 / Not set");
+				_ratingMenu.AppendMenuItem(MF_STRING, 2001, "0 / 沒有設置");
 				_ratingMenu.AppendMenuItem(MF_STRING, 2002, "1");
 				_ratingMenu.AppendMenuItem(MF_STRING, 2003, "2");
 				_ratingMenu.AppendMenuItem(MF_STRING, 2004, "3");
@@ -2370,37 +2371,37 @@ function moreMenu(x, y){
 					_ratingMenu.CheckMenuRadioItem(2001, 2006, 2000+Number(g_rating)+1);
 				else
 					_ratingMenu.CheckMenuRadioItem(2001, 2006, 2000+1);
-				_ratingMenu.AppendTo(_moreMenu, MF_STRING, "Rating");
+				_ratingMenu.AppendTo(_moreMenu, MF_STRING, "評等");
 			}
 			var quickSearchMenu = window.CreatePopupMenu();
-			quickSearchMenu.AppendMenuItem(MF_STRING, 34,"Same title");
-			quickSearchMenu.AppendMenuItem(MF_STRING, 30,"Same artist");
-			quickSearchMenu.AppendMenuItem(MF_STRING, 31,"Same album");
-			quickSearchMenu.AppendMenuItem(MF_STRING, 32,"Same genre");
-			quickSearchMenu.AppendMenuItem(MF_STRING, 33,"Same date");
-			quickSearchMenu.AppendTo(_moreMenu, MF_STRING, "Quick search for...");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的專輯演出者");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的歌曲類型");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
+			quickSearchMenu.AppendTo(_moreMenu, MF_STRING, "快速搜索...");
 			_moreMenu.AppendMenuSeparator();
 		}
 
 
 
 		var _controlsMenu = window.CreatePopupMenu();
-		_controlsMenu.AppendMenuItem(MF_STRING, 3000, "Stop");
+		_controlsMenu.AppendMenuItem(MF_STRING, 3000, "停止");
 		if (!fb.IsPlaying) _controlsMenu.CheckMenuItem(3000, true);
-		if (fb.IsPlaying && !fb.IsPaused) _controlsMenu.AppendMenuItem(MF_STRING, 3001, "Pause");
-		else _controlsMenu.AppendMenuItem(MF_STRING, 3001, "Play");
-		_controlsMenu.AppendMenuItem(MF_STRING, 3003, "Previous");
-		_controlsMenu.AppendMenuItem(MF_STRING, 3004, "Next");
-		_controlsMenu.AppendMenuItem(MF_STRING, 3005, "Random");
+		if (fb.IsPlaying && !fb.IsPaused) _controlsMenu.AppendMenuItem(MF_STRING, 3001, "暫停");
+		else _controlsMenu.AppendMenuItem(MF_STRING, 3001, "播放");
+		_controlsMenu.AppendMenuItem(MF_STRING, 3003, "上一首");
+		_controlsMenu.AppendMenuItem(MF_STRING, 3004, "下一首");
+		_controlsMenu.AppendMenuItem(MF_STRING, 3005, "隨機選一個");
 		_controlsMenu.AppendMenuSeparator();
 			var _playbackOrder = window.CreatePopupMenu();
-			_playbackOrder.AppendMenuItem(MF_STRING, 3007, "Default");
-			_playbackOrder.AppendMenuItem(MF_STRING, 3008, "Repeat (playlist)");
-			_playbackOrder.AppendMenuItem(MF_STRING, 3009, "Repeat (track)");
-			_playbackOrder.AppendMenuItem(MF_STRING, 3010, "Random");
-			_playbackOrder.AppendMenuItem(MF_STRING, 3011, "Shuffle (tracks)");
-			_playbackOrder.AppendMenuItem(MF_STRING, 3012, "Shuffle (albums)");
-			_playbackOrder.AppendMenuItem(MF_STRING, 3013, "Shuffle (folders)");
+			_playbackOrder.AppendMenuItem(MF_STRING, 3007, "預設");
+			_playbackOrder.AppendMenuItem(MF_STRING, 3008, "重複 (播放清單)");
+			_playbackOrder.AppendMenuItem(MF_STRING, 3009, "重複 (曲目)");
+			_playbackOrder.AppendMenuItem(MF_STRING, 3010, "隨機");
+			_playbackOrder.AppendMenuItem(MF_STRING, 3011, "隨機 (曲目)");
+			_playbackOrder.AppendMenuItem(MF_STRING, 3012, "隨機 (專輯)");
+			_playbackOrder.AppendMenuItem(MF_STRING, 3013, "隨機 (資料夾)");
 			if(plman.PlaybackOrder==0) _playbackOrder.CheckMenuItem(3007, true);
 			else if(plman.PlaybackOrder==1) _playbackOrder.CheckMenuItem(3008, true);
 			else if(plman.PlaybackOrder==2) _playbackOrder.CheckMenuItem(3009, true);
@@ -2409,60 +2410,60 @@ function moreMenu(x, y){
 			else if(plman.PlaybackOrder==5) _playbackOrder.CheckMenuItem(3012, true);
 			else if(plman.PlaybackOrder==6) _playbackOrder.CheckMenuItem(3013, true);
 			_playbackOrder.AppendMenuSeparator();
-			_playbackOrder.AppendMenuItem(MF_STRING, 3024, "Randomize playing playlist");
-			_playbackOrder.AppendTo(_controlsMenu, MF_STRING, "Order");
+			_playbackOrder.AppendMenuItem(MF_STRING, 3024, "隨機化播放清單");
+			_playbackOrder.AppendTo(_controlsMenu, MF_STRING, "排序");
 		_controlsMenu.AppendMenuSeparator();
-		_controlsMenu.AppendMenuItem(MF_STRING, 3006, "Flush playback queue");
-		_controlsMenu.AppendTo(_moreMenu, MF_STRING, "Playback");
+		_controlsMenu.AppendMenuItem(MF_STRING, 3006, "刷新播放隊列");
+		_controlsMenu.AppendTo(_moreMenu, MF_STRING, "播放");
 
 		if(!properties.displayOpen || !properties.displayPlayRandom) _moreMenu.AppendMenuSeparator();
 
 		if(!properties.displayOpen) {
 			var _openMenu = window.CreatePopupMenu();
-			_openMenu.AppendMenuItem(MF_STRING, 3025, "Open files...");
-			_openMenu.AppendMenuItem(MF_STRING, 3026, "Open audio CD...");
+			_openMenu.AppendMenuItem(MF_STRING, 3025, "開啟檔案...");
+			_openMenu.AppendMenuItem(MF_STRING, 3026, "開啟音樂CD...");
 			_openMenu.AppendMenuSeparator();
-			_openMenu.AppendMenuItem(MF_STRING, 3027, "Add files...");
-			_openMenu.AppendMenuItem(MF_STRING, 3028, "Add folders...");
-			_openMenu.AppendMenuItem(MF_STRING, 3029, "Add location...");
-			_openMenu.AppendTo(_moreMenu, MF_STRING, "Open");
+			_openMenu.AppendMenuItem(MF_STRING, 3027, "加入檔案...");
+			_openMenu.AppendMenuItem(MF_STRING, 3028, "加入目錄...");
+			_openMenu.AppendMenuItem(MF_STRING, 3029, "加入位置...");
+			_openMenu.AppendTo(_moreMenu, MF_STRING, "開啟");
 		}
 
 		if(!properties.displayPlayRandom) {
 			var _playRandom = window.CreatePopupMenu();
 			var checked_item_menu=503;
-			_playRandom.AppendMenuItem(MF_STRING, 503, "Tracks");
+			_playRandom.AppendMenuItem(MF_STRING, 503, "曲目");
 				if(properties.random_function=='200_tracks') checked_item_menu=503;
-			_playRandom.AppendMenuItem(MF_STRING, 502, "Albums");
+			_playRandom.AppendMenuItem(MF_STRING, 502, "專輯");
 				if(properties.random_function=='20_albums') checked_item_menu=502;
-			_playRandom.AppendMenuItem(MF_STRING, 505, "Artist");
+			_playRandom.AppendMenuItem(MF_STRING, 505, "專輯演出者");
 				if(properties.random_function=='1_artist') checked_item_menu=505;
 
 			var genreValue=parseInt(properties.random_function);
-				_playRandom.AppendMenuItem(MF_STRING, 504, "Genre");
+				_playRandom.AppendMenuItem(MF_STRING, 504, "歌曲類型");
 			if((genreValue >= 1000 && genreValue < 2001) || properties.random_function=='1_genre')	checked_item_menu=504;
 
 			//_playRandom.CheckMenuRadioItem(502, 505, checked_item_menu);
 
 			var genrePopupMenu = window.CreatePopupMenu();
 			createGenrePopupMenu(false, -1, genrePopupMenu);
-			genrePopupMenu.AppendTo(_playRandom, MF_STRING, "A specific genre");
+			genrePopupMenu.AppendTo(_playRandom, MF_STRING, "特定歌曲類型");
 
-			_playRandom.AppendTo(_moreMenu, MF_STRING, "Play randomly");
+			_playRandom.AppendTo(_moreMenu, MF_STRING, "播放隨機化");
 		}
 
 		if(!properties.displayScheduler || !properties.displayEqualizer) _moreMenu.AppendMenuSeparator();
 
 		if(!properties.displayScheduler) {
 			var _schedulerMenu = window.CreatePopupMenu();
-			_schedulerMenu.AppendMenuItem(MF_STRING, 3018, "Do nothing");
+			_schedulerMenu.AppendMenuItem(MF_STRING, 3018, "什麼都不做");
 			_schedulerMenu.AppendMenuSeparator();
-			_schedulerMenu.AppendMenuItem(MF_STRING, 3019, "Stop after current");
-			_schedulerMenu.AppendMenuItem(MF_STRING, 3020, "Hibernate after current");
-			_schedulerMenu.AppendMenuItem(MF_STRING, 3021, "Shutdown after current");
+			_schedulerMenu.AppendMenuItem(MF_STRING, 3019, "當前曲目播放完後 停止");
+			_schedulerMenu.AppendMenuItem(MF_STRING, 3020, "當前曲目播放完後 休眠");
+			_schedulerMenu.AppendMenuItem(MF_STRING, 3021, "當前曲目播放完後 關機");
 			_schedulerMenu.AppendMenuSeparator();
-			_schedulerMenu.AppendMenuItem(MF_STRING, 3022, "Hibernate after playlist");
-			_schedulerMenu.AppendMenuItem(MF_STRING, 3023, "Shutdown after playlist");
+			_schedulerMenu.AppendMenuItem(MF_STRING, 3022, "播放清單播放完後 休眠");
+			_schedulerMenu.AppendMenuItem(MF_STRING, 3023, "播放清單播放完後 關機");
 			checked_item=0;
 			switch (true) {
 				case (scheduler.hibernate_after_current):
@@ -2485,34 +2486,34 @@ function moreMenu(x, y){
 					break;
 			}
 			_schedulerMenu.CheckMenuRadioItem(3018, 3023, checked_item);
-			_schedulerMenu.AppendTo(_moreMenu, MF_STRING, "Scheduler");
+			_schedulerMenu.AppendTo(_moreMenu, MF_STRING, "排程");
 		}
 
 		if(!properties.displayEqualizer)
-			_moreMenu.AppendMenuItem(MF_STRING, 3017, "Equalizer");
+			_moreMenu.AppendMenuItem(MF_STRING, 3017, "等化器");
 
 		var _menu_button = window.CreatePopupMenu();
 		_moreMenu.AppendMenuSeparator();
-		_menu_button.AppendMenuItem(MF_STRING, 4016, "Stop button");
+		_menu_button.AppendMenuItem(MF_STRING, 4016, "停止按鈕");
 		_menu_button.CheckMenuItem(4016, properties.displayStop);
-		_menu_button.AppendMenuItem(MF_STRING, 4022, "Repeat");
+		_menu_button.AppendMenuItem(MF_STRING, 4022, "重複");
 		_menu_button.CheckMenuItem(4022, properties.displayRepeat);
-		_menu_button.AppendMenuItem(MF_STRING, 4021, "Shuffle");
+		_menu_button.AppendMenuItem(MF_STRING, 4021, "隨機");
 		_menu_button.CheckMenuItem(4021, properties.displayShuffle);
-		_menu_button.AppendMenuItem(MF_STRING, 4023, "Open");
+		_menu_button.AppendMenuItem(MF_STRING, 4023, "開啟");
 		_menu_button.CheckMenuItem(4023, properties.displayOpen);
-		_menu_button.AppendMenuItem(MF_STRING, 4020, "Play randomly");
+		_menu_button.AppendMenuItem(MF_STRING, 4020, "播放隨機化");
 		_menu_button.CheckMenuItem(4020, properties.displayPlayRandom);
-		_menu_button.AppendMenuItem(MF_STRING, 4017, "Equalizer");
+		_menu_button.AppendMenuItem(MF_STRING, 4017, "等化器");
 		_menu_button.CheckMenuItem(4017, properties.displayEqualizer);
-		_menu_button.AppendMenuItem(MF_STRING, 4024, "Output device && DSP presets");
+		_menu_button.AppendMenuItem(MF_STRING, 4024, "輸出設備跟DSP預設");
 		_menu_button.CheckMenuItem(4024, properties.displayDevice);		
-		_menu_button.AppendMenuItem(MF_STRING, 4018, "Rating");
+		_menu_button.AppendMenuItem(MF_STRING, 4018, "評等");
 		_menu_button.CheckMenuItem(4018, properties.displayRating);
-		_menu_button.AppendMenuItem(MF_STRING, 4019, "Scheduler");
+		_menu_button.AppendMenuItem(MF_STRING, 4019, "排程");
 		_menu_button.CheckMenuItem(4019, properties.displayScheduler);
 
-		_menu_button.AppendTo(_moreMenu,MF_STRING, "Visible buttons");
+		_menu_button.AppendTo(_moreMenu,MF_STRING, "按鈕顯示");
 
         idx = _moreMenu.TrackPopupMenu(x,y,0x0008 | 0x0020);
 
@@ -2633,7 +2634,8 @@ function moreMenu(x, y){
                 break;
 
 			case (idx == 3017):
-				fb.RunMainMenuCommand("View/DSP/Equalizer");
+				//fb.RunMainMenuCommand("View/DSP/Equalizer");
+				fb.RunMainMenuCommand("檢視/DSP/等化器");
 				break;
 			case (idx == 3018):
 				setScheduler(0);
@@ -2657,7 +2659,8 @@ function moreMenu(x, y){
 				plman.SortByFormat(plman.ActivePlaylist,"");
                 break;
             case (idx == 3025):
-				fb.RunMainMenuCommand("File/Open...");
+				//fb.RunMainMenuCommand("File/Open...");
+				fb.RunMainMenuCommand("檔案/開啟");
                 break;
             case (idx == 3026):
 				fb.RunMainMenuCommand("File/Open audio CD...");
@@ -2775,16 +2778,16 @@ function schedulerMenu(x, y){
         var idx;
 
 		var _schedulerMenu = window.CreatePopupMenu();
-		_schedulerMenu.AppendMenuItem(MF_DISABLED, 0, "Scheduler :");
+		_schedulerMenu.AppendMenuItem(MF_DISABLED, 0, "排程 :");
 		_schedulerMenu.AppendMenuSeparator();
-		_schedulerMenu.AppendMenuItem(MF_STRING, 3018, "Do nothing");
+		_schedulerMenu.AppendMenuItem(MF_STRING, 3018, "什麼都不做");
 		_schedulerMenu.AppendMenuSeparator();
-		_schedulerMenu.AppendMenuItem(MF_STRING, 3019, "Stop after current");
-		_schedulerMenu.AppendMenuItem(MF_STRING, 3020, "Hibernate after current");
-		_schedulerMenu.AppendMenuItem(MF_STRING, 3021, "Shutdown after current");
+		_schedulerMenu.AppendMenuItem(MF_STRING, 3019, "當前曲目播放完後 停止");
+		_schedulerMenu.AppendMenuItem(MF_STRING, 3020, "當前曲目播放完後 休眠");
+		_schedulerMenu.AppendMenuItem(MF_STRING, 3021, "當前曲目播放完後 關機");
 		_schedulerMenu.AppendMenuSeparator();
-		_schedulerMenu.AppendMenuItem(MF_STRING, 3022, "Hibernate after playlist");
-		_schedulerMenu.AppendMenuItem(MF_STRING, 3023, "Shutdown after playlist");
+		_schedulerMenu.AppendMenuItem(MF_STRING, 3022, "播放清單播放完後 休眠");
+		_schedulerMenu.AppendMenuItem(MF_STRING, 3023, "播放清單播放完後 關機");
 			checked_item=0;
 			switch (true) {
 				case (scheduler.hibernate_after_current):
@@ -2840,10 +2843,10 @@ function schedulerMenu(x, y){
 function draw_rating_menu(x,y){
         var _menu = window.CreatePopupMenu();
         var idx;
-		_menu.AppendMenuItem(MF_DISABLED, 0, "Rating:");
+		_menu.AppendMenuItem(MF_DISABLED, 0, "評等:");
 		_menu.AppendMenuSeparator();
 
-		_menu.AppendMenuItem(MF_STRING, 1, "0 / Not set");
+		_menu.AppendMenuItem(MF_STRING, 1, "0 / 沒有設置");
 		_menu.AppendMenuItem(MF_STRING, 2, "1");
 		_menu.AppendMenuItem(MF_STRING, 3, "2");
 		_menu.AppendMenuItem(MF_STRING, 4, "3");
@@ -2890,28 +2893,28 @@ function draw_controls_menu(x,y){
 		var _menu3A = window.CreatePopupMenu();
         var idx;
 
-		_menu.AppendMenuItem(MF_STRING, 1, "Settings...");
+		_menu.AppendMenuItem(MF_STRING, 1, "設定...");
 		_menu.AppendMenuSeparator();
 
-		_menu.AppendMenuItem(MF_STRING, 3000, "Stop");
-		if (fb.IsPlaying && !fb.IsPaused) _menu.AppendMenuItem(MF_STRING, 3001, "Pause");
-		else _menu.AppendMenuItem(MF_STRING, 3001, "Play");
-		_menu.AppendMenuItem(MF_STRING, 3003, "Previous");
-		_menu.AppendMenuItem(MF_STRING, 3004, "Next");
-		_menu.AppendMenuItem(MF_STRING, 3005, "Random");
+		_menu.AppendMenuItem(MF_STRING, 3000, "停止");
+		if (fb.IsPlaying && !fb.IsPaused) _menu.AppendMenuItem(MF_STRING, 3001, "暫停");
+		else _menu.AppendMenuItem(MF_STRING, 3001, "播放");
+		_menu.AppendMenuItem(MF_STRING, 3003, "上一個");
+		_menu.AppendMenuItem(MF_STRING, 3004, "下一個");
+		_menu.AppendMenuItem(MF_STRING, 3005, "隨機選一個");
 		_menu.AppendMenuSeparator();
 
-		_menu.AppendMenuItem(MF_STRING, 3024, "Randomize playing playlist");
+		_menu.AppendMenuItem(MF_STRING, 3024, "隨機化播放清單");
 		_menu.AppendMenuSeparator();
 
 		var _playbackOrder = window.CreatePopupMenu();
-		_playbackOrder.AppendMenuItem(MF_STRING, 3007, "Default");
-		_playbackOrder.AppendMenuItem(MF_STRING, 3008, "Repeat (playlist)");
-		_playbackOrder.AppendMenuItem(MF_STRING, 3009, "Repeat (track)");
-		_playbackOrder.AppendMenuItem(MF_STRING, 3010, "Random");
-		_playbackOrder.AppendMenuItem(MF_STRING, 3011, "Shuffle (tracks)");
-		_playbackOrder.AppendMenuItem(MF_STRING, 3012, "Shuffle (albums)");
-		_playbackOrder.AppendMenuItem(MF_STRING, 3013, "Shuffle (folders)");
+		_playbackOrder.AppendMenuItem(MF_STRING, 3007, "預設");
+		_playbackOrder.AppendMenuItem(MF_STRING, 3008, "重複 (播放清單)");
+		_playbackOrder.AppendMenuItem(MF_STRING, 3009, "重複 (曲目)");
+		_playbackOrder.AppendMenuItem(MF_STRING, 3010, "隨機");
+		_playbackOrder.AppendMenuItem(MF_STRING, 3011, "隨機 (曲目)");
+		_playbackOrder.AppendMenuItem(MF_STRING, 3012, "隨機 (專輯)");
+		_playbackOrder.AppendMenuItem(MF_STRING, 3013, "隨機 (資料夾)");
 		if(plman.PlaybackOrder==0) _playbackOrder.CheckMenuItem(3007, true);
 		else if(plman.PlaybackOrder==1) _playbackOrder.CheckMenuItem(3008, true);
 		else if(plman.PlaybackOrder==2) _playbackOrder.CheckMenuItem(3009, true);
@@ -2919,18 +2922,18 @@ function draw_controls_menu(x,y){
 		else if(plman.PlaybackOrder==4) _playbackOrder.CheckMenuItem(3011, true);
 		else if(plman.PlaybackOrder==5) _playbackOrder.CheckMenuItem(3012, true);
 		else if(plman.PlaybackOrder==6) _playbackOrder.CheckMenuItem(3013, true);
-		_playbackOrder.AppendTo(_menu, MF_STRING, "Playback order");
+		_playbackOrder.AppendTo(_menu, MF_STRING, "播放順序");
 		_menu.AppendMenuSeparator();
 
 		var _schedulerMenu = window.CreatePopupMenu();
-		_schedulerMenu.AppendMenuItem(MF_STRING, 3018, "Do nothing");
+		_schedulerMenu.AppendMenuItem(MF_STRING, 3018, "什麼都不做");
 		_schedulerMenu.AppendMenuSeparator();
-		_schedulerMenu.AppendMenuItem(MF_STRING, 3019, "Stop after current");
-		_schedulerMenu.AppendMenuItem(MF_STRING, 3020, "Hibernate after current");
-		_schedulerMenu.AppendMenuItem(MF_STRING, 3021, "Shutdown after current");
+		_schedulerMenu.AppendMenuItem(MF_STRING, 3019, "當前曲目播放完後 停止");
+		_schedulerMenu.AppendMenuItem(MF_STRING, 3020, "當前曲目播放完後 休眠");
+		_schedulerMenu.AppendMenuItem(MF_STRING, 3021, "當前曲目播放完後 關機");
 		_schedulerMenu.AppendMenuSeparator();
-		_schedulerMenu.AppendMenuItem(MF_STRING, 3022, "Hibernate after playlist");
-		_schedulerMenu.AppendMenuItem(MF_STRING, 3023, "Shutdown after playlist");
+		_schedulerMenu.AppendMenuItem(MF_STRING, 3022, "播放清單播放完後 休眠");
+		_schedulerMenu.AppendMenuItem(MF_STRING, 3023, "播放清單播放完後 關機");
 		checked_item=0;
 		switch (true) {
 			case (scheduler.hibernate_after_current):
@@ -2953,27 +2956,27 @@ function draw_controls_menu(x,y){
 				break;
 		}
 		_schedulerMenu.CheckMenuRadioItem(3018, 3023, checked_item);
-		_schedulerMenu.AppendTo(_menu, MF_STRING, "Scheduler");
+		_schedulerMenu.AppendTo(_menu, MF_STRING, "排程");
 
 		if(fb.IsPlaying){
 			_menu.AppendMenuSeparator();
 			var _quickSearchMenu = window.CreatePopupMenu();
-			_quickSearchMenu.AppendMenuItem(MF_STRING, 34,"Same title");
-			_quickSearchMenu.AppendMenuItem(MF_STRING, 30,"Same artist");
-			_quickSearchMenu.AppendMenuItem(MF_STRING, 31,"Same album");
-			_quickSearchMenu.AppendMenuItem(MF_STRING, 32,"Same genre");
-			_quickSearchMenu.AppendMenuItem(MF_STRING, 33,"Same date");
-			_quickSearchMenu.AppendTo(_menu, MF_STRING, "Quick search for...");			
+			_quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
+			_quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的專輯演出者");
+			_quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
+			_quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的歌曲類型");
+			_quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
+			_quickSearchMenu.AppendTo(_menu, MF_STRING, "快速搜索...");			
 			_menu.AppendMenuSeparator();
-			_menu.AppendMenuItem(MF_STRING, 2, "Properties");
+			_menu.AppendMenuItem(MF_STRING, 2, "屬性");
 		}
 		
 		if(utils.IsKeyPressed(VK_SHIFT)) {
 			_menu.AppendMenuSeparator();
-			_menu.AppendMenuItem(MF_STRING, 100, "Properties ");
-			_menu.AppendMenuItem(MF_STRING, 101, "Configure...");
+			_menu.AppendMenuItem(MF_STRING, 100, "屬性 ");
+			_menu.AppendMenuItem(MF_STRING, 101, "配置...");
             _menu.AppendMenuSeparator();
-			_menu.AppendMenuItem(MF_STRING, 102, "Reload");
+			_menu.AppendMenuItem(MF_STRING, 102, "重新載入");
 		}
         idx = _menu.TrackPopupMenu(x,y,0x0020);
         switch(true) {
@@ -3082,70 +3085,70 @@ function draw_settings_menu(x,y){
 
 		//_menu.AppendMenuItem(MF_STRING, 3027, "Compact controls");
 		//_menu.CheckMenuItem(3027, mini_controlbar.isActive());
-		_menu.AppendMenuItem(MF_STRING, 3027, "Large controls");
+		_menu.AppendMenuItem(MF_STRING, 3027, "大型控制器");
 		_menu.CheckMenuItem(3027,!mini_controlbar.isActive());		
 		var custom_rows = properties.custom_firstRow!=""||properties.custom_secondRow!="";
-		_menu_track_infos.AppendMenuItem(MF_STRING, 3015, properties.showTrackInfo?"Hide":"Show");
-		_menu_track_infos.AppendMenuItem(properties.showTrackInfo?MF_STRING:MF_GRAYED, 3040, "Track details on 2 lines");
+		_menu_track_infos.AppendMenuItem(MF_STRING, 3015, properties.showTrackInfo?"隱藏":"顯示");
+		_menu_track_infos.AppendMenuItem(properties.showTrackInfo?MF_STRING:MF_GRAYED, 3040, "2行的曲目細節");
 		_menu_track_infos.CheckMenuItem(3040,!mini_controlbar.isActive() && properties.twoLinesDetails);		
 		_menu_track_infos.AppendMenuSeparator();		
-        _menu_track_infos.AppendMenuItem(properties.showTrackInfo&&!custom_rows?MF_STRING:MF_GRAYED, 9001, "Show track title prefix (Discnumber.tracknumber)");
+        _menu_track_infos.AppendMenuItem(properties.showTrackInfo&&!custom_rows?MF_STRING:MF_GRAYED, 9001, "顯示曲目標題前綴 (Discnumber.tracknumber)");
 		_menu_track_infos.CheckMenuItem(9001, properties.showTrackPrefix);
-        _menu_track_infos.AppendMenuItem(properties.showTrackInfo?MF_STRING:MF_GRAYED, 3031, "Customize...");
+        _menu_track_infos.AppendMenuItem(properties.showTrackInfo?MF_STRING:MF_GRAYED, 3031, "自定義...");
 		_menu_track_infos.CheckMenuItem(3031, custom_rows);
         if(custom_rows) _menu_track_infos.AppendMenuItem(properties.showTrackInfo?MF_STRING:MF_GRAYED, 3032, "Reset");		
-		_menu_track_infos.AppendTo(_menu,MF_STRING, "Track details");
+		_menu_track_infos.AppendTo(_menu,MF_STRING, "曲目細節");
 		
-		_menu.AppendMenuItem(MF_STRING, 3030, "Always show volume bar");
+		_menu.AppendMenuItem(MF_STRING, 3030, "始終顯示音量欄");
 		_menu.CheckMenuItem(3030, properties.volumeA1waysVisible);		
-		_menu.AppendMenuItem(MF_STRING, 3016, "Show now playing artwork");
+		_menu.AppendMenuItem(MF_STRING, 3016, "顯示目前播放的專輯封面");
 		_menu.CheckMenuItem(3016, (layout_state.isEqual(0)?coverpanel_state_big.isActive():coverpanel_state_mini.isActive()));
 
 		_menu.AppendMenuSeparator();
-		_menu3.AppendMenuItem(MF_STRING, 200, "Enable");
+		_menu3.AppendMenuItem(MF_STRING, 200, "啟用");
 		_menu3.CheckMenuItem(200, properties.showwallpaper);
-		_menu3.AppendMenuItem(MF_STRING, 220, "Blur");
+		_menu3.AppendMenuItem(MF_STRING, 220, "模糊化");
 		_menu3.CheckMenuItem(220, properties.wallpaperblurred);
 
-		_menu3A.AppendMenuItem(MF_STRING, 221, "Filling");
+		_menu3A.AppendMenuItem(MF_STRING, 221, "填滿");
 		_menu3A.CheckMenuItem(221, properties.wallpaperdisplay==0);
-		_menu3A.AppendMenuItem(MF_STRING, 222, "Adjust");
+		_menu3A.AppendMenuItem(MF_STRING, 222, "調整圖片符合視窗大小");
 		_menu3A.CheckMenuItem(222, properties.wallpaperdisplay==1);
-		_menu3A.AppendMenuItem(MF_STRING, 223, "Stretch");
+		_menu3A.AppendMenuItem(MF_STRING, 223, "延展");
 		_menu3A.CheckMenuItem(223, properties.wallpaperdisplay==2);
-		_menu3A.AppendTo(_menu3,MF_STRING, "Wallpaper size");
+		_menu3A.AppendTo(_menu3,MF_STRING, "壁紙尺寸");
 
-		_menu3.AppendTo(_menu,MF_STRING, "Background Wallpaper");
+		_menu3.AppendTo(_menu,MF_STRING, "背景壁紙");
 
-		_menu_slider.AppendMenuItem(MF_STRING, 3024, "Circle");
+		_menu_slider.AppendMenuItem(MF_STRING, 3024, "圓形");
 		_menu_slider.CheckMenuItem(3024, properties.cursor_style==0);
-		_menu_slider.AppendMenuItem(MF_STRING, 3025, "Plain disk");
+		_menu_slider.AppendMenuItem(MF_STRING, 3025, "圓盤");
 		_menu_slider.CheckMenuItem(3025, properties.cursor_style==1);
-		_menu_slider.AppendMenuItem(MF_STRING, 3026, "Plain disk only on hover");
+		_menu_slider.AppendMenuItem(MF_STRING, 3026, "只有鼠標在上面時才有圓盤");
 		_menu_slider.CheckMenuItem(3026, properties.cursor_style==2);
-		_menu_slider.AppendTo(_menu,MF_STRING, "Sliders cursor");
+		_menu_slider.AppendTo(_menu,MF_STRING, "滑杆游標");
 
 		_menu.AppendMenuSeparator();
-		_menu_button.AppendMenuItem(MF_STRING, 3028, "Stop button");
+		_menu_button.AppendMenuItem(MF_STRING, 3028, "停止按鈕");
 		_menu_button.CheckMenuItem(3028, properties.displayStop);
-		_menu_button.AppendMenuItem(MF_STRING, 3022, "Repeat");
+		_menu_button.AppendMenuItem(MF_STRING, 3022, "重播");
 		_menu_button.CheckMenuItem(3022, properties.displayRepeat);
-		_menu_button.AppendMenuItem(MF_STRING, 3021, "Shuffle");
+		_menu_button.AppendMenuItem(MF_STRING, 3021, "隨機");
 		_menu_button.CheckMenuItem(3021, properties.displayShuffle);
-		_menu_button.AppendMenuItem(MF_STRING, 3020, "Play randomly");
+		_menu_button.AppendMenuItem(MF_STRING, 3020, "播放隨機化");
 		_menu_button.CheckMenuItem(3020, properties.displayPlayRandom);		
-		_menu_button.AppendMenuItem(MF_STRING, 3023, "Open");
+		_menu_button.AppendMenuItem(MF_STRING, 3023, "開啟");
 		_menu_button.CheckMenuItem(3023, properties.displayOpen);
-		_menu_button.AppendMenuItem(MF_STRING, 3029, "Output device && DSP presets");
+		_menu_button.AppendMenuItem(MF_STRING, 3029, "輸出設備跟DSP預設");
 		_menu_button.CheckMenuItem(3029, properties.displayDevice);				
-		_menu_button.AppendMenuItem(MF_STRING, 3017, "Equalizer");
+		_menu_button.AppendMenuItem(MF_STRING, 3017, "等化器");
 		_menu_button.CheckMenuItem(3017, properties.displayEqualizer);	
-		_menu_button.AppendMenuItem(MF_STRING, 3018, "Rating");
+		_menu_button.AppendMenuItem(MF_STRING, 3018, "評等");
 		_menu_button.CheckMenuItem(3018, properties.displayRating);
-		_menu_button.AppendMenuItem(MF_STRING, 3019, "Scheduler");
+		_menu_button.AppendMenuItem(MF_STRING, 3019, "排程");
 		_menu_button.CheckMenuItem(3019, properties.displayScheduler);
 
-		_menu_button.AppendTo(_menu,MF_STRING, "Visible buttons");
+		_menu_button.AppendTo(_menu,MF_STRING, "按鈕顯示");
 
 		idx = _menu.TrackPopupMenu(x,y,0x0020);
         switch(true) {
@@ -3337,10 +3340,10 @@ function draw_settings_menu(x,y){
                 break;			
 			case (idx == 3031):
 				try {
-					customControlDetails("Customize displayed fields"
-										,"<div class='titleBig'>Customize displayed fields</div><div class='separator'></div><br/>Enter a title formatting script for each line displayed.\nYou can use the full foobar2000 title formatting syntax here.<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">Click here</a> for informations about foobar title formatting. (http://tinyurl.com/lwhay6f)<br/>"
+					customControlDetails("自定義顯示的字段"
+										,"<div class='titleBig'>自定義顯示的字段</div><div class='separator'></div><br/>為顯示的每一行輸入一個曲目名稱格式化腳本。\n你可以在這裡使用完整的foobar2000曲目名稱格式化語法。<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">點擊這裡</a> 瞭解關於foobar曲目名稱格式化的信息。 (http://tinyurl.com/lwhay6f)<br/>"
 										,''
-										,'First line (default is %title% - %artist%):##Second line, displayed when the option is enabled (default is %album% (%date%)):'
+										,'第一行 (預設為 %title% - %artist%):##第二行，在選項被啟用時顯示 (預設為 %album% (%date%)):'
 										,properties.custom_firstRow+'##'+properties.custom_secondRow);
 					properties.tf_custom_firstRow = fb.TitleFormat(properties.custom_firstRow);
 					properties.tf_custom_secondRow = fb.TitleFormat(properties.custom_secondRow);
@@ -3587,13 +3590,13 @@ function SimpleButton(x, y, w, h, text, tooltip_text, fonDown, fonUp, fonDbleCli
 }
 function get_repeat_tooltip(){
 	if(plman.PlaybackOrder==0 && properties.playandrandom) {
-		var tooltip_text = 'Play tracks of the same genre at the end of playlist';
+		var tooltip_text = '在播放清單結束時播放相同類型的曲目';
 	} else if(plman.PlaybackOrder==0){
-		var tooltip_text = 'Default order';
+		var tooltip_text = '預設排序';
 	} else if(plman.PlaybackOrder==1) {
-		var tooltip_text = 'Repeat all';
+		var tooltip_text = '重複全部';
 	} else if(plman.PlaybackOrder==2) {
-		var tooltip_text = 'Repeat current';
+		var tooltip_text = '重複當前曲目';
 	} else if(plman.PlaybackOrder==3) {
 		var tooltip_text = 'Random';
 	} else if(plman.PlaybackOrder==4) {
