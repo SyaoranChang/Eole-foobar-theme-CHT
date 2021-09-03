@@ -1,4 +1,4 @@
-var colors = {};
+﻿var colors = {};
 var properties = {
 	panelName: 'WSHcoverpanel',
     enableDiskCache: window.GetProperty("COVER Disk Cache", true),
@@ -412,14 +412,16 @@ function on_mouse_lbtn_dblclk(x, y) {
 				if(!g_cover.isFiller()) openCoverFullscreen(g_cover.metadb);
 			break;
 			case (properties.dble_click_action==3):
-				fb.RunContextCommandWithMetadb("Open containing folder", fb.GetNowPlaying(), 8);
+				//fb.RunContextCommandWithMetadb("Open containing folder", fb.GetNowPlaying(), 8);
+				fb.RunContextCommandWithMetadb("開啟所在資料夾", fb.GetNowPlaying(), 8);
 			break;
 			case (properties.dble_click_action==4):
 				window.NotifyOthers('toggleLayoutMode',true);
 			break;
 			case (properties.dble_click_action==5):
 				if (g_infos.metadb && TextBtn_info.isXYInButton(x, y)) {
-					fb.RunContextCommandWithMetadb("Properties", g_infos.metadb);
+					//fb.RunContextCommandWithMetadb("Properties", g_infos.metadb);
+					fb.RunContextCommandWithMetadb("屬性", g_infos.metadb);
 				}
 			break;
 		}
@@ -1633,37 +1635,38 @@ function on_mouse_rbtn_up(x, y){
 	var main_menu = window.CreatePopupMenu();
 	var idx;
 
-	main_menu.AppendMenuItem(MF_STRING, 35, "Settings...");
+	main_menu.AppendMenuItem(MF_STRING, 35, "設定...");
 	main_menu.AppendMenuSeparator();
 	if(g_cover.isValid()){
 		var now_playing_track = fb.GetNowPlaying();
-		main_menu.AppendMenuItem(MF_STRING, 1, "Open cover in its full/original size");
-		main_menu.AppendMenuItem(MF_STRING, 6, "Open containing folder");
-		main_menu.AppendMenuItem(MF_STRING, 8, "Refresh this image");
+		main_menu.AppendMenuItem(MF_STRING, 1, "以全尺寸/原尺寸開啟專輯封面");
+		main_menu.AppendMenuItem(MF_STRING, 6, "打開包含的文件夾");
+		main_menu.AppendMenuItem(MF_STRING, 8, "更新此圖片");
 		var quickSearchMenu = window.CreatePopupMenu();
-		quickSearchMenu.AppendMenuItem(MF_STRING, 34,"Same title");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 30,"Same artist");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 31,"Same album");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 32,"Same genre");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 33,"Same date");
-		quickSearchMenu.AppendTo(main_menu, MF_STRING, "Quick search for...");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的專輯演出者");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的歌曲類型");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
+		quickSearchMenu.AppendTo(main_menu, MF_STRING, "快速搜尋...");
 	}
 	
 	main_menu.AppendMenuSeparator();
-	main_menu.AppendMenuItem(MF_STRING, 9, "Show now playing");
+	main_menu.AppendMenuItem(MF_STRING, 9, "顯示現在播放中");
 	main_menu.AppendMenuSeparator();
-	main_menu.AppendMenuItem(MF_STRING, 2, "Properties");
+	main_menu.AppendMenuItem(MF_STRING, 2, "屬性");
 	if(utils.IsKeyPressed(VK_SHIFT)) {
 		main_menu.AppendMenuSeparator();
-		main_menu.AppendMenuItem(MF_STRING, 100, "Properties ");
-		main_menu.AppendMenuItem(MF_STRING, 101, "Configure...");
+		main_menu.AppendMenuItem(MF_STRING, 100, "屬性 ");
+		main_menu.AppendMenuItem(MF_STRING, 101, "配置...");
 		main_menu.AppendMenuSeparator();
-		main_menu.AppendMenuItem(MF_STRING, 102, "Reload");
+		main_menu.AppendMenuItem(MF_STRING, 102, "重新載入");
 	}
 	idx = main_menu.TrackPopupMenu(x,y);
 	switch(true) {
 		case (idx == 2):
-			fb.RunContextCommandWithMetadb("Properties", fb.GetNowPlaying());
+			//fb.RunContextCommandWithMetadb("Properties", fb.GetNowPlaying());
+			fb.RunContextCommandWithMetadb("屬性", fb.GetNowPlaying());
 		break;
 		case (idx == 11):
 			properties.circleMode = !properties.circleMode;
@@ -1730,7 +1733,8 @@ function on_mouse_rbtn_up(x, y){
 			play_random(properties.random_function);
 			break;
 		case (idx == 6):
-			fb.RunContextCommandWithMetadb("Open containing folder", now_playing_track, 8);
+			//fb.RunContextCommandWithMetadb("Open containing folder", now_playing_track, 8);
+			fb.RunContextCommandWithMetadb("開啟所在資料夾", now_playing_track, 8);
 			break;
 		case (idx == 8):
 			window.NotifyOthers("RefreshImageCover",g_cover.metadb);
@@ -1774,51 +1778,51 @@ function draw_settings_menu(x,y){
 		var wallpapper_menub = window.CreatePopupMenu();
         var idx;
 
-		_menu.AppendMenuItem(MF_STRING, 10, "Cover always follow cursor");
+		_menu.AppendMenuItem(MF_STRING, 10, "專輯封面始終跟隨滑鼠點擊的項目變更");
 		_menu.CheckMenuItem(10,properties.follow_cursor);
-		_menu.AppendMenuItem(MF_STRING, 11, "Circle artwork");
+		_menu.AppendMenuItem(MF_STRING, 11, "圓形專輯封面");
 		_menu.CheckMenuItem(11,properties.circleMode);
-		_menu.AppendMenuItem(MF_STRING, 12, "Keep proportion")
+		_menu.AppendMenuItem(MF_STRING, 12, "維持比例")
 		_menu.CheckMenuItem(12,globalProperties.keepProportion);
-		_menu.AppendMenuItem(MF_STRING, 13, "Fill the whole space");
+		_menu.AppendMenuItem(MF_STRING, 13, "填滿整個空間");
 		_menu.CheckMenuItem(13,!trackinfostext_state.isActive() && properties.coverNoPadding);				
 		_menu.AppendMenuSeparator();
-		_menu.AppendMenuItem(MF_STRING, 18, "Show track details");
+		_menu.AppendMenuItem(MF_STRING, 18, "顯示曲目的細節");
 		_menu.CheckMenuItem(18, trackinfostext_state.isActive());		
-		_menu.AppendMenuItem(trackinfostext_state.isActive()?MF_STRING:MF_GRAYED, 17, "Show details on 2 rows");
+		_menu.AppendMenuItem(trackinfostext_state.isActive()?MF_STRING:MF_GRAYED, 17, "雙行顯示細節");
 		_menu.CheckMenuItem(17, properties.doubleRowText);
-		_menu.AppendMenuItem(trackinfostext_state.isActive()?MF_STRING:MF_GRAYED, 16, "Show rating");
+		_menu.AppendMenuItem(trackinfostext_state.isActive()?MF_STRING:MF_GRAYED, 16, "顯示評等");
 		_menu.CheckMenuItem(16,properties.showRating);		
 		_menu.AppendMenuSeparator();
 
 		var _single_click_menu = window.CreatePopupMenu();
-		_single_click_menu.AppendMenuItem(MF_STRING, 14, "Play / pause");
-		_single_click_menu.AppendMenuItem(MF_STRING, 15, "Show now playing");
+		_single_click_menu.AppendMenuItem(MF_STRING, 14, "播放 / 暫停");
+		_single_click_menu.AppendMenuItem(MF_STRING, 15, "顯示現在播放中");
 		_single_click_menu.CheckMenuRadioItem(14, 15, 14+properties.single_click_action);
-		_single_click_menu.AppendTo(_menu, MF_STRING, "Cover button");
+		_single_click_menu.AppendTo(_menu, MF_STRING, "專輯封面按鈕");
 
 		var _dble_click_menu = window.CreatePopupMenu();
-		_dble_click_menu.AppendMenuItem(MF_STRING, 3, "Pause playback");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 4, "Show now playing on all panels");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 5, "Open cover in its full/original size");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 6, "Open containing folder");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 7, "Activate/quit mini player");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 8, "Edit track properties");		
+		_dble_click_menu.AppendMenuItem(MF_STRING, 3, "暫停播放");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 4, "在全部的面板顯示現在播放中");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 5, "以全尺寸/原尺寸開啟專輯封面");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 6, "開啟所在資料夾");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 7, "啟用/退出袖珍播放器");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 8, "編輯曲目的屬性");		
 		_dble_click_menu.CheckMenuRadioItem(3, 8, 3+properties.dble_click_action);
-		_dble_click_menu.AppendTo(_menu, MF_STRING, "Double click action");
+		_dble_click_menu.AppendTo(_menu, MF_STRING, "雙擊的作用");
 
-		wallpapper_menu.AppendMenuItem(MF_STRING, 200, "Enable");
+		wallpapper_menu.AppendMenuItem(MF_STRING, 200, "啟用");
 		wallpapper_menu.CheckMenuItem(200, properties.showwallpaper);
-		wallpapper_menu.AppendMenuItem(MF_STRING, 220, "Blur");
+		wallpapper_menu.AppendMenuItem(MF_STRING, 220, "模糊化");
 		wallpapper_menu.CheckMenuItem(220, properties.wallpaperblurred);
-		wallpapper_menub.AppendMenuItem(MF_STRING, 221, "Filling");
+		wallpapper_menub.AppendMenuItem(MF_STRING, 221, "填滿");
 		wallpapper_menub.CheckMenuItem(221, properties.wallpaperdisplay==0);
-		wallpapper_menub.AppendMenuItem(MF_STRING, 222, "Adjust");
+		wallpapper_menub.AppendMenuItem(MF_STRING, 222, "調整圖片符合視窗大小");
 		wallpapper_menub.CheckMenuItem(222, properties.wallpaperdisplay==1);
-		wallpapper_menub.AppendMenuItem(MF_STRING, 223, "Stretch");
+		wallpapper_menub.AppendMenuItem(MF_STRING, 223, "延展");
 		wallpapper_menub.CheckMenuItem(223, properties.wallpaperdisplay==2);
-		wallpapper_menub.AppendTo(wallpapper_menu,MF_STRING, "Wallpaper size");
-		wallpapper_menu.AppendTo(_menu,MF_STRING, "Background Wallpaper");
+		wallpapper_menub.AppendTo(wallpapper_menu,MF_STRING, "壁紙尺寸");
+		wallpapper_menu.AppendTo(_menu,MF_STRING, "背景壁紙");
 
         idx = _menu.TrackPopupMenu(x,y);
         switch(true) {

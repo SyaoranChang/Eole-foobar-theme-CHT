@@ -1,4 +1,4 @@
-var properties = {
+﻿var properties = {
 	panelName: 'WSHplaylistheader',
 	darklayout: window.GetProperty("_DISPLAY: Dark layout", false),
 	displayToggleBtns: window.GetProperty("_DISPLAY: Toggle buttons", true),
@@ -81,7 +81,7 @@ function get_colors() {
 	setSettingsBtn();
 } get_colors();
 buttons = {
-    Settings: new SimpleButton(0, 8, 21, 21, "Settings", "Settings...", function () {
+    Settings: new SimpleButton(0, 8, 21, 21, "Settings", "設定...", function () {
         if(plman.PlaylistItemCount(plman.ActivePlaylist)>0) draw_menu(buttons.Settings.x+25,buttons.Settings.y+25);
     },false,settings_off,settings_hover,ButtonStates.normal),
     filtersToggle: new SimpleButton(18, 8, 50, 21, "filtersToggle", "Extend filters", function () {
@@ -364,66 +364,66 @@ function draw_menu(x, y) {
 	if (typeof y == "undefined") y=29;
 	var panelsMenu = window.CreatePopupMenu();
 
-    if(!nowplayingplaylist_state.isActive()) panelsMenu.AppendMenuItem(MF_STRING, 4999, "Show right playlist");
-	else panelsMenu.AppendMenuItem(MF_STRING, 4999, "Hide right playlist");
-    if(!filters_panel_state.isMaximumValue()) panelsMenu.AppendMenuItem(MF_STRING, 4996, "Hide bottom playlist");
-	else panelsMenu.AppendMenuItem(MF_STRING, 4996, "Show bottom playlist");
+    if(!nowplayingplaylist_state.isActive()) panelsMenu.AppendMenuItem(MF_STRING, 4999, "顯示右側播放清單");
+	else panelsMenu.AppendMenuItem(MF_STRING, 4999, "隱藏右側播放清單");
+    if(!filters_panel_state.isMaximumValue()) panelsMenu.AppendMenuItem(MF_STRING, 4996, "隱藏底部播放清單(包含此面板)");
+	else panelsMenu.AppendMenuItem(MF_STRING, 4996, "顯示底部播放清單");
 
 	var FiltersMenu = window.CreatePopupMenu();
 	if(filters_panel_state.isActive())
-		FiltersMenu.AppendMenuItem(MF_STRING, 4990, "Hide");
+		FiltersMenu.AppendMenuItem(MF_STRING, 4990, "隱藏");
 	else
-		FiltersMenu.AppendMenuItem(MF_STRING, 4988, "Show");
+		FiltersMenu.AppendMenuItem(MF_STRING, 4988, "顯示");
 
-	FiltersMenu.AppendMenuItem((filters_panel_state.isActive())? MF_STRING : MF_GRAYED, 4991, "Decrease height");
-	FiltersMenu.AppendMenuItem(MF_STRING, 4992, "Increase height");
+	FiltersMenu.AppendMenuItem((filters_panel_state.isActive())? MF_STRING : MF_GRAYED, 4991, "減少高度");
+	FiltersMenu.AppendMenuItem(MF_STRING, 4992, "增加高度");
 
 	FiltersMenu.AppendMenuSeparator();
-	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "Enable 1st filter");
+	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "啟用第1個篩選器 - 歌曲類型");
 	FiltersMenu.CheckMenuItem(4993, (filter1_state.isActive()));
-	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "Enable 2nd filter");
+	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 專輯演出者");
 	FiltersMenu.CheckMenuItem(4994, (filter2_state.isActive()));
-	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4995, "Enable 3rd filter");
+	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4995, "啟用第3個篩選器 - 專輯");
 	FiltersMenu.CheckMenuItem(4995, (filter3_state.isActive()));
-	FiltersMenu.AppendTo(panelsMenu, MF_STRING, "Filters");
+	FiltersMenu.AppendTo(panelsMenu, MF_STRING, "篩選器");
 
 	panelsMenu.AppendMenuSeparator();
-	panelsMenu.AppendMenuItem(MF_STRING, 4989, "Show toggle buttons");
+	panelsMenu.AppendMenuItem(MF_STRING, 4989, "顯示篩選器切換按鈕");
 	panelsMenu.CheckMenuItem(4989, properties.displayToggleBtns);
-	panelsMenu.AppendTo(basemenu, MF_STRING, "Panels position");
+	panelsMenu.AppendTo(basemenu, MF_STRING, "面板設計");
 
 	if(!plman.IsAutoPlaylist(plman.ActivePlaylist)){
 		basemenu.AppendMenuSeparator();
 		var SortMenu = window.CreatePopupMenu(); //Custom Entries
-		SortMenu.AppendTo(basemenu, MF_STRING, "Sort By");
+		SortMenu.AppendTo(basemenu, MF_STRING, "排序");
 
-		SortMenu.AppendMenuItem(MF_STRING, 3001, "Artist / Album / Tracknumber");
-		SortMenu.AppendMenuItem(MF_STRING, 3003, "Title");
-		SortMenu.AppendMenuItem(MF_STRING, 3004, "Tracknumber");
+		SortMenu.AppendMenuItem(MF_STRING, 3001, "專輯演出者 / 專輯 / 音軌編號");
+		SortMenu.AppendMenuItem(MF_STRING, 3003, "曲目名稱");
+		SortMenu.AppendMenuItem(MF_STRING, 3004, "音軌編號");
 		SortMenu.AppendMenuSeparator();
-		SortMenu.AppendMenuItem(MF_STRING, 3002, "Randomize");
+		SortMenu.AppendMenuItem(MF_STRING, 3002, "隨機化");
 	}
     basemenu.AppendMenuSeparator();
-    basemenu.AppendMenuItem(MF_STRING, 3000, "Select all");
-    basemenu.AppendMenuItem(MF_STRING, 2998, "Remove all");
+    basemenu.AppendMenuItem(MF_STRING, 3000, "全選");
+    basemenu.AppendMenuItem(MF_STRING, 2998, "移除所有");
 	metadblist_selection = plman.GetPlaylistSelectedItems(plman.ActivePlaylist);
 	if(metadblist_selection.Count > 0) {
 		var Context = fb.CreateContextMenuManager();
 		var Context_root = window.CreatePopupMenu();
-		Context_root.AppendTo(basemenu, MF_STRING, "Selection ("+metadblist_selection.Count+" item"+((metadblist_selection.Count>1)?"s":"")+")");
+		Context_root.AppendTo(basemenu, MF_STRING, "選擇 ("+metadblist_selection.Count+" 項目"+((metadblist_selection.Count>1)?"s":"")+")");
 		Context.InitContext(metadblist_selection);
 		Context.BuildMenu(Context_root, 2, -1);
-		Context_root.AppendMenuItem(MF_STRING, 2997, "Remove");
+		Context_root.AppendMenuItem(MF_STRING, 2997, "移除");
 	}
-	basemenu.AppendMenuItem(MF_STRING, 2000, "Tracks properties");
+	basemenu.AppendMenuItem(MF_STRING, 2000, "曲目屬性");
 
 
 	if(utils.IsKeyPressed(VK_SHIFT)) {
 		basemenu.AppendMenuSeparator();
-		basemenu.AppendMenuItem(MF_STRING, 5100, "Properties ");
-		basemenu.AppendMenuItem(MF_STRING, 5101, "Configure...");
+		basemenu.AppendMenuItem(MF_STRING, 5100, "屬性 ");
+		basemenu.AppendMenuItem(MF_STRING, 5101, "配置...");
 		basemenu.AppendMenuSeparator();
-		basemenu.AppendMenuItem(MF_STRING, 5102, "Reload");
+		basemenu.AppendMenuItem(MF_STRING, 5102, "重新載入");
 	}
 
     idx = 0;
@@ -437,7 +437,8 @@ function draw_menu(x, y) {
 		draw_settings_menu(x,y);
 		break;
 	case (idx == 2000):
-		fb.RunContextCommandWithMetadb("Properties", plman.GetPlaylistItems(plman.ActivePlaylist), 0);
+		//fb.RunContextCommandWithMetadb("Properties", plman.GetPlaylistItems(plman.ActivePlaylist), 0);
+		fb.RunContextCommandWithMetadb("屬性", plman.GetPlaylistItems(plman.ActivePlaylist), 0);
 		break;
     case (idx == 2997):
 		removeItems(metadblist_selection,plman.ActivePlaylist);
@@ -971,7 +972,8 @@ function on_mouse_lbtn_up(x, y) {
     }
 }
 function on_mouse_mbtn_down(x, y, mask) {
-    fb.RunContextCommandWithMetadb("Properties",plman.GetPlaylistItems(plman.ActivePlaylist));
+    //fb.RunContextCommandWithMetadb("Properties",plman.GetPlaylistItems(plman.ActivePlaylist));
+	fb.RunContextCommandWithMetadb("屬性",plman.GetPlaylistItems(plman.ActivePlaylist));
 }
 function on_mouse_lbtn_dblclk(x,y){
     plman.ExecutePlaylistDefaultAction(plman.ActivePlaylist,0);

@@ -1,4 +1,4 @@
-var colors = {};
+﻿var colors = {};
 var properties = {
 	panelName: 'WSHcoverpanel',
     enableDiskCache: window.GetProperty("COVER Disk Cache", true),
@@ -177,19 +177,19 @@ function startAnimation(){
 function setTooltipDoubleClicText(){
 	switch(true){
 		case (properties.dble_click_action==0):
-			tooltipDoubleClicText = "pause playback";
+			tooltipDoubleClicText = "暫停播放";
 		break;
 		case (properties.dble_click_action==1):
-			tooltipDoubleClicText = "show on all panels";
+			tooltipDoubleClicText = "在全部的面板顯示現在播放中";
 		break;
 		case (properties.dble_click_action==2):
-			tooltipDoubleClicText = "open cover in its full/original size";
+			tooltipDoubleClicText = "以全尺寸/原尺寸開啟專輯封面";
 		break;
 		case (properties.dble_click_action==3):
-			tooltipDoubleClicText = "open containing folder";
+			tooltipDoubleClicText = "開啟所在資料夾";
 		break;
 		case (properties.dble_click_action==4):
-			tooltipDoubleClicText = "activate/quit mini player";
+			tooltipDoubleClicText = "啟用/退出袖珍播放器";
 		break;
 	}
 }
@@ -394,7 +394,8 @@ function on_mouse_lbtn_dblclk(x, y) {
 				if(!g_cover.isFiller()) openCoverFullscreen(fb.GetNowPlaying());
 			break;
 			case (properties.dble_click_action==3):
-				fb.RunContextCommandWithMetadb("Open containing folder", fb.GetNowPlaying(), 8);
+				//fb.RunContextCommandWithMetadb("Open containing folder", fb.GetNowPlaying(), 8);
+				fb.RunContextCommandWithMetadb("開啟所在資料夾", fb.GetNowPlaying(), 8);
 			break;
 			case (properties.dble_click_action==4):
 				window.NotifyOthers('toggleLayoutMode',true);
@@ -410,9 +411,9 @@ function on_mouse_move(x, y, m) {
     if(!fb.IsPlaying) {
         tooltip_text = "Play randomly"
     } else if(!fb.IsPaused) {
-        tooltip_text = "Show now playing\nDouble-click : "+tooltipDoubleClicText;
+        tooltip_text = "顯示現在播放中\n雙擊 : "+tooltipDoubleClicText;
     } else {
-		tooltip_text = "Resume playback"
+		tooltip_text = "繼續播放"
 	}
 	g_tooltip.ActivateDelay(tooltip_text, x+10, y+20, globalProperties.tooltip_delay, 1200, false, 'track_title');
 }
@@ -954,61 +955,62 @@ function on_mouse_rbtn_up(x, y){
 	var context_menu = window.CreatePopupMenu();	
 	var idx;
 
-	main_menu.AppendMenuItem(MF_STRING, 35, "Settings...");
+	main_menu.AppendMenuItem(MF_STRING, 35, "設定...");
 	main_menu.AppendMenuSeparator();
 	if(fb.IsPlaying){
 		var now_playing_track = fb.GetNowPlaying();
-		main_menu.AppendMenuItem(MF_STRING, 1, "Open cover in its full/original size");
-		main_menu.AppendMenuItem(MF_STRING, 9, "Show on all panels");
-		main_menu.AppendMenuItem(MF_STRING, 6, "Open containing folder");
-		main_menu.AppendMenuItem(MF_STRING, 8, "Refresh this image");
+		main_menu.AppendMenuItem(MF_STRING, 1, "以全尺寸/原尺寸開啟專輯封面");
+		main_menu.AppendMenuItem(MF_STRING, 9, "在全部的面板顯示現在播放中");
+		main_menu.AppendMenuItem(MF_STRING, 6, "打開包含的文件夾");
+		main_menu.AppendMenuItem(MF_STRING, 8, "更新此圖片");
 		var quickSearchMenu = window.CreatePopupMenu();
-		quickSearchMenu.AppendMenuItem(MF_STRING, 34,"Same title");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 30,"Same artist");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 31,"Same album");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 32,"Same genre");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 33,"Same date");
-		quickSearchMenu.AppendTo(main_menu, MF_STRING, "Quick search for...");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的專輯演出者");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的歌曲類型");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
+		quickSearchMenu.AppendTo(main_menu, MF_STRING, "快速搜尋...");
 		main_menu.AppendMenuSeparator();
 	} else {
 		var checked_item_menu=3;
-		main_menu.AppendMenuItem(MF_DISABLED, 0, "Play randomly :");
+		main_menu.AppendMenuItem(MF_DISABLED, 0, "播放隨機化 :");
 		main_menu.AppendMenuSeparator();
-		main_menu.AppendMenuItem(MF_STRING, 3, "Tracks");
+		main_menu.AppendMenuItem(MF_STRING, 3, "曲目");
 			if(properties.random_function=='200_tracks') checked_item_menu=3;
-		main_menu.AppendMenuItem(MF_STRING, 2, "Albums");
+		main_menu.AppendMenuItem(MF_STRING, 2, "專輯");
 			if(properties.random_function=='20_albums') checked_item_menu=2;
-		main_menu.AppendMenuItem(MF_STRING, 5, "Artist");
+		main_menu.AppendMenuItem(MF_STRING, 5, "專輯演出者");
 			if(properties.random_function=='1_artist') checked_item_menu=5;
 
 		var genreValue=parseInt(properties.random_function);
-			main_menu.AppendMenuItem(MF_STRING, 4, "Genre");
+			main_menu.AppendMenuItem(MF_STRING, 4, "歌曲類型");
 		if((genreValue >= 1000 && genreValue < 2001) || properties.random_function=='1_genre')	checked_item_menu=4;
 
 		main_menu.CheckMenuRadioItem(2, 5, checked_item_menu);
 
 		var genrePopupMenu = window.CreatePopupMenu();
 		createGenrePopupMenu(false, -1, genrePopupMenu);
-		genrePopupMenu.AppendTo(main_menu, MF_STRING, "A specific genre");
+		genrePopupMenu.AppendTo(main_menu, MF_STRING, "特定歌曲類型");
 	}
 	
 	if(fb.IsPlaying){
 		//Context.InitContext(new FbMetadbHandleList(fb.GetNowPlaying()));
 		//Context.BuildMenu(context_menu, 100, -1);
 		//context_menu.AppendTo(main_menu, MF_STRING, "Track properties");
-		main_menu.AppendMenuItem(MF_STRING, 2, "Properties");
+		main_menu.AppendMenuItem(MF_STRING, 2, "屬性");
 	}
 	if(utils.IsKeyPressed(VK_SHIFT)) {
 		main_menu.AppendMenuSeparator();
-		main_menu.AppendMenuItem(MF_STRING, 100, "Properties ");
-		main_menu.AppendMenuItem(MF_STRING, 101, "Configure...");
+		main_menu.AppendMenuItem(MF_STRING, 100, "屬性 ");
+		main_menu.AppendMenuItem(MF_STRING, 101, "配置...");
 		main_menu.AppendMenuSeparator();
-		main_menu.AppendMenuItem(MF_STRING, 102, "Reload");
+		main_menu.AppendMenuItem(MF_STRING, 102, "重新載入");
 	}
 	idx = main_menu.TrackPopupMenu(x,y,0x0020);
 	switch(true) {
 		case (idx == 2):
-			fb.RunContextCommandWithMetadb("Properties", fb.GetNowPlaying());
+			//fb.RunContextCommandWithMetadb("Properties", fb.GetNowPlaying());
+			fb.RunContextCommandWithMetadb("屬性", fb.GetNowPlaying());
 		break;
 		case (idx == 100):
 			window.ShowProperties();
@@ -1059,7 +1061,8 @@ function on_mouse_rbtn_up(x, y){
 			play_random(properties.random_function);
 			break;
 		case (idx == 6):
-			fb.RunContextCommandWithMetadb("Open containing folder", now_playing_track, 8);
+			//fb.RunContextCommandWithMetadb("Open containing folder", now_playing_track, 8);
+			fb.RunContextCommandWithMetadb("開啟所在資料夾", now_playing_track, 8);
 			break;
 		case (idx == 8):
 			g_cover.refresh(now_playing_track, true);
@@ -1119,25 +1122,25 @@ function draw_settings_menu(x,y){
         var idx;
 
 		var _dble_click_menu = window.CreatePopupMenu();
-		_dble_click_menu.AppendMenuItem(MF_STRING, 3, "Pause playback");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 4, "Show now playing on all panels");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 5, "Open cover in its full/original size");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 6, "Open containing folder");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 7, "Activate/quit mini player");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 3, "暫停播放");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 4, "在全部的面板顯示現在播放中");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 5, "以全尺寸/原尺寸開啟專輯封面");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 6, "開啟所在資料夾");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 7, "啟用/退出袖珍播放器");
 		_dble_click_menu.CheckMenuRadioItem(3, 7, 3+properties.dble_click_action);
-		_dble_click_menu.AppendTo(_menu, MF_STRING, "Double click action");
+		_dble_click_menu.AppendTo(_menu, MF_STRING, "雙擊的作用");
 		_menu.AppendMenuSeparator();
 
 		var _visu_menu = window.CreatePopupMenu();
-		_visu_menu.AppendMenuItem(MF_STRING, 8, "Always show");
+		_visu_menu.AppendMenuItem(MF_STRING, 8, "總是顯示");
 		_visu_menu.CheckMenuItem(8,properties.showVisualization==2);
-		_visu_menu.AppendMenuItem(MF_STRING, 10, "Never");
+		_visu_menu.AppendMenuItem(MF_STRING, 10, "從不顯示");
 		_visu_menu.CheckMenuItem(10,properties.showVisualization==0);
 		
-		_menu.AppendMenuItem(MF_STRING, 8, "Animation on playback");
+		_menu.AppendMenuItem(MF_STRING, 8, "播放時的動畫");
 		_menu.CheckMenuItem(8,properties.showVisualization==2);
 
-		_menu.AppendMenuItem(MF_STRING, 2, "Show now playing artwork");
+		_menu.AppendMenuItem(MF_STRING, 2, "顯示播放中的專輯封面");
 		_menu.CheckMenuItem(2, (layout_state.isEqual(0)?coverpanel_state_big.isActive():coverpanel_state_mini.isActive()));
 
 
