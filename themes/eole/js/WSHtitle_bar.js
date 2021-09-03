@@ -1245,7 +1245,7 @@ function draw_settings_menu(x,y){
 				break;
 			case (idx == 1809):
 				try {
-					new_caption_format = utils.InputBox(window.ID, "Enter a title formatting script.\nYou can use the full foobar2000 title formatting syntax here.\n\nSee http://tinyurl.com/lwhay6f\nfor informations about foobar title formatting.", "Custom windows title", properties.tracktitle_format, true);
+					new_caption_format = utils.InputBox(window.ID, "輸入一個標題名稱的格式化腳本。\n你可以在這裡使用完整的foobar2000曲目名稱格式化語法。\n\n參見 http://tinyurl.com/lwhay6f\nfor 瞭解關於foobar曲目名稱格式化的信息。", "自定義視窗標題名稱", properties.tracktitle_format, true);
 					if (!(new_caption_format == "" || typeof new_caption_format == 'undefined')) {
 						properties.tracktitle_format = new_caption_format;
 						window.SetProperty("_DISPLAY: Track title format", properties.tracktitle_format);
@@ -1564,7 +1564,7 @@ function draw_main_menu(x,y){
 	mem_solicitation.AppendTo(skin_settings_menu, MF_STRING, "Covers && Memory usage");*/
 
 	skin_settings_menu.AppendMenuItem(MF_STRING, 4029, "封面和記憶體的使用方式");
-	skin_settings_menu.AppendMenuItem(MF_STRING, 4026, "重置圖片緩存");
+	skin_settings_menu.AppendMenuItem(MF_STRING, 4026, "重置圖片快取");
 	skin_settings_menu.AppendMenuSeparator();
 
 	var ratingMenu = window.CreatePopupMenu();
