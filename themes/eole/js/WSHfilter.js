@@ -1,4 +1,4 @@
-var images = {
+﻿var images = {
     path: theme_img_path + "\\",
     glass_reflect: null,
     loading_angle: 0,
@@ -826,9 +826,9 @@ oFilterBox = function() {
         this.inputbox.textcolor = colors.normal_txt;
         this.inputbox.backselectioncolor = colors.selected_bg;
 
-		var item_txt = new Array("", "Albums...", "Artists...", "Genres...");
+		var item_txt = new Array("", "專輯...", "專輯演出者...", "歌曲類型...");
 		if(!properties.showTagSwitcherBar) var boxText = item_txt[properties.tagMode];
-		else var boxText = "Filter...";
+		else var boxText = "篩選...";
 		this.inputbox.empty_text = boxText;
     };
     this.setSize = function(w, h, font_size) {
@@ -979,8 +979,8 @@ oTagSwitcherBar = function() {
 		);
 		this.items_width = new Array(0, 0, 0, 0);
 		this.items_x = new Array(0, 0, 0, 0);
-		this.items_txt = new Array("T","ALBUM", "ARTIST", "GENRE");
-		this.items_tooltips = new Array("Library tree","Album filter", "Artist filter", "Genre filter");
+		this.items_txt = new Array("T","專輯", "專輯演出者", "歌曲類型");
+		this.items_tooltips = new Array("Library tree","專輯 篩選器", "專輯演出者 篩選器", "歌曲類型 篩選器");
 		properties.album_label = this.items_txt[1];
 		properties.artist_label = this.items_txt[2];
 		properties.genre_label = this.items_txt[3];		
@@ -3121,10 +3121,11 @@ oBrowser = function(name) {
 			this.draw_right_line = (properties.DrawRightLine && (!(properties.filterOrder==2) && !(!filter3_state.isActive() && properties.filterOrder==1) && !(!filter3_state.isActive() && !filter2_state.isActive() && properties.filterOrder==0) || main_panel_state.isEqual(0)));
             // draw top header bar
             if(properties.showHeaderBar) {
-                var item_txt = new Array("group", "album", "artist", "genre");
+                var item_txt = new Array("群組", "專輯", "專輯演出者", "歌曲類型");
                 var nb_groups = (properties.showAllItem && total > 1 ? total - 1 : total);
 				var txt_id = this.customGroups?0:properties.tagMode;
-                var boxText = nb_groups+" "+item_txt[txt_id]+(nb_groups > 1 ? "s  " : "  ");
+                //var boxText = nb_groups+" "+item_txt[txt_id]+(nb_groups > 1 ? "s  " : "  ");
+				var boxText = nb_groups+" "+item_txt[txt_id]+("  "); // 中文化後不需要額外加 s
 
                 // draw background part above playlist (headerbar)
 				//gr.FillSolidRect(0, 0, ww, brw.y-1, colors.lightgrey_bg);
@@ -3547,18 +3548,18 @@ oBrowser = function(name) {
 
 		this.metadblist_selection = this.groups[albumIndex].pl.Clone();
 
-		_menu.AppendMenuItem(MF_STRING, 1, "Settings...");
+		_menu.AppendMenuItem(MF_STRING, 1, "設定...");
 		_menu.AppendMenuSeparator();
 		if(fb.IsPlaying && this.current_sourceMode==0){
-			_menu.AppendMenuItem(MF_STRING, 1011, "Locate now playing group");
+			_menu.AppendMenuItem(MF_STRING, 1011, "定位正在播放的群組");
 			_menu.AppendMenuSeparator();
 		}
 		if(properties.displayMode==1 || properties.displayMode==2 || properties.displayMode==3){
-			_menu.AppendMenuItem(MF_STRING, 1010, "Refresh this image");
+			_menu.AppendMenuItem(MF_STRING, 1010, "更新此圖片");
 		}
 
-		_child02.AppendTo(_menu, MF_STRING, "Send to...");
-		_child02.AppendMenuItem(MF_STRING, 2000, "A new playlist...");
+		_child02.AppendTo(_menu, MF_STRING, "傳送到...");
+		_child02.AppendMenuItem(MF_STRING, 2000, "新增一個播放清單...");
         var pl_count = plman.PlaylistCount;
 		if(pl_count > 1) {
 			_child02.AppendMenuItem(MF_SEPARATOR, 0, "");
@@ -3577,10 +3578,10 @@ oBrowser = function(name) {
 
 		if(utils.IsKeyPressed(VK_SHIFT)) {
 			_menu.AppendMenuSeparator();
-			_menu.AppendMenuItem(MF_STRING, 1001, "Properties ");
-			_menu.AppendMenuItem(MF_STRING, 1002, "Configure...");
+			_menu.AppendMenuItem(MF_STRING, 1001, "屬性 ");
+			_menu.AppendMenuItem(MF_STRING, 1002, "配置...");
 			_menu.AppendMenuSeparator();
-			_menu.AppendMenuItem(MF_STRING, 1003, "Reload");
+			_menu.AppendMenuItem(MF_STRING, 1003, "重新載入");
 		}
 
 		var ret = _menu.TrackPopupMenu(x, y);
@@ -3651,10 +3652,10 @@ oBrowser = function(name) {
             var idx;
 			
 			if(properties.ParentName!="Library"){
-				_menu0.AppendMenuItem(MF_STRING, 50, "Library");
-				_menu0.AppendMenuItem(MF_STRING, 51, "Playlist");
+				_menu0.AppendMenuItem(MF_STRING, 50, "媒體櫃");
+				_menu0.AppendMenuItem(MF_STRING, 51, "播放清單");
 				_menu0.CheckMenuRadioItem(50, 51, 50 + (properties.adapt_to_playlist?1:0));
-				_menu0.AppendTo(_menu,MF_STRING, "Source");
+				_menu0.AppendTo(_menu,MF_STRING, "來源");
 				_menu.AppendMenuSeparator();
 			}
             //_menu.AppendMenuItem((this.current_sourceMode == 1 ? MF_STRING : MF_GRAYED | MF_DISABLED), 60, "Cursor follows Focus");
@@ -3662,98 +3663,98 @@ oBrowser = function(name) {
             //_menu.AppendMenuSeparator();
 
 
-            _menu13.AppendMenuItem(MF_STRING, 113, "Default (%genre%)");
+            _menu13.AppendMenuItem(MF_STRING, 113, "預設為 (%genre%)");
             _menu13.CheckMenuItem(113, properties.tf_groupkey_genre == properties.tf_groupkey_genre_default && properties.genre_customGroup_label == "");
-            _menu13.AppendMenuItem(MF_STRING, 116, "Custom titleformat...");
+            _menu13.AppendMenuItem(MF_STRING, 116, "自定義格式化曲目名稱...");
             _menu13.CheckMenuItem(116, !(properties.tf_groupkey_genre == properties.tf_groupkey_genre_default && properties.genre_customGroup_label == ""));
 
-            _menu12.AppendMenuItem(MF_STRING, 112, "Default (%artist%)");
+            _menu12.AppendMenuItem(MF_STRING, 112, "預設為 (%artist%)");
             _menu12.CheckMenuItem(112, properties.tf_groupkey_artist == properties.tf_groupkey_artist_default && properties.artist_customGroup_label == "");
-            _menu12.AppendMenuItem(MF_STRING, 115, "Custom titleformat...");
+            _menu12.AppendMenuItem(MF_STRING, 115, "自定義格式化曲目名稱...");
             _menu12.CheckMenuItem(115, !(properties.tf_groupkey_artist == properties.tf_groupkey_artist_default && properties.artist_customGroup_label == ""));
 
-            _menu11.AppendMenuItem(MF_STRING, 111, "Default (%album%)");
+            _menu11.AppendMenuItem(MF_STRING, 111, "預設為 (%album%)");
             _menu11.CheckMenuItem(111, properties.tf_groupkey_album == properties.tf_groupkey_album_default && properties.album_customGroup_label == "");
-            _menu11.AppendMenuItem(MF_STRING, 114, "Custom titleformat...");
+            _menu11.AppendMenuItem(MF_STRING, 114, "自定義格式化曲目名稱...");
             _menu11.CheckMenuItem(114, !(properties.tf_groupkey_album == properties.tf_groupkey_album_default && properties.album_customGroup_label == ""));
 
 			if(properties.showLibraryTreeSwitch) {
-				_menu.AppendMenuItem(MF_STRING, 990, "Switch to library tree");
+				_menu.AppendMenuItem(MF_STRING, 990, "切換到媒體櫃樹狀結構");
 				_menu.AppendMenuSeparator();
 			}
-            _menu13.AppendTo(_menu1,(properties.tagMode==3)?MF_CHECKED:MF_STRING, "Preset 1 ("+properties.genre_label.toUpperCase()+")");
-            _menu12.AppendTo(_menu1,(properties.tagMode==2)?MF_CHECKED:MF_STRING, "Preset 2 ("+properties.artist_label.toUpperCase()+")");
-            _menu11.AppendTo(_menu1,(properties.tagMode==1)?MF_CHECKED:MF_STRING, "Preset 3 ("+properties.album_label.toUpperCase()+")");
+            _menu13.AppendTo(_menu1,(properties.tagMode==3)?MF_CHECKED:MF_STRING, "預置 1 ("+properties.genre_label.toUpperCase()+")");
+            _menu12.AppendTo(_menu1,(properties.tagMode==2)?MF_CHECKED:MF_STRING, "預置 2 ("+properties.artist_label.toUpperCase()+")");
+            _menu11.AppendTo(_menu1,(properties.tagMode==1)?MF_CHECKED:MF_STRING, "預置 3 ("+properties.album_label.toUpperCase()+")");
 
-            _menu1.AppendTo(_menu,MF_STRING, "Group by");
+            _menu1.AppendTo(_menu,MF_STRING, "通過...分組");
 
-            _menu2.AppendMenuItem(MF_STRING, 913, "Tag switcher bar");
+            _menu2.AppendMenuItem(MF_STRING, 913, "標籤切換欄");
             _menu2.CheckMenuItem(913, properties.showTagSwitcherBar);
 			if(main_panel_state.isEqual(0)){
-				_menu2.AppendMenuItem(MF_STRING, 914, "Hide menu button");
+				_menu2.AppendMenuItem(MF_STRING, 914, "隱藏選單按鈕");
 				_menu2.CheckMenuItem(914, properties.showFiltersTogglerBtn);
 			}
-            _menu2.AppendMenuItem(MF_STRING, 910, "Search bar");
+            _menu2.AppendMenuItem(MF_STRING, 910, "搜尋欄");
             _menu2.CheckMenuItem(910, properties.showHeaderBar);
             _menu2.AppendMenuSeparator();
 
-            _menu2.AppendMenuItem(MF_STRING, 900, "Text only");
-            _menu2.AppendMenuItem(MF_STRING, 902, "Text (Album Art on right)");
-            _menu2.AppendMenuItem(MF_STRING, 901, "Album Art (Text on bottom)");
-            _menu2.AppendMenuItem(MF_STRING, 903, "Album Art Grid");
-			_menu2.AppendMenuItem(MF_STRING, 1806, "Album Art Grid (without Text)");
+            _menu2.AppendMenuItem(MF_STRING, 900, "文字");
+            _menu2.AppendMenuItem(MF_STRING, 902, "文字 (左側為專輯封面)");
+            _menu2.AppendMenuItem(MF_STRING, 901, "專輯封面 (底部為文字)");
+            _menu2.AppendMenuItem(MF_STRING, 903, "專輯封面網格");
+			_menu2.AppendMenuItem(MF_STRING, 1806, "專輯封面網格 (不含文字)");
 			if (properties.displayModeGridNoText) _menu2.CheckMenuItem(1806, properties.showTagSwitcherBar);
 			else _menu2.CheckMenuRadioItem(900, 903, 900 + properties.displayMode);
             _menu2.AppendMenuSeparator();
 			if(properties.tagMode!=1){
-				_menu2.AppendMenuItem(MF_STRING, 918, "Album art Fallback");
+				_menu2.AppendMenuItem(MF_STRING, 918, "專輯封面替代機制(沒有此專輯封面時顯示替代封面)");
 				_menu2.CheckMenuItem(918, properties.AlbumArtFallback);
 			}
-			_menu2.AppendMenuItem(MF_STRING, 904, "Circle artwork");
+			_menu2.AppendMenuItem(MF_STRING, 904, "圓形專輯封面");
             _menu2.CheckMenuItem(904, properties.circleMode);
-            _menu2.AppendMenuItem(MF_STRING, 911, "Aggregate Item");
+            _menu2.AppendMenuItem(MF_STRING, 911, "匯總項目");
             _menu2.CheckMenuItem(911, properties.showAllItem);
-            _menu2.AppendMenuItem(MF_STRING, 912, "Items count (on Text displays)");
+            _menu2.AppendMenuItem(MF_STRING, 912, "合計項目數量（影響於文字時）");
             _menu2.CheckMenuItem(912, properties.drawItemsCounter);
-            _menu2.AppendMenuItem(MF_STRING, 916, "Show Tooltips");
+            _menu2.AppendMenuItem(MF_STRING, 916, "顯示游標提示");
             _menu2.CheckMenuItem(916, properties.showToolTip);
 
-            _menu2.AppendTo(_menu,MF_STRING, "Display");
+            _menu2.AppendTo(_menu,MF_STRING, "顯示");
 
-			_rowHeight.AppendMenuItem(MF_STRING, 1001, "Increase");
-			_rowHeight.AppendMenuItem(MF_STRING, 1000, "Decrease");
+			_rowHeight.AppendMenuItem(MF_STRING, 1001, "增加");
+			_rowHeight.AppendMenuItem(MF_STRING, 1000, "減少");
 			_rowHeight.AppendMenuSeparator();
-			_rowHeight.AppendMenuItem(MF_DISABLED, 0, "Tip: Hold SHIFT and use your");
-			_rowHeight.AppendMenuItem(MF_DISABLED, 0, "mouse wheel over the panel!");
+			_rowHeight.AppendMenuItem(MF_DISABLED, 0, "提示：");
+			_rowHeight.AppendMenuItem(MF_DISABLED, 0, "按住SHIFT鍵，在面板上使用滑鼠滾輪！");
 			if(properties.displayMode==0 || properties.displayMode==2){
-				_rowHeight.AppendTo(_menu,MF_STRING, "Row height");
+				_rowHeight.AppendTo(_menu,MF_STRING, "行高");
 			} else {
-				_rowHeight.AppendTo(_menu,MF_STRING, "Columns Width");
+				_rowHeight.AppendTo(_menu,MF_STRING, "列寬");
 			}
 
 			if(properties.ParentName=='Library'){
 				var _panelWidth = window.CreatePopupMenu();
-				_panelWidth.AppendMenuItem(MF_STRING, 1030, "Increase width");
-				_panelWidth.AppendMenuItem(MF_STRING, 1031, "Decrease width");
-				_panelWidth.AppendMenuItem(MF_STRING, 1033, "Custom width...");
-				_panelWidth.AppendMenuItem(MF_STRING, 1032, "Reset");
-				_panelWidth.AppendTo(_menu,MF_STRING, "Panel width");
+				_panelWidth.AppendMenuItem(MF_STRING, 1030, "增加寬度");
+				_panelWidth.AppendMenuItem(MF_STRING, 1031, "減少寬度");
+				_panelWidth.AppendMenuItem(MF_STRING, 1033, "自定義寬度...");
+				_panelWidth.AppendMenuItem(MF_STRING, 1032, "重置");
+				_panelWidth.AppendTo(_menu,MF_STRING, "面板寬度");
 			}
 
-            _menu3.AppendMenuItem(MF_STRING, 200, "Enable");
+            _menu3.AppendMenuItem(MF_STRING, 200, "啟用");
             _menu3.CheckMenuItem(200, properties.showwallpaper);
-            _menu3.AppendMenuItem(MF_STRING, 220, "Blur");
+            _menu3.AppendMenuItem(MF_STRING, 220, "模糊化");
             _menu3.CheckMenuItem(220, properties.wallpaperblurred);
 
-            _menu3A.AppendMenuItem(MF_STRING, 221, "Filling");
+            _menu3A.AppendMenuItem(MF_STRING, 221, "填滿");
             _menu3A.CheckMenuItem(221, properties.wallpaperdisplay==0);
-            _menu3A.AppendMenuItem(MF_STRING, 222, "Adjust");
+            _menu3A.AppendMenuItem(MF_STRING, 222, "調整圖片符合視窗大小");
             _menu3A.CheckMenuItem(222, properties.wallpaperdisplay==1);
-            _menu3A.AppendMenuItem(MF_STRING, 223, "Stretch");
+            _menu3A.AppendMenuItem(MF_STRING, 223, "延展");
             _menu3A.CheckMenuItem(223, properties.wallpaperdisplay==2);
-			_menu3A.AppendTo(_menu3,MF_STRING, "Wallpaper size");
+			_menu3A.AppendTo(_menu3,MF_STRING, "壁紙尺寸");
 
-            _menu3.AppendTo(_menu,MF_STRING, "Background Wallpaper");
+            _menu3.AppendTo(_menu,MF_STRING, "背景壁紙");
 
             //_menu.AppendMenuSeparator();
             //_menu.AppendMenuItem(MF_STRING, 990, "Reload Library");
@@ -3772,35 +3773,35 @@ oBrowser = function(name) {
             _menu.AppendMenuItem((globalProperties.enableDiskCache)?MF_STRING:MF_GRAYED, 917, "Load all artist thumbnails at startup");
             _menu.CheckMenuItem(917, globalProperties.load_artist_img_at_startup);*/
 
-			_menu.AppendMenuItem(MF_STRING, 2997, "Show playlist panel on drag and drop");
+			_menu.AppendMenuItem(MF_STRING, 2997, "顯示拖放到播放列表中的功能 - 功能待測試理解!?");
 			_menu.CheckMenuItem(2997, properties.DropInplaylist);
 			
-			_menu.AppendMenuItem(MF_STRING, 2998, "Sort ignoring the/les/los");
+			_menu.AppendMenuItem(MF_STRING, 2998, "排序時忽略前輟文字 (如: the/les/los)");
 			_menu.CheckMenuItem(2998, properties.removePrefix);			
 
 			if(main_panel_state.isEqual(1)) {
 				_menu.AppendMenuSeparator();
-				_menu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 2993, "Enable 1st filter");
+				_menu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 2993, "啟用第1個篩選器 - 歌曲類型");
 				_menu.CheckMenuItem(2993, (filter1_state.isActive()));
-				_menu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 2994, "Enable 2nd filter");
+				_menu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 2994, "啟用第2個篩選器 - 專輯演出者");
 				_menu.CheckMenuItem(2994, (filter2_state.isActive()));
-				_menu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 2995, "Enable 3rd filter");
+				_menu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 2995, "啟用第3個篩選器 - 專輯");
 				_menu.CheckMenuItem(2995, (filter3_state.isActive()));
 				_menu.AppendMenuSeparator();
 				if(!filters_panel_state.isMaximumValue())
-					_menu.AppendMenuItem(MF_STRING, 2992, "Hide filters");
+					_menu.AppendMenuItem(MF_STRING, 2992, "隱藏篩選器");
 				else
-					_menu.AppendMenuItem(MF_STRING, 2996, "Show bottom playlist");
+					_menu.AppendMenuItem(MF_STRING, 2996, "顯示底部播放清單");
 			}
 
 
 
 			if(utils.IsKeyPressed(VK_SHIFT)) {
 				_menu.AppendMenuSeparator();
-				_menu.AppendMenuItem(MF_STRING, 991, "Properties ");
-				_menu.AppendMenuItem(MF_STRING, 992, "Configure...");
+				_menu.AppendMenuItem(MF_STRING, 991, "屬性 ");
+				_menu.AppendMenuItem(MF_STRING, 992, "配置...");
 				_menu.AppendMenuSeparator();
-				_menu.AppendMenuItem(MF_STRING, 993, "Reload");
+				_menu.AppendMenuItem(MF_STRING, 993, "重新載入");
 			}
 
             idx = _menu.TrackPopupMenu(x,y);
@@ -3862,9 +3863,9 @@ oBrowser = function(name) {
                         case 1:
 							try {
 								customFilterGrouping(properties.tagMode
-													,"<div class='titleBig'>Custom Filter</div><div class='separator'></div><br/>Enter a title formatting script.\nYou can use the full foobar2000 title formatting syntax here.<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">Click here</a> for informations about foobar title formatting. (http://tinyurl.com/lwhay6f)<br/>"
+													,"<div class='titleBig'>自定義篩選器</div><div class='separator'></div><br/>輸入一個曲目名稱格式化腳本。\n你可以在這裡使用完整的foobar2000曲目名稱格式化語法。<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">點擊這裡</a> 瞭解關於foobar曲目名稱格式化的信息。 (http://tinyurl.com/lwhay6f)<br/>"
 													,''
-													,'Label (10 chars max):##Grouping pattern:'
+													,'標籤 (最多10個字符):##分組模式:'
 													,properties.album_label+'##'+properties.tf_groupkey_album);
 								/*new_TFgrouping = utils.InputBox(window.ID, "Enter a title formatting script.\nYou can use the full foobar2000 title formatting syntax here.\n\nSee http://tinyurl.com/lwhay6f\nfor informations about foobar title formatting.", "Album grouping", properties.tf_groupkey_album, true);
 								if (!(new_TFgrouping == "" || typeof new_TFgrouping == 'undefined' || properties.tf_groupkey_album==new_TFgrouping)) {
@@ -3881,9 +3882,9 @@ oBrowser = function(name) {
                         case 2:
 							try {
 								customFilterGrouping(properties.tagMode
-													,"<div class='titleBig'>Custom Filter</div><div class='separator'></div><br/>Enter a title formatting script.\nYou can use the full foobar2000 title formatting syntax here.<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">Click here</a> for informations about foobar title formatting. (http://tinyurl.com/lwhay6f)<br/>"
+													,"<div class='titleBig'>自定義篩選器</div><div class='separator'></div><br/>輸入一個曲目名稱格式化腳本。\n你可以在這裡使用完整的foobar2000曲目名稱格式化語法。<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">點擊這裡</a> 瞭解關於foobar曲目名稱格式化的信息。 (http://tinyurl.com/lwhay6f)<br/>"
 													,''
-													,'Label (10 chars max):##Grouping pattern:'
+													,'標籤 (最多10個字符):##分組模式:'
 													,properties.artist_label+'##'+properties.tf_groupkey_artist);
 								/*new_TFgrouping = utils.InputBox(window.ID, "Enter a title formatting script.\nYou can use the full foobar2000 title formatting syntax here.\n\nSee http://tinyurl.com/lwhay6f\nfor informations about foobar title formatting.", "Artist grouping", properties.tf_groupkey_artist, true);
 								if (!(new_TFgrouping == "" || typeof new_TFgrouping == 'undefined')) {
@@ -3900,9 +3901,9 @@ oBrowser = function(name) {
                         case 3:
 							try {
 								customFilterGrouping(properties.tagMode
-													,"<div class='titleBig'>Custom Filter</div><div class='separator'></div><br/>Enter a title formatting script.\nYou can use the full foobar2000 title formatting syntax here.<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">Click here</a> for informations about foobar title formatting. (http://tinyurl.com/lwhay6f)<br/>"
+													,"<div class='titleBig'>自定義篩選器</div><div class='separator'></div><br/>輸入一個曲目名稱格式化腳本。\n你可以在這裡使用完整的foobar2000曲目名稱格式化語法。<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">點擊這裡</a> 瞭解關於foobar曲目名稱格式化的信息。 (http://tinyurl.com/lwhay6f)<br/>"
 													,''
-													,'Label (10 chars max):##Grouping pattern:'
+													,'標籤 (最多10個字符):##分組模式:'
 													,properties.genre_label+'##'+properties.tf_groupkey_genre);
 								/*new_TFgrouping = utils.InputBox(window.ID, "Enter a title formatting script.\nYou can use the full foobar2000 title formatting syntax here.\n\nSee http://tinyurl.com/lwhay6f\nfor informations about foobar title formatting.", "Genre grouping", properties.tf_groupkey_genre, true);
 								if (!(new_TFgrouping == "" || typeof new_TFgrouping == 'undefined')) {
@@ -4074,7 +4075,7 @@ oBrowser = function(name) {
 					libraryfilter_width.setDefault();
 					break;
 				case (idx == 1033):
-					libraryfilter_width.userInputValue("Enter the desired width in pixel.\nDefault width is 210px.\nMinimum width: 100px. Maximum width: 900px", "Custom left menu width");
+					libraryfilter_width.userInputValue("以像素為單位輸入所需的寬度。\n預設寬度為210px。\n最小寬度：100px。 最大寬度：900px", "自定義左側選單寬度");
 					break;
 				case (idx == 2992):
 					if(filters_panel_state.isActive()) toggleFilterState(0,true);

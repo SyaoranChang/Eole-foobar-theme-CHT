@@ -1442,7 +1442,7 @@ function draw_main_menu(x,y){
 		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4995, "啟用第3個篩選器 - 專輯");
 		FiltersMenu.CheckMenuItem(4995, (filter3_state.isActive()));
 		FiltersMenu.AppendTo(playlists_menu, MF_STRING, "篩選器");
-		if(!filters_panel_state.isMaximumValue()) playlists_menu.AppendMenuItem(MF_STRING, 4996, "隱藏底部播放列表");
+		if(!filters_panel_state.isMaximumValue()) playlists_menu.AppendMenuItem(MF_STRING, 4996, "隱藏底部播放清單");
 		else playlists_menu.AppendMenuItem(MF_STRING, 4997, "顯示底部播放列表");
 		playlists_menu.AppendMenuSeparator();
 		playlists_menu.AppendMenuItem(MF_STRING, 4001, "灰暗主題");
@@ -1876,7 +1876,7 @@ function draw_main_menu(x,y){
 		rightplaylist_width.setDefault();
 		break;
 	case (idx == 4033):
-		rightplaylist_width.userInputValue("Enter the desired width in pixel.\nDefault width is 270px.\nMinimum width: 100px. Maximum width: 900px", "Custom playlist width");
+		rightplaylist_width.userInputValue("以像素為單位輸入所需的寬度。\n預設寬度為270px。\n最小寬度：100px。 最大寬度：900px", "自定義播放清單寬度");
 		break;
 	case (idx == 4034):
 		libraryfilter_width.increment(10);
@@ -1888,7 +1888,7 @@ function draw_main_menu(x,y){
 		libraryfilter_width.setDefault();
 		break;
 	case (idx == 4037):
-		libraryfilter_width.userInputValue("Enter the desired width in pixel.\nDefault width is 210px.\nMinimum width: 100px. Maximum width: 900px", "Custom left menu width");
+		libraryfilter_width.userInputValue("以像素為單位輸入所需的寬度。\n預設寬度為210px。\n最小寬度：100px。 最大寬度：900px", "自定義左側選單寬度");
 		break;
 	case (idx == 4038):
 		playlistpanel_width.increment(10);
@@ -1900,7 +1900,7 @@ function draw_main_menu(x,y){
 		playlistpanel_width.setDefault();
 		break;
 	case (idx == 4041):
-		playlistpanel_width.userInputValue("Enter the desired width in pixel.\nDefault width is 180px.\nMinimum width: 100px. Maximum width: 900px", "Custom left menu width");
+		playlistpanel_width.userInputValue("以像素為單位輸入所需的寬度。\n預設寬度為180px。\n最小寬度：100px。 最大寬度：900px", "自定義左側選單寬度");
 		break;
 	case (idx == 4042):
 		setMemoryUsageGlobally(0);

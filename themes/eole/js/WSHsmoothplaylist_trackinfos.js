@@ -4379,7 +4379,7 @@ oBrowser = function(name) {
             _menu.AppendMenuSeparator();
 
 			var _menu_title = window.CreatePopupMenu();
-            _menu_title.AppendMenuItem(MF_STRING, 905, "為長音軌標題顯示游標提示框");
+            _menu_title.AppendMenuItem(MF_STRING, 905, "為長音軌標題顯示游標提示");
 			_menu_title.CheckMenuItem(905, properties.showToolTip);
             _menu_title.AppendMenuItem(MF_STRING, 906, "顯示播放次數");
 			_menu_title.CheckMenuItem(906, properties.showPlaycount);
