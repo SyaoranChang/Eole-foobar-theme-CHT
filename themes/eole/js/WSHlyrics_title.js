@@ -1,4 +1,4 @@
-var padding_top = 27;
+﻿var padding_top = 27;
 var padding_top_nobio = 17;
 var padding_bottom = 5;
 var padding_left = 35;
@@ -128,15 +128,15 @@ function on_mouse_rbtn_up(x, y){
 	var _menu = window.CreatePopupMenu();
 	var idx;
 
-	_menu.AppendMenuItem(MF_STRING, 99, "Stick to dark layout");
+	_menu.AppendMenuItem(MF_STRING, 99, "堅持採用灰暗版面");
 	_menu.CheckMenuItem(99,properties.stick2darklayout);
 
 	if(utils.IsKeyPressed(VK_SHIFT)) {
 		_menu.AppendMenuSeparator();
-		_menu.AppendMenuItem(MF_STRING, 100, "Properties ");
-		_menu.AppendMenuItem(MF_STRING, 101, "Configure...");
+		_menu.AppendMenuItem(MF_STRING, 100, "屬性 ");
+		_menu.AppendMenuItem(MF_STRING, 101, "配置...");
 		_menu.AppendMenuSeparator();
-		_menu.AppendMenuItem(MF_STRING, 102, "Reload");
+		_menu.AppendMenuItem(MF_STRING, 102, "重新載入");
 	}
 	idx = _menu.TrackPopupMenu(x,y);
 	switch(true) {

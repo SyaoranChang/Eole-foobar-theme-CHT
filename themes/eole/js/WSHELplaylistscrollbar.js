@@ -1,4 +1,4 @@
-function RGB(r,g,b){ return (0xff000000|(r<<16)|(g<<8)|(b)); }
+﻿function RGB(r,g,b){ return (0xff000000|(r<<16)|(g<<8)|(b)); }
 function RGBA(r, g, b, a) {
     return ((a << 24) | (r << 16) | (g << 8) | (b))
 }
@@ -199,10 +199,10 @@ function on_mouse_rbtn_up(x, y){
         var _menu = window.CreatePopupMenu();
         var idx;
 		if(utils.IsKeyPressed(VK_SHIFT)) {
-			_menu.AppendMenuItem(MF_STRING, 100, "Properties ");
-			_menu.AppendMenuItem(MF_STRING, 101, "Configure...");
+			_menu.AppendMenuItem(MF_STRING, 100, "屬性 ");
+			_menu.AppendMenuItem(MF_STRING, 101, "配置...");
             _menu.AppendMenuSeparator();
-			_menu.AppendMenuItem(MF_STRING, 102, "Reload");
+			_menu.AppendMenuItem(MF_STRING, 102, "重新載入");
 		}
         idx = _menu.TrackPopupMenu(x,y);
         switch(true) {
