@@ -408,7 +408,7 @@ oFilterBox = function() {
 		else icon_theme_subfolder = "";
 
 		this.images.search_icon = gdi.Image(theme_img_path + "\\icons"+icon_theme_subfolder+"\\search_icon.png");
-		this.search_bt = new button(this.images.search_icon, this.images.search_icon, this.images.search_icon,"search_bt", "Filter groups"+(properties.filterBox_filter_tracks?" & tracks":''));
+		this.search_bt = new button(this.images.search_icon, this.images.search_icon, this.images.search_icon,"search_bt", "篩選群族"+(properties.filterBox_filter_tracks?" & 曲目":''));
 
         this.images.resetIcon_off = gdi.CreateImage(w, w);
         gb = this.images.resetIcon_off.GetGraphics();
@@ -2650,11 +2650,11 @@ oHeaderBar = function(name) {
 
 		if(typeof(this.GridModeButton) == "undefined") {
 			if(properties.CoverGridNoText)
-				this.GridModeButton = new button(this.grid_mode_on, this.grid_mode_on_hover, this.grid_mode_on,"gridmode","Display mode");
+				this.GridModeButton = new button(this.grid_mode_on, this.grid_mode_on_hover, this.grid_mode_on,"gridmode","顯示模式");
 			else if(properties.circleMode)
-				this.GridModeButton = new button(this.grid_mode_off, this.grid_mode_off_hover, this.grid_mode_off,"gridmode","Display mode");
+				this.GridModeButton = new button(this.grid_mode_off, this.grid_mode_off_hover, this.grid_mode_off,"gridmode","顯示模式");
 			else
-				this.GridModeButton = new button(this.grid_mode_off_circle, this.grid_mode_off_circle_hover, this.grid_mode_off_circle,"gridmode","Display mode");
+				this.GridModeButton = new button(this.grid_mode_off_circle, this.grid_mode_off_circle_hover, this.grid_mode_off_circle,"gridmode","顯示模式");
 		} else {
 			if(properties.CoverGridNoText){
 				this.GridModeButton.img[0] = this.grid_mode_on;
@@ -2698,7 +2698,7 @@ oHeaderBar = function(name) {
 		this.settings_hover.ReleaseGraphics(gb);
 
 		if(typeof(this.SettingsButton) == "undefined") {
-			this.SettingsButton = new button(this.settings_off, this.settings_hover, this.settings_off,"settings_bt","Settings...");
+			this.SettingsButton = new button(this.settings_off, this.settings_hover, this.settings_off,"settings_bt","設定...");
 		} else {
 			this.SettingsButton.img[0] = this.settings_off;
 			this.SettingsButton.img[1] = this.settings_hover;
@@ -5583,7 +5583,7 @@ oBrowser = function(name) {
         this.ResizeButton_hover.ReleaseGraphics(gb);
 
         if(typeof(this.resize_bt) == "undefined") {
-            this.resize_bt = new button(this.ResizeButton_off, this.ResizeButton_hover, this.ResizeButton_hover,"resize_bt","Resize covers");
+            this.resize_bt = new button(this.ResizeButton_off, this.ResizeButton_hover, this.ResizeButton_hover,"resize_bt","調整專輯封面大小");
         } else {
             this.resize_bt.img[0] = this.ResizeButton_off;
             this.resize_bt.img[1] = this.ResizeButton_hover;
