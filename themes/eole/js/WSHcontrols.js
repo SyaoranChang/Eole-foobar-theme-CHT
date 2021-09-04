@@ -2265,10 +2265,10 @@ function randomPlayMenu(x, y){
 			if(properties.random_function=='200_tracks') checked_item_menu=3;
         _menu.AppendMenuItem(MF_STRING, 2, "專輯");
 			if(properties.random_function=='20_albums') checked_item_menu=2;
-        _menu.AppendMenuItem(MF_STRING, 5, "專輯演出者");
+        _menu.AppendMenuItem(MF_STRING, 5, "演出者");
 			if(properties.random_function=='1_artist') checked_item_menu=5;
 		var genreValue=parseInt(properties.random_function);
-			_menu.AppendMenuItem(MF_STRING, 4, "歌曲類型");
+			_menu.AppendMenuItem(MF_STRING, 4, "音樂類型");
 			if((genreValue >= 1000 && genreValue < 2001) || properties.random_function=='1_genre')	checked_item_menu=4;
 
 		_menu.CheckMenuRadioItem(2, 5, checked_item_menu);
@@ -2277,7 +2277,7 @@ function randomPlayMenu(x, y){
 
 		createGenrePopupMenu(false, -1, genrePopupMenu);
 
-		genrePopupMenu.AppendTo(_menu, MF_STRING, "特定歌曲類型");
+		genrePopupMenu.AppendTo(_menu, MF_STRING, "特定音樂類型");
 
         idx = _menu.TrackPopupMenu(x-(properties.displayDevice?100:0),y,0x0020);
         switch(true) {
@@ -2324,7 +2324,7 @@ function menuOutputAndDSP(x, y){
 	var menu = window.CreatePopupMenu();
 
 	var outputs = JSON.parse(fb.GetOutputDevices());
-	menu.AppendMenuItem(MF_GRAYED, 0, "Output device:");
+	menu.AppendMenuItem(MF_GRAYED, 0, "輸出裝置:");
 	menu.AppendMenuSeparator();	
 	var active = -1;
 	for (var i = 0; i < outputs.length; i++) {
@@ -2335,7 +2335,7 @@ function menuOutputAndDSP(x, y){
 
 	var dsps = JSON.parse(fb.GetDSPPresets());
 	menu.AppendMenuSeparator();
-	menu.AppendMenuItem(MF_GRAYED, 0, "DSP preset:");
+	menu.AppendMenuItem(MF_GRAYED, 0, "DSP 預置:");
 	menu.AppendMenuSeparator();	
 	if(dsps.length>0){
 		var active = -1;
@@ -2345,8 +2345,9 @@ function menuOutputAndDSP(x, y){
 		}
 		if (active > -1) menu.CheckMenuRadioItem(1000, dsps.length + 1000, active + 1000);
 	} else {
-		menu.AppendMenuItem(MF_GRAYED, 0, "You didn't define any DSP presets.");
-		menu.AppendMenuItem(MF_GRAYED, 0, "Foobar > File > Preference > Playback > DSP manager");
+		menu.AppendMenuItem(MF_GRAYED, 0, "您沒有定義任何DSP預置。");
+		//menu.AppendMenuItem(MF_GRAYED, 0, "Foobar > File > Preference > Playback > DSP manager");
+		menu.AppendMenuItem(MF_GRAYED, 0, "Foobar > 檔案 > 設定 > 播放 > DSP 管理");
 	}
 	var idx = menu.TrackPopupMenu(x, y, 0x0020);
 	if (idx > 0 && idx < 999) fb.RunMainMenuCommand(outputs[idx - 1].name); 
@@ -2375,9 +2376,9 @@ function moreMenu(x, y){
 			}
 			var quickSearchMenu = window.CreatePopupMenu();
 			quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
-			quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的專輯演出者");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
 			quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
-			quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的歌曲類型");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
 			quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
 			quickSearchMenu.AppendTo(_moreMenu, MF_STRING, "快速搜尋...");
 			_moreMenu.AppendMenuSeparator();
@@ -2436,18 +2437,18 @@ function moreMenu(x, y){
 				if(properties.random_function=='200_tracks') checked_item_menu=503;
 			_playRandom.AppendMenuItem(MF_STRING, 502, "專輯");
 				if(properties.random_function=='20_albums') checked_item_menu=502;
-			_playRandom.AppendMenuItem(MF_STRING, 505, "專輯演出者");
+			_playRandom.AppendMenuItem(MF_STRING, 505, "演出者");
 				if(properties.random_function=='1_artist') checked_item_menu=505;
 
 			var genreValue=parseInt(properties.random_function);
-				_playRandom.AppendMenuItem(MF_STRING, 504, "歌曲類型");
+				_playRandom.AppendMenuItem(MF_STRING, 504, "音樂類型");
 			if((genreValue >= 1000 && genreValue < 2001) || properties.random_function=='1_genre')	checked_item_menu=504;
 
 			//_playRandom.CheckMenuRadioItem(502, 505, checked_item_menu);
 
 			var genrePopupMenu = window.CreatePopupMenu();
 			createGenrePopupMenu(false, -1, genrePopupMenu);
-			genrePopupMenu.AppendTo(_playRandom, MF_STRING, "特定歌曲類型");
+			genrePopupMenu.AppendTo(_playRandom, MF_STRING, "特定音樂類型");
 
 			_playRandom.AppendTo(_moreMenu, MF_STRING, "播放隨機化");
 		}
@@ -2966,9 +2967,9 @@ function draw_controls_menu(x,y){
 			_menu.AppendMenuSeparator();
 			var _quickSearchMenu = window.CreatePopupMenu();
 			_quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
-			_quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的專輯演出者");
+			_quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
 			_quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
-			_quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的歌曲類型");
+			_quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
 			_quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
 			_quickSearchMenu.AppendTo(_menu, MF_STRING, "快速搜尋...");			
 			_menu.AppendMenuSeparator();

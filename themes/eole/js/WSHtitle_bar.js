@@ -1435,9 +1435,9 @@ function draw_main_menu(x,y){
 		FiltersMenu.AppendMenuItem(MF_STRING, 4992, "增加高度");
 		FiltersMenu.AppendMenuItem((filters_panel_state.isActive()? MF_STRING : MF_GRAYED), 4991, "減少高度");
 		FiltersMenu.AppendMenuSeparator();
-		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "啟用第1個篩選器 - 歌曲類型");
+		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "啟用第1個篩選器 - 音樂類型");
 		FiltersMenu.CheckMenuItem(4993, (filter1_state.isActive()));
-		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 專輯演出者");
+		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 演出者");
 		FiltersMenu.CheckMenuItem(4994, (filter2_state.isActive()));
 		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4995, "啟用第3個篩選器 - 專輯");
 		FiltersMenu.CheckMenuItem(4995, (filter3_state.isActive()));

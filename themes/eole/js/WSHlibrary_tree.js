@@ -104,8 +104,8 @@ oTagSwitcherBar = function() {
 		);
 		this.items_width = new Array(0, 0, 0, 0);
 		this.items_x = new Array(0, 0, 0, 0);
-		this.items_txt = new Array("T","專輯", "專輯演出者", "歌曲類型");
-		this.items_tooltips = new Array("媒體櫃樹狀欄","專輯 篩選器", "專輯演出者 篩選器", "歌曲類型 篩選器");
+		this.items_txt = new Array("T","專輯", "演出者", "音樂類型");
+		this.items_tooltips = new Array("媒體櫃樹狀欄","專輯 篩選器", "演出者 篩選器", "音樂類型 篩選器");
 		properties.album_label = this.items_txt[1];
 		properties.artist_label = this.items_txt[2];
 		properties.genre_label = this.items_txt[3];		
@@ -1160,10 +1160,10 @@ function panel_operations() {
         sort = "";
     var view_ppt = [
         window.GetProperty("View 01: Name // Pattern", "按 演出者 檢視 // %artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
-        window.GetProperty("View 02: Name // Pattern", "按 專輯演出者 檢視 // %album artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
-        window.GetProperty("View 03: Name // Pattern", "按 專輯演出者 - 專輯 檢視 // [%album artist% - ]['['%date%']' ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
+        window.GetProperty("View 02: Name // Pattern", "按 演出者 檢視 // %album artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
+        window.GetProperty("View 03: Name // Pattern", "按 演出者 - 專輯 檢視 // [%album artist% - ]['['%date%']' ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
         window.GetProperty("View 04: Name // Pattern", "按 專輯 檢視 // %album%[ '['%album artist%']']|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
-        window.GetProperty("View 05: Name // Pattern", "按 歌曲類型 檢視 // %genre%|[%album artist% - ][(%date%) ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
+        window.GetProperty("View 05: Name // Pattern", "按 音樂類型 檢視 // %genre%|[%album artist% - ][(%date%) ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
         window.GetProperty("View 06: Name // Pattern", "按 年份 檢視 // %date%|[%album artist% - ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%")
     ];
     var nm = "",
@@ -2662,7 +2662,7 @@ function populate() {
 					show_text : false,
 					use_album_art : false,
 					use_theming : false,
-					custom_image : createDragText(drag_text, items.Count+" tracks", 220),
+					custom_image : createDragText(drag_text, items.Count+" 曲目", 220),
 				}
 				var effect = fb.DoDragDrop(window.ID, items, g_drop_effect.copy | g_drop_effect.move | g_drop_effect.link, options); // effects can be combined
 				// nothing happens here until the mouse button is released

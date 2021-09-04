@@ -965,9 +965,9 @@ function on_mouse_rbtn_up(x, y){
 		main_menu.AppendMenuItem(MF_STRING, 8, "更新此圖片");
 		var quickSearchMenu = window.CreatePopupMenu();
 		quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的專輯演出者");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
 		quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的歌曲類型");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
 		quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
 		quickSearchMenu.AppendTo(main_menu, MF_STRING, "快速搜尋...");
 		main_menu.AppendMenuSeparator();
@@ -979,18 +979,18 @@ function on_mouse_rbtn_up(x, y){
 			if(properties.random_function=='200_tracks') checked_item_menu=3;
 		main_menu.AppendMenuItem(MF_STRING, 2, "專輯");
 			if(properties.random_function=='20_albums') checked_item_menu=2;
-		main_menu.AppendMenuItem(MF_STRING, 5, "專輯演出者");
+		main_menu.AppendMenuItem(MF_STRING, 5, "演出者");
 			if(properties.random_function=='1_artist') checked_item_menu=5;
 
 		var genreValue=parseInt(properties.random_function);
-			main_menu.AppendMenuItem(MF_STRING, 4, "歌曲類型");
+			main_menu.AppendMenuItem(MF_STRING, 4, "音樂類型");
 		if((genreValue >= 1000 && genreValue < 2001) || properties.random_function=='1_genre')	checked_item_menu=4;
 
 		main_menu.CheckMenuRadioItem(2, 5, checked_item_menu);
 
 		var genrePopupMenu = window.CreatePopupMenu();
 		createGenrePopupMenu(false, -1, genrePopupMenu);
-		genrePopupMenu.AppendTo(main_menu, MF_STRING, "特定歌曲類型");
+		genrePopupMenu.AppendTo(main_menu, MF_STRING, "特定音樂類型");
 	}
 	
 	if(fb.IsPlaying){

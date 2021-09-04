@@ -3165,7 +3165,7 @@ function createDragImg(img, cover_size, count){
     gb.FillSolidRect(left_padding, top_padding, cover_size, cover_size, colors.dragcover_overlay);
 	gb.FillSolidRect(left_padding,top_padding+cover_size-text_height,cover_size,text_height,colors.dragimage_bg);
 	gb.DrawRect(left_padding, top_padding, cover_size-1, cover_size-1, 1.0,colors.dragimage_border);
-	gb.GdiDrawText(count+" tracks", g_font.italicmin1,  colors.dragimage_text, left_padding, top_padding+cover_size-text_height, cover_size, text_height, DT_CENTER | DT_CALCRECT | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX);
+	gb.GdiDrawText(count+" 曲目", g_font.italicmin1,  colors.dragimage_text, left_padding, top_padding+cover_size-text_height, cover_size, text_height, DT_CENTER | DT_CALCRECT | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX);
 	drag_img.ReleaseGraphics(gb);
 
 	//drag_img = drag_img.Resize(cover_size, cover_size, 2);

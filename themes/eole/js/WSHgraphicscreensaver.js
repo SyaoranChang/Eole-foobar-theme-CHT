@@ -1370,7 +1370,7 @@ oShowList = function(parentPanelName) {
 			this.discnumber = Tags[2];
 			this.date = Tags[3];
 			this.genre = Tags[4];
-			this.total_tracks = this.pl.Count+(this.pl.Count>1?" tracks":" track");
+			this.total_tracks = this.pl.Count+(this.pl.Count>1?" 曲目":" 曲目");
 		} else {
 			TagsString = TF.showlistReduced.EvalWithMetadb(this.pl[0]);
 			Tags = TagsString.split(" ^^ ");
@@ -1379,7 +1379,7 @@ oShowList = function(parentPanelName) {
 			this.discnumber = (Tags[0]=='')?'':' - Disc '+Tags[0];
 			this.date = ' ('+brw.groups_draw[this.idx].date+')';
 			this.genre = brw.groups_draw[this.idx].genre;
-			this.total_tracks = this.pl.Count+(this.pl.Count>1?" tracks":" track");
+			this.total_tracks = this.pl.Count+(this.pl.Count>1?" 曲目":" 曲目");
 		}
 
 		this.firstRowInfo = this.album+this.discnumber+this.date;
@@ -1998,7 +1998,8 @@ oHeaderbar = function(name) {
 		if(brw.finishLoading) {
 			if(brw.playlistItemCount) {
 				this.timeTxt = brw.FormatTime(brw.totalTime);
-				this.itemsTxt=',  '+brw.playlistItemCount+' track'+((brw.playlistItemCount>1)?"s":"")+',  '+brw.groups_draw.length+' group'+((brw.groups_draw.length>1)?"s":"");
+				//this.itemsTxt=',  '+brw.playlistItemCount+' track'+((brw.playlistItemCount>1)?"s":"")+',  '+brw.groups_draw.length+' group'+((brw.groups_draw.length>1)?"s":"");
+				this.itemsTxt=',  '+brw.playlistItemCount+' 曲目'+',  '+brw.groups_draw.length+' 群組';
 
 				// Main Text, Left justified
 				if(brw.playlistName==globalProperties.whole_library){
@@ -2061,7 +2062,7 @@ oHeaderbar = function(name) {
 			SortMenu.AppendTo(basemenu, MF_STRING, "排序");
 
 			SortMenu.AppendMenuItem(MF_STRING, 3000, "不要排序（播放中的排序訂單）");
-			SortMenu.AppendMenuItem(MF_STRING, 3001, "專輯演出者 / 專輯 / 音軌編號");
+			SortMenu.AppendMenuItem(MF_STRING, 3001, "演出者 / 專輯 / 音軌編號");
 			SortMenu.AppendMenuItem(MF_STRING, 3002, "曲目名稱");
 			SortMenu.AppendMenuItem(MF_STRING, 3003, "音軌編號");
 			SortMenu.AppendMenuItem(MF_STRING, 3004, "日期");
@@ -2107,7 +2108,7 @@ oHeaderbar = function(name) {
 		var GroupMenu = window.CreatePopupMenu(); //Custom Entries
 		GroupMenu.AppendTo(basemenu, MF_STRING, "群組");
 
-		GroupMenu.AppendMenuItem(MF_STRING, 4000, "預設 (專輯, 專輯演出者)");
+		GroupMenu.AppendMenuItem(MF_STRING, 4000, "預設 (專輯, 演出者)");
 		GroupMenu.AppendMenuItem(MF_STRING, 4001, "自定義曲目名稱格式化...");
 
 		checked_item=0;
@@ -2301,7 +2302,7 @@ function draw_settings_menu(x,y){
 
 	_menuTracklist.AppendMenuItem(MF_STRING, 11, "啟用曲目清單");
 	_menuTracklist.CheckMenuItem(11, properties.expandInPlace);
-	_menuTracklist.AppendMenuItem(MF_STRING, 28, "顯示每首曲目的專輯演出者的名稱");
+	_menuTracklist.AppendMenuItem(MF_STRING, 28, "顯示每首曲目的演出者的名稱");
 	_menuTracklist.CheckMenuItem(28, properties.showArtistName);
 	_menuTracklist.AppendMenuItem(MF_STRING, 13, "開啟動畫");
 	_menuTracklist.CheckMenuItem(13, properties.smooth_expand_value>0);
@@ -3067,11 +3068,13 @@ oBrowser = function(name) {
 			totalS -= (totalH = Math.floor(totalS / 3600)) * 3600;
 			totalS -= (totalM = Math.floor(totalS / 60)) * 60;
 
-			if (totalW != 0) time_txt += totalW + ((totalW > 1)? ' weeks': ' week');
-			if (totalD != 0) time_txt += ' ' + totalD + ((totalD > 1)? ' days': ' day');
-			if (totalH != 0) time_txt += ' ' + totalH + ' h';
-			if (totalM != 0) time_txt += ' ' + totalM + ' min';
-			if (time_txt == '' || totalS != 0) time_txt += ' ' + totalS +' sec';
+			//if (totalW != 0) time_txt += totalW + ((totalW > 1)? ' weeks': ' week');
+			if (totalW != 0) time_txt += totalW + ' 週';
+			//if (totalD != 0) time_txt += ' ' + totalD + ((totalD > 1)? ' days': ' day');
+			if (totalD != 0) time_txt += ' ' + totalD + ' 天';
+			if (totalH != 0) time_txt += ' ' + totalH + ' 小時';
+			if (totalM != 0) time_txt += ' ' + totalM + ' 分';
+			if (time_txt == '' || totalS != 0) time_txt += ' ' + totalS +' 秒';
 		}
 		return time_txt;
 	}
@@ -3222,7 +3225,7 @@ oBrowser = function(name) {
 				if(i>0) {
 					if(this.custom_firstRow) this.groups[i-1].firstRow = TF.grouping.EvalWithMetadb(this.groups[i-1].pl[0]);
 					else this.groups[i-1].firstRow = this.groups[i-1].artist
-					if(this.custom_secondRow) this.groups[i-1].secondRow = this.groups[i-1].pl.Count+(this.groups[this.groups.length-1].pl.Count>1?" tracks":" track");
+					if(this.custom_secondRow) this.groups[i-1].secondRow = this.groups[i-1].pl.Count+(this.groups[this.groups.length-1].pl.Count>1?" 曲目":" 曲目");
 					else this.groups[i-1].secondRow = this.groups[i-1].album;
 
 					this.totalTime += this.groups[i-1].length;
@@ -3318,7 +3321,7 @@ oBrowser = function(name) {
 			if(this.groups.length>0){
 				if(this.custom_firstRow) this.groups[this.groups.length-1].firstRow = TF.grouping.EvalWithMetadb(this.groups[this.groups.length-1].pl[0]);
 				else this.groups[this.groups.length-1].firstRow = this.groups[this.groups.length-1].artist
-				if(this.custom_secondRow) this.groups[this.groups.length-1].secondRow = this.groups[this.groups.length-1].pl.Count+(this.groups[this.groups.length-1].pl.Count>1?" tracks":" track");
+				if(this.custom_secondRow) this.groups[this.groups.length-1].secondRow = this.groups[this.groups.length-1].pl.Count+(this.groups[this.groups.length-1].pl.Count>1?" 曲目":" 曲目");
 				else this.groups[this.groups.length-1].secondRow = this.groups[this.groups.length-1].album;
 				this.totalTime += this.groups[this.groups.length-1].length;
 				if(this.searched_track!=null && this.found_albumIdx>-1) {
@@ -3989,7 +3992,7 @@ oBrowser = function(name) {
 					} else {
 						gr.GdiDrawText(playlistname+" :", g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 						gr.FillSolidRect(this.w/2 -125, py-46, 250, 1, colors.border);
-						gr.GdiDrawText("This playlist is empty.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+						gr.GdiDrawText("這個播放清單是空的。", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 					}
 				}
 
@@ -5207,14 +5210,14 @@ function on_mouse_rbtn_down(x, y){
 			metadblist_selection = brw.groups_draw[check__].pl;
 
 			var quickSearchMenu = window.CreatePopupMenu();
-			quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的專輯演出者");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
 			quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
-			quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的歌曲類型");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
 			quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
 			quickSearchMenu.AppendTo(_menu, MF_STRING, "快速搜尋...");
 
 			var genrePopupMenu = createGenrePopupMenu(brw.groups_draw[check__].pl[0]);
-			genrePopupMenu.AppendTo(_menu, MF_STRING, "編輯歌曲類型");
+			genrePopupMenu.AppendTo(_menu, MF_STRING, "編輯音樂類型");
 			_menu.AppendMenuSeparator();
 			_menu.AppendMenuItem(MF_STRING, 19, "刷新此圖片");
 			_menu.AppendMenuSeparator();
@@ -5251,9 +5254,9 @@ function on_mouse_rbtn_down(x, y){
 
 								var quickSearchMenu = window.CreatePopupMenu();
 								quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
-								quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的專輯演出者");
+								quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
 								quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
-								quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的歌曲類型");
+								quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
 								quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
 								quickSearchMenu.AppendTo(_menu, MF_STRING, "快速搜尋...");
 

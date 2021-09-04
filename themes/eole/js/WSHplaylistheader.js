@@ -84,7 +84,7 @@ buttons = {
     Settings: new SimpleButton(0, 8, 21, 21, "Settings", "設定...", function () {
         if(plman.PlaylistItemCount(plman.ActivePlaylist)>0) draw_menu(buttons.Settings.x+25,buttons.Settings.y+25);
     },false,settings_off,settings_hover,ButtonStates.normal),
-    filtersToggle: new SimpleButton(18, 8, 50, 21, "filtersToggle", "Extend filters", function () {
+    filtersToggle: new SimpleButton(18, 8, 50, 21, "filtersToggle", "擴展篩選器", function () {
 		if(filters_panel_state.isMaximumValue()) filters_panel_state.decrement(1);
 		else filters_panel_state.increment(1);
 		positionButtons();
@@ -379,9 +379,9 @@ function draw_menu(x, y) {
 	FiltersMenu.AppendMenuItem(MF_STRING, 4992, "增加高度");
 
 	FiltersMenu.AppendMenuSeparator();
-	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "啟用第1個篩選器 - 歌曲類型");
+	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "啟用第1個篩選器 - 音樂類型");
 	FiltersMenu.CheckMenuItem(4993, (filter1_state.isActive()));
-	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 專輯演出者");
+	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 演出者");
 	FiltersMenu.CheckMenuItem(4994, (filter2_state.isActive()));
 	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4995, "啟用第3個篩選器 - 專輯");
 	FiltersMenu.CheckMenuItem(4995, (filter3_state.isActive()));
@@ -397,7 +397,7 @@ function draw_menu(x, y) {
 		var SortMenu = window.CreatePopupMenu(); //Custom Entries
 		SortMenu.AppendTo(basemenu, MF_STRING, "排序");
 
-		SortMenu.AppendMenuItem(MF_STRING, 3001, "專輯演出者 / 專輯 / 音軌編號");
+		SortMenu.AppendMenuItem(MF_STRING, 3001, "演出者 / 專輯 / 音軌編號");
 		SortMenu.AppendMenuItem(MF_STRING, 3003, "曲目名稱");
 		SortMenu.AppendMenuItem(MF_STRING, 3004, "音軌編號");
 		SortMenu.AppendMenuSeparator();
@@ -732,16 +732,20 @@ playlistInfo = function(){
 			totalS=Math.round(r_timetodraw);
 			totalS=(totalS>9) ? totalS:'0'+totalS;
 
-			txt_month=(totalMth>1)?totalMth+'months, ':totalMth+'month, ';
-			txt_week=(totalW>1)?totalW+'weeks, ':totalW+'week, ';if(totalW==0) txt_week='';
-			txt_day=(totalD>1)?totalD+'days, ':totalD+'day, '; if(totalD==0) txt_day='';
-			txt_hour=(totalH>1)?totalH+'hours, ':totalH+'hour, '; if(totalH==0) txt_hour='';
-			if(totalMth>0) this.time_txt=txt_month+txt_week+txt_day+txt_hour+totalM+'min ';
-			else if (totalW>0) this.time_txt=txt_week+txt_day+txt_hour+totalM+'min ';
-			else if (totalD>0) this.time_txt=txt_day+txt_hour+totalM+'min ';
-			else if (totalH>0) this.time_txt=txt_hour+totalM+'min, '+totalS+'sec';
-			else this.time_txt=totalM+'min, '+totalS+'sec';
-			this.items_txt=displayed_count+' items';
+			//txt_month=(totalMth>1)?totalMth+'months, ':totalMth+'month, ';
+			txt_month=totalMth+'月, ';
+			//txt_week=(totalW>1)?totalW+'weeks, ':totalW+'week, ';if(totalW==0) txt_week='';
+			txt_week=totalW+'週, ';if(totalW==0) txt_week='';
+			//txt_day=(totalD>1)?totalD+'days, ':totalD+'day, '; if(totalD==0) txt_day='';
+			txt_day=totalD+'天, '; if(totalD==0) txt_day='';
+			//txt_hour=(totalH>1)?totalH+'hours, ':totalH+'hour, '; if(totalH==0) txt_hour='';
+			txt_hour=totalH+'小時, '; if(totalH==0) txt_hour='';
+			if(totalMth>0) this.time_txt=txt_month+txt_week+txt_day+txt_hour+totalM+'分 ';
+			else if (totalW>0) this.time_txt=txt_week+txt_day+txt_hour+totalM+'分 ';
+			else if (totalD>0) this.time_txt=txt_day+txt_hour+totalM+'分 ';
+			else if (totalH>0) this.time_txt=txt_hour+totalM+'分, '+totalS+'秒';
+			else this.time_txt=totalM+'分, '+totalS+'秒';
+			this.items_txt=displayed_count+' 項目';
 
 			// Main Text, Left justified
 			var filtered_playlist = "";
@@ -749,27 +753,27 @@ playlistInfo = function(){
 				var filtered_playlist = plman.GetPlaylistName(properties.filtred_playlist_idx);
 			}
 			if(filtered_playlist!="" && filtered_playlist!=globalProperties.selection_playlist){				
-				this.main_txt='Playlist : '+plman.GetPlaylistName(properties.filtred_playlist_idx)+' (Filtered)';	
+				this.main_txt='播放清單 : '+plman.GetPlaylistName(properties.filtred_playlist_idx)+' (已篩選)';	
 			} else if(this.playlist_name!=globalProperties.playing_playlist && this.playlist_name!=globalProperties.selection_playlist && this.playlist_name!=globalProperties.filter_playlist){
-				this.main_txt='Playlist : '+this.playlist_name;
+				this.main_txt='播放清單 : '+this.playlist_name;
 			} else if(this.albums!=""){
 				if(this.artists!="") this.main_txt=this.albums+' - '+this.artists
-				else this.main_txt='Various Artists - '+this.albums;
+				else this.main_txt='多位演出者 - '+this.albums;
 			} else if(this.artists!="") {
-				this.main_txt=this.artists+' - Several Albums';
+				this.main_txt=this.artists+' - 數張專輯';
 			} else if(this.genres!="") {
 				this.main_txt=this.genres;
 			} else if(this.dates!="") {
-				this.main_txt="Date : "+this.dates;
+				this.main_txt="日期 : "+this.dates;
 			} else if(this.playlist_name==globalProperties.playing_playlist || this.playlist_name==globalProperties.selection_playlist){
-				this.main_txt='Mixed selection';
+				this.main_txt='混合選擇';
 			} else {
-				this.main_txt='Playlist : '+this.playlist_name;
+				this.main_txt='播放清單 : '+this.playlist_name;
 			}
 
 		} else {
-			this.main_txt='Playlist : '+this.playlist_name;
-			this.items_txt='Empty Playlist';
+			this.main_txt='播放清單 : '+this.playlist_name;
+			this.items_txt='空的播放清單';
 		}
 		this.items_width = -1;
 		this.main_txt_width = -1;

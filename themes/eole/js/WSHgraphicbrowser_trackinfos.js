@@ -1813,7 +1813,7 @@ oShowList = function(parentPanelName) {
 			this.discnumber = Tags[2];
 			this.date = Tags[3];
 			this.genre = Tags[4];
-			this.total_tracks = pl_count+(pl_count>1?" tracks":" track");
+			this.total_tracks = pl_count+(pl_count>1?" 曲目":" 曲目");
 		} else {
 			//TagsString = TF.showlistReduced.EvalWithMetadb(this.pl[0]);
 			//Tags = TagsString.split(" ^^ ");
@@ -1824,7 +1824,7 @@ oShowList = function(parentPanelName) {
 			if(brw.groups[this.idx].date!="?" && !brw.custom_groupby) this.date = ' ('+brw.groups[this.idx].date+')';
 			else this.date = '';
 			this.genre = brw.groups[this.idx].genre;
-			this.total_tracks = pl_count+(pl_count>1?" tracks":" track");
+			this.total_tracks = pl_count+(pl_count>1?" 曲目":" 曲目");
 		}
 
 		this.firstRow = this.album+this.discnumber+this.date;
@@ -2791,13 +2791,14 @@ oHeaderBar = function(name) {
 				else if(brw.totalTime>0) this.timeTxt = brw.FormatTime(brw.totalTime);
 				else this.timeTxt = 'ON AIR';
 
-				this.itemsTxt=((properties.showTotalTime)?',  ':'')+brw.playlistItemCount+' track'+((brw.playlistItemCount>1)?"s":"")+',  '+brw.groups_draw.length+' group'+((brw.groups_draw.length>1)?"s":"");
+				//this.itemsTxt=((properties.showTotalTime)?',  ':'')+brw.playlistItemCount+' track'+((brw.playlistItemCount>1)?"s":"")+',  '+brw.groups_draw.length+' group'+((brw.groups_draw.length>1)?"s":"");
+				this.itemsTxt=((properties.showTotalTime)?',  ':'')+brw.playlistItemCount+' 曲目'+',  '+brw.groups_draw.length+' 群組';
 
 				// Main Text, Left justified
 				if(brw.playlistName==globalProperties.whole_library){
-					this.mainTxt='Whole Library';
+					this.mainTxt='整個媒體櫃';
 				} else if(brw.playlistName!=globalProperties.selection_playlist && brw.playlistName!=globalProperties.playing_playlist){
-					this.mainTxt='Playlist : '+brw.playlistName;
+					this.mainTxt='播放清單 : '+brw.playlistName;
 				} else if(brw.albumName!="" && brw.albumName!="?") {
 					if(brw.date!="" && brw.date!="?") var albumName = brw.albumName + ' (' + brw.date + ')';
 					else var albumName = brw.albumName
@@ -2809,22 +2810,22 @@ oHeaderBar = function(name) {
 					this.mainTxt=brw.genreName;
 				} else if(brw.playlistName==globalProperties.selection_playlist || brw.playlistName==globalProperties.playing_playlist){
 					if(brw.date!="" && brw.date!="?") {
-						this.mainTxt='Date : '+brw.date;
-					} else this.mainTxt='Mixed selection';
+						this.mainTxt='日期 : '+brw.date;
+					} else this.mainTxt='混合選擇';
 				}
 				else {
-					this.mainTxt='Playlist : '+brw.playlistName;
+					this.mainTxt='播放清單 : '+brw.playlistName;
 				}
 			} else if(brw.playlistName==globalProperties.selection_playlist || brw.playlistName==globalProperties.playing_playlist) {
 				this.mainTxt=''+brw.playlistName;
-				this.itemsTxt='Empty selection';
+				this.itemsTxt='空的選擇';
 			} else {
-				this.mainTxt='Playlist : '+brw.playlistName;
-				this.itemsTxt='Empty Playlist';
+				this.mainTxt='播放清單 : '+brw.playlistName;
+				this.itemsTxt='空的播放清單';
 			}
-			if(brw.SourcePlaylistIdx==plman.PlayingPlaylist) this.mainTxt+= ' (playing)';
+			if(brw.SourcePlaylistIdx==plman.PlayingPlaylist) this.mainTxt+= ' (播放中)';
 		} else {
-				this.mainTxt='Loading ...';
+				this.mainTxt='載入中...';
 				this.itemsTxt='';
 		}
 		g_filterbox.inputbox.empty_text = ''+this.mainTxt+'';
@@ -2901,7 +2902,7 @@ oHeaderBar = function(name) {
 
 			SortMenu.AppendMenuItem(MF_STRING, 2999, "不要排序（播放中的排序訂單）");
 			SortMenu.AppendMenuSeparator();
-			SortMenu.AppendMenuItem(MF_STRING, 3000, "專輯演出者 / 專輯 / 音軌編號");
+			SortMenu.AppendMenuItem(MF_STRING, 3000, "演出者 / 專輯 / 音軌編號");
 			SortMenu.AppendMenuItem(MF_STRING, 3001, "曲目名稱");
 			SortMenu.AppendMenuItem(MF_STRING, 3002, "音軌編號");
 			SortMenu.AppendMenuItem(MF_STRING, 3003, "日期");
@@ -3028,7 +3029,7 @@ oHeaderBar = function(name) {
 		var GroupMenu = window.CreatePopupMenu(); //Custom Entries
 		GroupMenu.AppendTo(basemenu, MF_STRING, "群組");
 
-		GroupMenu.AppendMenuItem(MF_STRING, 4000, "預設 (專輯, 專輯演出者)");
+		GroupMenu.AppendMenuItem(MF_STRING, 4000, "預設 (專輯, 演出者)");
 		GroupMenu.AppendMenuItem(MF_STRING, 4001, "自定義曲目名稱格式化...");
 		GroupMenu.AppendMenuSeparator();
 		GroupMenu.AppendMenuItem(MF_STRING, 4002, "合併一張多碟專輯的所有曲目");
@@ -3321,7 +3322,6 @@ function draw_settings_menu(x,y,right_align,sort_group){
 	_menuBackground.AppendMenuItem(MF_STRING, 17, "根據專輯封面的背景 (模糊化)");
 	_menuBackground.AppendMenuItem(MF_STRING, 18, "根據專輯封面的背景 (混合兩者)");
 	_menuBackground.AppendMenuItem(MF_STRING, 19, "透明背景");
-	//_menuBackground.CheckMenuRadioItem(15, 18,  (!properties.showListColored) ? 18 : (properties.showListColoredOneColor) ? 15 : (properties.showListColoredBlurred) ? 16 :  (properties.showListColoredMixedColor) ? 17 : 18);
 	_menuBackground.CheckMenuRadioItem(16, 19, (properties.showListColoredOneColor) ? 16 : (properties.showListColoredBlurred) ? 17 :  (properties.showListColoredMixedColor) ? 18 : 19);
 	_menuBackground.AppendTo(_menuTracklist,MF_STRING, "背景壁紙");
 
@@ -4246,11 +4246,13 @@ oBrowser = function(name) {
 			totalS -= (totalH = Math.floor(totalS / 3600)) * 3600;
 			totalS -= (totalM = Math.floor(totalS / 60)) * 60;
 
-			if (totalW != 0) time_txt += totalW + ((totalW > 1)? ' weeks': ' week');
-			if (totalD != 0) time_txt += ' ' + totalD + ((totalD > 1)? ' days': ' day');
-			if (totalH != 0) time_txt += ' ' + totalH + ' h';
-			if (totalM != 0) time_txt += ' ' + totalM + ' min';
-			if (time_txt == '' || totalS != 0) time_txt += ' ' + totalS +' sec';
+			//if (totalW != 0) time_txt += totalW + ((totalW > 1)? ' weeks': ' week');
+			if (totalW != 0) time_txt += totalW + ' 週';
+			//if (totalD != 0) time_txt += ' ' + totalD + ((totalD > 1)? ' days': ' day');
+			if (totalD != 0) time_txt += ' ' + totalD + ' 天';
+			if (totalH != 0) time_txt += ' ' + totalH + ' 小時';
+			if (totalM != 0) time_txt += ' ' + totalM + ' 分';
+			if (time_txt == '' || totalS != 0) time_txt += ' ' + totalS +' 秒';
 		}
 		return time_txt;
 	}
@@ -4437,7 +4439,7 @@ oBrowser = function(name) {
 					if(this.custom_groupby) {
 						var groupinfos_rows = TF.grouping.EvalWithMetadb(this.groups[i-1].pl[0]).split(" ^^ ");
 						this.groups[i-1].firstRow = groupinfos_rows[0];
-						this.groups[i-1].secondRow = (groupinfos_rows[1]!="")?groupinfos_rows[1]:this.groups[i-1].pl.Count+(this.groups[i-1].pl.Count>1?" tracks":" track");
+						this.groups[i-1].secondRow = (groupinfos_rows[1]!="")?groupinfos_rows[1]:this.groups[i-1].pl.Count+(this.groups[i-1].pl.Count>1?" 曲目":" 曲目");
 					} else {
 						this.groups[i-1].firstRow = this.groups[i-1].artist
 						this.groups[i-1].secondRow = this.groups[i-1].album;
@@ -4538,7 +4540,7 @@ oBrowser = function(name) {
 				if(this.custom_groupby) {
 					var groupinfos_rows = TF.grouping.EvalWithMetadb(this.groups[i-1].pl[0]).split(" ^^ ");
 					this.groups[this.groups.length-1].firstRow = groupinfos_rows[0];
-					this.groups[this.groups.length-1].secondRow = (groupinfos_rows[1]!="")?groupinfos_rows[1]:this.groups[this.groups.length-1].pl.Count+(this.groups[this.groups.length-1].pl.Count>1?" tracks":" track");
+					this.groups[this.groups.length-1].secondRow = (groupinfos_rows[1]!="")?groupinfos_rows[1]:this.groups[this.groups.length-1].pl.Count+(this.groups[this.groups.length-1].pl.Count>1?" 曲目":" 曲目");
 				} else {
 					this.groups[this.groups.length-1].firstRow = this.groups[this.groups.length-1].artist
 					this.groups[this.groups.length-1].secondRow = this.groups[this.groups.length-1].album;
@@ -5129,7 +5131,7 @@ oBrowser = function(name) {
 				if(this.firstInitialisation) {
 					gr.GdiDrawText("載入中...",  g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 					gr.FillSolidRect(this.w/2 -125, py-46, 250, 1, colors.border);
-					gr.GdiDrawText("Library browser", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+					gr.GdiDrawText("媒體櫃瀏覽器", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 				}
 				else {
 					var playlistname=plman.GetPlaylistName(this.SourcePlaylistIdx);
@@ -5140,11 +5142,11 @@ oBrowser = function(name) {
 					} else if(playlistname==globalProperties.selection_playlist || playlistname==globalProperties.playing_playlist) {
 						gr.FillSolidRect(this.w/2 -150, py-46, 300, 1, colors.border);
 						gr.GdiDrawText(playlistname+" :",  g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
-						gr.GdiDrawText("Nothing to show.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+						gr.GdiDrawText("沒有項目可以顯示.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 					} else {
 						gr.GdiDrawText(playlistname+" :", g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 						gr.FillSolidRect(this.w/2 -125, py-46, 250, 1, colors.border);
-						gr.GdiDrawText("This playlist is empty.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+						gr.GdiDrawText("這個播放清單是空的.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 					}
 				}
 
@@ -6502,9 +6504,9 @@ function on_mouse_rbtn_down(x, y){
 			metadblist_selection = brw.groups[brw.groups_draw[check__]].pl;
 
 			var quickSearchMenu = window.CreatePopupMenu();
-			quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的專輯演出者");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
 			quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
-			quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的歌曲類型");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
 			quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
 			quickSearchMenu.AppendTo(_menu, MF_STRING, "快速搜尋...");
 
@@ -6546,9 +6548,9 @@ function on_mouse_rbtn_down(x, y){
 
 								var quickSearchMenu = window.CreatePopupMenu();
 								quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
-								quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的專輯演出者");
+								quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
 								quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
-								quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的歌曲類型");
+								quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
 								quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
 								quickSearchMenu.AppendTo(_menu, MF_STRING, "快速搜尋...");
 
@@ -6784,7 +6786,7 @@ function on_mouse_move(x, y, m) {
 				if(g_showlist.rows_[i].isSelected) showlist_selected_count++;
 			}
 			if(showlist_selected_count==items.Count) var drag_img = createDragImg(brw.groups[g_showlist.idx].cover_img, 80,items.Count);
-			else drag_img = createDragText("Dragging", items.Count+" tracks", 220);
+			else drag_img = createDragText("Dragging", items.Count+" 曲目", 220);
 			brw.external_dragging = true;
 			var options = {
 				show_text : false,

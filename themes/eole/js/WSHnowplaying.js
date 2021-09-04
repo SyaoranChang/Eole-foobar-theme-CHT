@@ -200,7 +200,7 @@ function SimpleButton(x, y, w, h, text, tooltip_text, fonClick, fonDbleClick, N_
                 this.state = ButtonStates.hide;return;
             } else this.state = ButtonStates.normal;
         } else if(this.text=='Pause'){
-			this.tooltip_text = fb.IsPaused?"Resume Playback":"Pause playback";
+			this.tooltip_text = fb.IsPaused?"繼續播放":"暫停播放";
 			var play_pause = (fb.IsPaused || (g_cover.isPlaying() && g_cover.isHover));
             if(!play_pause || Randomsetfocus || !g_cover.isPlaying() || properties.single_click_action!=0){
                 this.state = ButtonStates.hide;
@@ -1483,7 +1483,8 @@ function oInfos() {
 		var txt_title = allinfos[1];
 		var txt_info = allinfos[2] + allinfos[3] + (allinfos[4]!='?'?" ("+allinfos[4]+")":"");
 		var _playcount = allinfos[6];
-		if(foo_playcount) var txt_profile = allinfos[5] + allinfos[7] + " | " + _playcount + (_playcount > 1 ? " plays" : " play");
+		//if(foo_playcount) var txt_profile = allinfos[5] + allinfos[7] + " | " + _playcount + (_playcount > 1 ? " plays" : " play");
+		if(foo_playcount) var txt_profile = allinfos[5] + allinfos[7] + " | " + _playcount + " 次播放";
 		else var txt_profile = allinfos[5] + allinfos[7];
 		this.show_info = true;
 		this.updateInfos(txt_title, txt_info, txt_profile, this.metadb, false, this.rating);
@@ -1644,9 +1645,9 @@ function on_mouse_rbtn_up(x, y){
 		main_menu.AppendMenuItem(MF_STRING, 8, "更新此圖片");
 		var quickSearchMenu = window.CreatePopupMenu();
 		quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的專輯演出者");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
 		quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的歌曲類型");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
 		quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
 		quickSearchMenu.AppendTo(main_menu, MF_STRING, "快速搜尋...");
 	}

@@ -1216,11 +1216,11 @@ oBrowser = function(name) {
 						var line_width = Math.min(150,Math.round(this.w-40));
 						var py = this.y + properties.rowHeight + Math.round(this.h  / 2)-1 - wh * 0.1;
 						if(g_filterbox.inputbox.text!='') {
-							var text1 = "No items";
-							var text2 = "matching";
+							var text1 = "沒有任何項目";
+							var text2 = "匹配的";
 						} else {
 							var text1 = "";
-							var text2 = "Nothing seleted";
+							var text2 = "沒有選擇任何項目";
 						}
 						if(text1!='') {
 							gr.GdiDrawText(text1, g_font.plus5, colors.normal_txt, this.x, py - 40, this.w, 36, DT_CENTER | DT_BOTTOM | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
@@ -1233,9 +1233,9 @@ oBrowser = function(name) {
 						var px = 0;
 						var line_width = Math.min(150,Math.round(this.w-40));
 						var py = this.y + Math.round(this.h  / 2)-1;
-						gr.GdiDrawText("Loading...", g_font.plus5, colors.normal_txt, this.x, py - 40, this.w, 36, DT_CENTER | DT_BOTTOM | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+						gr.GdiDrawText("載入中...", g_font.plus5, colors.normal_txt, this.x, py - 40, this.w, 36, DT_CENTER | DT_BOTTOM | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 						gr.FillSolidRect(this.x+Math.round(this.w/2-line_width/2),py, line_width, 1, colors.border);
-						gr.GdiDrawText("Playlists manager", g_font.italicplus1, colors.faded_txt, this.x, py + 6, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+						gr.GdiDrawText("播放清單管理器", g_font.italicplus1, colors.faded_txt, this.x, py + 6, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 				}
 			}
 			// draw bottom gradient
@@ -1244,7 +1244,8 @@ oBrowser = function(name) {
             // draw header
             if(properties.showHeaderBar) {
                 if(globalProperties.fontAdjustement>=globalProperties.fontAdjustement_max-2) var boxText = this.rows.length;
-				else var boxText = this.rows.length+" playlist"+(this.rows.length>1?"s":"");
+				//else var boxText = this.rows.length+" playlist"+(this.rows.length>1?"s":"");
+				else var boxText = this.rows.length+" 播放清單";
 
                 gr.FillSolidRect(this.x, 0, this.w - this.x -1, properties.headerBarHeight, colors.headerbar_bg);
                 gr.FillSolidRect(this.x, properties.headerBarHeight, this.w - this.x -1, 1, colors.headerbar_line);
