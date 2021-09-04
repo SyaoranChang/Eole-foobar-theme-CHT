@@ -196,7 +196,7 @@ function DeletePlaylist(delete_pid){
 		}
 	}
 	parsed_tabname = plman.GetPlaylistName(delete_pid);
-	HtmlDialog("Delete this playlist", "Delete the playlist '"+parsed_tabname+"' ?", 'Yes', 'No', delete_confirmation);
+	HtmlDialog("刪除播放清單", "確定要刪除播放清單 '"+parsed_tabname+"' ?", 'Yes', 'No', delete_confirmation);
 }
 /*
 ===================================================================================================
@@ -263,7 +263,7 @@ oFilterBox = function() {
 		} else {
 			this.images.search_icon = gdi.Image(theme_img_path + "\\icons\\search_icon.png");
 		}
-		this.search_bt = new button(this.images.search_icon, this.images.search_icon, this.images.search_icon,"search_bt", "Filter playlists");
+		this.search_bt = new button(this.images.search_icon, this.images.search_icon, this.images.search_icon,"search_bt", "篩選播放清單");
 
         this.images.resetIcon_off = gdi.CreateImage(w, w);
         gb = this.images.resetIcon_off.GetGraphics();
@@ -1768,11 +1768,12 @@ oBrowser = function(name) {
             this.repaint();
             break;
         case (idx==2):
-            fb.RunMainMenuCommand("File/Load Playlist...");
+            //fb.RunMainMenuCommand("File/Load Playlist...");
+			fb.RunMainMenuCommand("檔案/載入播放表.");
             break;
         case (idx==3):
 			try {
-				playlistname = utils.InputBox(window.ID, "Rename the playlist: "+plman.GetPlaylistName(pl_idx), "Rename a playlist", plman.GetPlaylistName(pl_idx), true);
+				playlistname = utils.InputBox(window.ID, "重新命名播放清單: "+plman.GetPlaylistName(pl_idx), "重新命名播放清單", plman.GetPlaylistName(pl_idx), true);
 				if(!playlistname || playlistname == "") playlistname = plman.GetPlaylistName(pl_idx);
 				if (playlistname.length > 1 || (playlistname.length == 1 && (playlistname >= "a" && playlistname <= "z") || (playlistname >= "A" && playlistname <= "Z") || (playlistname >= "0" && playlistname <= "9"))) {
 					plman.RenamePlaylist(pl_idx, playlistname);
@@ -1783,10 +1784,11 @@ oBrowser = function(name) {
             this.repaint();
             break;
         case (idx==4):
-            fb.RunMainMenuCommand("File/Save Playlist...");
+            //fb.RunMainMenuCommand("File/Save Playlist...");
+			fb.RunMainMenuCommand("檔案/儲存播放表.");
             break;
         case (idx==5):
-            plman.DuplicatePlaylist(pl_idx, "Copy of " + plman.GetPlaylistName(pl_idx));
+            plman.DuplicatePlaylist(pl_idx, "複製的 " + plman.GetPlaylistName(pl_idx));
             plman.ActivePlaylist = pl_idx + 1;
             break;
         case (idx==6):
@@ -2061,7 +2063,7 @@ oBrowser = function(name) {
 				playlistpanel_width.setDefault();
 				break;
 			case (idx == 1033):
-				playlistpanel_width.userInputValue("Enter the desired width in pixel.\nDefault width is 180px.\nMinimum width: 100px. Maximum width: 900px", "Custom left menu width");
+				playlistpanel_width.userInputValue("以像素為單位輸入所需的寬度。\n預設寬度為180px。\n最小寬度：100px。 最大寬度：900px", "自定義左側選單寬度");
 				break;
         };
         _menu2 = undefined;
@@ -2661,7 +2663,7 @@ function on_key_down(vkey) {
                     var rowId = brw.selectedRow;
 					
 					try {
-						playlistname = utils.InputBox(window.ID, "Rename the playlist: "+plman.GetPlaylistName(brw.rows[rowId].idx), "Rename a playlist", plman.GetPlaylistName(brw.rows[rowId].idx), true);
+						playlistname = utils.InputBox(window.ID, "重新命名播放清單: "+plman.GetPlaylistName(brw.rows[rowId].idx), "重新命名播放清單", plman.GetPlaylistName(brw.rows[rowId].idx), true);
 						if(!playlistname || playlistname == "") playlistname = plman.GetPlaylistName(brw.rows[rowId].idx);
 						if (playlistname.length > 1 || (playlistname.length == 1 && (playlistname >= "a" && playlistname <= "z") || (playlistname >= "A" && playlistname <= "Z") || (playlistname >= "0" && playlistname <= "9"))) {
 							plman.RenamePlaylist(brw.rows[rowId].idx, playlistname);
@@ -2819,22 +2821,27 @@ function on_key_down(vkey) {
 
                         };
                         if(vkey==70) { // CTRL+F
-                            fb.RunMainMenuCommand("Edit/Search");
+                            //fb.RunMainMenuCommand("Edit/Search");
+							fb.RunMainMenuCommand("編輯/搜尋");
                         };
                         if(vkey==73) { // CTRL+I
 
                         };
                         if(vkey==78) { // CTRL+N
-                            fb.RunMainMenuCommand("File/New playlist");
+                            //fb.RunMainMenuCommand("File/New playlist");
+							fb.RunMainMenuCommand("檔案/新增播放");
                         };
                         if(vkey==79) { // CTRL+O
-                            fb.RunMainMenuCommand("File/Open...");
+                            //fb.RunMainMenuCommand("File/Open...");
+							fb.RunMainMenuCommand("檔案/開啟");
                         };
                         if(vkey==80) { // CTRL+P
-                            fb.RunMainMenuCommand("File/Preferences");
+                            //fb.RunMainMenuCommand("File/Preferences");
+							fb.RunMainMenuCommand("檔案/設定");
                         };
                         if(vkey==83) { // CTRL+S
-                            fb.RunMainMenuCommand("File/Save playlist...");
+                            //fb.RunMainMenuCommand("File/Save playlist...");
+							fb.RunMainMenuCommand("檔案/儲存播放表.");
                         };
                         if(vkey==84) { // CTRL+T
                             properties.showHeaderBar = !properties.showHeaderBar;
@@ -2860,7 +2867,8 @@ function on_key_down(vkey) {
                     case KMask.alt:
                         switch(vkey) {
                         case 65: // ALT+A
-                            fb.RunMainMenuCommand("View/Always on Top");
+                            //fb.RunMainMenuCommand("View/Always on Top");
+							fb.RunMainMenuCommand("檢視/在最上層");
                             break;
                         case VK_ALT: // ALT key alone
                             break;
@@ -3167,7 +3175,7 @@ function on_drag_drop(action, x, y, mask) {
             } else {
 				drop_done = true;
 				var total_pl = plman.PlaylistCount;
-				plman.CreatePlaylist(total_pl, "Dropped Items");
+				plman.CreatePlaylist(total_pl, "拖放的項目");
 				action.Effect = 1;
 				action.Playlist = total_pl;
 				action.ToSelect = false;
@@ -3176,7 +3184,7 @@ function on_drag_drop(action, x, y, mask) {
         } else {
             drop_done = true;
             var total_pl = plman.PlaylistCount;
-            plman.CreatePlaylist(total_pl, "Dropped Items");
+            plman.CreatePlaylist(total_pl, "拖放的項目");
             action.Effect = 1;
             action.Playlist = total_pl;
             action.ToSelect = false;
@@ -3184,7 +3192,7 @@ function on_drag_drop(action, x, y, mask) {
         };
 		if(rename_playlist){
 			try {
-				playlistname = utils.InputBox(window.ID, "Give your playlist a name ?", "Rename a playlist", plman.GetPlaylistName(total_pl), true);
+				playlistname = utils.InputBox(window.ID, "給你的播放清單取一個名字?", "重新命名播放清單", plman.GetPlaylistName(total_pl), true);
 				if(!playlistname || playlistname == "") playlistname = plman.GetPlaylistName(total_pl);
 				if (playlistname.length > 1 || (playlistname.length == 1 && (playlistname >= "a" && playlistname <= "z") || (playlistname >= "A" && playlistname <= "Z") || (playlistname >= "0" && playlistname <= "9"))) {
 					plman.RenamePlaylist(total_pl, playlistname);

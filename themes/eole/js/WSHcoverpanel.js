@@ -409,7 +409,7 @@ function on_mouse_move(x, y, m) {
 	g_cursor.onMouse("move", x, y, m);
 	g_cover.onMouse("move", x, y, m);
     if(!fb.IsPlaying) {
-        tooltip_text = "Play randomly"
+        tooltip_text = "播放隨機化"
     } else if(!fb.IsPaused) {
         tooltip_text = "顯示現在播放中\n雙擊 : "+tooltipDoubleClicText;
     } else {
