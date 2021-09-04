@@ -762,8 +762,8 @@ function get_text(metadb) {
 		}		
     } else {
 		current_played_track = null;
-        g_text_artist=" -  Nothing Played";
-        g_text_title="No Sound";
+        g_text_artist=" -  沒有播放任何內容";
+        g_text_title="沒有聲音";
         g_text_second_line="";
         g_text_title_prefix="";
     }

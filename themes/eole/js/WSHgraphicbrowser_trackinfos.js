@@ -2557,7 +2557,7 @@ oHeaderBar = function(name) {
 			gb.FillPolygon(colors.normal_txt, 0, xpts2);
 		this.hide_bt_ov.ReleaseGraphics(gb);
 		if(typeof(this.hide_filters_bt) == "undefined") {
-			this.hide_filters_bt = new button(this.hide_bt_off, this.hide_bt_ov, this.hide_bt_ov,"hide_filters", "Show left menu");
+			this.hide_filters_bt = new button(this.hide_bt_off, this.hide_bt_ov, this.hide_bt_ov,"hide_filters", "顯示做側選單面板");
 		} else {
 			this.hide_filters_bt.img[0] = this.hide_bt_off;
 			this.hide_filters_bt.img[1] = this.hide_bt_ov;
@@ -2587,7 +2587,7 @@ oHeaderBar = function(name) {
 		this.full_library_hover.ReleaseGraphics(gb);
 
 		if(typeof(this.FullLibraryButton) == "undefined") {
-			this.FullLibraryButton = new button(this.full_library_off, this.full_library_hover, this.full_library_off,"fulllibrary","Show whole library");
+			this.FullLibraryButton = new button(this.full_library_off, this.full_library_hover, this.full_library_off,"fulllibrary","顯示整個媒體櫃");
 		} else {
 			this.FullLibraryButton.img[0] = this.full_library_off;
 			this.FullLibraryButton.img[1] = this.full_library_hover;
@@ -5124,7 +5124,7 @@ oBrowser = function(name) {
 					if(LibraryItems_counter<1){
 						gr.GdiDrawText("沒有找到音樂.",  g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 						gr.FillSolidRect(this.w/2 -125, py-46, 250, 1, colors.border);
-						gr.GdiDrawText("單擊此處配置媒體櫃.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+						gr.GdiDrawText("點擊此處配置媒體櫃.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 					} else if(playlistname==globalProperties.selection_playlist || playlistname==globalProperties.playing_playlist) {
 						gr.FillSolidRect(this.w/2 -150, py-46, 300, 1, colors.border);
 						gr.GdiDrawText(playlistname+" :",  g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
@@ -5220,9 +5220,14 @@ oBrowser = function(name) {
                     this.resize_click = false;
                 }
 
+				//console.log("小狼 Test")
                 if(this.ishover && this.rowsCount == 0 && LibraryItems_counter==0) {
                     //fb.RunMainMenuCommand("Library/Configure");
-					fb.RunMainMenuCommand("媒體庫/設定");
+					//console.log("小狼 Test In")
+					fb.RunMainMenuCommand("媒體櫃/設定");
+					//fb.RunMainMenuCommand("媒體櫃/搜尋");
+					//fb.RunMainMenuCommand("媒體櫃/專輯表");
+					//console.log("小狼 Test Out")
                 } else {
 					this.sourceX = x;
 					this.sourceY = y;

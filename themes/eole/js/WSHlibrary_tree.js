@@ -104,8 +104,8 @@ oTagSwitcherBar = function() {
 		);
 		this.items_width = new Array(0, 0, 0, 0);
 		this.items_x = new Array(0, 0, 0, 0);
-		this.items_txt = new Array("T","ALBUM", "ARTIST", "GENRE");
-		this.items_tooltips = new Array("Library tree","Album filter", "Artist filter", "Genre filter");
+		this.items_txt = new Array("T","專輯", "專輯演出者", "歌曲類型");
+		this.items_tooltips = new Array("媒體櫃樹狀欄","專輯 篩選器", "專輯演出者 篩選器", "歌曲類型 篩選器");
 		properties.album_label = this.items_txt[1];
 		properties.artist_label = this.items_txt[2];
 		properties.genre_label = this.items_txt[3];		
@@ -161,7 +161,7 @@ oTagSwitcherBar = function() {
 			gb.FillPolygon(colors.normal_txt, 0, xpts3);
 			gb.FillPolygon(colors.normal_txt, 0, xpts4);
 		this.hide_bt_ov.ReleaseGraphics(gb);
-		this.hide_bt = new button(this.hide_bt_off, this.hide_bt_ov, this.hide_bt_ov,"hide_filters", "Hide this menu");
+		this.hide_bt = new button(this.hide_bt_off, this.hide_bt_ov, this.hide_bt_ov,"hide_filters", "隱藏此選單面板");
 	}
     this.getImages = function() {
 		if(properties.darklayout) icon_theme_subfolder = "\\white";
@@ -2379,9 +2379,9 @@ function populate() {
 				var px = 0;
 				var line_width = Math.min(130,Math.round(ui.w-40));
 				var py = p.s_h + Math.round((ui.h-p.s_h)  / 2)-1;
-				gr.GdiDrawText("Loading...", g_font.plus3, colors.normal_txt, px, py - 40, ui.w, 36, DT_CENTER | DT_BOTTOM | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+				gr.GdiDrawText("載入中...", g_font.plus3, colors.normal_txt, px, py - 40, ui.w, 36, DT_CENTER | DT_BOTTOM | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 				gr.FillSolidRect(px+Math.round(ui.w/2-line_width/2),py, line_width, 1, colors.border);
-				gr.GdiDrawText("library tree", g_font.italicplus1, colors.faded_txt, px, py + 6, ui.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+				gr.GdiDrawText("媒體櫃樹狀欄", g_font.italicplus1, colors.faded_txt, px, py + 6, ui.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 				return;
 				//return gr.GdiDrawText(lib.none, ui.font, ui.textcol, ui.margin, p.s_h, ui.w - p.r_mg, ui.row_h * (lib.none.length > 14 ? 5 : 1), 0x00000004 | 0x00000400);
 			}
