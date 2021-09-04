@@ -600,7 +600,8 @@ oPlaylistManager = function(name) {
                         if(this.activeRow == 0) {
                             // send to a new playlist
                             this.drop_done = true;
-                            fb.RunMainMenuCommand("File/New playlist");
+                            //fb.RunMainMenuCommand("File/New playlist");
+							fb.RunMainMenuCommand("檔案/新增播放");
                             plman.InsertPlaylistItems(plman.PlaylistCount-1, 0, this.metadblist_selection, false);
                         } else {
                             // send to selected (hover) playlist

@@ -3096,11 +3096,11 @@ oBrowser = function(name) {
 					var line_width = Math.min(130,Math.round(this.w-40));
 					var py = this.y + Math.round(this.h  / 2)-1;
 					if(g_filterbox.inputbox.text!='') {
-						var text1 = "No items";
-						var text2 = "matching";
+						var text1 = "沒有任何項目";
+						var text2 = "匹配的";
 					} else {
 						var text1 = "";
-						var text2 = "No items";
+						var text2 = "沒有任何項目";
 					}
 					if(text1!='') {
 						gr.GdiDrawText(text1, g_font.plus5, colors.normal_txt, this.x, py - 40, this.w, 36, DT_CENTER | DT_BOTTOM | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);

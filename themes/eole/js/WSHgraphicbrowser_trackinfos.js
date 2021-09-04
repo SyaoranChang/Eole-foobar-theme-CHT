@@ -348,7 +348,8 @@ oPlaylistHistory = function() {
 		if (previous_playlist !== undefined){
 			if(properties.fullPlaylistHistory) {
 				if(previous_playlist == brw.SourcePlaylistIdx && brw.SourcePlaylistIdx!=plman.PlayingPlaylist){
-					fb.RunMainMenuCommand('Edit/Undo');
+					//fb.RunMainMenuCommand('Edit/Undo');
+					fb.RunMainMenuCommand('編輯/重做');
 				} else plman.ActivePlaylist = previous_playlist;
 			} else plman.ActivePlaylist = previous_playlist;
 		} else {
@@ -5114,16 +5115,16 @@ oBrowser = function(name) {
                 var px = 0;
                 var py = this.y + Math.floor(this.h / 2);
 				if(this.firstInitialisation) {
-					gr.GdiDrawText("Loading...",  g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+					gr.GdiDrawText("載入中...",  g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 					gr.FillSolidRect(this.w/2 -125, py-46, 250, 1, colors.border);
 					gr.GdiDrawText("Library browser", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 				}
 				else {
 					var playlistname=plman.GetPlaylistName(this.SourcePlaylistIdx);
 					if(LibraryItems_counter<1){
-						gr.GdiDrawText("No music found.",  g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+						gr.GdiDrawText("沒有找到音樂.",  g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 						gr.FillSolidRect(this.w/2 -125, py-46, 250, 1, colors.border);
-						gr.GdiDrawText("Click here to configure the Media Library.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+						gr.GdiDrawText("單擊此處配置媒體櫃.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 					} else if(playlistname==globalProperties.selection_playlist || playlistname==globalProperties.playing_playlist) {
 						gr.FillSolidRect(this.w/2 -150, py-46, 300, 1, colors.border);
 						gr.GdiDrawText(playlistname+" :",  g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
@@ -5220,7 +5221,8 @@ oBrowser = function(name) {
                 }
 
                 if(this.ishover && this.rowsCount == 0 && LibraryItems_counter==0) {
-                    fb.RunMainMenuCommand("Library/Configure");
+                    //fb.RunMainMenuCommand("Library/Configure");
+					fb.RunMainMenuCommand("媒體庫/設定");
                 } else {
 					this.sourceX = x;
 					this.sourceY = y;
@@ -6678,7 +6680,8 @@ function on_mouse_rbtn_down(x, y){
 				g_genre_cache.build_from_library();
 				break;
 			case (idx == 5000):
-				fb.RunMainMenuCommand("File/New playlist");
+				//fb.RunMainMenuCommand("File/New playlist");
+				fb.RunMainMenuCommand("檔案/新增播放");
 				plman.InsertPlaylistItems(plman.PlaylistCount-1, 0, metadblist_selection, false);
 				break;
 			case (idx > 5000):
@@ -7820,22 +7823,27 @@ function on_key_down(vkey) {
 
 				};
 				if(vkey==70) { // CTRL+F
-					fb.RunMainMenuCommand("Edit/Search");
+					//fb.RunMainMenuCommand("Edit/Search");
+					fb.RunMainMenuCommand("編輯/搜尋");
 				};
 				if(vkey==73) { // CTRL+I
 
 				};
 				if(vkey==78) { // CTRL+N
-					fb.RunMainMenuCommand("File/New playlist");
+					//fb.RunMainMenuCommand("File/New playlist");
+					fb.RunMainMenuCommand("檔案/新增播放");
 				};
 				if(vkey==79) { // CTRL+O
-					fb.RunMainMenuCommand("File/Open...");
+					//fb.RunMainMenuCommand("File/Open...");
+					fb.RunMainMenuCommand("檔案/開啟");
 				};
 				if(vkey==80) { // CTRL+P
-					fb.RunMainMenuCommand("File/Preferences");
+					//fb.RunMainMenuCommand("File/Preferences");
+					fb.RunMainMenuCommand("檔案/設定");
 				};
 				if(vkey==83) { // CTRL+S
-					fb.RunMainMenuCommand("File/Save playlist...");
+					//fb.RunMainMenuCommand("File/Save playlist...");
+					fb.RunMainMenuCommand("檔案/儲存播放表.");
 				};
 				if(vkey==84) { // CTRL+T
 				};
@@ -7845,7 +7853,8 @@ function on_key_down(vkey) {
 			case KMask.alt:
 				switch(vkey) {
 				case 65: // ALT+A
-					fb.RunMainMenuCommand("View/Always on Top");
+					//fb.RunMainMenuCommand("View/Always on Top");
+					fb.RunMainMenuCommand("檢視/在最上層");
 					break;
 				case VK_ALT: // ALT key alone
 					break;
