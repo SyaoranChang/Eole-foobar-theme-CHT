@@ -1,4 +1,4 @@
-var theme_name = "eole";
+﻿var theme_name = "eole";
 
 var ProfilePath = fb.ProfilePath;
 var FoobarPath = fb.FoobarPath;

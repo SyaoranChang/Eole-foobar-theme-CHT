@@ -1,4 +1,4 @@
-var settings_file_not_found = false;
+﻿var settings_file_not_found = false;
 	
 oPanelSetting = function (name, file_prefix, default_value, min_value, max_value, int_value, update_settings_file_not_found) {
 	this.name = name;	

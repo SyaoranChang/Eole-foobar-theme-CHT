@@ -1,4 +1,4 @@
-function JSButton(x, y, w, h, label, name, tooltip_text, fonDown, fonUp, fonDbleClick, N_img, H_img, btn_index, state, hover_color, hover_bar_bottom) {
+﻿function JSButton(x, y, w, h, label, name, tooltip_text, fonDown, fonUp, fonDbleClick, N_img, H_img, btn_index, state, hover_color, hover_bar_bottom) {
     this.state = state ? state : ButtonStates.normal;
     this.x = x;
     this.y = y;

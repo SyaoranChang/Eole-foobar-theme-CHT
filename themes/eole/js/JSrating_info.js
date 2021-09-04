@@ -1,4 +1,4 @@
-var colors = {};
+﻿var colors = {};
 var properties = {
 	panelName: 'WSHcoverpanel',
 	darklayout: window.GetProperty("_DISPLAY: Dark layout", true),
