@@ -3259,7 +3259,7 @@ function draw_settings_menu(x,y,right_align,sort_group){
 	_menuTracklist.CheckMenuItem(13, properties.smooth_expand_value>0);
 	_menuTracklist.AppendMenuItem(MF_STRING, 14, "只顯示一列");
 	_menuTracklist.CheckMenuItem(14, properties.showlistOneColumn);
-	_menuTracklist.AppendMenuItem(MF_STRING, 15, "水平滾動條");
+	_menuTracklist.AppendMenuItem(MF_STRING, 15, "水平卷軸");
 	_menuTracklist.CheckMenuItem(15, properties.showlistScrollbar);
 	_menuTracklist.AppendMenuSeparator();
 	
@@ -3317,7 +3317,7 @@ function draw_settings_menu(x,y,right_align,sort_group){
 
 	_menuTracklist.AppendMenuSeparator();
 
-	_menuBackground.AppendMenuItem(MF_STRING, 16, "根據專輯封面的背景 (主要顏色) (此處勾選似乎有bug!?)");
+	_menuBackground.AppendMenuItem(MF_STRING, 16, "根據專輯封面的背景 (主要顏色)");
 	_menuBackground.AppendMenuItem(MF_STRING, 17, "根據專輯封面的背景 (模糊化)");
 	_menuBackground.AppendMenuItem(MF_STRING, 18, "根據專輯封面的背景 (混合兩者)");
 	_menuBackground.AppendMenuItem(MF_STRING, 19, "透明背景");
