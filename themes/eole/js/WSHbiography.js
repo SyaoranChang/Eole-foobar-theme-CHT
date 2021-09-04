@@ -826,7 +826,7 @@ function Panel() {
 				}
 			} else {
 				if (s.file(lfmBio)) {
-					kw = "Similar Artists: |Ähnliche Künstler: |Artistas Similares: |Artistes Similaires: |Artisti Simili: |似ているアーティスト: |Podobni Wykonawcy: |Artistas Parecidos: |Похожие исполнители: |Liknande Artister: |Benzer Sanatçılar: |相似艺术家: "
+					kw = "Similar Artists: |Ähnliche Künstler: |Artistas Similares: |Artistes Similaires: |Artisti Simili: |似ているアーティスト: |Podobni Wykonawcy: |Artistas Parecidos: |Похожие исполнители: |Liknande Artister: |Benzer Sanatçılar: |相似的演出者: "
 					let found = false, sim = lfm_a.match(RegExp(kw)); if (sim) {sim = sim.toString(); ix = lfm_a.lastIndexOf(sim); if (ix != -1) {sa = lfm_a.substring(ix + sim.length); sa = sa.split('\n')[0].trim().split(", ");}}
 					if (sa.length < 7 && sa) {$.take(sa, similarNo); found = true;}
 					if (!found) {
@@ -2180,10 +2180,10 @@ function Text() {
     const done = {amBio: false, amRev: false,  lfmBio: false, lfmRev: false}
     const id = {alb: "", alb_o: "", album: "", album_o: "",   tr: "", tr_o: ""}
     const mod = {amBio: "", amBio_o: "", amRev: "", amRev_o: "", lfmBio: "", lfmBio_o: "", lfmRev: "", lfmRev_o: ""}
-    const popNow = "Popular Now: |Beliebt Jetzt: |Popular Ahora: |Populaire Maintenant: |Popolare Ora: |今人気: |Popularne Teraz: |Popular Agora: |Популярные сейчас: |Populär Nu: |ŞImdi Popüler: |热门 现在";
-    const releaseDate = "Release Date: |Veröffentlichungsdatum: |Fecha De Lanzamiento: |Date De Sortie: |Data Di Pubblicazione: |リリース日: |Data Wydania: |Data De Lançamento: |Дата релиза: |Utgivningsdatum: |Yayınlanma Tarihi: |发布日期: ";
-	const topTags = ["Tags", "Tags", "Tags", "Tags", "Tag", "タグ", "Tagi", "Tags", "Теги", "Taggar", "Etiketler", "标签"];
-    const yrsActive = "Years Active: |Jahre aktiv: |Años de actividad: |Années d'activité: |Anni di attività: |活動期間: |Lata aktywności: |Anos de atividade: |Активность \\(лет\\): |År aktiv: |Aktif yıllar: |活跃年份: |Born: |Geburtstag: |Fecha de nacimiento: |Né\\(e\\) le: |Data di nascita: |生年月日: |Urodzony: |Data de nascimento: |Год рождения: |Född: |Doğum tarihi: |出生";
+    const popNow = "Popular Now: |Beliebt Jetzt: |Popular Ahora: |Populaire Maintenant: |Popolare Ora: |今人気: |Popularne Teraz: |Popular Agora: |Популярные сейчас: |Populär Nu: |ŞImdi Popüler: |現在受歡迎: ";
+    const releaseDate = "Release Date: |Veröffentlichungsdatum: |Fecha De Lanzamiento: |Date De Sortie: |Data Di Pubblicazione: |リリース日: |Data Wydania: |Data De Lançamento: |Дата релиза: |Utgivningsdatum: |Yayınlanma Tarihi: |發布日期: ";
+	const topTags = ["Tags", "Tags", "Tags", "Tags", "Tag", "タグ", "Tagi", "Tags", "Теги", "Taggar", "Etiketler", "標籤"];
+    const yrsActive = "Years Active: |Jahre aktiv: |Años de actividad: |Années d'activité: |Anni di attività: |活動期間: |Lata aktywności: |Anos de atividade: |Активность \\(лет\\): |År aktiv: |Aktif yıllar: |活躍年代: |Born: |Geburtstag: |Fecha de nacimiento: |Né\\(e\\) le: |Data di nascita: |生年月日: |Urodzony: |Data de nascimento: |Год рождения: |Född: |Doğum tarihi: |出生";
     let alb_inf = "", alb_txt_arr = [], alb_txt_o = "", album = "", albumartist = "", amBio = "", amRev = "", art_txt_arr = [], art_txt_o = "", artist = "", artist_o = "", bioSubHead = 0, calc = true, checkedTrackSubHead = true, init = true, initialise = true, lfmBio = "", lfmRev = "", new_text = false, revSubHead = 0, scrollBioPos = {}, scrollRevPos = {}, showTrackHead = true, textUpdate = 0, track = "", trackartist = "", trackUpd = false;
 	this.alb_allmusic = true; this.alb_txt = ""; this.art_txt = ""; this.avgRating = -1; this.bio_allmusic = false; this.btnBioBoth = 0; this.btnRevBoth = 0; this.cc = DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_NOPREFIX | DT_WORD_ELLIPSIS; this.get = 1; this.head = true; this.heading = ""; this.l = DT_NOPREFIX; this.lfmRating = -1; const lc = DT_VCENTER | DT_SINGLELINE | DT_NOPREFIX | DT_WORD_ELLIPSIS, rc = DT_RIGHT | + lc; this.c = [lc, rc]; this.cc = DT_CENTER | DT_VCENTER | DT_CALCRECT | DT_NOPREFIX | DT_WORD_ELLIPSIS; this.mulAlbum = false; this.mulArtist = false; this.na = ""; this.amRating = -1; this.rp = true; this.text = ""; ppt.sourceHeading = s.clamp(ppt.sourceHeading, 0, 2); ppt.trackHeading = s.clamp(ppt.trackHeading, 0, 2);
 
@@ -2572,8 +2572,8 @@ function Tagger() {
     const arr1 = [], arr2 = [], simList = [];
     let ix = -1; this.replace = this.replace.replace(/>/g, "|").split("|");
     this.replace.forEach((v, i) => {if (i % 2 == 0) arr1.push(v.trim()); else arr2.push(v.trim());}); this.replace = undefined;
-    const kww = "Founded In: |Born In: |Gegründet: |Formado en: |Fondé en: |Luogo di fondazione: |出身地: |Założono w: |Local de fundação: |Место основания: |Grundat år: |Kurulduğu tarih: |创建于: |Geboren in: |Lugar de nacimiento: |Né\\(e\\) en: |Luogo di nascita: |出身地: |Urodzony w: |Local de nascimento: |Место рождения: |Född: |Doğum yeri: |生于: ";
-    const kw = "Similar Artists: |Ähnliche Künstler: |Artistas Similares: |Artistes Similaires: |Artisti Simili: |似ているアーティスト: |Podobni Wykonawcy: |Artistas Parecidos: |Похожие исполнители: |Liknande Artister: |Benzer Sanatçılar: |相似艺术家: ";
+    const kww = "Founded In: |Born In: |Gegründet: |Formado en: |Fondé en: |Luogo di fondazione: |出身地: |Założono w: |Local de fundação: |Место основания: |Grundat år: |Kurulduğu tarih: |出身地: |Geboren in: |Lugar de nacimiento: |Né\\(e\\) en: |Luogo di nascita: |出身地: |Urodzony w: |Local de nascimento: |Место рождения: |Född: |Doğum yeri: |生於: ";
+    const kw = "Similar Artists: |Ähnliche Künstler: |Artistas Similares: |Artistes Similaires: |Artisti Simili: |似ているアーティスト: |Podobni Wykonawcy: |Artistas Parecidos: |Похожие исполнители: |Liknande Artister: |Benzer Sanatçılar: |相似的演出者: ";
 
     const uniq = a => {const out = [], seen = {}; let j = 0; a.forEach(v => {const item = v.toLowerCase(); if (seen[item] !== 1) {seen[item] = 1; out[j++] = v.titlecase().replace(/\bAor\b/g, "AOR").replace(/\bDj\b/g, "DJ").replace(/\bFc\b/g, "FC").replace(/\bIdm\b/g, "IDM").replace(/\bNwobhm\b/g, "NWOBHM").replace(/\bR&b\b/g, "R&B").replace(/\bRnb\b/g, "RnB").replace(/\bUsa\b/g, "USA").replace(/\bUs\b/g, "US").replace(/\bUk\b/g, "UK");}}); return out;}
 
@@ -3560,14 +3560,14 @@ function Server() {
     const fallback = p.valueIni("LASTFM LANGUAGE", p.lang[1].name, p.lang[1].tf, 1);
     let lfm_server = p.lfmLang, def_server_EN = lfm_server == "www.last.fm", serverFallback = fallback && !def_server_EN;
     this.setLfm = lang => {if (lang) lfm_server = lang; lfm_server = lfm_server == "en" ? "www.last.fm" : "www.last.fm/" + lfm_server; def_server_EN = lfm_server == "www.last.fm"; serverFallback = fallback && !def_server_EN;}; this.setLfm();
-    const listeners = ["Listeners", "Hörer", "Oyentes", "Auditeurs", "Ascoltatori", "リスナー", "Słuchaczy", "Ouvintes", "Слушатели", "Lyssnare", "Dinleyiciler", "听众"];
+    const listeners = ["Listeners", "Hörer", "Oyentes", "Auditeurs", "Ascoltatori", "リスナー", "Słuchaczy", "Ouvintes", "Слушатели", "Lyssnare", "Dinleyiciler", "聽眾"];
     const noWiki = n => (/wiki|vikimiz|\u0412\u0438\u043A\u0438|\u7EF4\u57FA/i).test(n);
     const partial_match = p.valueIni("MISCELLANEOUS", p.def_tf[10].name, p.def_tf[10].tf, 1);
-    const releaseDate = ["Release Date: ", "Veröffentlichungsdatum: ", "Fecha De Lanzamiento: ", "Date De Sortie: ", "Data Di Pubblicazione: ", "リリース日: ", "Data Wydania: ", "Data De Lançamento: ", "Дата релиза: ", "Utgivningsdatum: ", "Yayınlanma Tarihi: ", "发布日期: "];
+    const releaseDate = ["Release Date: ", "Veröffentlichungsdatum: ", "Fecha De Lanzamiento: ", "Date De Sortie: ", "Data Di Pubblicazione: ", "リリース日: ", "Data Wydania: ", "Data De Lançamento: ", "Дата релиза: ", "Utgivningsdatum: ", "Yayınlanma Tarihi: ", "發布日期: "];
     const res = () => {window.NotifyOthers("get_txt_bio", "get_txt_bio"); t.grab();}
-    const similar = ["Similar Artists: ", "Ähnliche Künstler: ", "Artistas Similares: ", "Artistes Similaires: ", "Artisti Simili: ", "似ているアーティスト: ", "Podobni Wykonawcy: ", "Artistas Parecidos: ", "Похожие исполнители: ", "Liknande Artister: ", "Benzer Sanatçılar: ", "相似艺术家: "];
+    const similar = ["Similar Artists: ", "Ähnliche Künstler: ", "Artistas Similares: ", "Artistes Similaires: ", "Artisti Simili: ", "似ているアーティスト: ", "Podobni Wykonawcy: ", "Artistas Parecidos: ", "Похожие исполнители: ", "Liknande Artister: ", "Benzer Sanatçılar: ", "相似的演出者: "];
     const sort = data => data.sort((a, b) => a.m - b.m);
-	const topAlb = ["Top Albums: ", "Top-Alben: ", "Álbumes Más Escuchados: ", "Top Albums: ", "Album Più Ascoltati: ", "人気アルバム: ", "Najpopularniejsze Albumy: ", "Álbuns Principais: ", "Популярные альбомы: ", "Toppalbum: ", "En Sevilen Albümler: ", "最佳专辑: "];
+	const topAlb = ["Top Albums: ", "Top-Alben: ", "Álbumes Más Escuchados: ", "Top Albums: ", "Album Più Ascoltati: ", "人気アルバム: ", "Najpopularniejsze Albumy: ", "Álbuns Principais: ", "Популярные альбомы: ", "Toppalbum: ", "En Sevilen Albümler: ", "最佳專輯: "];
     this.fetch = (force, art, alb) => {get_bio(force, art, alb, force == 2 ? true : false); get_rev(force, art, alb, force == 2 ? true : false);}
     this.fetch_dynamic = () => {get_bio(false, {ix:0, focus:false, arr:[]}, {ix:0, focus:false, arr:[]}); amBio(false, {ix:0, focus:false, arr:[]})}
     function create_dl_file() {const n = fb.ProfilePath + "yttm\\foo_lastfm_img.vbs"; if (!s.file(n) || s.fs.GetFile(n).Size == "696") {const dl_im = "If (WScript.Arguments.Count <> 2) Then\r\nWScript.Quit\r\nEnd If\r\n\r\nurl = WScript.Arguments(0)\r\nfile = WScript.Arguments(1)\r\n\r\nSet objFSO = Createobject(\"Scripting.FileSystemObject\")\r\nIf objFSO.Fileexists(file) Then\r\nSet objFSO = Nothing\r\nWScript.Quit\r\nEnd If\r\n\r\nSet objXMLHTTP = CreateObject(\"MSXML2.XMLHTTP\")\r\nobjXMLHTTP.open \"GET\", url, false\r\nobjXMLHTTP.send()\r\n\r\nIf objXMLHTTP.Status = 200 Then\r\nSet objADOStream = CreateObject(\"ADODB.Stream\")\r\nobjADOStream.Open\r\nobjADOStream.Type = 1\r\nobjADOStream.Write objXMLHTTP.ResponseBody\r\nobjADOStream.Position = 0\r\nobjADOStream.SaveToFile file\r\nobjADOStream.Close\r\nSet objADOStream = Nothing\r\nEnd If\r\n\r\nSet objFSO = Nothing\r\nSet objXMLHTTP = Nothing"; s.save(n, dl_im, false);}}; if (p.server) create_dl_file();
@@ -3838,8 +3838,8 @@ function Server() {
 
     function Dl_lastfm_bio(state_callback) {
         const popAlbums = [], scrobbles = ["", ""]; let artist, con = "", counts = ["", ""], fo_bio, itemDate = "", itemName = ["", ""], itemValue = ["", ""], pop = "", pth_bio, retry = false, searchBio = 0, simArtists = [], tags = [], topAlbums = []; this.xmlhttp = null; this.func = null; this.ready_callback = state_callback; this.ie_timer = null;
-        const r1 = ["Popular this week", "Beliebt diese Woche", "Popular esta semana", "Populaire cette semaine", "Popolare questa settimana", "今週の人気音楽", "Popularne w tym tygodniu", "Mais ouvida na semana", "Популярно на этой неделе", "Populärt denna vecka", "Bu hafta popüler olanlar", "本周热门"];
-        const r2 = ["Popular Now", "Beliebt Jetzt", "Popular Ahora", "Populaire Maintenant", "Popolare Ora", "今人気", "Popularne Teraz", "Popular Agora", "Популярные сейчас", "Populär Nu", "Şimdi Popüler", "热门 现在"];
+        const r1 = ["Popular this week", "Beliebt diese Woche", "Popular esta semana", "Populaire cette semaine", "Popolare questa settimana", "今週の人気音楽", "Popularne w tym tygodniu", "Mais ouvida na semana", "Популярно на этой неделе", "Populärt denna vecka", "Bu hafta popüler olanlar", "本周熱門"];
+        const r2 = ["Popular Now", "Beliebt Jetzt", "Popular Ahora", "Populaire Maintenant", "Popolare Ora", "今人気", "Popularne Teraz", "Popular Agora", "Популярные сейчас", "Populär Nu", "Şimdi Popüler", "現在受歡迎"];
         this.on_state_change = () => {if (this.xmlhttp != null && this.func != null) if (this.xmlhttp.readyState == 4) {clearTimeout(this.ie_timer); this.ie_timer = null; if (this.xmlhttp.status == 200) this.func(); else {if (searchBio < 2 || searchBio == 2 && itemValue[0]) {searchBio++; this.Search(artist, fo_bio, pth_bio);} if (searchBio == 3) this.func(true);}}}
 
         this.Search = (p_artist, p_fo_bio, p_pth_bio, force) => {
