@@ -3317,11 +3317,12 @@ function draw_settings_menu(x,y,right_align,sort_group){
 
 	_menuTracklist.AppendMenuSeparator();
 
-	_menuBackground.AppendMenuItem(MF_STRING, 15, "根據專輯封面的背景 (主要顏色) (此處勾選似乎有bug!?)");
-	_menuBackground.AppendMenuItem(MF_STRING, 16, "根據專輯封面的背景 (模糊化)");
-	_menuBackground.AppendMenuItem(MF_STRING, 17, "根據專輯封面的背景 (混合兩者)");
-	_menuBackground.AppendMenuItem(MF_STRING, 18, "透明背景");
-	_menuBackground.CheckMenuRadioItem(15, 18,  (!properties.showListColored) ? 18 : (properties.showListColoredOneColor) ? 15 : (properties.showListColoredBlurred) ? 16 :  (properties.showListColoredMixedColor) ? 17 : 18);
+	_menuBackground.AppendMenuItem(MF_STRING, 16, "根據專輯封面的背景 (主要顏色) (此處勾選似乎有bug!?)");
+	_menuBackground.AppendMenuItem(MF_STRING, 17, "根據專輯封面的背景 (模糊化)");
+	_menuBackground.AppendMenuItem(MF_STRING, 18, "根據專輯封面的背景 (混合兩者)");
+	_menuBackground.AppendMenuItem(MF_STRING, 19, "透明背景");
+	//_menuBackground.CheckMenuRadioItem(15, 18,  (!properties.showListColored) ? 18 : (properties.showListColoredOneColor) ? 15 : (properties.showListColoredBlurred) ? 16 :  (properties.showListColoredMixedColor) ? 17 : 18);
+	_menuBackground.CheckMenuRadioItem(16, 19, (properties.showListColoredOneColor) ? 16 : (properties.showListColoredBlurred) ? 17 :  (properties.showListColoredMixedColor) ? 18 : 19);
 	_menuBackground.AppendTo(_menuTracklist,MF_STRING, "背景壁紙");
 
 	_menuTracklist.AppendTo(_menu,MF_STRING, "曲目清單");
@@ -3411,37 +3412,48 @@ function draw_settings_menu(x,y,right_align,sort_group){
 			brw.repaint();
 			break;
 		case (idx == 16):
-			properties.showListColored = true;
-			properties.showListColoredBlurred = true;
-			properties.showListColoredOneColor = false;
+			properties.showListColoredBlurred = false;
+			properties.showListColoredOneColor = true;
 			properties.showListColoredMixedColor = false;
 			get_colors();
-			window.SetProperty("TRACKLIST Color according to albumart", properties.showListColored);
 			window.SetProperty("TRACKLIST Color according to albumart (main color)", properties.showListColoredOneColor);
 			window.SetProperty("TRACKLIST Color according to albumart (blurred)", properties.showListColoredBlurred);
 			window.SetProperty("TRACKLIST Color according to albumart (mix of both)", properties.showListColoredMixedColor);
-			g_showlist.backgroungImg = null;
 			g_showlist.reset();
 			brw.repaint();
 			break;
 		case (idx == 17):
-			properties.showListColored = true;
-			properties.showListColoredBlurred = false;
+			properties.showListColoredBlurred = true;
 			properties.showListColoredOneColor = false;
-			properties.showListColoredMixedColor = true;
+			properties.showListColoredMixedColor = false;
 			get_colors();
-			window.SetProperty("TRACKLIST Color according to albumart", properties.showListColored);
 			window.SetProperty("TRACKLIST Color according to albumart (main color)", properties.showListColoredOneColor);
 			window.SetProperty("TRACKLIST Color according to albumart (blurred)", properties.showListColoredBlurred);
 			window.SetProperty("TRACKLIST Color according to albumart (mix of both)", properties.showListColoredMixedColor);
-			g_showlist.backgroungImg = null;
+			g_showlist.g_wallpaperImg = null;
 			g_showlist.reset();
 			brw.repaint();
 			break;
 		case (idx == 18):
-			properties.showListColored = false;
+			properties.showListColoredBlurred = false;
+			properties.showListColoredOneColor = false;
+			properties.showListColoredMixedColor = true;
 			get_colors();
-			window.SetProperty("TRACKLIST Color according to albumart", properties.showListColored);
+			window.SetProperty("TRACKLIST Color according to albumart (main color)", properties.showListColoredOneColor);
+			window.SetProperty("TRACKLIST Color according to albumart (blurred)", properties.showListColoredBlurred);
+			window.SetProperty("TRACKLIST Color according to albumart (mix of both)", properties.showListColoredMixedColor);
+			g_showlist.g_wallpaperImg = null;
+			g_showlist.reset();
+			brw.repaint();
+			break;
+		case (idx == 19):
+			properties.showListColoredBlurred = false;
+			properties.showListColoredOneColor = false;
+			properties.showListColoredMixedColor = false;
+			get_colors();
+			window.SetProperty("TRACKLIST Color according to albumart (main color)", properties.showListColoredOneColor);
+			window.SetProperty("TRACKLIST Color according to albumart (blurred)", properties.showListColoredBlurred);
+			window.SetProperty("TRACKLIST Color according to albumart (mix of both)", properties.showListColoredMixedColor);
 			g_showlist.reset();
 			brw.repaint();
 			break;
