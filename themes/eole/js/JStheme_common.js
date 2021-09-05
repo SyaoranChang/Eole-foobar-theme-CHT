@@ -346,7 +346,7 @@ function chooseMemorySettings(title, top_msg, bottom_msg, dialog_name, inter_tex
 		}
 	}
 	utils.ShowHtmlDialog(window.ID, htmlCode(skin_global_path+"\\html",dialog_name+".html"), {
-		data: [title, top_msg, 'Cancel', ok_callback,'0 - Minimum##1 - Keep loaded covers in memory##2 - Load all covers at startup##3 - Load all covers & artist thumbnails at startup',globalProperties.mem_solicitation,bottom_msg,globalProperties.coverCacheWidthMax,inter_text],
+		data: [title, top_msg, 'Cancel', ok_callback,'0 - 最低限度(Minimum)##1 - 在記憶體中保持已載入的封面##2 - 啟動時載入所有封面##3 - 啟動時載入所有封面和演出者的快取縮圖',globalProperties.mem_solicitation,bottom_msg,globalProperties.coverCacheWidthMax,inter_text],
 	});
 }
 function customFilterGrouping(title, top_msg, bottom_msg, input_default_values, input_labels){

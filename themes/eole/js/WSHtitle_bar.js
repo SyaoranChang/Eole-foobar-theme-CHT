@@ -1817,7 +1817,7 @@ function draw_main_menu(x,y){
 		break;
 	case (idx == 4018):
 		try {
-			new_mseconds_before_screensaver = utils.InputBox(window.ID, "Seconds of mouse inactivity before activation of the idle screen", "Idle screen", globalProperties.mseconds_before_screensaver/1000, true);
+			new_mseconds_before_screensaver = utils.InputBox(window.ID, "啟用待機畫面前滑鼠閒置的秒數", "待機畫面", globalProperties.mseconds_before_screensaver/1000, true);
 			if (!(new_mseconds_before_screensaver == "" || typeof new_mseconds_before_screensaver == 'undefined')) {
 				globalProperties.mseconds_before_screensaver = Number(new_mseconds_before_screensaver);
 				if(globalProperties.mseconds_before_screensaver<=0) globalProperties.mseconds_before_screensaver = 60;
@@ -1856,7 +1856,7 @@ function draw_main_menu(x,y){
 		delete_full_cache();
 		break;
 	case (idx == 4029):
-		chooseMemorySettings(" ", "<div class='titleBig'>Covers  &  Memory usage</div><div class='separator'></div><br/>In order to adapt the memory usage to the speed of your computer and size of your music library, please choose one of the covers & memory settings below.\n\nYou can decrease it later if you experience performances issues or out of memory errors. On the contrary, if everything is working fine, then you can increase it.",'<br/>Note: Eole uses a cover cache. The cover cache is built little by little: when a cover is displayed, if it isn\'t stored yet in the cache, it will be added to it, so on first display of any cover, it will be a little bit slow, but it will get a lot faster on the second display.<br/><br/>This cache is based on the %album artist% & %album% tags.<br/><br/>After updating a existing cover, you must manually refresh it in foobar, do a right click over the cover which need to be refreshed, and you will have a menu item for that.<br/><br/>','MemoryDialog','You can also reduce the width of the covers stocked in memory, below. Lower is this number, lower is the memory footprint of this skin. Note: the covers may look blurred if you decrease it too much. <u>Warning: changing this value will reset the cover cache.</u>');
+		chooseMemorySettings(" ", "<div class='titleBig'>封面和記憶體的使用方式</div><div class='separator'></div><br/>為了使記憶體的使用適應你的電腦速度和你的音樂庫的大小，請選擇下面的封面和記憶體設置之一。\n\n如果你遇到性能問題或記憶體不足的錯誤，你可以在以後減少它。 相反，如果一切工作正常，那麼你可以增加它。",'<br/>註：Eole主題使用的是封面快取。 封面快取是一點一點建立起來的：當一個封面被顯示時，如果它還沒有被存儲在快取中，它將被添加到快取中，所以在第一次顯示任何封面時，它將會有點慢，但在第二次顯示時它將會變得快很多。<br/><br/>這個快取是基於 %album artist% & %album% 的標簽。<br/><br/>在更新一個現有的封面後，你必須在foobar中手動刷新它，在需要刷新的封面上點擊右鍵，你會有一個選項的項目來操作。<br/><br/>','MemoryDialog','你也可以減少儲存在記憶體中的封面的寬度，如下。 這個數字越低，這個封面的記憶體佔用就越低。 注意：如果減少太多，封面可能會看起來模糊不清。  <u>警告：改變這個值將重置封面快取。</u>');
 		break;
 	case (idx == 4027):
 		toggleNowPlayingState();
@@ -2728,7 +2728,7 @@ function on_init(){
 	if(fb.IsPlaying) caption_title = fb.TitleFormat("[%artist%  -  ][%album%[  -  %tracknumber%] : ]%title%[  -  %date%]").Eval();
 	if(settings_file_not_found){
 		var welcome_msg_timer = setTimeout(function(){
-			chooseMemorySettings(" ", "<div class='titleBig'>Looks like you just installed this theme?</div><div class='separator'></div><br/>Please read this popup fully, especially the text at the bottom, in order to understand how Eole image cache works.\n\nThe settings below influence the performances, the resolution of covers, and the memory footprint of this skin.\n\nYou can decrease it later by going to Foobar > Skin settings > Cover & memory usage\nif you experience performances issues or out of memory errors. On the contrary, if everything is working fine, then you can increase it. If you don't understand all this, keep the default settings.",'<br/>Useful tip: most panels have a settings menu available with a right-click.<br/><br/>Note: Eole uses a cover cache. The cover cache is built little by little: when a cover is displayed, if it isn\'t stored yet in the cache, it will be added to it, so on first display of any cover, it will be a little bit slow, but it will get a lot faster on the second display.<br/><br/>This cache is based on the %album artist% & %album% tags.<br/><br/>If you update a existing cover, you need to trigger a cache refresh. Do a right click over the cover which need to be refreshed, and you will have a menu item for that.<br/><br/>','MemoryDialog','You can reduce the width of the covers stocked in memory, below. Lower is this number, lower is the memory footprint of this skin. Note: the covers will looks blurred if you decrease it too much.');
+			chooseMemorySettings(" ", "<div class='titleBig'>看起來你剛剛安裝了這個主題？</div><div class='separator'></div><br/>請充分閱讀本彈出窗口，特別是底部的文字，以便瞭解Eole圖片快取的工作原理。\n\n下面的設置影響到這個 Skin 的性能、封面的解析度和記憶體佔用。\n\n你可以在之後減少它，方法是進入 Foobar > Skin 介面設定 > 封面和記憶體的使用方式\n如果你遇到性能問題或記憶體不足的錯誤。 相反，如果一切工作正常，那麼你可以增加它。 如果你不理解這些，請保持預設設置。",'<br/>有用的提示：大多數面板都有一個設置選單，可通過右鍵點擊獲得。<br/><br/>註：Eole 主題使用的是封面快取。 封面快取是一點一點建立起來的：當一個封面被顯示時，如果它還沒有被存儲在快取中，它將被添加到快取中，所以在第一次顯示任何封面時，它將會有點慢，但在第二次顯示時它將會變得快很多。<br/><br/>這個快取是基於 %album artist% & %album% 的標籤.<br/><br/>如果你更新一個現有的封面，你需要執行一次快取刷新。 在需要刷新的封面上點擊右鍵，你將會有一個選單項目來執行刷新。<br/><br/>','MemoryDialog','你可以減少記憶體中儲存的封面的寬度，如下。這個數字越低，這個 Skin 的記憶體佔用就越低。 注意：如果你減少得太多，封面會看起來模糊不清。');
 			theme_version.setValue(globalProperties.theme_version);
 			clearTimeout(welcome_msg_timer);
 			welcome_msg_timer=false;
@@ -2736,7 +2736,7 @@ function on_init(){
 		RefreshPSS();
 	} else if(versionCompare(theme_version.getValue(),globalProperties.lastest_breaking_version)<0) {
 		var welcome_msg_timer = setTimeout(function(){
-			NoticeBox(" ","<div class='titleBig'>Import fcl file, Eole v"+(globalProperties.lastest_breaking_version)+" and after</div><div class='separator'></div><br/>Looks like your column UI configuration file is out of date, you need to import the new configuration file. You may loose some of the customizations you did to this theme, but you'll be able to set them back quickly.<br/><br/>On the preferences page (Foobar > File > Preferences), go to<br/>Display > column UI > Main tab > Import configuration...<br/><br/>And then import this file: [YOUR_FOOBAR_DIRECTORY]/themes/eole/columnsUI_eole.fcl", "Got it, open the preferences","Not now",'fb.RunMainMenuCommand("File/Preferences")');
+			NoticeBox(" ","<div class='titleBig'>匯入 fcl 文件, Eole v"+(globalProperties.lastest_breaking_version)+" 之後</div><div class='separator'></div><br/>看來你的column UI配置文件已經過期，你需要導入新的配置文件。 你可能會失去一些你對這個主題所做的定製，但你能夠很快地把它們設置回來。<br/><br/>在偏好頁面 (Foobar > 檔案 > 設定), 前往<br/>顯示 > column UI > 主頁 > 匯入設定檔案...<br/><br/>然後匯入這個文件: [你的_FOOBAR_文件夾]/themes/eole/columnsUI_eole.fcl", "知道了，打開偏好設置","不是現在",'fb.RunMainMenuCommand("檔案/設定")');
 			clearTimeout(welcome_msg_timer);
 			welcome_msg_timer=false;
 		}, 200);

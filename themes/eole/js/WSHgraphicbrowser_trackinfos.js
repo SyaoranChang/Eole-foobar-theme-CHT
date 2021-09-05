@@ -3706,7 +3706,7 @@ function draw_settings_menu(x,y,right_align,sort_group){
 			break;
 		case (idx == 48):
 			try {
-				new_value = utils.InputBox(window.ID, "Enter the desired opacity, between 0 (full transparency) to 255 (full opacity).", "Covers shadow opacity", properties.default_CoverShadowOpacity, true);
+				new_value = utils.InputBox(window.ID, "輸入期望的不透明度，在0（完全透明）到255（完全不透明）之間。", "封面陰影的不透明度", properties.default_CoverShadowOpacity, true);
 				if (!(new_value == "" || typeof new_value == 'undefined')) {
 					properties.default_CoverShadowOpacity = Math.min(255,Math.max(0,Number(new_value)));
 					window.SetProperty("COVER Shadow Opacity", properties.default_CoverShadowOpacity);
