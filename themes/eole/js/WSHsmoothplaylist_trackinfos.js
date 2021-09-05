@@ -3310,7 +3310,7 @@ oBrowser = function(name) {
             // draw header
             if(properties.showHeaderBar) {
                 //var boxText = (this.totaltracks > 1 ? this.totaltracks+" items" : this.totaltracks+" item");
-				var boxText = this.totaltracks+" 項目";
+				var boxText = this.totaltracks+" 個項目";
                 // draw background part above playlist (headerbar)
 				gr.FillSolidRect(0, 0, ww, properties.headerBarHeight, colors.headerbar_bg);
 
@@ -3457,7 +3457,7 @@ oBrowser = function(name) {
 									playlist:g_active_playlist,
 									trackIndex:playlistTrackId,
 									cover_img:null,
-									totalTracks:this.groups[groupId].count+(this.groups[groupId].count > 1 ? " 曲目" : " 曲目"),
+									totalTracks:this.groups[groupId].count+(this.groups[groupId].count > 1 ? " 首曲目" : " 首曲目"),
 									genre:this.groups[groupId].genre,
 									metadb:this.groups[groupId].metadb,
 									date:this.groups[groupId].date,
@@ -3668,7 +3668,7 @@ oBrowser = function(name) {
 								album_info=this.rows[this.activeRow].groupkeysplit;
 								if(items.Count>1) {
 									var line1 = "Dragging";
-									var line2 = items.Count+" 曲目";
+									var line2 = items.Count+" 首曲目";
 								} else {
 									var line1 = album_info[0];
 									var line2 = album_info[1];
@@ -3677,7 +3677,7 @@ oBrowser = function(name) {
 								track_info=this.groups[this.rows[this.activeRow].albumId].tracks[this.rows[this.activeRow].albumTrackId];
 								if(items.Count>1) {
 									var line1 = "Dragging";
-									var line2 = items.Count+" 曲目";
+									var line2 = items.Count+" 首曲目";
 								} else {
 									var line1 = track_info[1];
 									var line2 = track_info[0];
@@ -3703,7 +3703,7 @@ oBrowser = function(name) {
 									album_info=this.rows[this.activeRow].groupkeysplit;
 									if(items.Count>1) {
 										var line1 = "Dragging";
-										var line2 = items.Count+" 曲目";
+										var line2 = items.Count+" 首曲目";
 									} else {
 										var line1 = album_info[0];
 										var line2 = album_info[1];
@@ -3712,7 +3712,7 @@ oBrowser = function(name) {
 									track_info=this.groups[this.rows[this.activeRow].albumId].tracks[this.rows[this.activeRow].albumTrackId];
 									if(items.Count>1) {
 										var line1 = "Dragging";
-										var line2 = items.Count+" 曲目";
+										var line2 = items.Count+" 首曲目";
 									} else {
 										var line1 = track_info[1];
 										var line2 = track_info[0];

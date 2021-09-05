@@ -409,7 +409,7 @@ oFilterBox = function() {
 		else icon_theme_subfolder = "";
 
 		this.images.search_icon = gdi.Image(theme_img_path + "\\icons"+icon_theme_subfolder+"\\search_icon.png");
-		this.search_bt = new button(this.images.search_icon, this.images.search_icon, this.images.search_icon,"search_bt", "篩選群族"+(properties.filterBox_filter_tracks?" & 曲目":''));
+		this.search_bt = new button(this.images.search_icon, this.images.search_icon, this.images.search_icon,"search_bt", "篩選群組"+(properties.filterBox_filter_tracks?" & 曲目":''));
 
         this.images.resetIcon_off = gdi.CreateImage(w, w);
         gb = this.images.resetIcon_off.GetGraphics();
@@ -1813,7 +1813,7 @@ oShowList = function(parentPanelName) {
 			this.discnumber = Tags[2];
 			this.date = Tags[3];
 			this.genre = Tags[4];
-			this.total_tracks = pl_count+(pl_count>1?" 曲目":" 曲目");
+			this.total_tracks = pl_count+(pl_count>1?" 首曲目":" 首曲目");
 		} else {
 			//TagsString = TF.showlistReduced.EvalWithMetadb(this.pl[0]);
 			//Tags = TagsString.split(" ^^ ");
@@ -1824,7 +1824,7 @@ oShowList = function(parentPanelName) {
 			if(brw.groups[this.idx].date!="?" && !brw.custom_groupby) this.date = ' ('+brw.groups[this.idx].date+')';
 			else this.date = '';
 			this.genre = brw.groups[this.idx].genre;
-			this.total_tracks = pl_count+(pl_count>1?" 曲目":" 曲目");
+			this.total_tracks = pl_count+(pl_count>1?" 首曲目":" 首曲目");
 		}
 
 		this.firstRow = this.album+this.discnumber+this.date;
@@ -2792,7 +2792,7 @@ oHeaderBar = function(name) {
 				else this.timeTxt = 'ON AIR';
 
 				//this.itemsTxt=((properties.showTotalTime)?',  ':'')+brw.playlistItemCount+' track'+((brw.playlistItemCount>1)?"s":"")+',  '+brw.groups_draw.length+' group'+((brw.groups_draw.length>1)?"s":"");
-				this.itemsTxt=((properties.showTotalTime)?',  ':'')+brw.playlistItemCount+' 曲目'+',  '+brw.groups_draw.length+' 群組';
+				this.itemsTxt=((properties.showTotalTime)?',  ':'')+brw.playlistItemCount+' 首曲目'+',  '+brw.groups_draw.length+' 個群組';
 
 				// Main Text, Left justified
 				if(brw.playlistName==globalProperties.whole_library){
@@ -2825,7 +2825,7 @@ oHeaderBar = function(name) {
 			}
 			if(brw.SourcePlaylistIdx==plman.PlayingPlaylist) this.mainTxt+= ' (播放中)';
 		} else {
-				this.mainTxt='載入中...';
+				this.mainTxt='載入中 ...';
 				this.itemsTxt='';
 		}
 		g_filterbox.inputbox.empty_text = ''+this.mainTxt+'';
@@ -4439,7 +4439,7 @@ oBrowser = function(name) {
 					if(this.custom_groupby) {
 						var groupinfos_rows = TF.grouping.EvalWithMetadb(this.groups[i-1].pl[0]).split(" ^^ ");
 						this.groups[i-1].firstRow = groupinfos_rows[0];
-						this.groups[i-1].secondRow = (groupinfos_rows[1]!="")?groupinfos_rows[1]:this.groups[i-1].pl.Count+(this.groups[i-1].pl.Count>1?" 曲目":" 曲目");
+						this.groups[i-1].secondRow = (groupinfos_rows[1]!="")?groupinfos_rows[1]:this.groups[i-1].pl.Count+(this.groups[i-1].pl.Count>1?" 首曲目":" 首曲目");
 					} else {
 						this.groups[i-1].firstRow = this.groups[i-1].artist
 						this.groups[i-1].secondRow = this.groups[i-1].album;
@@ -4540,7 +4540,7 @@ oBrowser = function(name) {
 				if(this.custom_groupby) {
 					var groupinfos_rows = TF.grouping.EvalWithMetadb(this.groups[i-1].pl[0]).split(" ^^ ");
 					this.groups[this.groups.length-1].firstRow = groupinfos_rows[0];
-					this.groups[this.groups.length-1].secondRow = (groupinfos_rows[1]!="")?groupinfos_rows[1]:this.groups[this.groups.length-1].pl.Count+(this.groups[this.groups.length-1].pl.Count>1?" 曲目":" 曲目");
+					this.groups[this.groups.length-1].secondRow = (groupinfos_rows[1]!="")?groupinfos_rows[1]:this.groups[this.groups.length-1].pl.Count+(this.groups[this.groups.length-1].pl.Count>1?" 首曲目":" 首曲目");
 				} else {
 					this.groups[this.groups.length-1].firstRow = this.groups[this.groups.length-1].artist
 					this.groups[this.groups.length-1].secondRow = this.groups[this.groups.length-1].album;
@@ -6786,7 +6786,7 @@ function on_mouse_move(x, y, m) {
 				if(g_showlist.rows_[i].isSelected) showlist_selected_count++;
 			}
 			if(showlist_selected_count==items.Count) var drag_img = createDragImg(brw.groups[g_showlist.idx].cover_img, 80,items.Count);
-			else drag_img = createDragText("Dragging", items.Count+" 曲目", 220);
+			else drag_img = createDragText("Dragging", items.Count+" 首曲目", 220);
 			brw.external_dragging = true;
 			var options = {
 				show_text : false,

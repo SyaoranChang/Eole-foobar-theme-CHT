@@ -1680,7 +1680,7 @@ function library_manager() {
             }
 			if(pop.show_aggregate_item && this.root.length>1){
 				all_elems = {
-					name: "全部 ("+this.root.length+" 組)",
+					name: "全部 ("+this.root.length+" 個群組)",
 					sel: false,
 					totop: true,
 					child: [],
@@ -1691,7 +1691,7 @@ function library_manager() {
 			}
         } else {
             this.root[0] = {
-                name: "All Music",
+                name: "全部音樂",
                 sel: false,
                 child: [],
                 item: []

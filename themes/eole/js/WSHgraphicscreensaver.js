@@ -1370,7 +1370,7 @@ oShowList = function(parentPanelName) {
 			this.discnumber = Tags[2];
 			this.date = Tags[3];
 			this.genre = Tags[4];
-			this.total_tracks = this.pl.Count+(this.pl.Count>1?" 曲目":" 曲目");
+			this.total_tracks = this.pl.Count+(this.pl.Count>1?" 首曲目":" 首曲目");
 		} else {
 			TagsString = TF.showlistReduced.EvalWithMetadb(this.pl[0]);
 			Tags = TagsString.split(" ^^ ");
@@ -1379,7 +1379,7 @@ oShowList = function(parentPanelName) {
 			this.discnumber = (Tags[0]=='')?'':' - Disc '+Tags[0];
 			this.date = ' ('+brw.groups_draw[this.idx].date+')';
 			this.genre = brw.groups_draw[this.idx].genre;
-			this.total_tracks = this.pl.Count+(this.pl.Count>1?" 曲目":" 曲目");
+			this.total_tracks = this.pl.Count+(this.pl.Count>1?" 首曲目":" 首曲目");
 		}
 
 		this.firstRowInfo = this.album+this.discnumber+this.date;
@@ -1999,34 +1999,34 @@ oHeaderbar = function(name) {
 			if(brw.playlistItemCount) {
 				this.timeTxt = brw.FormatTime(brw.totalTime);
 				//this.itemsTxt=',  '+brw.playlistItemCount+' track'+((brw.playlistItemCount>1)?"s":"")+',  '+brw.groups_draw.length+' group'+((brw.groups_draw.length>1)?"s":"");
-				this.itemsTxt=',  '+brw.playlistItemCount+' 曲目'+',  '+brw.groups_draw.length+' 群組';
+				this.itemsTxt=',  '+brw.playlistItemCount+' 首曲目'+',  '+brw.groups_draw.length+' 個群組';
 
 				// Main Text, Left justified
 				if(brw.playlistName==globalProperties.whole_library){
-					this.mainTxt='Whole Library';
+					this.mainTxt='整個媒體櫃';
 				} else if(brw.playlistName!=globalProperties.selection_playlist && brw.playlistName!=globalProperties.playing_playlist){
-					this.mainTxt='Playlist : '+brw.playlistName;
+					this.mainTxt='播放清單 : '+brw.playlistName;
 				} else if(brw.artistName!="" && brw.artistName!="?") {
 					this.mainTxt=brw.artistName;
 				} else if(brw.genreName!="" && brw.artistName!="?") {
 					this.mainTxt=brw.genreName;
 				} else if(brw.playlistName==globalProperties.selection_playlist || brw.playlistName==globalProperties.playing_playlist){
 					if(brw.date!="" && brw.date!="?") {
-						this.mainTxt='Date : '+brw.date;
-					} else this.mainTxt='Mixed selection';
+						this.mainTxt='日期 : '+brw.date;
+					} else this.mainTxt='混合選擇';
 				}
 				else {
-					this.mainTxt='Playlist : '+brw.playlistName;
+					this.mainTxt='播放清單 : '+brw.playlistName;
 				}
 			} else if(brw.playlistName==globalProperties.selection_playlist || brw.playlistName==globalProperties.playing_playlist) {
 				this.mainTxt=''+brw.playlistName;
-				this.itemsTxt='Empty selection';
+				this.itemsTxt='空的選擇';
 			} else {
-				this.mainTxt='Playlist : '+brw.playlistName;
-				this.itemsTxt='Empty Playlist';
+				this.mainTxt='播放清單 : '+brw.playlistName;
+				this.itemsTxt='空的播放清單';
 			}
 		} else {
-				this.mainTxt='Loading ...';
+				this.mainTxt='載入中 ...';
 				this.itemsTxt='';
 		}
 		this.RightTextLength = -1;
@@ -3225,7 +3225,7 @@ oBrowser = function(name) {
 				if(i>0) {
 					if(this.custom_firstRow) this.groups[i-1].firstRow = TF.grouping.EvalWithMetadb(this.groups[i-1].pl[0]);
 					else this.groups[i-1].firstRow = this.groups[i-1].artist
-					if(this.custom_secondRow) this.groups[i-1].secondRow = this.groups[i-1].pl.Count+(this.groups[this.groups.length-1].pl.Count>1?" 曲目":" 曲目");
+					if(this.custom_secondRow) this.groups[i-1].secondRow = this.groups[i-1].pl.Count+(this.groups[this.groups.length-1].pl.Count>1?" 首曲目":" 首曲目");
 					else this.groups[i-1].secondRow = this.groups[i-1].album;
 
 					this.totalTime += this.groups[i-1].length;
@@ -3321,7 +3321,7 @@ oBrowser = function(name) {
 			if(this.groups.length>0){
 				if(this.custom_firstRow) this.groups[this.groups.length-1].firstRow = TF.grouping.EvalWithMetadb(this.groups[this.groups.length-1].pl[0]);
 				else this.groups[this.groups.length-1].firstRow = this.groups[this.groups.length-1].artist
-				if(this.custom_secondRow) this.groups[this.groups.length-1].secondRow = this.groups[this.groups.length-1].pl.Count+(this.groups[this.groups.length-1].pl.Count>1?" 曲目":" 曲目");
+				if(this.custom_secondRow) this.groups[this.groups.length-1].secondRow = this.groups[this.groups.length-1].pl.Count+(this.groups[this.groups.length-1].pl.Count>1?" 首曲目":" 首曲目");
 				else this.groups[this.groups.length-1].secondRow = this.groups[this.groups.length-1].album;
 				this.totalTime += this.groups[this.groups.length-1].length;
 				if(this.searched_track!=null && this.found_albumIdx>-1) {

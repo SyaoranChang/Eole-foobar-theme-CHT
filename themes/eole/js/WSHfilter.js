@@ -2759,7 +2759,7 @@ oBrowser = function(name) {
 								} else if(this.groups[i].cover_img) { // panelMode = 3 (Grid)
 									// draw text
 									if(properties.showAllItem && i == 0 && total > 1) { // aggregate item ( [ALL] )
-										this.groups[i].firstRow = "全部 "+(this.customGroups?"項目":'專輯');
+										this.groups[i].firstRow = "全部 "+(this.customGroups?"個項目":'張專輯');
 										//this.groups[i].secondRow = this.groups[i].count+" item"+(this.groups[i].count>1?'s':'');
 										this.groups[i].secondRow = this.groups[i].count+" 項目";
 									} else {
@@ -2893,18 +2893,18 @@ oBrowser = function(name) {
 											try{
 												gr.GdiDrawText("全部項目", g_font.normal, txt_color1, this.margin_left + ax + coverWidth + this.marginCover*2, ay - properties.textLineHeight, aw - coverWidth - this.marginCover*3-this.textMarginRight - items_counter_width, ah, DT_LEFT | DT_VCENTER | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 												if(properties.drawItemsCounter) gr.GdiDrawText(items_counter_txt, g_font.min2, txt_color2, this.margin_left + ax + coverWidth + this.marginCover*2, ay - properties.textLineHeight, aw - coverWidth - this.marginCover*3-this.textMarginRight - this.margin_right, ah, DT_RIGHT | DT_VCENTER | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
-												gr.GdiDrawText("("+(total-1)+(!(properties.tf_groupkey_album == properties.tf_groupkey_album_default && properties.album_customGroup_label == "")?' 群組)':" 專輯)"), g_font.min1, txt_color2, this.margin_left + ax + coverWidth + this.marginCover*2, ay + properties.textLineHeight, aw - coverWidth - this.marginCover*3-this.textMarginRight, ah, DT_LEFT | DT_VCENTER | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+												gr.GdiDrawText("("+(total-1)+(!(properties.tf_groupkey_album == properties.tf_groupkey_album_default && properties.album_customGroup_label == "")?' 個群組)':" 張專輯)"), g_font.min1, txt_color2, this.margin_left + ax + coverWidth + this.marginCover*2, ay + properties.textLineHeight, aw - coverWidth - this.marginCover*3-this.textMarginRight, ah, DT_LEFT | DT_VCENTER | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 											} catch(e) {}
 											break;
 										case 2: // artist
 											try{
-												gr.GdiDrawText("全部 ("+(total-1)+(!(properties.tf_groupkey_artist == properties.tf_groupkey_artist_default && properties.artist_customGroup_label == "")?' 群組)':" 演出者)"), g_font.normal, txt_color1, this.margin_left + ax + coverWidth + this.marginCover*2, ay, aw - coverWidth - this.marginCover*3-this.textMarginRight - items_counter_width, ah, DT_LEFT | DT_VCENTER | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+												gr.GdiDrawText("全部 ("+(total-1)+(!(properties.tf_groupkey_artist == properties.tf_groupkey_artist_default && properties.artist_customGroup_label == "")?' 個群組)':" 位演出者)"), g_font.normal, txt_color1, this.margin_left + ax + coverWidth + this.marginCover*2, ay, aw - coverWidth - this.marginCover*3-this.textMarginRight - items_counter_width, ah, DT_LEFT | DT_VCENTER | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 												if(properties.drawItemsCounter) gr.GdiDrawText(items_counter_txt, g_font.min2, txt_color2, this.margin_left + ax + coverWidth + this.marginCover*2, ay, aw - coverWidth - this.marginCover*3-this.textMarginRight - this.margin_right, ah, DT_RIGHT | DT_VCENTER | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 											} catch(e) {}
 											break;
 										case 3: // genre
 											try{
-												gr.GdiDrawText("全部 ("+(total-1)+(!(properties.tf_groupkey_genre == properties.tf_groupkey_genre_default && properties.genre_customGroup_label == "")?' 群組)':" 音樂類型)"), g_font.normal, ((i == this.selectedIndex && plman.GetPlaylistName(plman.ActivePlaylist)==this.name_to_send) ? colors.selected_txt : txt_color1), this.margin_left + ax + coverWidth + this.marginCover*2, ay, aw - coverWidth - this.marginCover*3-this.textMarginRight - items_counter_width, ah, DT_LEFT | DT_VCENTER | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+												gr.GdiDrawText("全部 ("+(total-1)+(!(properties.tf_groupkey_genre == properties.tf_groupkey_genre_default && properties.genre_customGroup_label == "")?' 個群組)':" 種音樂類型)"), g_font.normal, ((i == this.selectedIndex && plman.GetPlaylistName(plman.ActivePlaylist)==this.name_to_send) ? colors.selected_txt : txt_color1), this.margin_left + ax + coverWidth + this.marginCover*2, ay, aw - coverWidth - this.marginCover*3-this.textMarginRight - items_counter_width, ah, DT_LEFT | DT_VCENTER | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 												if(properties.drawItemsCounter) gr.GdiDrawText(items_counter_txt, g_font.min2, txt_color2, this.margin_left + ax + coverWidth + this.marginCover*2, ay, aw - coverWidth - this.marginCover*3-this.textMarginRight - this.margin_right, ah, DT_RIGHT | DT_VCENTER | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 											} catch(e) {}
 											break;
@@ -3125,7 +3125,7 @@ oBrowser = function(name) {
 			this.draw_right_line = (properties.DrawRightLine && (!(properties.filterOrder==2) && !(!filter3_state.isActive() && properties.filterOrder==1) && !(!filter3_state.isActive() && !filter2_state.isActive() && properties.filterOrder==0) || main_panel_state.isEqual(0)));
             // draw top header bar
             if(properties.showHeaderBar) {
-                var item_txt = new Array("群組", "專輯", "演出者", "音樂類型");
+                var item_txt = new Array("個群組", "張專輯", "位演出者", "種音樂類型");
                 var nb_groups = (properties.showAllItem && total > 1 ? total - 1 : total);
 				var txt_id = this.customGroups?0:properties.tagMode;
                 //var boxText = nb_groups+" "+item_txt[txt_id]+(nb_groups > 1 ? "s  " : "  ");

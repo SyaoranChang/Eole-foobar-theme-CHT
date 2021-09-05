@@ -257,37 +257,38 @@ function SimpleButton(x, y, w, h, text, tooltip_text, fonClick, fonDbleClick, N_
 		}
     }
 }
+// 此函式這個版面不會用到
 function draw_settings_menu(x, y) {
     var basemenu = window.CreatePopupMenu();
 	if (typeof x == "undefined") x=20;
 	if (typeof y == "undefined") y=29;
 
-    if(!nowplayingplaylist_state.isActive()) basemenu.AppendMenuItem(MF_STRING, 4999, "Show right playlist");
-	else basemenu.AppendMenuItem(MF_STRING, 4999, "Hide right playlist");
-    if(!filters_panel_state.isMaximumValue()) basemenu.AppendMenuItem(MF_STRING, 4996, "Hide bottom playlist");
-	else {basemenu.AppendMenuItem(MF_STRING, 4996, "Show bottom playlist");}
+    if(!nowplayingplaylist_state.isActive()) basemenu.AppendMenuItem(MF_STRING, 4999, "顯示右側播放清單");
+	else basemenu.AppendMenuItem(MF_STRING, 4999, "隱藏底部播放清單");
+    if(!filters_panel_state.isMaximumValue()) basemenu.AppendMenuItem(MF_STRING, 4996, "隱藏底部播放清單");
+	else {basemenu.AppendMenuItem(MF_STRING, 4996, "顯示底部播放清單");}
 
 	var FiltersMenu = window.CreatePopupMenu();
-	FiltersMenu.AppendTo(basemenu, MF_STRING, "Filters");
+	FiltersMenu.AppendTo(basemenu, MF_STRING, "篩選器");
 
 	if(filters_panel_state.isActive())
-		FiltersMenu.AppendMenuItem(MF_STRING, 4990, "Hide");
+		FiltersMenu.AppendMenuItem(MF_STRING, 4990, "隱藏");
 	else
-		FiltersMenu.AppendMenuItem(MF_STRING, 4988, "Show");
+		FiltersMenu.AppendMenuItem(MF_STRING, 4988, "顯示");
 
-	FiltersMenu.AppendMenuItem((filters_panel_state.isActive())? MF_STRING : MF_GRAYED, 4991, "Decrease height");
-	FiltersMenu.AppendMenuItem(MF_STRING, 4992, "Increase height");
+	FiltersMenu.AppendMenuItem((filters_panel_state.isActive())? MF_STRING : MF_GRAYED, 4991, "增加高度");
+	FiltersMenu.AppendMenuItem(MF_STRING, 4992, "減少高度");
 
 	FiltersMenu.AppendMenuSeparator();
-	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "Enable 1st filter");
+	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "啟用第1個篩選器 - 音樂類型");
 	FiltersMenu.CheckMenuItem(4993, (filter1_state.isActive()));
-	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "Enable 2nd filter");
+	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 演出者");
 	FiltersMenu.CheckMenuItem(4994, (filter2_state.isActive()));
-	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4995, "Enable 3rd filter");
+	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4995, "啟用第3個篩選器 - 專輯");
 	FiltersMenu.CheckMenuItem(4995, (filter3_state.isActive()));
 
 	basemenu.AppendMenuSeparator();
-	basemenu.AppendMenuItem(MF_STRING, 4989, "Show toggle buttons");
+	basemenu.AppendMenuItem(MF_STRING, 4989, "顯示篩選器切換按鈕");
 	basemenu.CheckMenuItem(4989, properties.displayToggleBtns);
 
     idx = 0;
@@ -410,7 +411,8 @@ function draw_menu(x, y) {
 	if(metadblist_selection.Count > 0) {
 		var Context = fb.CreateContextMenuManager();
 		var Context_root = window.CreatePopupMenu();
-		Context_root.AppendTo(basemenu, MF_STRING, "選擇 ("+metadblist_selection.Count+" 項目"+((metadblist_selection.Count>1)?"s":"")+")");
+		//Context_root.AppendTo(basemenu, MF_STRING, "Selection ("+metadblist_selection.Count+" item"+((metadblist_selection.Count>1)?"s":"")+")");
+		Context_root.AppendTo(basemenu, MF_STRING, "選擇 ("+metadblist_selection.Count+" 個項目"+")");
 		Context.InitContext(metadblist_selection);
 		Context.BuildMenu(Context_root, 2, -1);
 		Context_root.AppendMenuItem(MF_STRING, 2997, "移除");
@@ -745,7 +747,7 @@ playlistInfo = function(){
 			else if (totalD>0) this.time_txt=txt_day+txt_hour+totalM+'分 ';
 			else if (totalH>0) this.time_txt=txt_hour+totalM+'分, '+totalS+'秒';
 			else this.time_txt=totalM+'分, '+totalS+'秒';
-			this.items_txt=displayed_count+' 項目';
+			this.items_txt=displayed_count+' 個項目';
 
 			// Main Text, Left justified
 			var filtered_playlist = "";

@@ -1452,17 +1452,17 @@ function draw_main_menu(x,y){
 	} else if(main_panel_state.isEqual(2)){
 		bio_menu.AppendTo(skin_settings_menu,MF_STRING, "面板版面設計");
 
-		nowplaying.AppendTo(bio_menu,MF_STRING, "Right playlist");
+		nowplaying.AppendTo(bio_menu,MF_STRING, "右側邊欄播放清單");
 
 		if(!lyrics_state.isActive()){
-			bio_menu.AppendMenuItem(MF_STRING, 4999, "Show lyrics");
+			bio_menu.AppendMenuItem(MF_STRING, 4999, "顯示歌詞");
 		} else {
 			var LyricsMenu = window.CreatePopupMenu();
-			LyricsMenu.AppendMenuItem(MF_STRING, 5000, "Hide");
+			LyricsMenu.AppendMenuItem(MF_STRING, 5000, "隱藏");
 			LyricsMenu.AppendMenuSeparator();
-			LyricsMenu.AppendMenuItem((!lyrics_state.isMaximumValue())?MF_STRING:MF_GRAYED, 4999, "Increase width");
-			LyricsMenu.AppendMenuItem(MF_STRING, 4998, "Decrease width");
-			LyricsMenu.AppendTo(bio_menu, MF_STRING, "Lyrics panel");
+			LyricsMenu.AppendMenuItem((!lyrics_state.isMaximumValue())?MF_STRING:MF_GRAYED, 4999, "增加寬度");
+			LyricsMenu.AppendMenuItem(MF_STRING, 4998, "減少寬度");
+			LyricsMenu.AppendTo(bio_menu, MF_STRING, "歌詞面板");
 		}
 
 		bio_menu.AppendMenuSeparator();
@@ -1471,7 +1471,7 @@ function draw_main_menu(x,y){
 		wallpaper_visibility.AppendTo(bio_menu,MF_STRING, "壁紙可見性");
 		wallpaper_blur.AppendTo(bio_menu,MF_STRING, "壁紙模糊");
 	} else if(main_panel_state.isEqual(3)){
-		visu_menu.AppendTo(skin_settings_menu,MF_STRING, "Panel layout");
+		visu_menu.AppendTo(skin_settings_menu,MF_STRING, "面板版面設計");
 		nowplaying.AppendTo(visu_menu,MF_STRING, "右側邊欄播放清單");
 		visu_menu.AppendMenuSeparator();
 		visu_menu.AppendMenuItem(MF_STRING, 4003, "灰暗主題");

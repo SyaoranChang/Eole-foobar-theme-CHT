@@ -4454,7 +4454,7 @@ function positionButtons(){
 		btns_manager.buttons.lyricsIncrease.hide = true;	
 		btns_manager.buttons.lyricsReduce.hide = false;			
 	} else if(lyrics_state.isMinimumValue()) {
-		btns_manager.buttons.lyricsIncrease.text = "Lyrics";
+		btns_manager.buttons.lyricsIncrease.text = "歌詞";
 		btns_manager.buttons.lyricsIncrease.first_draw=true;
 		btns_manager.buttons.lyricsIncrease.x = -20;		
 		btns_manager.buttons.lyricsReduce.hide = true;

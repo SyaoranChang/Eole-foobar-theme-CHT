@@ -89,10 +89,10 @@ function on_paint(gr) {
 	gr.SetTextRenderingHint(globalProperties.TextRendering);
 	gr.FillSolidRect(0, 0, ww, wh, colors.normal_bg);
 	if(lyricsText_Width<0) {
-		lyricsText_Width = gr.CalcTextWidth("Lyrics", font_title)+10;
+		lyricsText_Width = gr.CalcTextWidth("歌詞", font_title)+10;
 		positionButtons();
 	}
-	gr.GdiDrawText("Lyrics", font_title, colors.normal_txt, padding_left, (lyrics_state.isEqual(5)?padding_top_nobio:padding_top), ww - padding_left-padding_right, header_height, DT_TOP | DT_LEFT | DT_END_ELLIPSIS | DT_NOPREFIX);
+	gr.GdiDrawText("歌詞", font_title, colors.normal_txt, padding_left, (lyrics_state.isEqual(5)?padding_top_nobio:padding_top), ww - padding_left-padding_right, header_height, DT_TOP | DT_LEFT | DT_END_ELLIPSIS | DT_NOPREFIX);
 	drawAllButtons(gr);
 }
 function on_font_changed() {
