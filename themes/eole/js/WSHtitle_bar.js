@@ -1637,8 +1637,9 @@ function draw_main_menu(x,y){
 	}
 	skin_settings_menu.AppendMenuSeparator();
 	skin_settings_menu.AppendMenuItem(MF_GRAYED, 0, "Eole v"+globalProperties.theme_version);
+	skin_settings_menu.AppendMenuItem(MF_GRAYED, 0, "繁化: SyaoranChang v"+ globalProperties.lastest_ChineseTraditionaltranslation_version);
 
-	skin_settings_menu.AppendTo(basemenu, MF_STRING, "Skin 介面設定");
+	skin_settings_menu.AppendTo(basemenu, MF_STRING, "Skin 設定");
 
     menuman1.Init("file");
     menuman2.Init("edit");
@@ -2728,7 +2729,7 @@ function on_init(){
 	if(fb.IsPlaying) caption_title = fb.TitleFormat("[%artist%  -  ][%album%[  -  %tracknumber%] : ]%title%[  -  %date%]").Eval();
 	if(settings_file_not_found){
 		var welcome_msg_timer = setTimeout(function(){
-			chooseMemorySettings(" ", "<div class='titleBig'>看起來你剛剛安裝了這個主題？</div><div class='separator'></div><br/>請充分閱讀本彈出窗口，特別是底部的文字，以便瞭解Eole圖片快取的工作原理。\n\n下面的設置影響到這個 Skin 的性能、封面的解析度和記憶體佔用。\n\n你可以在之後減少它，方法是進入 Foobar > Skin 介面設定 > 封面和記憶體的使用方式\n如果你遇到性能問題或記憶體不足的錯誤。 相反，如果一切工作正常，那麼你可以增加它。 如果你不理解這些，請保持預設設置。",'<br/>有用的提示：大多數面板都有一個設置選單，可通過右鍵點擊獲得。<br/><br/>註：Eole 主題使用的是封面快取。 封面快取是一點一點建立起來的：當一個封面被顯示時，如果它還沒有被存儲在快取中，它將被添加到快取中，所以在第一次顯示任何封面時，它將會有點慢，但在第二次顯示時它將會變得快很多。<br/><br/>這個快取是基於 %album artist% & %album% 的標籤.<br/><br/>如果你更新一個現有的封面，你需要執行一次快取刷新。 在需要刷新的封面上點擊右鍵，你將會有一個選單項目來執行刷新。<br/><br/>','MemoryDialog','你可以減少記憶體中儲存的封面的寬度，如下。這個數字越低，這個 Skin 的記憶體佔用就越低。 注意：如果你減少得太多，封面會看起來模糊不清。');
+			chooseMemorySettings(" ", "<div class='titleBig'>看起來你剛剛安裝了這個主題？</div><div class='separator'></div><br/>請充分閱讀本彈出窗口，特別是底部的文字，以便瞭解 Eole 主題圖片快取的工作原理。\n\n下面的設置影響到這個 Skin 的性能、封面的解析度和記憶體佔用。\n\n你可以在之後減少它，方法是進入 Foobar > Skin 設定 > 封面和記憶體的使用方式\n如果你遇到性能問題或記憶體不足的錯誤。 相反，如果一切工作正常，那麼你可以增加它。 如果你不理解這些，請保持預設設置。",'<br/>有用的提示：大多數面板都有一個設置選單，可通過右鍵點擊獲得。<br/><br/>註：Eole 主題使用的是封面快取。 封面快取是一點一點建立起來的：當一個封面被顯示時，如果它還沒有被存儲在快取中，它將被添加到快取中，所以在第一次顯示任何封面時，它將會有點慢，但在第二次顯示時它將會變得快很多。<br/><br/>這個快取是基於 %album artist% & %album% 的標籤.<br/><br/>如果你更新一個現有的封面，你需要執行一次快取刷新。 在需要刷新的封面上點擊右鍵，你將會有一個選單項目來執行刷新。<br/><br/>','MemoryDialog','你可以減少記憶體中儲存的封面的寬度，如下。這個數字越低，這個 Skin 的記憶體佔用就越低。 注意：如果你減少得太多，封面會看起來模糊不清。');
 			theme_version.setValue(globalProperties.theme_version);
 			clearTimeout(welcome_msg_timer);
 			welcome_msg_timer=false;
