@@ -2989,7 +2989,8 @@ function draw_controls_menu(x,y){
 				draw_settings_menu(x,y);
                 break;
 			case (idx == 2):
-				fb.RunContextCommandWithMetadb("Properties", fb.GetNowPlaying());
+				//fb.RunContextCommandWithMetadb("Properties", fb.GetNowPlaying());
+				fb.RunContextCommandWithMetadb("屬性", fb.GetNowPlaying());
 			break;		
 		case (idx == 30):
 			if(!main_panel_state.isEqual(0) && !main_panel_state.isEqual(1)) {

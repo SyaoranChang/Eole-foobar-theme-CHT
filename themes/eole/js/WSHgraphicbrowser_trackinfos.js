@@ -5287,7 +5287,8 @@ oBrowser = function(name) {
                 break;
             case "mbtn_down":
                 if(this.activeIndex > -1){
-					fb.RunContextCommandWithMetadb("Properties",this.groups[this.groups_draw[this.activeIndex]].pl);
+					//fb.RunContextCommandWithMetadb("Properties",this.groups[this.groups_draw[this.activeIndex]].pl);
+					fb.RunContextCommandWithMetadb("屬性",this.groups[this.groups_draw[this.activeIndex]].pl);
                 }
                 break;
             case "move":

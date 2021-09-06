@@ -217,7 +217,8 @@ function on_mouse_wheel(step, stepstrait, delta){
 	}
 }
 function on_mouse_lbtn_dblclk(x, y) {
-	if (g_infos.metadb && TextBtn_info.isXYInButton(x, y)) fb.RunContextCommandWithMetadb("Properties", g_infos.metadb);
+	//if (g_infos.metadb && TextBtn_info.isXYInButton(x, y)) fb.RunContextCommandWithMetadb("Properties", g_infos.metadb);
+	if (g_infos.metadb && TextBtn_info.isXYInButton(x, y)) fb.RunContextCommandWithMetadb("屬性", g_infos.metadb);
 }
 
 function on_mouse_rbtn_up(x, y) {
