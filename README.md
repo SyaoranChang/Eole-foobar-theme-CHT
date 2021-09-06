@@ -3,6 +3,10 @@
 This is a skin for the [foobar2000](https://www.foobar2000.org) audio player.
 This theme require Foobar2000 1.4 (or superior).
 
+# Eole Foobar theme CHT
+
+此為 Eole Foobar theme 的內容的繁體中文化
+
 ## Participate to the theme
 
 If you've got some knowledge in javascript, feel free to suggest code performance improvements, to report bugs and their fixes. Open an issue ticket, share the code, or do a pull request.
