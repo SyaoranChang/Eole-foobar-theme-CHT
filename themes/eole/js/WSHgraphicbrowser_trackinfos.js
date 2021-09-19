@@ -3267,7 +3267,7 @@ function draw_settings_menu(x,y,right_align,sort_group){
 	
 	_menuCover.AppendMenuItem(MF_STRING, 80, "總是");
 	_menuCover.CheckMenuItem(80, properties.showlistShowCover==2);
-	_menuCover.AppendMenuItem(MF_STRING, 81, "當右側邊欄還沒有顯示時(似乎沒作用!?)");
+	_menuCover.AppendMenuItem(MF_STRING, 81, "當右側曲目資料面板開啟，且該面板的跟隨現在播放中啟用時將自動隱藏");
 	_menuCover.CheckMenuItem(81, properties.showlistShowCover==1);
 	_menuCover.AppendMenuItem(MF_STRING, 82, "從不");
 	_menuCover.CheckMenuItem(82, properties.showlistShowCover==0);	
