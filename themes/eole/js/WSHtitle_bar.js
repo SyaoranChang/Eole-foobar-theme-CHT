@@ -1637,7 +1637,7 @@ function draw_main_menu(x,y){
 	}
 	skin_settings_menu.AppendMenuSeparator();
 	skin_settings_menu.AppendMenuItem(MF_GRAYED, 0, "Eole v"+globalProperties.theme_version);
-	skin_settings_menu.AppendMenuItem(MF_GRAYED, 0, "繁化: SyaoranChang v"+ globalProperties.lastest_ChineseTraditionaltranslation_version);
+	skin_settings_menu.AppendMenuItem(MF_GRAYED, 0, "繁體化: SyaoranChang v"+ globalProperties.lastest_ChineseTraditionaltranslation_version);
 
 	skin_settings_menu.AppendTo(basemenu, MF_STRING, "Skin 設定");
 
