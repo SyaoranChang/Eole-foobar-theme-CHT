@@ -1292,7 +1292,8 @@ function sendandplayPlaybackPlaylist(items, play_metadb){
 		else
 			plman.SetPlaylistFocusItem(pidx_playing, 0);
 		if(play_metadb)
-			fb.RunContextCommandWithMetadb("Add to playback queue", play_metadb);
+			//fb.RunContextCommandWithMetadb("Add to playback queue", play_metadb);
+			fb.RunContextCommandWithMetadb("新增到播放佇列", play_metadb);
 		else
 			plman.AddPlaylistItemToPlaybackQueue(pidx_playing, 0);
 		if(fb.IsPaused || fb.IsPlaying) fb.Next();

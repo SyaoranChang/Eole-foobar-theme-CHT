@@ -981,7 +981,8 @@ oRow = function(metadb,itemIndex) {
 					var a = g_showlist.idx;
 					plman.SetPlaylistFocusItemByHandle(plman.ActivePlaylist, this.metadb);
 					if(fb.IsPaused) fb.Stop();
-                    fb.RunContextCommandWithMetadb("Add to playback queue", this.metadb);
+                    //fb.RunContextCommandWithMetadb("Add to playback queue", this.metadb);
+					fb.RunContextCommandWithMetadb("新增到播放佇列", this.metadb);
                     fb.Play();
                 }
                 break;
@@ -4069,7 +4070,8 @@ oBrowser = function(name) {
 						}
 						plman.SetPlaylistFocusItemByHandle(plman.ActivePlaylist, this.groups_draw[this.activeIndex].pl[0]);
 						if(fb.IsPaused) fb.Stop();
-						fb.RunContextCommandWithMetadb("Add to playback queue", this.groups_draw[this.activeIndex].pl[0]);
+						//fb.RunContextCommandWithMetadb("Add to playback queue", this.groups_draw[this.activeIndex].pl[0]);
+						fb.RunContextCommandWithMetadb("新增到播放佇列", this.groups_draw[this.activeIndex].pl[0]);
 						fb.Play();
 					}
 
@@ -4108,7 +4110,8 @@ oBrowser = function(name) {
 					}
 					plman.SetPlaylistFocusItemByHandle(plman.ActivePlaylist, this.groups_draw[a].pl[0]);
 					if(fb.IsPaused) fb.Stop();
-                    fb.RunContextCommandWithMetadb("Add to playback queue", this.groups_draw[a].pl[0]);
+                    //fb.RunContextCommandWithMetadb("Add to playback queue", this.groups_draw[a].pl[0]);
+					fb.RunContextCommandWithMetadb("新增到播放佇列", this.groups_draw[a].pl[0]);
                     fb.Play();
 
 					/*

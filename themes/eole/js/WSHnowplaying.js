@@ -117,7 +117,8 @@ function setButtons(){
 				plman.ActivePlaylist = g_cover.playlistIndex;		
 				if(fb.IsPaused) fb.Stop();
 				plman.FlushPlaybackQueue();
-				fb.RunContextCommandWithMetadb("Add to playback queue", g_cover.metadb);
+				//fb.RunContextCommandWithMetadb("Add to playback queue", g_cover.metadb);
+				fb.RunContextCommandWithMetadb("新增到播放佇列", g_cover.metadb);
 				fb.Play();
 			}
 		},function () {},images.play_img,images.play_img),
