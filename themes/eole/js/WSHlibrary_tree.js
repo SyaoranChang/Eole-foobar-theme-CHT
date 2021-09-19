@@ -1160,8 +1160,8 @@ function panel_operations() {
         sort = "";
     var view_ppt = [
         window.GetProperty("View 01: Name // Pattern", "按 演出者 檢視 // %artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
-        window.GetProperty("View 02: Name // Pattern", "按 演出者 檢視 // %album artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
-        window.GetProperty("View 03: Name // Pattern", "按 演出者 - 專輯 檢視 // [%album artist% - ]['['%date%']' ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
+        window.GetProperty("View 02: Name // Pattern", "按 專輯 演出者 檢視 // %album artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
+        window.GetProperty("View 03: Name // Pattern", "按 專輯 演出者 - 專輯 檢視 // [%album artist% - ]['['%date%']' ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
         window.GetProperty("View 04: Name // Pattern", "按 專輯 檢視 // %album%[ '['%album artist%']']|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
         window.GetProperty("View 05: Name // Pattern", "按 音樂類型 檢視 // %genre%|[%album artist% - ][(%date%) ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
         window.GetProperty("View 06: Name // Pattern", "按 年份 檢視 // %date%|[%album artist% - ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%")
@@ -1177,7 +1177,7 @@ function panel_operations() {
         window.GetProperty("View Filter 01: Name // Query", "無 No // Query Not Configurable"),
         window.GetProperty("View Filter 02: Name // Query", "無損 Lossless // \"$info(encoding)\" IS lossless"),
         window.GetProperty("View Filter 03: Name // Query", "有損 Lossy // \"$info(encoding)\" IS lossy"),
-        window.GetProperty("View Filter 04: Name // Query", "遺失回放增益 Missing Replaygain // %replaygain_track_gain% MISSING"),
+        window.GetProperty("View Filter 04: Name // Query", "遺失播放增益 Missing Replaygain // %replaygain_track_gain% MISSING"),
         window.GetProperty("View Filter 05: Name // Query", "從未播放 Never Played // %play_count% MISSING"),
         window.GetProperty("View Filter 06: Name // Query", "播放次數最多 Played Often // %play_count% GREATER 9"),
         window.GetProperty("View Filter 07: Name // Query", "過去2周新增加 Recently Added // %added% DURING LAST 2 WEEKS"),
@@ -3866,7 +3866,7 @@ function menu_object() {
 
 		if(utils.IsKeyPressed(VK_SHIFT)) {
 			menu.AppendMenuSeparator();
-			menu.AppendMenuItem(MF_STRING, 7001, "屬性");
+			menu.AppendMenuItem(MF_STRING, 7001, "面板屬性");
 			menu.AppendMenuItem(MF_STRING, 7002, "配置...");
 			menu.AppendMenuSeparator();
 			menu.AppendMenuItem(MF_STRING, 7003, "重新載入");
@@ -4197,7 +4197,7 @@ function showOptionsMenu(x,y,reduced){
 
 	if(utils.IsKeyPressed(VK_SHIFT)) {
 		menu.AppendMenuSeparator();
-		menu.AppendMenuItem(MF_STRING, 7001, "屬性");
+		menu.AppendMenuItem(MF_STRING, 7001, "面板屬性");
 		menu.AppendMenuItem(MF_STRING, 7002, "配置...");
 		menu.AppendMenuSeparator();
 		menu.AppendMenuItem(MF_STRING, 7003, "重新載入");

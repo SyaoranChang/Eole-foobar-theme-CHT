@@ -2978,7 +2978,7 @@ function draw_controls_menu(x,y){
 		
 		if(utils.IsKeyPressed(VK_SHIFT)) {
 			_menu.AppendMenuSeparator();
-			_menu.AppendMenuItem(MF_STRING, 100, "屬性 ");
+			_menu.AppendMenuItem(MF_STRING, 100, "面板屬性");
 			_menu.AppendMenuItem(MF_STRING, 101, "配置...");
             _menu.AppendMenuSeparator();
 			_menu.AppendMenuItem(MF_STRING, 102, "重新載入");

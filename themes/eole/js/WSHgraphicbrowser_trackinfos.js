@@ -3107,7 +3107,7 @@ oHeaderBar = function(name) {
 
 		if(utils.IsKeyPressed(VK_SHIFT)) {
 			basemenu.AppendMenuSeparator();
-			basemenu.AppendMenuItem(MF_STRING, 3100, "屬性 ");
+			basemenu.AppendMenuItem(MF_STRING, 3100, "面板屬性");
 			basemenu.AppendMenuItem(MF_STRING, 3101, "配置...");
 			basemenu.AppendMenuSeparator();
 			basemenu.AppendMenuItem(MF_STRING, 3102, "重新載入");
@@ -6625,7 +6625,7 @@ function on_mouse_rbtn_down(x, y){
 
 		if(utils.IsKeyPressed(VK_SHIFT)) {
 			_menu.AppendMenuSeparator();
-			_menu.AppendMenuItem(MF_STRING, 7, "屬性 ");
+			_menu.AppendMenuItem(MF_STRING, 7, "面板屬性");
 			_menu.AppendMenuItem(MF_STRING, 6, "配置...");
 			_menu.AppendMenuSeparator();
 			_menu.AppendMenuItem(MF_STRING, 5, "重新載入");

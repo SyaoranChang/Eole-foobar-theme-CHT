@@ -199,7 +199,7 @@ function on_mouse_rbtn_up(x, y){
         var _menu = window.CreatePopupMenu();
         var idx;
 		if(utils.IsKeyPressed(VK_SHIFT)) {
-			_menu.AppendMenuItem(MF_STRING, 100, "屬性 ");
+			_menu.AppendMenuItem(MF_STRING, 100, "面板屬性");
 			_menu.AppendMenuItem(MF_STRING, 101, "配置...");
             _menu.AppendMenuSeparator();
 			_menu.AppendMenuItem(MF_STRING, 102, "重新載入");

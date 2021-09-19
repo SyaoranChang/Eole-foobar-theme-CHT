@@ -3582,7 +3582,7 @@ oBrowser = function(name) {
 
 		if(utils.IsKeyPressed(VK_SHIFT)) {
 			_menu.AppendMenuSeparator();
-			_menu.AppendMenuItem(MF_STRING, 1001, "屬性 ");
+			_menu.AppendMenuItem(MF_STRING, 1001, "面板屬性");
 			_menu.AppendMenuItem(MF_STRING, 1002, "配置...");
 			_menu.AppendMenuSeparator();
 			_menu.AppendMenuItem(MF_STRING, 1003, "重新載入");
@@ -3802,7 +3802,7 @@ oBrowser = function(name) {
 
 			if(utils.IsKeyPressed(VK_SHIFT)) {
 				_menu.AppendMenuSeparator();
-				_menu.AppendMenuItem(MF_STRING, 991, "屬性 ");
+				_menu.AppendMenuItem(MF_STRING, 991, "面板屬性");
 				_menu.AppendMenuItem(MF_STRING, 992, "配置...");
 				_menu.AppendMenuSeparator();
 				_menu.AppendMenuItem(MF_STRING, 993, "重新載入");

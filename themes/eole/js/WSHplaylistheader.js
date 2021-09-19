@@ -422,7 +422,7 @@ function draw_menu(x, y) {
 
 	if(utils.IsKeyPressed(VK_SHIFT)) {
 		basemenu.AppendMenuSeparator();
-		basemenu.AppendMenuItem(MF_STRING, 5100, "屬性 ");
+		basemenu.AppendMenuItem(MF_STRING, 5100, "面板屬性");
 		basemenu.AppendMenuItem(MF_STRING, 5101, "配置...");
 		basemenu.AppendMenuSeparator();
 		basemenu.AppendMenuItem(MF_STRING, 5102, "重新載入");

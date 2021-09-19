@@ -1659,7 +1659,7 @@ function on_mouse_rbtn_up(x, y){
 	main_menu.AppendMenuItem(MF_STRING, 2, "屬性");
 	if(utils.IsKeyPressed(VK_SHIFT)) {
 		main_menu.AppendMenuSeparator();
-		main_menu.AppendMenuItem(MF_STRING, 100, "屬性 ");
+		main_menu.AppendMenuItem(MF_STRING, 100, "面板屬性");
 		main_menu.AppendMenuItem(MF_STRING, 101, "配置...");
 		main_menu.AppendMenuSeparator();
 		main_menu.AppendMenuItem(MF_STRING, 102, "重新載入");
