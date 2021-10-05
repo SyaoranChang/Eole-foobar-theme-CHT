@@ -1836,7 +1836,7 @@ function MenuItems() {
     const blacklistImageMenu = (Menu, StartIndex) => {
         let blacklist = [], Index = StartIndex; bn = fb.ProfilePath + "yttm\\" + "blacklist_image.json";
 		if (!s.file(bn)) s.save(bn, JSON.stringify({"blacklist":{}}), true); if (s.file(bn)) {b_n = imgArtist.clean().toLowerCase(); imgList = s.jsonParse(bn, false, 'file'); blacklist = imgList.blacklist[b_n] || [];}
-		const n = [imgBlk ? "+ 加入到黑名單: " + imgArtist + "_" + imgName : "+ 加入到黑名單: " + (imgName ? "N/A - Requires Last.fm Artist Image. Selected Image : " + imgName : "N/A - No Image"), blacklist.length ? " - 從黑名單移除 (點擊名稱): " : "目前的演出者沒有黑名單的圖片", "Undo"];
+		const n = [imgBlk ? "+ 加入到黑名單: " + imgArtist + "_" + imgName : "+ 加入到黑名單: " + (imgName ? "無 - 需要 Last.fm 的演出者圖片. 選擇的圖片 : " + imgName : "無 - 無圖片"), blacklist.length ? " - 從黑名單移除 (點擊名稱): " : "目前的演出者沒有黑名單的圖片", "復原"];
         for (let i = 0; i < 3; i++) {newMenuItem(Index, "ImageBlacklist", i); if (i < 2 || img.undo[0] == b_n) Menu.AppendMenuItem(!i && imgBlk || i == 2 ? MF_STRING : MF_GRAYED, Index, n[i]); if (!i) Menu.AppendMenuItem(MF_SEPARATOR, 0, 0); Index++;}
         blacklist.forEach((v, i) => {newMenuItem(Index, "ImageBlacklist", i + (img.undo[0] == b_n ? 3 : 2)); Menu.AppendMenuItem(MF_STRING, Index, (imgArtist + "_" + v).replace(/&/g, "&&")); Index++;});
         return Index;
