@@ -5238,12 +5238,8 @@ oBrowser = function(name) {
 
 				//console.log("小狼 Test")
                 if(this.ishover && this.rowsCount == 0 && LibraryItems_counter==0) {
-                    //fb.RunMainMenuCommand("Library/Configure");
-					//console.log("小狼 Test In")
-					fb.RunMainMenuCommand("媒體櫃/設定");
-					//fb.RunMainMenuCommand("媒體櫃/搜尋");
-					//fb.RunMainMenuCommand("媒體櫃/專輯表");
-					//console.log("小狼 Test Out")
+					//fb.RunMainMenuCommand("Library/Configure");
+					fb.RunMainMenuCommand("媒體/設定");
                 } else {
 					this.sourceX = x;
 					this.sourceY = y;

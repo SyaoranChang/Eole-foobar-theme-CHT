@@ -4050,7 +4050,8 @@ oBrowser = function(name) {
                 }
 
                 if(this.ishover && this.rowsCount == 0 && LibraryItems_counter==0) {
-                    fb.RunMainMenuCommand("Library/Configure");
+                    //fb.RunMainMenuCommand("Library/Configure");
+					fb.RunMainMenuCommand("媒體/設定");
                 } else {
 					this.sourceX = x;
 					this.sourceY = y;
