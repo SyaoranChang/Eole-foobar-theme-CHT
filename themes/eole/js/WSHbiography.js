@@ -1896,7 +1896,7 @@ function MenuItems() {
 		Index = borderTypeMenu(this.borderMenu, Index); this.borderMenu.AppendTo(this.imageMenu, MF_STRING, "邊框");
 		Index = shadowTypeMenu(this.shadowMenu, Index); this.shadowMenu.AppendTo(this.imageMenu, MF_STRING, "陰影");
         if (pl_show == 2 || pl_show && shift) {this.menu.AppendMenuItem(MF_SEPARATOR, 0, 0); PlaylistsMenu.AppendTo(this.menu, MF_STRING, "Playlists"); const pl_me = [], pl_no = Math.ceil(pl_menu.length / 30); OrigIndex = Index; for (let j = 0; j < pl_no; j++) {pl_me[j] = window.CreatePopupMenu(); Index = playlistTypeMenu(j, pl_me[j], Index); pl_me[j].AppendTo(PlaylistsMenu, MF_STRING, "# " + (j * 30 + 1 +  " - " + Math.min(pl_menu.length, 30 + j * 30) + (30 + j * 30 > plman.ActivePlaylist && ((j * 30) - 1) < plman.ActivePlaylist ? "  >>>" : "")));}}
-        if (tags_show == 2 || tags_show && shift) {this.menu.AppendMenuItem(MF_SEPARATOR, 0, 0); Index = tagsTypeMenu(this.tagsMenu, Index); handles = plman.GetPlaylistSelectedItems(plman.ActivePlaylist); this.tagsMenu.AppendTo(this.menu, handles.Count ? MF_STRING : MF_GRAYED, "將標簽寫入選擇的曲目中" + (handles.Count ? "" : ": N/A 沒有選擇播放清單的曲目"));}
+        if (tags_show == 2 || tags_show && shift) {this.menu.AppendMenuItem(MF_SEPARATOR, 0, 0); Index = tagsTypeMenu(this.tagsMenu, Index); handles = plman.GetPlaylistSelectedItems(plman.ActivePlaylist); this.tagsMenu.AppendTo(this.menu, handles.Count ? MF_STRING : MF_GRAYED, "將標簽寫入選擇的曲目中" + (handles.Count ? "" : ": 無 沒有選擇播放清單的曲目"));}
         Index = defaultTypeMenu(this.menu, Index);
 
         idx = this.menu.TrackPopupMenu(x, y);
