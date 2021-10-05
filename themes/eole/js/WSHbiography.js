@@ -836,7 +836,7 @@ function Panel() {
 						if (!found) {const getSimilar = new Lfm_similar_artists(() => getSimilar.on_state_change(), getSimilar_search_done); getSimilar.Search(a, "", "", 6);}
 					}
 					if (found && $.isArray(sa) && sa.length) {
-						this.artists.push({name: "Similar Artists:", field: "", type: "label"});
+						this.artists.push({name: "相似的演出者:", field: "", type: "label"});
 						sa.forEach((v, i) => this.artists.push({name: v, field: "", type: i != sa.length - 1 ? "similar" : "similarend"}));
 					}
 				}
@@ -858,7 +858,7 @@ function Panel() {
 			}}
 			if (mult_arr.length) {
 				this.moreTags = true;
-				this.artists.push({name: "More Tags:", field: "", type: "label"}); this.artists = this.artists.concat(mult_arr); this.artists[this.artists.length - 1].type = "tagend";}
+				this.artists.push({name: "更多的標籤:", field: "", type: "label"}); this.artists = this.artists.concat(mult_arr); this.artists[this.artists.length - 1].type = "tagend";}
 		}
 
 		if (!a || !history_a || a != history_a) {
@@ -877,7 +877,7 @@ function Panel() {
 		}
 
 		if (artistHistory.length && ppt.showArtistHistory) {
-			this.artists.push({name: "Artist History:", field: "", type: "label"}); 
+			this.artists.push({name: "演出者歷史紀錄:", field: "", type: "label"}); 
 			for (let h = 0; h < artistHistory.length; h++) this.artists.push(artistHistory[h]);
 			this.artists[this.artists.length - 1].type = "historyend";
 		}
@@ -886,7 +886,7 @@ function Panel() {
         this.artistsUniq = this.artists.filter(v => v.type != "label");
 
         if (ppt.showTopAlbums && s.file(lfmBio)) {
-            kw = "Top Albums: |Top-Alben: |Álbumes Más Escuchados: |Top Albums: |Album Più Ascoltati: |人気アルバム: |Najpopularniejsze Albumy: |Álbuns Principais: |Популярные альбомы: |Toppalbum: |En Sevilen Albümler: |最佳专辑: "; ix = -1;
+            kw = "Top Albums: |Top-Alben: |Álbumes Más Escuchados: |Top Albums: |Album Più Ascoltati: |人気アルバム: |Najpopularniejsze Albumy: |Álbuns Principais: |Популярные альбомы: |Toppalbum: |En Sevilen Albümler: |最佳專輯: "; ix = -1;
             let found = false, talb = lfm_a.match(RegExp(kw)); if (talb) {talb = talb.toString(); ix = lfm_a.lastIndexOf(talb); if (ix != -1) {ta = lfm_a.substring(ix + talb.length); ta = ta.split('\n')[0].trim().split(", ");}}
             if (ta.length < 7 && ta) found = true;
 			if (!found) {
@@ -898,13 +898,13 @@ function Panel() {
 			this.albums = [];
             this.albums.push({artist: aa, album: l, type: "Current Album"});
             if (found && $.isArray(ta) && ta.length) {
-                this.albums.push({artist: "Last.fm Top Albums: " + a + ":", album: "Last.fm Top Albums: " + a + ":", type: "label"});
+                this.albums.push({artist: "Last.fm Top Albums: " + a + ":", album: "Last.fm 最佳專輯: " + a + ":", type: "label"});
                 ta.forEach((v, i) => this.albums.push({artist: a, album: v, type: i != ta.length - 1 ? "album" : "albumend"}));
             }
         } else {this.albums = []; this.albums.push({artist: aa, album: l, type: "Current Album"});}
 
 		if (albumHistory.length && ppt.showAlbumHistory) {
-			this.albums.push({artist: "Album History:", l: "", album: "Album History:", type: "label"}); 
+			this.albums.push({artist: "Album History:", l: "", album: "專輯歷史紀錄:", type: "label"}); 
 			for (let h = 0; h < albumHistory.length; h++) this.albums.push(albumHistory[h]);
 			this.albums[this.albums.length - 1].type = "historyend";
 		}
@@ -1806,8 +1806,8 @@ function MenuItems() {
     const langTypeMenu= (Menu, StartIndex) => {let Index = StartIndex; const n = p.langArr; n.forEach((v, i) => {newMenuItem(Index, "Language", i); Menu.AppendMenuItem(MF_STRING, Index, v); Index++;}); Menu.CheckMenuRadioItem(StartIndex, StartIndex + n.length - 1, StartIndex + p.lfmLang_ix); return Index;}
     const lfmRevTypeMenu = (Menu, StartIndex) => {let Index = StartIndex; const n = ["專輯", "專輯 + 曲目", "曲目"]; n.forEach((v, i) => {newMenuItem(Index, "Sources", i + 9); Menu.AppendMenuItem(MF_STRING, Index, v); Index++;}); Menu.CheckMenuRadioItem(StartIndex, StartIndex + 2, StartIndex + ppt.inclTrackRev); return Index;}
     const modeTypeMenu = (Menu, StartIndex) => {let Index = StartIndex; const n = [!p.imgText ? "自動顯示" : "圖片+文字", "只有圖片", "只有文字"]; n.forEach((v, i) => {newMenuItem(Index, "Mode", i); Menu.AppendMenuItem(i != 1 || !ppt.autoEnlarge ? MF_STRING : MF_GRAYED, Index, v); Index++; if (i == 2) Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);}); Menu.CheckMenuRadioItem(StartIndex, StartIndex + 2, StartIndex + (ppt.sameStyle ? (!ppt.img_only && !ppt.text_only ? 0 : ppt.img_only ? 1 : 2) : ppt.artistView ? ppt.bioMode : ppt.revMode)); return Index;}
-    const moreAlbMenu = (Menu, StartIndex) => {let Index = StartIndex; const n = ["Manual Cycle: Wheel Over Button", "自動循環項目", "設定週期時間...", "Reload"]; p.albums.forEach((v, i) => {newMenuItem(Index, "More-Album", i); Menu.AppendMenuItem(v.type != "label" ? MF_STRING : MF_GRAYED, Index, !i || v.type.includes("history") ? v.artist.replace(/&/g, "&&") + " - " + v.album.replace(/&/g, "&&") : v.album.replace(/&/g, "&&")); Index++; if (!i || v.type == "albumend" || v.type == "label" || v.type == "historyend") Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);}); if (p.albums.length) Menu.CheckMenuRadioItem(StartIndex, StartIndex + p.albums.length, StartIndex + p.alb_ix); n.forEach((v, i) => {newMenuItem(Index, "More-Album", p.albums.length + i); Menu.AppendMenuItem(!i ? MF_GRAYED : MF_STRING, Index, v); if (i == 1) Menu.CheckMenuItem(Index++, ppt.cycItem); else Index++; if (!i || i == 2) Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);}); return Index;}
-	const moreArtMenu = (Menu, StartIndex) => {let Index = StartIndex; const n = ["Manual Cycle: Wheel Over Button", "自動循環項目", "設定週期時間...", "Reload"]; p.artists.forEach((v, i) => {newMenuItem(Index, "More-Artist", i); Menu.AppendMenuItem(v.type != "label" ? MF_STRING : MF_GRAYED, Index, v.name.replace(/&/g, "&&") + v.field.replace(/&/g, "&&")); Index++; if (!i || v.type == "similarend" || v.type == "label" || v.type == "tagend" || v.type == "historyend") Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);}); if (p.artists.length) Menu.CheckMenuRadioItem(StartIndex, StartIndex + p.artists.length, StartIndex + p.art_ix); n.forEach((v, i) => {newMenuItem(Index, "More-Artist", p.artists.length + i); Menu.AppendMenuItem(!i ? MF_GRAYED : MF_STRING, Index, v); if (i == 1) Menu.CheckMenuItem(Index++, ppt.cycItem); else Index++; if (!i || i == 2) Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);}); return Index;}
+    const moreAlbMenu = (Menu, StartIndex) => {let Index = StartIndex; const n = ["手動循環: 滑鼠滾輪按鈕", "自動循環項目", "設定週期時間...", "重新載入"]; p.albums.forEach((v, i) => {newMenuItem(Index, "More-Album", i); Menu.AppendMenuItem(v.type != "label" ? MF_STRING : MF_GRAYED, Index, !i || v.type.includes("history") ? v.artist.replace(/&/g, "&&") + " - " + v.album.replace(/&/g, "&&") : v.album.replace(/&/g, "&&")); Index++; if (!i || v.type == "albumend" || v.type == "label" || v.type == "historyend") Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);}); if (p.albums.length) Menu.CheckMenuRadioItem(StartIndex, StartIndex + p.albums.length, StartIndex + p.alb_ix); n.forEach((v, i) => {newMenuItem(Index, "More-Album", p.albums.length + i); Menu.AppendMenuItem(!i ? MF_GRAYED : MF_STRING, Index, v); if (i == 1) Menu.CheckMenuItem(Index++, ppt.cycItem); else Index++; if (!i || i == 2) Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);}); return Index;}
+	const moreArtMenu = (Menu, StartIndex) => {let Index = StartIndex; const n = ["手動循環: 滑鼠滾輪按鈕", "自動循環項目", "設定週期時間...", "重新載入"]; p.artists.forEach((v, i) => {newMenuItem(Index, "More-Artist", i); Menu.AppendMenuItem(v.type != "label" ? MF_STRING : MF_GRAYED, Index, v.name.replace(/&/g, "&&") + v.field.replace(/&/g, "&&")); Index++; if (!i || v.type == "similarend" || v.type == "label" || v.type == "tagend" || v.type == "historyend") Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);}); if (p.artists.length) Menu.CheckMenuRadioItem(StartIndex, StartIndex + p.artists.length, StartIndex + p.art_ix); n.forEach((v, i) => {newMenuItem(Index, "More-Artist", p.artists.length + i); Menu.AppendMenuItem(!i ? MF_GRAYED : MF_STRING, Index, v); if (i == 1) Menu.CheckMenuItem(Index++, ppt.cycItem); else Index++; if (!i || i == 2) Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);}); return Index;}
     const openTypeMenu = (Menu, StartIndex) => {let Index = StartIndex; const fo = [imgPth, amPth[3], lfmPth[3], tracksPth[3]], n = ["圖片", ppt.artistView ? "人物介紹 [AllMusic]" : "評論 [AllMusic]", ppt.artistView ? "人物介紹 [Last.fm]" : "評論 [Last.fm]", ppt.artistView ? "" : "曲目 [Last.fm]"]; let i = n.length; while (i--) if (!fo[i]) {n.splice(i, 1); fo.splice(i, 1); pths.splice(i, 1);} n.forEach((v, i) => {newMenuItem(Index, "Open", i); Menu.AppendMenuItem(MF_STRING, Index, v); Index++; if (!i && n.length > 1 && imgPth) Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);}); return Index;}
 	const optionsTypeMenu = (Menu, StartIndex) => {let Index = StartIndex; const c = [ppt.sameStyle, !p.imgText, ppt.smooth, ppt.touchControl, p.dblClick,,], n = ["對演出者和專輯使用相同的風格", "自動雙重風格", "平滑捲動", "觸碰控制", "點擊行為: 設定為雙擊才有反應", "文字替代機制...", "設定行間距...", "重置縮放", "重新載入"]; n.forEach((v, i) => {newMenuItem(Index, "Options", i); Menu.AppendMenuItem(MF_STRING, Index, v); if (i < 2 || i > 2 && i < 6) Menu.AppendMenuItem(MF_SEPARATOR, 0, 0); Menu.CheckMenuItem(Index++, c[i]);}); return Index;}
     const overlayTypeMenu = (Menu, StartIndex) => {let Index = StartIndex; const n = ["漸變", "標準", "標準 + 邊框", "圓角", "圓角 + 邊框"]; n.forEach((v, i) => {newMenuItem(Index, "Overlay", i); Menu.AppendMenuItem(MF_STRING, Index, v); Menu.CheckMenuItem(Index++, i == ppt.overlayStyle); if (!i || i == 2) Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);}); return Index;}
@@ -1830,8 +1830,8 @@ function MenuItems() {
     const themeTypeMenu = (Menu, StartIndex) => {let Index = StartIndex; const c = [!ppt.blurDark && !ppt.blurBlend && !ppt.blurLight, ppt.blurDark, ppt.blurBlend, ppt.blurLight, ppt.covBlur, ppt.swapCol, ppt.summaryFirst], n = ["無", "灰暗", "混合", "明亮", "始終以專輯封面為基礎", "標題跟介紹文字交換顏色", "文字: 摘要優先"]; n.forEach((v, i) 	=> {newMenuItem(Index, "Theme", i); Menu.AppendMenuItem(!ui.blur && i == 4 ? MF_GRAYED : MF_STRING, Index, v); if (i < 4) {Index++; if (c[i]) Menu.CheckMenuRadioItem(StartIndex + i, StartIndex + i, StartIndex + i);} else Menu.CheckMenuItem(Index++, c[i]); if (!i || i == 3  || i == 4 || i == 5) Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);}); return Index;}
     const toggleTypeMenu = (Menu, StartIndex) => {let Index = StartIndex; const n = ppt.artistView ? "人物介紹: 切換到 " + (!ppt.allmusic_bio ? (!ppt.lockBio || ppt.bothBio ? "傾向於 " : "") + "AllMusic" + (ppt.bothBio ? " First" : "") : (!ppt.lockBio || ppt.bothBio ? "傾向於 " : "") + "Last.fm" + (ppt.bothBio ? " First" : "")) : "評論: 切換到 " + (!ppt.allmusic_alb ? (!ppt.lockRev || ppt.bothRev ? "傾向於 " : "") + "AllMusic" + (ppt.bothRev ? " First" : "") : (!ppt.lockRev || ppt.bothRev ? "傾向於 " : "") + "Last.fm" + (ppt.bothRev ? " First" : "")); newMenuItem(Index, "Toggle", 0); Menu.AppendMenuItem(MF_STRING, Index, n); Index++; Menu.AppendMenuItem(MF_SEPARATOR, 0, 0); return Index;}
 	const trackHeadTypeMenu = (Menu, StartIndex) => {let Index = StartIndex; const c = [, , , ppt.trackStyle == 1, ppt.trackStyle == 2, ppt.trackStyle == 3, ppt.trackStyle == 16, ppt.trackStyle == 18, false], n = ["隱藏", "自動", "顯示", "粗體", "斜體", "粗斜體", "無襯線字型: 半粗體 [Segoe UI]", "無襯線字型: 半粗斜體 [Segoe UI]", "副標題的格式..."]; n.forEach((v, i) => {newMenuItem(Index, "TrackHead", i); Menu.AppendMenuItem(MF_STRING, Index, v); if (i < 3) Index++; else Menu.CheckMenuItem(Index++, c[i]); if (i == 2 || i == 5 || i == 7) Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);}); Menu.CheckMenuRadioItem(StartIndex, StartIndex + 2, StartIndex + ppt.trackHeading); return Index;}
-	const webAlbumTypeMenu = (Menu, StartIndex) => {let Index = StartIndex; const artist = p.artists.length ? p.artists[0].name : name.artist(ppt.focus), c = [ppt.showTopAlbums, ppt.showAlbumHistory, ppt.autoLock], n = ["Show Top Albums", "Show Album History", "Auto Lock", "Reset Album History...", "Last.fm: " + artist + "...", "Last.fm: " + artist + ": Similar Artists...", "Last.fm: " + artist + ": Top Albums...", "AllMusic: " + artist + "..."]; n.forEach((v, i) => {newMenuItem(Index, "Web", i); Menu.AppendMenuItem(MF_STRING, Index, v); if (i < 3) Menu.CheckMenuItem(Index++, c[i]); else Index++; if (i == 1 || i == 2 || i == 3 || i == 4) Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);}); return Index;}
-    const webArtistTypeMenu = (Menu, StartIndex) => {let Index = StartIndex; const artist = p.artists.length ? p.artists[0].name : name.artist(ppt.focus), c = [ppt.showSimilarArtists, ppt.showMoreTags, ppt.showArtistHistory, ppt.autoLock], n = ["Show Similar Artists", "Show More Tags" + (ui.fontAwesomeInstalled ? " (Circle Button if Present)" : ""), "Show Artist History", "Auto Lock", "Reset Artist History...", "Last.fm: " + artist + "...", "Last.fm: " + artist + ": Similar Artists...", "Last.fm: " + artist + ": Top Albums...", "AllMusic: " + artist + "..."]; n.forEach((v, i) => {newMenuItem(Index, "Web", i); Menu.AppendMenuItem(MF_STRING, Index, v); if (i < 4) Menu.CheckMenuItem(Index++, c[i]); else Index++; if (i == 2 || i == 3 || i == 4 || i == 5) Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);}); return Index;}
+	const webAlbumTypeMenu = (Menu, StartIndex) => {let Index = StartIndex; const artist = p.artists.length ? p.artists[0].name : name.artist(ppt.focus), c = [ppt.showTopAlbums, ppt.showAlbumHistory, ppt.autoLock], n = ["顯示最佳專輯", "顯示專輯歷史紀錄", "自動鎖定", "重置演出者歷史紀錄...", "Last.fm: " + artist + "...", "Last.fm: " + artist + ": 相似的演出者...", "Last.fm: " + artist + ": 最佳專輯...", "AllMusic: " + artist + "..."]; n.forEach((v, i) => {newMenuItem(Index, "Web", i); Menu.AppendMenuItem(MF_STRING, Index, v); if (i < 3) Menu.CheckMenuItem(Index++, c[i]); else Index++; if (i == 1 || i == 2 || i == 3 || i == 4) Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);}); return Index;}
+    const webArtistTypeMenu = (Menu, StartIndex) => {let Index = StartIndex; const artist = p.artists.length ? p.artists[0].name : name.artist(ppt.focus), c = [ppt.showSimilarArtists, ppt.showMoreTags, ppt.showArtistHistory, ppt.autoLock], n = ["顯示相似的演出者", "顯示更多的標籤" + (ui.fontAwesomeInstalled ? " (如果有的話，顯示圓形按鈕)" : ""), "顯示演出者歷史紀錄", "自動鎖定", "重置演出者歷史紀錄...", "Last.fm: " + artist + "...", "Last.fm: " + artist + ": 相似的演出者...", "Last.fm: " + artist + ": 最佳專輯...", "AllMusic: " + artist + "..."]; n.forEach((v, i) => {newMenuItem(Index, "Web", i); Menu.AppendMenuItem(MF_STRING, Index, v); if (i < 4) Menu.CheckMenuItem(Index++, c[i]); else Index++; if (i == 2 || i == 3 || i == 4 || i == 5) Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);}); return Index;}
 
     const blacklistImageMenu = (Menu, StartIndex) => {
         let blacklist = [], Index = StartIndex; bn = fb.ProfilePath + "yttm\\" + "blacklist_image.json";
@@ -2071,7 +2071,7 @@ function MenuItems() {
 	}
 
     this.button = (x, y) => {
-        const menu = window.CreatePopupMenu(), WebMenu = window.CreatePopupMenu(); let idx, Index = 1; Index = ppt.artistView ? moreArtMenu(menu, Index) : moreAlbMenu(menu, Index); menu.AppendMenuItem(MF_SEPARATOR, 0, 0); Index = ppt.artistView ? webArtistTypeMenu(WebMenu, Index) : webAlbumTypeMenu(WebMenu, Index); WebMenu.AppendTo(menu, MF_STRING, "More...");
+        const menu = window.CreatePopupMenu(), WebMenu = window.CreatePopupMenu(); let idx, Index = 1; Index = ppt.artistView ? moreArtMenu(menu, Index) : moreAlbMenu(menu, Index); menu.AppendMenuItem(MF_SEPARATOR, 0, 0); Index = ppt.artistView ? webArtistTypeMenu(WebMenu, Index) : webAlbumTypeMenu(WebMenu, Index); WebMenu.AppendTo(menu, MF_STRING, "更多...");
         const origArr = JSON.stringify(p.artists), origArrl = JSON.stringify(p.albums);
         idx = menu.TrackPopupMenu(x, y);
         if (idx >= 1 && idx <= Index) {

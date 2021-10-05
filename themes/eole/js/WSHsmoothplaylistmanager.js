@@ -1245,7 +1245,7 @@ oBrowser = function(name) {
             if(properties.showHeaderBar) {
                 if(globalProperties.fontAdjustement>=globalProperties.fontAdjustement_max-2) var boxText = this.rows.length;
 				//else var boxText = this.rows.length+" playlist"+(this.rows.length>1?"s":"");
-				else var boxText = this.rows.length+" 播放清單";
+				else var boxText = this.rows.length+" 個播放清單";
 
                 gr.FillSolidRect(this.x, 0, this.w - this.x -1, properties.headerBarHeight, colors.headerbar_bg);
                 gr.FillSolidRect(this.x, properties.headerBarHeight, this.w - this.x -1, 1, colors.headerbar_line);
@@ -1708,7 +1708,7 @@ oBrowser = function(name) {
         _newplaylist.AppendMenuItem(MF_STRING, 101, "新增自動播放清單");
         _autoplaylist.AppendTo(_newplaylist, MF_STRING, "預先定義自動播放清單");
         //_autoplaylist.AppendMenuItem(MF_STRING, 200, "Media Library (full)");
-        _autoplaylist.AppendMenuItem(MF_STRING, 205, "歷史（過去幾周播放的曲目）");
+        _autoplaylist.AppendMenuItem(MF_STRING, 205, "歷史曲目（過去幾周播放的曲目）");
         _autoplaylist.AppendMenuItem(MF_STRING, 206, "播放次數最多的曲目");
         _autoplaylist.AppendMenuItem(MF_STRING, 207, "評等最高的曲目");
         _autoplaylist.AppendMenuItem(MF_STRING, 210, "新增加的曲目");
@@ -1832,49 +1832,49 @@ oBrowser = function(name) {
         case (idx==200):
             var total = plman.PlaylistCount;
             //p.playlistManager.inputboxID = -1;
-            plman.CreateAutoPlaylist(total, "Media Library", "ALL", "%album artist% | $if(%album%,%date%,'9999') | %album% | %discnumber% | %tracknumber% | %title%", 0);
+            plman.CreateAutoPlaylist(total, "媒體櫃", "ALL", "%album artist% | $if(%album%,%date%,'9999') | %album% | %discnumber% | %tracknumber% | %title%", 0);
             plman.MovePlaylist(total, pl_idx);
             plman.ActivePlaylist = pl_idx;
             break;
         case (idx==205):
             var total = plman.PlaylistCount;
             //p.playlistManager.inputboxID = -1;
-            plman.CreateAutoPlaylist(total, "History", "%last_played% DURING LAST 1 WEEK SORT DESCENDING BY %last_played%", "",1);
+            plman.CreateAutoPlaylist(total, "歷史曲目", "%last_played% DURING LAST 1 WEEK SORT DESCENDING BY %last_played%", "",1);
             plman.MovePlaylist(total, pl_idx);
             plman.ActivePlaylist = pl_idx;
             break;
         case (idx==206):
             var total = plman.PlaylistCount;
             //p.playlistManager.inputboxID = -1;
-            plman.CreateAutoPlaylist(total, "Most Played", "%play_count% GREATER 2 SORT DESCENDING BY %play_count%", "", 1);
+            plman.CreateAutoPlaylist(total, "播放次數最多的曲目", "%play_count% GREATER 2 SORT DESCENDING BY %play_count%", "", 1);
             plman.MovePlaylist(total, pl_idx);
             plman.ActivePlaylist = pl_idx;
             break;
         case (idx==207):
             var total = plman.PlaylistCount;
             //p.playlistManager.inputboxID = -1;
-            plman.CreateAutoPlaylist(total, "Top Rated", (globalProperties.use_ratings_file_tags ? "$meta(rating)" : "%rating%") + " GREATER 1 SORT DESCENDING BY " + (globalProperties.use_ratings_file_tags ? "$meta(rating)" : "%rating%"), "", 1);
+            plman.CreateAutoPlaylist(total, "評等最高的曲目", (globalProperties.use_ratings_file_tags ? "$meta(rating)" : "%rating%") + " GREATER 1 SORT DESCENDING BY " + (globalProperties.use_ratings_file_tags ? "$meta(rating)" : "%rating%"), "", 1);
             plman.MovePlaylist(total, pl_idx);
             plman.ActivePlaylist = pl_idx;
             break;
         case (idx==210):
             var total = plman.PlaylistCount;
             //p.playlistManager.inputboxID = -1;
-            plman.CreateAutoPlaylist(total, "Newly Added", "%added% DURING LAST 12 WEEKS SORT DESCENDING BY %added%", "",1);
+            plman.CreateAutoPlaylist(total, "新增加的曲目", "%added% DURING LAST 12 WEEKS SORT DESCENDING BY %added%", "",1);
             plman.MovePlaylist(total, pl_idx);
             plman.ActivePlaylist = pl_idx;
             break;
         case (idx==211):
             var total = plman.PlaylistCount;
             //brw.inputboxID = -1;
-            plman.CreatePlaylist(total, "Radios");
+            plman.CreatePlaylist(total, "無線電廣播");
             plman.MovePlaylist(total, pl_idx);
             plman.ActivePlaylist = pl_idx;
             break;
         case (idx==212):
             var total = plman.PlaylistCount;
             //p.playlistManager.inputboxID = -1;
-            plman.CreatePlaylist(total, "External Files");
+            plman.CreatePlaylist(total, "外部檔案");
             plman.MovePlaylist(total, pl_idx);
             plman.ActivePlaylist = pl_idx;
             break;
@@ -2483,13 +2483,20 @@ function playlistName2icon(name, auto_playlist, images_array){
 	if(name==globalProperties.playing_playlist) return images_array.library_playback_icon;
 	if(name==globalProperties.whole_library) return images_array.whole_library_icon;
 	if(name=="Newly Added") return images_array.newly_added_icon;
+	if(name=="新增加的曲目") return images_array.newly_added_icon;
 	if(name=="Create Playlist") return images_array.create_playlist;
+	if(name=="新增播放清單") return images_array.create_playlist;
 	if(name=="History") return images_array.history_icon;
+	if(name=="歷史曲目") return images_array.history_icon;
 	if(name=="Top Rated") return images_array.top_rated;
+	if(name=="評等最高的曲目") return images_array.top_rated;
 	if(name=="Radios") return images_array.radios_icon;
+	if(name=="無線電廣播") return images_array.radios_icon;
 	if(name=="Most Played") return images_array.most_played_icon;
+	if(name=="播放次數最多的曲目") return images_array.most_played_icon;
 	if(name=="Podcasts") return images_array.podcasts_icon;
 	if(name=="External Files") return images_array.external_files_icon;
+	if(name=="外部檔案") return images_array.external_files_icon;
 	if(name=="Search" || name=="Search Results") return images_array.search_icon;
 	if(auto_playlist) {
 		return images_array.icon_auto_pl;
@@ -2988,7 +2995,9 @@ function checkMediaLibrayPlaylist() {
     var isMediaLibraryFound = false;
     var total = plman.PlaylistCount;
     for (var i = 0; i < total; i++) {
-        if(plman.GetPlaylistName(i) == "Media Library") {
+        if(plman.GetPlaylistName(i) == "Media Library"
+		|| plman.GetPlaylistName(i) == "媒體櫃")
+		{
             var mediaLibraryIndex = i;
             isMediaLibraryFound = true;
             break;
@@ -2999,7 +3008,7 @@ function checkMediaLibrayPlaylist() {
         // > sort: sort string expression.
         // > flags: 1 - always sort.
         // > boolean CreateAutoPlaylist(idx, name, query, sort = "", flags = 0);
-        plman.CreateAutoPlaylist(total, "Media Library", "%path% PRESENT", "%album artist% | $if(%album%,%date%,'9999') | %album% | %discnumber% | %tracknumber% | %title%", 1);
+        plman.CreateAutoPlaylist(total, "媒體櫃", "%path% PRESENT", "%album artist% | $if(%album%,%date%,'9999') | %album% | %discnumber% | %tracknumber% | %title%", 1);
         //plman.CreateAutoPlaylist(total, "Media Library", "%album% PRESENT", "%album artist% | %date% | %album% | %discnumber% | %tracknumber% | %title%", 1);
         // Move it to the top
         plman.MovePlaylist(total, 0);
