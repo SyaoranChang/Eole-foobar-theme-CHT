@@ -3983,13 +3983,13 @@ oBrowser = function(name) {
 				else {
 					var playlistname=plman.GetPlaylistName(this.SourcePlaylistIdx);
 					if(LibraryItems_counter<1){
-						gr.GdiDrawText("No music found.",  g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+						gr.GdiDrawText("沒有找到音樂.",  g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 						gr.FillSolidRect(this.w/2 -125, py-46, 250, 1, colors.border);
-						gr.GdiDrawText("Click here to configure the Media Library.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+						gr.GdiDrawText("點擊此處配置媒體櫃.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 					} else if(playlistname==globalProperties.selection_playlist || playlistname==globalProperties.playing_playlist) {
 						gr.FillSolidRect(this.w/2 -150, py-46, 300, 1, colors.border);
 						gr.GdiDrawText(playlistname+" :",  g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
-						gr.GdiDrawText("Nothing to show.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+						gr.GdiDrawText("沒有項目可以顯示.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 					} else {
 						gr.GdiDrawText(playlistname+" :", g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 						gr.FillSolidRect(this.w/2 -125, py-46, 250, 1, colors.border);
