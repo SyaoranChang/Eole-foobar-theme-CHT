@@ -1146,7 +1146,7 @@ function scrollbar() {
 }
 
 function panel_operations() {
-    var def_ppt = window.GetProperty("按文件夾結構檢視: Name // Pattern", "按文件夾結構檢視 // Pattern Not Configurable");
+    var def_ppt = window.GetProperty("View by Folder Structure: Name // Pattern", "按文件夾結構檢視 // 模式不可配置");
     var DT_LEFT = 0x00000000,
         DT_CENTER = 0x00000001,
         DT_RIGHT = 0x00000002,
