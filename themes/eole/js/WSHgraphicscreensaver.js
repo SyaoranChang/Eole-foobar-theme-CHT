@@ -2004,7 +2004,7 @@ oHeaderbar = function(name) {
 
 				// Main Text, Left justified
 				if(brw.playlistName==globalProperties.whole_library){
-					this.mainTxt='整個媒體櫃';
+					this.mainTxt=globalProperties.whole_library;
 				} else if(brw.playlistName!=globalProperties.selection_playlist && brw.playlistName!=globalProperties.playing_playlist){
 					this.mainTxt='播放清單 : '+brw.playlistName;
 				} else if(brw.artistName!="" && brw.artistName!="?") {
