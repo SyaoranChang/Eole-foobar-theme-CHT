@@ -2305,7 +2305,7 @@ function Text() {
         const stnd = ppt.artistView && !p.art_ix || !ppt.artistView && !p.alb_ix; n = n.replace(/%more_item%/gi, !stnd ? "$&#@!%path%#@!" : "$&");
         n = n.replace(/((\$if|\$and|\$or|\$not|\$xor)(|\d)\(|\[)[^$%]*%bio_artist%/gi, a ? "$&#@!%path%#@!" : "$&").replace(/%bio_artist%/gi, a).replace(/((\$if|\$and|\$or|\$not|\$xor)(|\d)\(|\[)[^$%]*%bio_albumartist%/gi, aa ? "$&#@!%path%#@!" : "$&").replace(/%bio_albumartist%/gi, aa).replace(/((\$if|\$and|\$or|\$not|\$xor)(|\d)\(|\[)[^$%]*%bio_album%/gi, l ? "$&#@!%path%#@!" : "$&").replace(/%bio_album%/gi, l).replace(/((\$if|\$and|\$or|\$not|\$xor)(|\d)\(|\[)[^$%]*%bio_title%/gi, tr ? "$&#@!%path%#@!" : "$&").replace(/%bio_title%/gi, tr);
         n = p.eval(n, ppt.focus);
-        if (p.lock) n = n.replace(/#¦#¦#.*?#¦#¦#/g, trackartist).replace(/#!#!#.*?#!#!#/g, track); n = n.replace(/#@!.*?#@!/g, "") || "No Selection";
+        if (p.lock) n = n.replace(/#¦#¦#.*?#¦#¦#/g, trackartist).replace(/#!#!#.*?#!#!#/g, track); n = n.replace(/#@!.*?#@!/g, "") || "沒有選擇歌曲";
         return n;
     }
 
