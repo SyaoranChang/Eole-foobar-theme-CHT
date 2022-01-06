@@ -1146,6 +1146,32 @@ function scrollbar() {
 }
 
 function panel_operations() {
+	ViewIsInited = window.GetProperty("View: View Is Inited", false);
+	if(!ViewIsInited)
+	{
+		window.SetProperty("View by Folder Structure: Name // Pattern", "按文件夾結構檢視 // 模式不可配置");
+		
+		window.SetProperty("View 01: Name // Pattern", "按 演出者 檢視 // %artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
+		window.SetProperty("View 02: Name // Pattern", "按 專輯 演出者 檢視 // %album artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
+		window.SetProperty("View 03: Name // Pattern", "按 專輯 演出者 - 專輯 檢視 // [%album artist% - ]['['%date%']' ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
+		window.SetProperty("View 04: Name // Pattern", "按 專輯 檢視 // %album%[ '['%album artist%']']|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
+		window.SetProperty("View 05: Name // Pattern", "按 音樂類型 檢視 // %genre%|[%album artist% - ][(%date%) ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
+		window.SetProperty("View 06: Name // Pattern", "按 年份 檢視 // %date%|[%album artist% - ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
+		
+		window.SetProperty("View Filter 01: Name // Query", "無 No // Query Not Configurable");
+		window.SetProperty("View Filter 02: Name // Query", "無損 Lossless // \"$info(encoding)\" IS lossless");
+		window.SetProperty("View Filter 03: Name // Query", "有損 Lossy // \"$info(encoding)\" IS lossy");
+		window.SetProperty("View Filter 04: Name // Query", "遺失播放增益 Missing Replaygain // %replaygain_track_gain% MISSING");
+		window.SetProperty("View Filter 05: Name // Query", "從未播放 Never Played // %play_count% MISSING");
+		window.SetProperty("View Filter 06: Name // Query", "播放次數最多 Played Often // %play_count% GREATER 9");
+		window.SetProperty("View Filter 07: Name // Query", "過去2周新增加 Recently Added // %added% DURING LAST 2 WEEKS");
+		window.SetProperty("View Filter 08: Name // Query", "過去2周播放 Recently Played // %last_played% DURING LAST 2 WEEKS");
+		window.SetProperty("View Filter 09: Name // Query", "評等最高 Top Rated // " + (globalProperties.use_ratings_file_tags ? "$meta(rating)" : "%rating%") + " GREATER 3");
+		
+		window.SetProperty("View: View Is Inited", true);
+	}
+	
+	
     var def_ppt = window.GetProperty("View by Folder Structure: Name // Pattern", "按文件夾結構檢視 // 模式不可配置");
     var DT_LEFT = 0x00000000,
         DT_CENTER = 0x00000001,
