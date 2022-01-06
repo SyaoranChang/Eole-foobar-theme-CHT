@@ -1158,15 +1158,15 @@ function panel_operations() {
 		window.SetProperty("View 05: Name // Pattern", "按 音樂類型 檢視 // %genre%|[%album artist% - ][(%date%) ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
 		window.SetProperty("View 06: Name // Pattern", "按 年份 檢視 // %date%|[%album artist% - ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
 		
-		window.SetProperty("View Filter 01: Name // Query", "無 No // Query Not Configurable");
-		window.SetProperty("View Filter 02: Name // Query", "無損 Lossless // \"$info(encoding)\" IS lossless");
-		window.SetProperty("View Filter 03: Name // Query", "有損 Lossy // \"$info(encoding)\" IS lossy");
-		window.SetProperty("View Filter 04: Name // Query", "遺失播放增益 Missing Replaygain // %replaygain_track_gain% MISSING");
-		window.SetProperty("View Filter 05: Name // Query", "從未播放 Never Played // %play_count% MISSING");
-		window.SetProperty("View Filter 06: Name // Query", "播放次數最多 Played Often // %play_count% GREATER 9");
-		window.SetProperty("View Filter 07: Name // Query", "過去2周新增加 Recently Added // %added% DURING LAST 2 WEEKS");
-		window.SetProperty("View Filter 08: Name // Query", "過去2周播放 Recently Played // %last_played% DURING LAST 2 WEEKS");
-		window.SetProperty("View Filter 09: Name // Query", "評等最高 Top Rated // " + (globalProperties.use_ratings_file_tags ? "$meta(rating)" : "%rating%") + " GREATER 3");
+		window.SetProperty("View Filter 01: Name // Query", "無 // Query Not Configurable");
+		window.SetProperty("View Filter 02: Name // Query", "無損 // \"$info(encoding)\" IS lossless");
+		window.SetProperty("View Filter 03: Name // Query", "有損 // \"$info(encoding)\" IS lossy");
+		window.SetProperty("View Filter 04: Name // Query", "遺失播放增益 // %replaygain_track_gain% MISSING");
+		window.SetProperty("View Filter 05: Name // Query", "從未播放 // %play_count% MISSING");
+		window.SetProperty("View Filter 06: Name // Query", "播放次數最多 // %play_count% GREATER 9");
+		window.SetProperty("View Filter 07: Name // Query", "過去2周新增加 // %added% DURING LAST 2 WEEKS");
+		window.SetProperty("View Filter 08: Name // Query", "過去2周播放 // %last_played% DURING LAST 2 WEEKS");
+		window.SetProperty("View Filter 09: Name // Query", "評等最高 // " + (globalProperties.use_ratings_file_tags ? "$meta(rating)" : "%rating%") + " GREATER 3");
 		
 		window.SetProperty("View: View Is Inited", true);
 	}
@@ -1200,15 +1200,15 @@ function panel_operations() {
     }
 
     var filter_ppt = [
-        window.GetProperty("View Filter 01: Name // Query", "無 No // Query Not Configurable"),
-        window.GetProperty("View Filter 02: Name // Query", "無損 Lossless // \"$info(encoding)\" IS lossless"),
-        window.GetProperty("View Filter 03: Name // Query", "有損 Lossy // \"$info(encoding)\" IS lossy"),
-        window.GetProperty("View Filter 04: Name // Query", "遺失播放增益 Missing Replaygain // %replaygain_track_gain% MISSING"),
-        window.GetProperty("View Filter 05: Name // Query", "從未播放 Never Played // %play_count% MISSING"),
-        window.GetProperty("View Filter 06: Name // Query", "播放次數最多 Played Often // %play_count% GREATER 9"),
-        window.GetProperty("View Filter 07: Name // Query", "過去2周新增加 Recently Added // %added% DURING LAST 2 WEEKS"),
-        window.GetProperty("View Filter 08: Name // Query", "過去2周播放 Recently Played // %last_played% DURING LAST 2 WEEKS"),
-        window.GetProperty("View Filter 09: Name // Query", "評等最高 Top Rated // " + (globalProperties.use_ratings_file_tags ? "$meta(rating)" : "%rating%") + " GREATER 3")
+        window.GetProperty("View Filter 01: Name // Query", "無 // Query Not Configurable"),
+        window.GetProperty("View Filter 02: Name // Query", "無損 // \"$info(encoding)\" IS lossless"),
+        window.GetProperty("View Filter 03: Name // Query", "有損 // \"$info(encoding)\" IS lossy"),
+        window.GetProperty("View Filter 04: Name // Query", "遺失播放增益 // %replaygain_track_gain% MISSING"),
+        window.GetProperty("View Filter 05: Name // Query", "從未播放 // %play_count% MISSING"),
+        window.GetProperty("View Filter 06: Name // Query", "播放次數最多 // %play_count% GREATER 9"),
+        window.GetProperty("View Filter 07: Name // Query", "過去2周新增加 // %added% DURING LAST 2 WEEKS"),
+        window.GetProperty("View Filter 08: Name // Query", "過去2周播放 // %last_played% DURING LAST 2 WEEKS"),
+        window.GetProperty("View Filter 09: Name // Query", "評等最高 // " + (globalProperties.use_ratings_file_tags ? "$meta(rating)" : "%rating%") + " GREATER 3")
     ];
     var filt_l = filter_ppt.length + 1;
     for (i = filt_l; i < filt_l + 90; i++) {
