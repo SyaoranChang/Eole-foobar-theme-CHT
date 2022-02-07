@@ -3365,7 +3365,7 @@ oBrowser = function(name) {
         if(this.activeRow > -1 && rowId == this.activeRow) {
 			while(typeof(this.rows[rowId]) !== "undefined" && this.rows[rowId].type == 99) {
 				rowId=rowId+1;
-				if(typeof(this.rows[rowId]) == "undefined") {rowId=this.rows.length-1;console.log("drag_bottom"+this.rows[rowId].type+" rowId "+rowId);g_dragndrop_bottom=true;break}
+				if(typeof(this.rows[rowId]) == "undefined") {rowId=this.rows.length-1;g_dragndrop_bottom=true;break}
 			};
 			while(typeof(this.rows[rowId]) === "undefined" || this.rows[rowId].type == 99) {
 				rowId=rowId-1;
@@ -3726,6 +3726,7 @@ oBrowser = function(name) {
 								}
 								var effect = fb.DoDragDrop(window.ID, items, g_drop_effect.copy | g_drop_effect.move | g_drop_effect.link, options);
 								// nothing happens here until the mouse button is released
+								on_mouse_lbtn_up(x, y);
 								items = undefined;
 								this.drag_tracks = false;
 								this.drag_clicked = false;
@@ -3873,6 +3874,7 @@ oBrowser = function(name) {
                         g_dragndrop_trackId = this.rows[rowId].playlistTrackId;
                         //g_dragndrop_rowId = rowId;
                     }
+
                 } else {
                     g_dragndrop_bottom = true;
                     g_dragndrop_trackId = 0;
@@ -5105,13 +5107,13 @@ function on_mouse_lbtn_down(x, y, m) {
 
 function on_mouse_lbtn_up(x, y, m) {
 
+
     // inputBox
     if(properties.showHeaderBar && properties.showFilterBox && g_filterbox.inputbox.visible) {
         g_filterbox.on_mouse("lbtn_up", x, y);
     };
 
 	g_resizing.on_mouse("lbtn_up", x, y, m);
-
 	if(brw.drag_tracks){
         if(g_dragndrop_bottom) {
             plman.MovePlaylistSelection(g_active_playlist, plman.PlaylistItemCount(g_active_playlist));
@@ -5120,6 +5122,7 @@ function on_mouse_lbtn_up(x, y, m) {
 			var selected_items = plman.GetPlaylistSelectedItems(g_active_playlist);
 			var	nb_selected_items = selected_items.Count;
 			if(nb_selected_items > 0)	{
+
 				var save_focus_handle = selected_items[0];
 				var drop_handle = brw.rows[g_dragndrop_rowId].metadb;
 				g_avoid_on_item_focus_change = true;
@@ -6963,6 +6966,7 @@ function on_drag_enter() {
 
 function on_drag_leave() {
 	g_resizing.on_mouse("lbtn_up", 0, 0, null);
+
     g_dragndrop_status = false;
     g_dragndrop_trackId = -1;
     g_dragndrop_rowId = -1;
@@ -7080,6 +7084,10 @@ function on_drag_over(action, x, y, mask) {
 };
 
 function on_drag_drop(action, x, y, mask) {
+	if(action.IsInternal) {
+		action.Effect = 0;		
+		return;
+	}
     if(brw.drag_tracks) {
 		action.Effect = 0;
 		on_mouse_lbtn_up(x, y);
