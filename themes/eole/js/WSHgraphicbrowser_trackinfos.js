@@ -1,4 +1,4 @@
-var found=false;
+﻿var found=false;
 var imgFolderPath = theme_img_path + "\\graphic_browser\\";
 var doubleClick=false;
 var now_playing_img1 = gdi.Image(theme_img_path + "\\graphic_browser\\now_playing_track1.png");
@@ -348,7 +348,8 @@ oPlaylistHistory = function() {
 		if (previous_playlist !== undefined){
 			if(properties.fullPlaylistHistory) {
 				if(previous_playlist == brw.SourcePlaylistIdx && brw.SourcePlaylistIdx!=plman.PlayingPlaylist){
-					fb.RunMainMenuCommand('Edit/Undo');
+					//fb.RunMainMenuCommand('Edit/Undo');
+					fb.RunMainMenuCommand('編輯/重做');
 				} else plman.ActivePlaylist = previous_playlist;
 			} else plman.ActivePlaylist = previous_playlist;
 		} else {
@@ -408,7 +409,7 @@ oFilterBox = function() {
 		else icon_theme_subfolder = "";
 
 		this.images.search_icon = gdi.Image(theme_img_path + "\\icons"+icon_theme_subfolder+"\\search_icon.png");
-		this.search_bt = new button(this.images.search_icon, this.images.search_icon, this.images.search_icon,"search_bt", "Filter groups"+(properties.filterBox_filter_tracks?" & tracks":''));
+		this.search_bt = new button(this.images.search_icon, this.images.search_icon, this.images.search_icon,"search_bt", "篩選群組"+(properties.filterBox_filter_tracks?" & 曲目":''));
 
         this.images.resetIcon_off = gdi.CreateImage(w, w);
         gb = this.images.resetIcon_off.GetGraphics();
@@ -1235,7 +1236,8 @@ oRow = function(metadb,itemIndex) {
 						plman.SetPlaylistFocusItemByHandle(plman.ActivePlaylist, this.metadb);
 						if(fb.IsPaused) fb.Stop();
 						plman.FlushPlaybackQueue();
-						fb.RunContextCommandWithMetadb("Add to playback queue", this.metadb);
+						//fb.RunContextCommandWithMetadb("Add to playback queue", this.metadb);
+						fb.RunContextCommandWithMetadb("新增到播放佇列", this.metadb);
 						fb.Play();
 					} else {
 						var PlaybackPlaylist = brw.getPlaybackPlaylist();
@@ -1813,7 +1815,7 @@ oShowList = function(parentPanelName) {
 			this.discnumber = Tags[2];
 			this.date = Tags[3];
 			this.genre = Tags[4];
-			this.total_tracks = pl_count+(pl_count>1?" tracks":" track");
+			this.total_tracks = pl_count+(pl_count>1?" 首曲目":" 首曲目");
 		} else {
 			//TagsString = TF.showlistReduced.EvalWithMetadb(this.pl[0]);
 			//Tags = TagsString.split(" ^^ ");
@@ -1824,7 +1826,7 @@ oShowList = function(parentPanelName) {
 			if(brw.groups[this.idx].date!="?" && !brw.custom_groupby) this.date = ' ('+brw.groups[this.idx].date+')';
 			else this.date = '';
 			this.genre = brw.groups[this.idx].genre;
-			this.total_tracks = pl_count+(pl_count>1?" tracks":" track");
+			this.total_tracks = pl_count+(pl_count>1?" 首曲目":" 首曲目");
 		}
 
 		this.firstRow = this.album+this.discnumber+this.date;
@@ -2557,7 +2559,7 @@ oHeaderBar = function(name) {
 			gb.FillPolygon(colors.normal_txt, 0, xpts2);
 		this.hide_bt_ov.ReleaseGraphics(gb);
 		if(typeof(this.hide_filters_bt) == "undefined") {
-			this.hide_filters_bt = new button(this.hide_bt_off, this.hide_bt_ov, this.hide_bt_ov,"hide_filters", "Show left menu");
+			this.hide_filters_bt = new button(this.hide_bt_off, this.hide_bt_ov, this.hide_bt_ov,"hide_filters", "顯示做側選單面板");
 		} else {
 			this.hide_filters_bt.img[0] = this.hide_bt_off;
 			this.hide_filters_bt.img[1] = this.hide_bt_ov;
@@ -2587,7 +2589,7 @@ oHeaderBar = function(name) {
 		this.full_library_hover.ReleaseGraphics(gb);
 
 		if(typeof(this.FullLibraryButton) == "undefined") {
-			this.FullLibraryButton = new button(this.full_library_off, this.full_library_hover, this.full_library_off,"fulllibrary","Show whole library");
+			this.FullLibraryButton = new button(this.full_library_off, this.full_library_hover, this.full_library_off,"fulllibrary","顯示整個媒體櫃");
 		} else {
 			this.FullLibraryButton.img[0] = this.full_library_off;
 			this.FullLibraryButton.img[1] = this.full_library_hover;
@@ -2651,11 +2653,11 @@ oHeaderBar = function(name) {
 
 		if(typeof(this.GridModeButton) == "undefined") {
 			if(properties.CoverGridNoText)
-				this.GridModeButton = new button(this.grid_mode_on, this.grid_mode_on_hover, this.grid_mode_on,"gridmode","Display mode");
+				this.GridModeButton = new button(this.grid_mode_on, this.grid_mode_on_hover, this.grid_mode_on,"gridmode","顯示模式");
 			else if(properties.circleMode)
-				this.GridModeButton = new button(this.grid_mode_off, this.grid_mode_off_hover, this.grid_mode_off,"gridmode","Display mode");
+				this.GridModeButton = new button(this.grid_mode_off, this.grid_mode_off_hover, this.grid_mode_off,"gridmode","顯示模式");
 			else
-				this.GridModeButton = new button(this.grid_mode_off_circle, this.grid_mode_off_circle_hover, this.grid_mode_off_circle,"gridmode","Display mode");
+				this.GridModeButton = new button(this.grid_mode_off_circle, this.grid_mode_off_circle_hover, this.grid_mode_off_circle,"gridmode","顯示模式");
 		} else {
 			if(properties.CoverGridNoText){
 				this.GridModeButton.img[0] = this.grid_mode_on;
@@ -2699,7 +2701,7 @@ oHeaderBar = function(name) {
 		this.settings_hover.ReleaseGraphics(gb);
 
 		if(typeof(this.SettingsButton) == "undefined") {
-			this.SettingsButton = new button(this.settings_off, this.settings_hover, this.settings_off,"settings_bt","Settings...");
+			this.SettingsButton = new button(this.settings_off, this.settings_hover, this.settings_off,"settings_bt","設定...");
 		} else {
 			this.SettingsButton.img[0] = this.settings_off;
 			this.SettingsButton.img[1] = this.settings_hover;
@@ -2791,13 +2793,14 @@ oHeaderBar = function(name) {
 				else if(brw.totalTime>0) this.timeTxt = brw.FormatTime(brw.totalTime);
 				else this.timeTxt = 'ON AIR';
 
-				this.itemsTxt=((properties.showTotalTime)?',  ':'')+brw.playlistItemCount+' track'+((brw.playlistItemCount>1)?"s":"")+',  '+brw.groups_draw.length+' group'+((brw.groups_draw.length>1)?"s":"");
+				//this.itemsTxt=((properties.showTotalTime)?',  ':'')+brw.playlistItemCount+' track'+((brw.playlistItemCount>1)?"s":"")+',  '+brw.groups_draw.length+' group'+((brw.groups_draw.length>1)?"s":"");
+				this.itemsTxt=((properties.showTotalTime)?',  ':'')+brw.playlistItemCount+' 首曲目'+',  '+brw.groups_draw.length+' 個群組';
 
 				// Main Text, Left justified
 				if(brw.playlistName==globalProperties.whole_library){
 					this.mainTxt=globalProperties.whole_library;
 				} else if(brw.playlistName!=globalProperties.selection_playlist && brw.playlistName!=globalProperties.playing_playlist){
-					this.mainTxt='Playlist : '+brw.playlistName;
+					this.mainTxt='播放清單 : '+brw.playlistName;
 				} else if(brw.albumName!="" && brw.albumName!="?") {
 					if(brw.date!="" && brw.date!="?") var albumName = brw.albumName + ' (' + brw.date + ')';
 					else var albumName = brw.albumName
@@ -2809,22 +2812,22 @@ oHeaderBar = function(name) {
 					this.mainTxt=brw.genreName;
 				} else if(brw.playlistName==globalProperties.selection_playlist || brw.playlistName==globalProperties.playing_playlist){
 					if(brw.date!="" && brw.date!="?") {
-						this.mainTxt='Date : '+brw.date;
-					} else this.mainTxt='Mixed selection';
+						this.mainTxt='日期 : '+brw.date;
+					} else this.mainTxt='混合選擇';
 				}
 				else {
-					this.mainTxt='Playlist : '+brw.playlistName;
+					this.mainTxt='播放清單 : '+brw.playlistName;
 				}
 			} else if(brw.playlistName==globalProperties.selection_playlist || brw.playlistName==globalProperties.playing_playlist) {
 				this.mainTxt=''+brw.playlistName;
-				this.itemsTxt='Empty selection';
+				this.itemsTxt='空的選擇';
 			} else {
-				this.mainTxt='Playlist : '+brw.playlistName;
-				this.itemsTxt='Empty Playlist';
+				this.mainTxt='播放清單 : '+brw.playlistName;
+				this.itemsTxt='空的播放清單';
 			}
-			if(brw.SourcePlaylistIdx==plman.PlayingPlaylist) this.mainTxt+= ' (playing)';
+			if(brw.SourcePlaylistIdx==plman.PlayingPlaylist) this.mainTxt+= ' (播放中)';
 		} else {
-				this.mainTxt='Loading ...';
+				this.mainTxt='載入中 ...';
 				this.itemsTxt='';
 		}
 		g_filterbox.inputbox.empty_text = ''+this.mainTxt+'';
@@ -2897,17 +2900,17 @@ oHeaderBar = function(name) {
 	this.append_sort_menu = function(basemenu,actions){
 		if(!plman.IsAutoPlaylist(plman.ActivePlaylist)){
 			var SortMenu = window.CreatePopupMenu(); //Custom Entries
-			SortMenu.AppendTo(basemenu, MF_STRING, "Sort By");
+			SortMenu.AppendTo(basemenu, MF_STRING, "排序");
 
-			SortMenu.AppendMenuItem(MF_STRING, 2999, "Don't sort (Playing order)");
+			SortMenu.AppendMenuItem(MF_STRING, 2999, "不要排序（播放中的排序訂單）");
 			SortMenu.AppendMenuSeparator();
-			SortMenu.AppendMenuItem(MF_STRING, 3000, "Artist / Album / Tracknumber");
-			SortMenu.AppendMenuItem(MF_STRING, 3001, "Title");
-			SortMenu.AppendMenuItem(MF_STRING, 3002, "Tracknumber");
-			SortMenu.AppendMenuItem(MF_STRING, 3003, "Date");
-			SortMenu.AppendMenuItem(MF_STRING, 3004, "Date added to library (Newest first)");
-			SortMenu.AppendMenuItem(MF_STRING, 3005, "Track rating");			
-			SortMenu.AppendMenuItem(MF_STRING, 3006, "Custom titleformat...");
+			SortMenu.AppendMenuItem(MF_STRING, 3000, "演出者 / 專輯 / 音軌編號");
+			SortMenu.AppendMenuItem(MF_STRING, 3001, "曲目名稱");
+			SortMenu.AppendMenuItem(MF_STRING, 3002, "音軌編號");
+			SortMenu.AppendMenuItem(MF_STRING, 3003, "日期");
+			SortMenu.AppendMenuItem(MF_STRING, 3004, "加入媒體櫃的日期（最新的在前）");
+			SortMenu.AppendMenuItem(MF_STRING, 3005, "評等");			
+			SortMenu.AppendMenuItem(MF_STRING, 3006, "自定義曲目名稱格式化...");
 
 			checked_item=0;
 			switch (true) {
@@ -2939,12 +2942,12 @@ oHeaderBar = function(name) {
 			SortMenu.CheckMenuRadioItem(2999, 3006, checked_item);
 			SortMenu.AppendMenuSeparator();
 
-			SortMenu.AppendMenuItem(MF_STRING, 3007, "Randomize");
+			SortMenu.AppendMenuItem(MF_STRING, 3007, "隨機化");
 			SortMenu.AppendMenuSeparator();
-			SortMenu.AppendMenuItem(MF_STRING, 3008, "Reverse sort order");
+			SortMenu.AppendMenuItem(MF_STRING, 3008, "反向排序順序");
 			SortMenu.CheckMenuItem(3008, properties.SortDescending);
 			SortMenu.AppendMenuSeparator();
-			SortMenu.AppendMenuItem(MF_STRING, 3009, "Set current sorting as default");
+			SortMenu.AppendMenuItem(MF_STRING, 3009, "將當前排序設置為預設值");
 			SortMenu.CheckMenuItem(3009, (brw.currentSorting==properties.TFsorting_default));
 
 			actions[2999] = function(){
@@ -2991,7 +2994,7 @@ oHeaderBar = function(name) {
 			}			
 			actions[3006] = function(){
 				try {
-					new_TFsorting = utils.InputBox(window.ID, "Enter a title formatting script.\nYou can use the full foobar2000 title formatting syntax here.\n\nSee http://tinyurl.com/lwhay6f\nfor informations about foobar title formatting.", "Custom Sort Order", brw.currentSorting, true);
+					new_TFsorting = utils.InputBox(window.ID, "輸入一個標題名稱的格式化腳本。\n你可以在這裡使用完整的foobar2000曲目名稱格式化語法。\n\n參見 http://tinyurl.com/lwhay6f\nfor 瞭解關於foobar曲目名稱格式化的信息。", "自定義排序順序", brw.currentSorting, true);
 					if (!(new_TFsorting == "" || typeof new_TFsorting == 'undefined')) {
 						properties.TFsorting = new_TFsorting;
 						window.SetProperty("MAINPANEL Library Sort TitleFormat", properties.TFsorting);
@@ -3026,12 +3029,12 @@ oHeaderBar = function(name) {
 	}
 	this.append_group_menu = function(basemenu,actions){
 		var GroupMenu = window.CreatePopupMenu(); //Custom Entries
-		GroupMenu.AppendTo(basemenu, MF_STRING, "Group By");
+		GroupMenu.AppendTo(basemenu, MF_STRING, "群組");
 
-		GroupMenu.AppendMenuItem(MF_STRING, 4000, "Default (Album, artist)");
-		GroupMenu.AppendMenuItem(MF_STRING, 4001, "Custom titleformat...");
+		GroupMenu.AppendMenuItem(MF_STRING, 4000, "預設 (專輯, 演出者)");
+		GroupMenu.AppendMenuItem(MF_STRING, 4001, "自定義曲目名稱格式化...");
 		GroupMenu.AppendMenuSeparator();
-		GroupMenu.AppendMenuItem(MF_STRING, 4002, "Combine all tracks of a multi-disc album");
+		GroupMenu.AppendMenuItem(MF_STRING, 4002, "合併一張多碟專輯的所有曲目");
 		GroupMenu.CheckMenuItem(4002, properties.SingleMultiDisc);
 		checked_item=0;
 		switch (true) {
@@ -3055,10 +3058,10 @@ oHeaderBar = function(name) {
 		actions[4001] = function(){
 			try {
 				var currrent_grouping_splitted = brw.current_grouping.split(" ^^ ");
-				customGraphicBrowserGrouping("Custom Grouping"
-									,"<div class='titleBig'>Custom Grouping</div><div class='separator'></div><br/>Enter a title formatting script for each line of text labelling a group. Note that it won't sort the tracks, it will group two consecutive tracks when their 2 lines defined there are equal.\nYou can use the full foobar2000 title formatting syntax here.<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">Click here</a> for informations about foobar title formatting. (http://tinyurl.com/lwhay6f)<br/>"
+				customGraphicBrowserGrouping("自定義群組"
+									,"<div class='titleBig'>自定義群組</div><div class='separator'></div><br/>為標籤群組的每一行文字輸入標題格式化腳本。 請注意，它不會對音軌進行排序，它將在兩個連續的音軌2行定義的相等時進行分組。\n你可以在這裡使用完整的foobar2000曲目名稱格式化語法。<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">點擊這裡</a> 瞭解關於foobar曲目名稱格式化的信息。 (http://tinyurl.com/lwhay6f)<br/>"
 									,''
-									,'First line of a group (default is %album artist%):##Second line (default is %album%, leave it empty to show the tracks count):'
+									,'第1行群組 (預設為 %album artist%):##第2行 (預設為 %album%, 留空，以顯示曲目數量):'
 									,currrent_grouping_splitted[0]+'##'+currrent_grouping_splitted[1]);
 			} catch(e) {
 			}
@@ -3072,12 +3075,13 @@ oHeaderBar = function(name) {
 	}
 	this.append_properties_menu = function(basemenu,actions){
 		basemenu.AppendMenuSeparator();
-		if(fb.IsPlaying) basemenu.AppendMenuItem(MF_STRING, 802, "Show now playing");
-		basemenu.AppendMenuItem(MF_STRING, 803, "Play all");
+		if(fb.IsPlaying) basemenu.AppendMenuItem(MF_STRING, 802, "顯示現在播放中");
+		basemenu.AppendMenuItem(MF_STRING, 803, "播放全部");
 		basemenu.AppendMenuSeparator();
-		basemenu.AppendMenuItem(MF_STRING, 801, "Tracks properties");
+		basemenu.AppendMenuItem(MF_STRING, 801, "曲目屬性");
 		actions[801] = function(){
-			fb.RunContextCommandWithMetadb("Properties", plman.GetPlaylistItems(brw.getSourcePlaylist()), 0);
+			//fb.RunContextCommandWithMetadb("Properties", plman.GetPlaylistItems(brw.getSourcePlaylist()), 0);
+			fb.RunContextCommandWithMetadb("屬性", plman.GetPlaylistItems(brw.getSourcePlaylist()), 0);
 		}
 		actions[802] = function(){
 			brw.focus_on_nowplaying(fb.GetNowPlaying());
@@ -3093,7 +3097,7 @@ oHeaderBar = function(name) {
 		if (typeof x == "undefined") x=this.MarginLeft-7;
 		if (typeof y == "undefined") y=this.padding_top+28;
 
-		basemenu.AppendMenuItem(MF_STRING, 1, "Settings...");
+		basemenu.AppendMenuItem(MF_STRING, 1, "設定...");
 		basemenu.AppendMenuSeparator();
 
 		this.append_sort_menu(basemenu, actions);
@@ -3104,10 +3108,10 @@ oHeaderBar = function(name) {
 
 		if(utils.IsKeyPressed(VK_SHIFT)) {
 			basemenu.AppendMenuSeparator();
-			basemenu.AppendMenuItem(MF_STRING, 3100, "Properties ");
-			basemenu.AppendMenuItem(MF_STRING, 3101, "Configure...");
+			basemenu.AppendMenuItem(MF_STRING, 3100, "面板屬性");
+			basemenu.AppendMenuItem(MF_STRING, 3101, "配置...");
 			basemenu.AppendMenuSeparator();
-			basemenu.AppendMenuItem(MF_STRING, 3102, "Reload");
+			basemenu.AppendMenuItem(MF_STRING, 3102, "重新載入");
 		}
 
 		idx = 0;
@@ -3181,166 +3185,167 @@ function draw_settings_menu(x,y,right_align,sort_group){
 		g_headerbar.append_group_menu(_menu, actions);
 		_menu.AppendMenuSeparator();
 	}
-	_menu.AppendMenuItem(MF_STRING, 10, "Follow now playing (right playlist hidden)");
+	_menu.AppendMenuItem(MF_STRING, 10, "跟隨現在播放中 (右側播放清單隱藏)");
 	_menu.CheckMenuItem(10, properties.followNowPlaying);
-	_menu.AppendMenuItem(MF_STRING, 31, "Show tooltips");
+	_menu.AppendMenuItem(MF_STRING, 31, "顯示游標提示");
 	_menu.CheckMenuItem(31, properties.showToolTip);
 
-	_NowPlaying.AppendMenuItem(MF_GRAYED, 0, "Right playlist visible:");
+	_NowPlaying.AppendMenuItem(MF_GRAYED, 0, "右側播放清單顯示:");
 	_NowPlaying.AppendMenuSeparator();
-	_NowPlaying.AppendMenuItem(MF_STRING, 51, "Show in library");
-	_NowPlaying.AppendMenuItem(MF_STRING, 52, "Show in playing playlist");
+	_NowPlaying.AppendMenuItem(MF_STRING, 51, "顯示於媒體櫃");
+	_NowPlaying.AppendMenuItem(MF_STRING, 52, "顯示於現在播放清單");
 	_NowPlaying.CheckMenuRadioItem(51, 52, (properties.showInLibrary_RightPlaylistOn) ? 51 : 52);
 	_NowPlaying.AppendMenuSeparator();
-	_NowPlaying.AppendMenuItem(MF_GRAYED, 0, "Right playlist hidden:");
+	_NowPlaying.AppendMenuItem(MF_GRAYED, 0, "右側播放清單隱藏:");
 	_NowPlaying.AppendMenuSeparator();
-	_NowPlaying.AppendMenuItem(MF_STRING, 53, "Show in library");
-	_NowPlaying.AppendMenuItem(MF_STRING, 54, "Show in playing playlist");
+	_NowPlaying.AppendMenuItem(MF_STRING, 53, "顯示於媒體櫃");
+	_NowPlaying.AppendMenuItem(MF_STRING, 54, "顯示於現在播放清單");
 	_NowPlaying.CheckMenuRadioItem(53, 54, (properties.showInLibrary_RightPlaylistOff) ? 53 : 54);
-	_NowPlaying.AppendTo(_menu,MF_STRING, '"Show now playing" behavior');
+	_NowPlaying.AppendTo(_menu,MF_STRING, '"顯示現在播放中" 的行為');
 
 	_menu.AppendMenuSeparator();
-	_menuHeaderBar.AppendMenuItem(MF_STRING, 27, "Show");
+	_menuHeaderBar.AppendMenuItem(MF_STRING, 27, "顯示");
 	_menuHeaderBar.CheckMenuItem(27, properties.showheaderbar);
 	_menuHeaderBar.AppendMenuSeparator();
 
-	_filterMenu.AppendMenuItem((!properties.showheaderbar)?MF_DISABLED:MF_STRING, 30, "Show")
+	_filterMenu.AppendMenuItem((!properties.showheaderbar)?MF_DISABLED:MF_STRING, 30, "顯示")
 	_filterMenu.CheckMenuItem(30, properties.showFilterBox);
-	_filterMenu.AppendMenuItem(MF_STRING, 50, "Filter also the tracks (slow down a little bit the search)");
+	_filterMenu.AppendMenuItem(MF_STRING, 50, "也過濾曲目 （會減慢一點搜尋速度)");
 	_filterMenu.CheckMenuItem(50, properties.filterBox_filter_tracks);
-	_filterMenu.AppendTo(_menuHeaderBar,MF_STRING, "Filter field");
+	_filterMenu.AppendTo(_menuHeaderBar,MF_STRING, "篩選器領域");
 
-	_menuHeaderBar.AppendMenuItem((!properties.showheaderbar)?MF_DISABLED:MF_STRING, 41, "Show total time");
+	_menuHeaderBar.AppendMenuItem((!properties.showheaderbar)?MF_DISABLED:MF_STRING, 41, "顯示總時間");
 	_menuHeaderBar.CheckMenuItem(41, properties.showTotalTime);
-	_menuHeaderBar.AppendMenuItem((!properties.showheaderbar)?MF_DISABLED:MF_STRING, 42, "Show cover resizer");
+	_menuHeaderBar.AppendMenuItem((!properties.showheaderbar)?MF_DISABLED:MF_STRING, 42, "顯示封面尺寸調整器");
 	_menuHeaderBar.CheckMenuItem(42, properties.showCoverResizer);
-	_menuHeaderBar.AppendMenuItem((!properties.showheaderbar)?MF_DISABLED:MF_STRING, 55, "Show display mode button");
+	_menuHeaderBar.AppendMenuItem((!properties.showheaderbar)?MF_DISABLED:MF_STRING, 55, "顯示版面模式按鈕");
 	_menuHeaderBar.CheckMenuItem(55, properties.showGridModeButton);
-	_menuHeaderBar.AppendTo(_menu,MF_STRING, "Header bar");
+	_menuHeaderBar.AppendTo(_menu,MF_STRING, "標題欄");
 
-	_menuFilters.AppendMenuItem(MF_STRING, 40, (!libraryfilter_state.isActive())?"Show":"Hide");
-	_menuFilters.AppendMenuItem(MF_STRING, 39, "Show toggle button");
+	_menuFilters.AppendMenuItem(MF_STRING, 40, (!libraryfilter_state.isActive())?"顯示":"隱藏");
+	_menuFilters.AppendMenuItem(MF_STRING, 39, "顯示開關按鈕");
 	_menuFilters.CheckMenuItem(39, properties.displayToggleBtns);
-	_menuFilters.AppendTo(_menu,MF_STRING, "Left menu");
+	_menuFilters.AppendTo(_menu,MF_STRING, "左側選單");
 
-	_menuGroupDisplay.AppendMenuItem(MF_STRING, 100, "Square Artwork");
-	_menuGroupDisplay.AppendMenuItem(MF_STRING, 101, "Circle Artwork");
-	_menuGroupDisplay.AppendMenuItem(MF_STRING, 102, "Grid mode, no padding, no labels");
+	_menuGroupDisplay.AppendMenuItem(MF_STRING, 100, "正方形專輯封面");
+	_menuGroupDisplay.AppendMenuItem(MF_STRING, 101, "圓形專輯封面");
+	_menuGroupDisplay.AppendMenuItem(MF_STRING, 102, "網格模式, 沒有填充，沒有標籤");
 	_menuGroupDisplay.CheckMenuRadioItem(100, 102, (properties.CoverGridNoText) ? 102 : (properties.circleMode) ? 101 : 100);
 	_menuGroupDisplay.AppendMenuSeparator();
 
-	_dateMenu.AppendMenuItem(MF_STRING, 25, "Show");
+	_dateMenu.AppendMenuItem(MF_STRING, 25, "顯示");
 	_dateMenu.CheckMenuItem(25, properties.showdateOverCover);
-	_dateMenu.AppendMenuItem(MF_STRING, 49, "Try to extract and display only the year");
+	_dateMenu.AppendMenuItem(MF_STRING, 49, "嘗試只提取和顯示年份");
 	_dateMenu.CheckMenuItem(49, properties.extractYearFromDate);
-	_dateMenu.AppendTo(_menuGroupDisplay,MF_STRING, "Date over album art");
+	_dateMenu.AppendTo(_menuGroupDisplay,MF_STRING, "專輯藝術的日期");
 
-	_menuGroupDisplay.AppendMenuItem(MF_STRING, 26, "Show disc number over album art");
+	_menuGroupDisplay.AppendMenuItem(MF_STRING, 26, "在專輯封面上顯示光碟編號");
 	_menuGroupDisplay.CheckMenuItem(26, properties.showDiscNbOverCover);
-	_menuGroupDisplay.AppendMenuItem(MF_STRING, 46, "Animate while showing now playing");
+	_menuGroupDisplay.AppendMenuItem(MF_STRING, 46, "顯示現在播放中時會有動畫");
 	_menuGroupDisplay.CheckMenuItem(46, properties.animateShowNowPlaying);
 	_menuGroupDisplay.AppendMenuSeparator();
 
-	_menuGroupDisplay.AppendMenuItem((properties.CoverGridNoText | properties.circleMode)?MF_GRAYED:MF_STRING, 38, "Center text");
+	_menuGroupDisplay.AppendMenuItem((properties.CoverGridNoText | properties.circleMode)?MF_GRAYED:MF_STRING, 38, "中間文字:");
 	_menuGroupDisplay.CheckMenuItem(38, properties.centerText);
-	_menuCoverShadow.AppendMenuItem(MF_STRING, 47, "Show a shadow under artwork");
+	_menuCoverShadow.AppendMenuItem(MF_STRING, 47, "在專輯封面下展示陰影");
 	_menuCoverShadow.CheckMenuItem(47, properties.showCoverShadow);
-	_menuCoverShadow.AppendMenuItem(MF_STRING, 48, "Set shadow opacity (current:"+properties.default_CoverShadowOpacity+")");
-	_menuCoverShadow.AppendTo(_menuGroupDisplay,MF_STRING, "Covers shadow");
+	_menuCoverShadow.AppendMenuItem(MF_STRING, 48, "設定陰影的不透明度 (目前數值:"+properties.default_CoverShadowOpacity+")");
+	_menuCoverShadow.AppendTo(_menuGroupDisplay,MF_STRING, "專輯封面的陰影");
 
-	_menuGroupDisplay.AppendTo(_menu,MF_STRING, "Covers grid");
+	_menuGroupDisplay.AppendTo(_menu,MF_STRING, "專輯封面網格");
 
-	_menuTracklist.AppendMenuItem(MF_STRING, 11, "Activate tracklist");
+	_menuTracklist.AppendMenuItem(MF_STRING, 11, "啟用曲目清單");
 	_menuTracklist.CheckMenuItem(11, properties.expandInPlace);
 	/*_menuTracklist.AppendMenuItem(MF_STRING, 45, "Expand on hover cover");
 	_menuTracklist.CheckMenuItem(45, properties.expandOnHover);	*/
-	_menuTracklist.AppendMenuItem(MF_STRING, 13, "Animate opening");
+	_menuTracklist.AppendMenuItem(MF_STRING, 13, "開啟動畫");
 	_menuTracklist.CheckMenuItem(13, properties.smooth_expand_value>0);
-	_menuTracklist.AppendMenuItem(MF_STRING, 14, "Display only one column");
+	_menuTracklist.AppendMenuItem(MF_STRING, 14, "只顯示一列");
 	_menuTracklist.CheckMenuItem(14, properties.showlistOneColumn);
-	_menuTracklist.AppendMenuItem(MF_STRING, 15, "Horizontal scrollbar");
+	_menuTracklist.AppendMenuItem(MF_STRING, 15, "水平卷軸");
 	_menuTracklist.CheckMenuItem(15, properties.showlistScrollbar);
 	_menuTracklist.AppendMenuSeparator();
 	
-	_menuCover.AppendMenuItem(MF_STRING, 80, "Always");
+	_menuCover.AppendMenuItem(MF_STRING, 80, "總是");
 	_menuCover.CheckMenuItem(80, properties.showlistShowCover==2);
-	_menuCover.AppendMenuItem(MF_STRING, 81, "When right sidebar doesn't already display it");
+	_menuCover.AppendMenuItem(MF_STRING, 81, "當右側曲目資料面板開啟，且該面板的跟隨現在播放中啟用時將自動隱藏");
 	_menuCover.CheckMenuItem(81, properties.showlistShowCover==1);
-	_menuCover.AppendMenuItem(MF_STRING, 82, "Never");
+	_menuCover.AppendMenuItem(MF_STRING, 82, "從不");
 	_menuCover.CheckMenuItem(82, properties.showlistShowCover==0);	
-	_menuCover.AppendTo(_menuTracklist,MF_STRING, "Show the cover on the right");
+	_menuCover.AppendTo(_menuTracklist,MF_STRING, "顯示右側的專輯封面");
 	
 	_menuTracklist.AppendMenuSeparator();
 
 	var custom_tag = properties.show2linesCustomTag!="";
-	_additionalInfos.AppendMenuItem(MF_STRING, 60, "Show infos on 2 rows");
+	_additionalInfos.AppendMenuItem(MF_STRING, 60, "顯示2行的信息");
 	_additionalInfos.CheckMenuItem(60, properties.show2lines);		
-	_additionalInfos.AppendMenuItem(MF_STRING, 61, "Customize 2nd row...");
+	_additionalInfos.AppendMenuItem(MF_STRING, 61, "自定義第2行...");
 	_additionalInfos.CheckMenuItem(61, custom_tag);	
 	if(properties.show2linesCustomTag!="")
-	_additionalInfos.AppendMenuItem(MF_STRING, 62, "Reset");
+	_additionalInfos.AppendMenuItem(MF_STRING, 62, "重置");
 	_additionalInfos.AppendMenuSeparator();
-	_additionalInfos.AppendMenuItem(custom_tag?MF_GRAYED:MF_STRING, 28, "Show artist name for each track");
+	_additionalInfos.AppendMenuItem(custom_tag?MF_GRAYED:MF_STRING, 28, "顯示每首曲目的演出者名稱");
 	_additionalInfos.CheckMenuItem(28, properties.showArtistName);
-	_additionalInfos.AppendMenuItem(custom_tag?MF_GRAYED:MF_STRING, 56, "Show play count");
+	_additionalInfos.AppendMenuItem(custom_tag?MF_GRAYED:MF_STRING, 56, "顯示播放次數");
 	_additionalInfos.CheckMenuItem(56, properties.showPlaycount);
-	_additionalInfos.AppendMenuItem(custom_tag?MF_GRAYED:MF_STRING, 44, "Show codec");
+	_additionalInfos.AppendMenuItem(custom_tag?MF_GRAYED:MF_STRING, 44, "顯示編解碼器");
 	_additionalInfos.CheckMenuItem(44, properties.showCodec);
-	_additionalInfos.AppendMenuItem(custom_tag?MF_GRAYED:MF_STRING, 43, "Show bitrate");
+	_additionalInfos.AppendMenuItem(custom_tag?MF_GRAYED:MF_STRING, 43, "顯示位元速率");
 	_additionalInfos.CheckMenuItem(43, properties.showBitrate);
 	_additionalInfos.AppendMenuSeparator();
-	_additionalInfos.AppendMenuItem(MF_GRAYED, 0, "Displayed in this order:");
-	_additionalInfos.AppendMenuItem(MF_GRAYED, 0, "[Artist name] ([Playcount] - [Codec] - [Bitrate])");
+	_additionalInfos.AppendMenuItem(MF_GRAYED, 0, "以此順序顯示 :");
+	//_additionalInfos.AppendMenuItem(MF_GRAYED, 0, "[Artist name] ([Playcount] - [Codec] - [Bitrate])");
+	_additionalInfos.AppendMenuItem(MF_GRAYED, 0, "[演出者名稱] ([播放次數] - [編解碼器] - [位元速率])");
 
 
-	_additionalInfos.AppendTo(_menuTracklist,MF_STRING, "Track details");
+	_additionalInfos.AppendTo(_menuTracklist,MF_STRING, "曲目細節");
 	
 	_menuTracklist.AppendMenuSeparator();
 
-	_menuProgressBar.AppendMenuItem(MF_STRING, 21, "No progress bar");
-	_menuProgressBar.AppendMenuItem(MF_STRING, 24, "White Progress bar");
-	_menuProgressBar.AppendMenuItem(MF_STRING, 23, "Progress bar according to the album art");
+	_menuProgressBar.AppendMenuItem(MF_STRING, 21, "沒有進度條");
+	_menuProgressBar.AppendMenuItem(MF_STRING, 24, "白色進度條");
+	_menuProgressBar.AppendMenuItem(MF_STRING, 23, "根據專輯封面的進度條");
 	_menuProgressBar.CheckMenuRadioItem(21, 24, (!properties.drawProgressBar) ? 21 : (properties.AlbumArtProgressbar) ? 23 : 24);
-	_menuProgressBar.AppendTo(_menuTracklist,MF_STRING, "Progress bar");
+	_menuProgressBar.AppendTo(_menuTracklist,MF_STRING, "播放曲目下的進度條");
 
 	_menuTracklist.AppendMenuSeparator();
 
-	_menuRating.AppendMenuItem(MF_STRING, 32, "Show rating for each track");
-	_menuRating.AppendMenuItem(MF_STRING, 33, "Show rating for selected tracks");
-	_menuRating.AppendMenuItem(MF_STRING, 36, "Show rating for rated tracks");
-	_menuRating.AppendMenuItem(MF_STRING, 34, "Show rating for selected and rated tracks");
-	_menuRating.AppendMenuItem(MF_STRING, 35, "Don't show rating");
+	_menuRating.AppendMenuItem(MF_STRING, 32, "顯示每首音軌的評等");
+	_menuRating.AppendMenuItem(MF_STRING, 33, "顯示所選音軌的評等");
+	_menuRating.AppendMenuItem(MF_STRING, 36, "顯示已評等的音軌的評等");
+	_menuRating.AppendMenuItem(MF_STRING, 34, "顯示所選跟已評等的音軌的評等");
+	_menuRating.AppendMenuItem(MF_STRING, 35, "不顯示評等");
 	_menuRating.CheckMenuRadioItem(32, 36, (properties.showRating && !properties.showRatingSelected && !properties.showRatingRated) ? 32 : (properties.showRating && properties.showRatingSelected && !properties.showRatingRated) ? 33 : (properties.showRating && properties.showRatingSelected && properties.showRatingRated) ? 34 : (properties.showRating && properties.showRatingRated) ? 36 : 35);
 	_menuRating.AppendTo(_menuTracklist,MF_STRING, "Rating");
 
 	_menuTracklist.AppendMenuSeparator();
 
-	_menuBackground.AppendMenuItem(MF_STRING, 16, "Background according to album art (main color)");
-	_menuBackground.AppendMenuItem(MF_STRING, 17, "Background according to album art (blurred)");
-	_menuBackground.AppendMenuItem(MF_STRING, 18, "Background according to album art (mix of both)");
-	_menuBackground.AppendMenuItem(MF_STRING, 19, "Transparent background");
+	_menuBackground.AppendMenuItem(MF_STRING, 16, "根據專輯封面的背景 (主要顏色)");
+	_menuBackground.AppendMenuItem(MF_STRING, 17, "根據專輯封面的背景 (模糊化)");
+	_menuBackground.AppendMenuItem(MF_STRING, 18, "根據專輯封面的背景 (混合兩者)");
+	_menuBackground.AppendMenuItem(MF_STRING, 19, "透明背景");
 	_menuBackground.CheckMenuRadioItem(16, 19, (properties.showListColoredOneColor) ? 16 : (properties.showListColoredBlurred) ? 17 :  (properties.showListColoredMixedColor) ? 18 : 19);
-	_menuBackground.AppendTo(_menuTracklist,MF_STRING, "Background");
+	_menuBackground.AppendTo(_menuTracklist,MF_STRING, "背景壁紙");
 
-	_menuTracklist.AppendTo(_menu,MF_STRING, "Tracklist");
+	_menuTracklist.AppendTo(_menu,MF_STRING, "曲目清單");
 
-	_menu2.AppendMenuItem(MF_STRING, 200, "Enable");
+	_menu2.AppendMenuItem(MF_STRING, 200, "啟用");
 	_menu2.CheckMenuItem(200, properties.showwallpaper);
-	_menu2.AppendMenuItem(MF_STRING, 220, "Blur");
+	_menu2.AppendMenuItem(MF_STRING, 220, "模糊化");
 	_menu2.CheckMenuItem(220, properties.wallpaperblurred);
 
-	_menu2A.AppendMenuItem(MF_STRING, 221, "Filling");
+	_menu2A.AppendMenuItem(MF_STRING, 221, "填滿");
 	_menu2A.CheckMenuItem(221, properties.wallpaperdisplay==0);
-	_menu2A.AppendMenuItem(MF_STRING, 222, "Adjust");
+	_menu2A.AppendMenuItem(MF_STRING, 222, "調整圖片符合視窗大小");
 	_menu2A.CheckMenuItem(222, properties.wallpaperdisplay==1);
-	_menu2A.AppendMenuItem(MF_STRING, 223, "Stretch");
+	_menu2A.AppendMenuItem(MF_STRING, 223, "延展");
 	_menu2A.CheckMenuItem(223, properties.wallpaperdisplay==2);
-	_menu2A.AppendTo(_menu2,MF_STRING, "Wallpaper size");
+	_menu2A.AppendTo(_menu2,MF_STRING, "壁紙尺寸");
 
-	_menu2.AppendTo(_menu,MF_STRING, "Background Wallpaper");
+	_menu2.AppendTo(_menu,MF_STRING, "背景壁紙");
 
 	_menu.AppendMenuSeparator();
-	_menu.AppendMenuItem(MF_STRING, 9, "Refresh images cache");
+	_menu.AppendMenuItem(MF_STRING, 9, "刷新圖片快取");
 
 	idx = 0;
 	if(right_align)
@@ -3601,10 +3606,10 @@ function draw_settings_menu(x,y,right_align,sort_group){
 			brw.repaint();
 			break;		
 		case (idx == 61):
-			customTracklistDetails("Customize 2nd line"
-								,"<div class='titleBig'>Customize 2nd line</div><div class='separator'></div><br/>Enter a title formatting script.\nYou can use the full foobar2000 title formatting syntax here.<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">Click here</a> for informations about foobar title formatting.<br/>"
-								,'Default is %artist% - %play_count% - %codec% - %bitrate%.'
-								,'2nd line title formatting script:'
+			customTracklistDetails("自定義第2行"
+								,"<div class='titleBig'>自定義第2行</div><div class='separator'></div><br/>輸入一個標題名稱的格式化腳本。\n你可以在這裡使用完整的foobar2000曲目名稱格式化語法。<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">點擊這裡</a> 瞭解關於foobar曲目名稱格式化的信息。<br/>"
+								,'預設為 %artist% - %play_count% - %codec% - %bitrate%.'
+								,'第2行標題名稱的格式化腳本:'
 								,properties.show2linesCustomTag);
 			properties.show2linesCustomTag_tf = fb.TitleFormat(properties.show2linesCustomTag);
 			g_showlist.refresh();
@@ -3707,7 +3712,7 @@ function draw_settings_menu(x,y,right_align,sort_group){
 			break;
 		case (idx == 48):
 			try {
-				new_value = utils.InputBox(window.ID, "Enter the desired opacity, between 0 (full transparency) to 255 (full opacity).", "Covers shadow opacity", properties.default_CoverShadowOpacity, true);
+				new_value = utils.InputBox(window.ID, "輸入期望的不透明度，在0（完全透明）到255（完全不透明）之間。", "封面陰影的不透明度", properties.default_CoverShadowOpacity, true);
 				if (!(new_value == "" || typeof new_value == 'undefined')) {
 					properties.default_CoverShadowOpacity = Math.min(255,Math.max(0,Number(new_value)));
 					window.SetProperty("COVER Shadow Opacity", properties.default_CoverShadowOpacity);
@@ -4249,11 +4254,13 @@ oBrowser = function(name) {
 			totalS -= (totalH = Math.floor(totalS / 3600)) * 3600;
 			totalS -= (totalM = Math.floor(totalS / 60)) * 60;
 
-			if (totalW != 0) time_txt += totalW + ((totalW > 1)? ' weeks': ' week');
-			if (totalD != 0) time_txt += ' ' + totalD + ((totalD > 1)? ' days': ' day');
-			if (totalH != 0) time_txt += ' ' + totalH + ' h';
-			if (totalM != 0) time_txt += ' ' + totalM + ' min';
-			if (time_txt == '' || totalS != 0) time_txt += ' ' + totalS +' sec';
+			//if (totalW != 0) time_txt += totalW + ((totalW > 1)? ' weeks': ' week');
+			if (totalW != 0) time_txt += totalW + ' 週';
+			//if (totalD != 0) time_txt += ' ' + totalD + ((totalD > 1)? ' days': ' day');
+			if (totalD != 0) time_txt += ' ' + totalD + ' 天';
+			if (totalH != 0) time_txt += ' ' + totalH + ' 小時';
+			if (totalM != 0) time_txt += ' ' + totalM + ' 分';
+			if (time_txt == '' || totalS != 0) time_txt += ' ' + totalS +' 秒';
 		}
 		return time_txt;
 	}
@@ -4443,7 +4450,7 @@ oBrowser = function(name) {
 					if(this.custom_groupby) {
 						var groupinfos_rows = TF.grouping.EvalWithMetadb(this.groups[i-1].pl[0]).split(" ^^ ");
 						this.groups[i-1].firstRow = groupinfos_rows[0];
-						this.groups[i-1].secondRow = (groupinfos_rows[1]!="")?groupinfos_rows[1]:this.groups[i-1].pl.Count+(this.groups[i-1].pl.Count>1?" tracks":" track");
+						this.groups[i-1].secondRow = (groupinfos_rows[1]!="")?groupinfos_rows[1]:this.groups[i-1].pl.Count+(this.groups[i-1].pl.Count>1?" 首曲目":" 首曲目");
 					} else {
 						this.groups[i-1].firstRow = this.groups[i-1].artist
 						this.groups[i-1].secondRow = this.groups[i-1].album;
@@ -4544,7 +4551,7 @@ oBrowser = function(name) {
 				if(this.custom_groupby) {
 					var groupinfos_rows = TF.grouping.EvalWithMetadb(this.groups[i-1].pl[0]).split(" ^^ ");
 					this.groups[this.groups.length-1].firstRow = groupinfos_rows[0];
-					this.groups[this.groups.length-1].secondRow = (groupinfos_rows[1]!="")?groupinfos_rows[1]:this.groups[this.groups.length-1].pl.Count+(this.groups[this.groups.length-1].pl.Count>1?" tracks":" track");
+					this.groups[this.groups.length-1].secondRow = (groupinfos_rows[1]!="")?groupinfos_rows[1]:this.groups[this.groups.length-1].pl.Count+(this.groups[this.groups.length-1].pl.Count>1?" 首曲目":" 首曲目");
 				} else {
 					this.groups[this.groups.length-1].firstRow = this.groups[this.groups.length-1].artist
 					this.groups[this.groups.length-1].secondRow = this.groups[this.groups.length-1].album;
@@ -5130,24 +5137,24 @@ oBrowser = function(name) {
                 var px = 0;
                 var py = this.y + Math.floor(this.h / 2);
 				if(this.firstInitialisation) {
-					gr.GdiDrawText("Loading...",  g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
-					gr.FillSolidRect(Math.round(this.w/2) -125, py-46, 250, 1, colors.border);
-					gr.GdiDrawText("Library browser", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+					gr.GdiDrawText("載入中...",  g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+					gr.FillSolidRect(this.w/2 -125, py-46, 250, 1, colors.border);
+					gr.GdiDrawText("媒體櫃瀏覽器", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 				}
 				else {
 					var playlistname=plman.GetPlaylistName(this.SourcePlaylistIdx);
 					if(LibraryItems_counter<1){
-						gr.GdiDrawText("No music found.",  g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
-						gr.FillSolidRect(Math.round(this.w/2) -125, py-46, 250, 1, colors.border);
-						gr.GdiDrawText("Click here to configure the Media Library.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+						gr.GdiDrawText("沒有找到音樂.",  g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+						gr.FillSolidRect(this.w/2 -125, py-46, 250, 1, colors.border);
+						gr.GdiDrawText("點擊此處配置媒體櫃.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 					} else if(playlistname==globalProperties.selection_playlist || playlistname==globalProperties.playing_playlist) {
-						gr.FillSolidRect(Math.round(this.w/2) -150, py-46, 300, 1, colors.border);
+						gr.FillSolidRect(this.w/2 -150, py-46, 300, 1, colors.border);
 						gr.GdiDrawText(playlistname+" :",  g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
-						gr.GdiDrawText("Nothing to show.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+						gr.GdiDrawText("沒有項目可以顯示.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 					} else {
 						gr.GdiDrawText(playlistname+" :", g_font.plus10, colors.normal_txt, px, py - 80, this.w, 35, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
-						gr.FillSolidRect(Math.round(this.w/2) -125, py-46, 250, 1, colors.border);
-						gr.GdiDrawText("This playlist is empty.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+						gr.FillSolidRect(this.w/2 -125, py-46, 250, 1, colors.border);
+						gr.GdiDrawText("這個播放清單是空的.", g_font.italicplus2, colors.faded_txt, px, py - 38, this.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 					}
 				}
             }
@@ -5199,7 +5206,8 @@ oBrowser = function(name) {
 				plman.SetPlaylistFocusItemByHandle(plman.ActivePlaylist, this.groups[this.groups_draw[group_id]].pl[0]);
 				if(fb.IsPaused) fb.Stop();
 				plman.FlushPlaybackQueue();
-				fb.RunContextCommandWithMetadb("Add to playback queue", this.groups[this.groups_draw[group_id]].pl[0]);
+				//fb.RunContextCommandWithMetadb("Add to playback queue", this.groups[this.groups_draw[group_id]].pl[0]);
+				fb.RunContextCommandWithMetadb("新增到播放佇列", this.groups[this.groups_draw[group_id]].pl[0]);
 				fb.Play();
 			} else {
 				plman.ClearPlaylist(PlaybackPlaylist);
@@ -5235,7 +5243,8 @@ oBrowser = function(name) {
                 }
 
                 if(this.ishover && this.rowsCount == 0 && LibraryItems_counter==0) {
-                    fb.RunMainMenuCommand("Library/Configure");
+					//fb.RunMainMenuCommand("Library/Configure");
+					fb.RunMainMenuCommand("媒體/設定");
                 } else {
 					this.sourceX = x;
 					this.sourceY = y;
@@ -5281,7 +5290,8 @@ oBrowser = function(name) {
                 break;
             case "mbtn_down":
                 if(this.activeIndex > -1){
-					fb.RunContextCommandWithMetadb("Properties",this.groups[this.groups_draw[this.activeIndex]].pl);
+					//fb.RunContextCommandWithMetadb("Properties",this.groups[this.groups_draw[this.activeIndex]].pl);
+					fb.RunContextCommandWithMetadb("屬性",this.groups[this.groups_draw[this.activeIndex]].pl);
                 }
                 break;
             case "move":
@@ -5598,7 +5608,7 @@ oBrowser = function(name) {
         this.ResizeButton_hover.ReleaseGraphics(gb);
 
         if(typeof(this.resize_bt) == "undefined") {
-            this.resize_bt = new button(this.ResizeButton_off, this.ResizeButton_hover, this.ResizeButton_hover,"resize_bt","Resize covers");
+            this.resize_bt = new button(this.ResizeButton_off, this.ResizeButton_hover, this.ResizeButton_hover,"resize_bt","調整專輯封面大小");
         } else {
             this.resize_bt.img[0] = this.ResizeButton_off;
             this.resize_bt.img[1] = this.ResizeButton_hover;
@@ -6489,7 +6499,7 @@ function on_mouse_rbtn_down(x, y){
         var check__ = brw.activeIndex;
         var drawSeparator = false;
 
-		_menu.AppendMenuItem(MF_STRING, 1, "Settings...");
+		_menu.AppendMenuItem(MF_STRING, 1, "設定...");
 		_menu.AppendMenuSeparator();
 
         if(check__ > -1) {
@@ -6498,20 +6508,20 @@ function on_mouse_rbtn_down(x, y){
 			metadblist_selection = brw.groups[brw.groups_draw[check__]].pl;
 
 			var quickSearchMenu = window.CreatePopupMenu();
-			quickSearchMenu.AppendMenuItem(MF_STRING, 30,"Same artist");
-			quickSearchMenu.AppendMenuItem(MF_STRING, 31,"Same album");
-			quickSearchMenu.AppendMenuItem(MF_STRING, 32,"Same genre");
-			quickSearchMenu.AppendMenuItem(MF_STRING, 33,"Same date");
-			quickSearchMenu.AppendTo(_menu, MF_STRING, "Quick search for...");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
+			quickSearchMenu.AppendTo(_menu, MF_STRING, "快速搜尋...");
 
 			var genrePopupMenu = createGenrePopupMenu(brw.groups[brw.groups_draw[check__]].pl[0]);
 			genrePopupMenu.AppendTo(_menu, MF_STRING, "Edit Genre");
 			_menu.AppendMenuSeparator();
-			_menu.AppendMenuItem(MF_STRING, 19, "Refresh this image");
+			_menu.AppendMenuItem(MF_STRING, 19, "刷新此圖片");
 			_menu.AppendMenuSeparator();
 
-			sendTo.AppendTo(_menu, MF_STRING, "Send to...");
-			sendTo.AppendMenuItem(MF_STRING, 5000, "A new playlist...");
+			sendTo.AppendTo(_menu, MF_STRING, "傳送到...");
+			sendTo.AppendMenuItem(MF_STRING, 5000, "一個新的播放清單...");
 			var pl_count = plman.PlaylistCount;
 			if(pl_count > 1) {
 				sendTo.AppendMenuItem(MF_SEPARATOR, 0, "");
@@ -6522,7 +6532,7 @@ function on_mouse_rbtn_down(x, y){
 				};
 			};
 			if(!getRightPlaylistState() && brw.currentSorting=='' && !brw.currently_sorted  && !plman.IsAutoPlaylist(brw.SourcePlaylistIdx)) {
-				_menu.AppendMenuItem(MF_STRING, 16, "Delete items from playlist");
+				_menu.AppendMenuItem(MF_STRING, 16, "從播放清單中刪除項目");
 			}
 
             Context.InitContext(brw.groups[brw.groups_draw[check__]].pl);
@@ -6541,16 +6551,16 @@ function on_mouse_rbtn_down(x, y){
 								metadblist_selection = plman.GetPlaylistSelectedItems(brw.getSourcePlaylist());
 
 								var quickSearchMenu = window.CreatePopupMenu();
-								quickSearchMenu.AppendMenuItem(MF_STRING, 34,"Same title");
-								quickSearchMenu.AppendMenuItem(MF_STRING, 30,"Same artist");
-								quickSearchMenu.AppendMenuItem(MF_STRING, 31,"Same album");
-								quickSearchMenu.AppendMenuItem(MF_STRING, 32,"Same genre");
-								quickSearchMenu.AppendMenuItem(MF_STRING, 33,"Same date");
-								quickSearchMenu.AppendTo(_menu, MF_STRING, "Quick search for...");
+								quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
+								quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
+								quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
+								quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
+								quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
+								quickSearchMenu.AppendTo(_menu, MF_STRING, "快速搜尋...");
 
 								_menu.AppendMenuSeparator();
-								sendTo.AppendTo(_menu, MF_STRING, "Send to...");
-								sendTo.AppendMenuItem(MF_STRING, 5000, "A new playlist...");
+								sendTo.AppendTo(_menu, MF_STRING, "傳送到...");
+								sendTo.AppendMenuItem(MF_STRING, 5000, "一個新的播放清單...");
 								var pl_count = plman.PlaylistCount;
 								if(pl_count > 1) {
 									sendTo.AppendMenuItem(MF_SEPARATOR, 0, "");
@@ -6563,9 +6573,9 @@ function on_mouse_rbtn_down(x, y){
 								if(!getRightPlaylistState() && brw.currentSorting=='' && !plman.IsAutoPlaylist(brw.SourcePlaylistIdx)) {
 
 									if(metadblist_selection.Count>1)
-										_menu.AppendMenuItem(MF_STRING, 17, "Delete items from playlist");
+										_menu.AppendMenuItem(MF_STRING, 17, "從播放清單中刪除項目");
 									else
-										_menu.AppendMenuItem(MF_STRING, 17, "Delete item from playlist");
+										_menu.AppendMenuItem(MF_STRING, 17, "從播放清單中刪除項目");
 									//_menu.AppendMenuItem(MF_STRING, 18, "Delete useless tags");
 								}
 
@@ -6582,8 +6592,8 @@ function on_mouse_rbtn_down(x, y){
 				if(!track_clicked &&  g_showlist.check("right", x, y)) {
 					album_clicked = true;
 
-					sendTo.AppendTo(_menu, MF_STRING, "Send to...");
-					sendTo.AppendMenuItem(MF_STRING, 5000, "A new playlist...");
+					sendTo.AppendTo(_menu, MF_STRING, "傳送到...");
+					sendTo.AppendMenuItem(MF_STRING, 5000, "一個新的播放清單...");
 					var pl_count = plman.PlaylistCount;
 					if(pl_count > 1) {
 						sendTo.AppendMenuItem(MF_SEPARATOR, 0, "");
@@ -6616,10 +6626,10 @@ function on_mouse_rbtn_down(x, y){
 
 		if(utils.IsKeyPressed(VK_SHIFT)) {
 			_menu.AppendMenuSeparator();
-			_menu.AppendMenuItem(MF_STRING, 7, "Properties ");
-			_menu.AppendMenuItem(MF_STRING, 6, "Configure...");
+			_menu.AppendMenuItem(MF_STRING, 7, "面板屬性");
+			_menu.AppendMenuItem(MF_STRING, 6, "配置...");
 			_menu.AppendMenuSeparator();
-			_menu.AppendMenuItem(MF_STRING, 5, "Reload");
+			_menu.AppendMenuItem(MF_STRING, 5, "重新載入");
 		}
         idx = _menu.TrackPopupMenu(x,y);
         switch(true) {
@@ -6693,7 +6703,8 @@ function on_mouse_rbtn_down(x, y){
 				g_genre_cache.build_from_library();
 				break;
 			case (idx == 5000):
-				fb.RunMainMenuCommand("File/New playlist");
+				//fb.RunMainMenuCommand("File/New playlist");
+				fb.RunMainMenuCommand("檔案/新增播放");
 				plman.InsertPlaylistItems(plman.PlaylistCount-1, 0, metadblist_selection, false);
 				break;
 			case (idx > 5000):
@@ -6780,7 +6791,7 @@ function on_mouse_move(x, y, m) {
 				if(g_showlist.rows_[i].isSelected) showlist_selected_count++;
 			}
 			if(showlist_selected_count==items.Count) var drag_img = createDragImg(brw.groups[g_showlist.idx].cover_img, 80,items.Count);
-			else drag_img = createDragText("Dragging", items.Count+" tracks", 220);
+			else drag_img = createDragText("Dragging", items.Count+" 首曲目", 220);
 			brw.external_dragging = true;
 			var options = {
 				show_text : false,
@@ -7833,22 +7844,27 @@ function on_key_down(vkey) {
 
 				};
 				if(vkey==70) { // CTRL+F
-					fb.RunMainMenuCommand("Edit/Search");
+					//fb.RunMainMenuCommand("Edit/Search");
+					fb.RunMainMenuCommand("編輯/搜尋");
 				};
 				if(vkey==73) { // CTRL+I
 
 				};
 				if(vkey==78) { // CTRL+N
-					fb.RunMainMenuCommand("File/New playlist");
+					//fb.RunMainMenuCommand("File/New playlist");
+					fb.RunMainMenuCommand("檔案/新增播放");
 				};
 				if(vkey==79) { // CTRL+O
-					fb.RunMainMenuCommand("File/Open...");
+					//fb.RunMainMenuCommand("File/Open...");
+					fb.RunMainMenuCommand("檔案/開啟");
 				};
 				if(vkey==80) { // CTRL+P
-					fb.RunMainMenuCommand("File/Preferences");
+					//fb.RunMainMenuCommand("File/Preferences");
+					fb.RunMainMenuCommand("檔案/設定");
 				};
 				if(vkey==83) { // CTRL+S
-					fb.RunMainMenuCommand("File/Save playlist...");
+					//fb.RunMainMenuCommand("File/Save playlist...");
+					fb.RunMainMenuCommand("檔案/儲存播放表.");
 				};
 				if(vkey==84) { // CTRL+T
 				};
@@ -7858,7 +7874,8 @@ function on_key_down(vkey) {
 			case KMask.alt:
 				switch(vkey) {
 				case 65: // ALT+A
-					fb.RunMainMenuCommand("View/Always on Top");
+					//fb.RunMainMenuCommand("View/Always on Top");
+					fb.RunMainMenuCommand("檢視/在最上層");
 					break;
 				case VK_ALT: // ALT key alone
 					break;

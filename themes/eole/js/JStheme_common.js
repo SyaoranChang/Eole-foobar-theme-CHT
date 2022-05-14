@@ -1,4 +1,4 @@
-var theme_name = "eole";
+﻿var theme_name = "eole";
 
 var ProfilePath = fb.ProfilePath;
 var FoobarPath = fb.FoobarPath;
@@ -25,6 +25,7 @@ var timers = []
 var globalProperties = {
 	theme_version: '1.2.3b20',
 	lastest_breaking_version: '1.2.3b19',
+	lastest_ChineseTraditionaltranslation_version: '2021.10.06 02:47',
     thumbnailWidthMax: window.GetProperty("GLOBAL thumbnail width max", 200),
     coverCacheWidthMax: window.GetProperty("GLOBAL cover cache width max", 400),
 	TextRendering: 4,
@@ -54,12 +55,12 @@ var globalProperties = {
 	refreshRate:40,
 	crc: "$if(%album artist%,$if(%album%,$crc32(%album artist%##%album%),undefined),undefined)",
 	crc_artist: "$crc32('artists'$meta(artist))",
-	create_playlist : "Create Playlist",
-	selection_playlist : "Library Selection",
-	playing_playlist : "Library Playback",
-	filter_playlist : "Filter Results",	
-	whole_library : "Whole Library",
-	media_library : "Media Library",
+	create_playlist : "新增播放清單",
+	selection_playlist : "媒體櫃的選擇",
+	playing_playlist : "媒體櫃播放中",
+	filter_playlist : "篩選結果",	
+	whole_library : "整個媒體櫃",
+	media_library : "媒體櫃",
 	default_wallpaper : theme_img_path+"\\nothing_played_full.png",
     nocover_img: gdi.Image(theme_img_path+"\\no_cover.png"),
     stream_img: gdi.Image(theme_img_path+"\\stream_icon.png"),
@@ -340,7 +341,7 @@ function chooseMemorySettings(title, top_msg, bottom_msg, dialog_name, inter_tex
 		}
 	}
 	utils.ShowHtmlDialog(window.ID, htmlCode(skin_global_path+"\\html",dialog_name+".html"), {
-		data: [title, top_msg, 'Cancel', ok_callback,'0 - Minimum##1 - Keep loaded covers in memory##2 - Load all covers at startup##3 - Load all covers & artist thumbnails at startup',globalProperties.mem_solicitation,bottom_msg,globalProperties.coverCacheWidthMax,inter_text],
+		data: [title, top_msg, 'Cancel', ok_callback,'0 - 最低限度(Minimum)##1 - 在記憶體中保持已載入的封面##2 - 啟動時載入所有封面##3 - 啟動時載入所有封面和演出者的快取縮圖',globalProperties.mem_solicitation,bottom_msg,globalProperties.coverCacheWidthMax,inter_text],
 	});
 }
 function customFilterGrouping(title, top_msg, bottom_msg, input_default_values, input_labels){
@@ -1285,7 +1286,8 @@ function sendandplayPlaybackPlaylist(items, play_metadb){
 		else
 			plman.SetPlaylistFocusItem(pidx_playing, 0);
 		if(play_metadb)
-			fb.RunContextCommandWithMetadb("Add to playback queue", play_metadb);
+			//fb.RunContextCommandWithMetadb("Add to playback queue", play_metadb);
+			fb.RunContextCommandWithMetadb("新增到播放佇列", play_metadb);
 		else
 			plman.AddPlaylistItemToPlaybackQueue(pidx_playing, 0);
 		if(fb.IsPaused || fb.IsPlaying) fb.Next();
@@ -3134,7 +3136,7 @@ function createDragImg(img, cover_size, count){
     gb.FillSolidRect(left_padding, top_padding, cover_size, cover_size, colors.dragcover_overlay);
 	gb.FillSolidRect(left_padding,top_padding+cover_size-text_height,cover_size,text_height,colors.dragimage_bg);
 	gb.DrawRect(left_padding, top_padding, cover_size-1, cover_size-1, 1.0,colors.dragimage_border);
-	gb.GdiDrawText(count+" tracks", g_font.italicmin1,  colors.dragimage_text, left_padding, top_padding+cover_size-text_height, cover_size, text_height, DT_CENTER | DT_CALCRECT | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX);
+	gb.GdiDrawText(count+" 曲目", g_font.italicmin1,  colors.dragimage_text, left_padding, top_padding+cover_size-text_height, cover_size, text_height, DT_CENTER | DT_CALCRECT | DT_VCENTER | DT_END_ELLIPSIS | DT_NOPREFIX);
 	drag_img.ReleaseGraphics(gb);
 
 	//drag_img = drag_img.Resize(cover_size, cover_size, 2);
