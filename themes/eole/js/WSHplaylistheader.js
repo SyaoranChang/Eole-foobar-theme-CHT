@@ -995,10 +995,6 @@ function on_notify_data(name, info) {
 		case "WSH_panels_reload":
 			window.Reload();
 		break;
-		case "enable_screensaver":
-			globalProperties.enable_screensaver = info;
-			window.SetProperty("GLOBAL enable screensaver", globalProperties.enable_screensaver);
-		break;
 		case "set_font":
 			globalProperties.fontAdjustement = info;
 			window.SetProperty("GLOBAL Font Adjustement", globalProperties.fontAdjustement),
@@ -1021,6 +1017,11 @@ function on_notify_data(name, info) {
 			filters_panel_state.value=info;
 			positionButtons();
 			window.Repaint();
+			timer_repaint = setTimeout(function(){
+				window.Repaint();
+				clearTimeout(timer_repaint);
+				timer_repaint = false;
+			},150);			
 		break;
 		case "save_filter_state":
 			properties.savedFilterState = info;

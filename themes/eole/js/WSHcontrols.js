@@ -11,7 +11,6 @@ var properties = {
     wallpaperblurred: window.GetProperty("_DISPLAY: Wallpaper Blurred", true),
     wallpaperblurvalue: window.GetProperty("_DISPLAY: Wallpaper Blur Value", 1.05),
     wallpaperdisplay: window.GetProperty("_DISPLAY: Wallpaper 0=Filling 1=Adjust 2=Stretch", 0),
-    screensaver_dark_theme: window.GetProperty("SCREENSAVER dark theme", false),
     library_dark_theme: window.GetProperty("LIBRARY dark theme", false),
     playlists_dark_theme: window.GetProperty("PLAYLISTS dark theme", false),
     displayDevice: window.GetProperty("_DISPLAY device", false),	
@@ -859,7 +858,6 @@ function on_paint(gr) {
 	}
 
 	switch(true){
-		case (layout_state.isEqual(0) && screensaver_state.isActive() && properties.screensaver_dark_theme && properties.darklayout):
 		case (layout_state.isEqual(1) && properties.minimode_dark_theme && properties.darklayout):
 		case (main_panel_state.isEqual(0) && properties.library_dark_theme && layout_state.isEqual(0) && properties.darklayout):
 		case (main_panel_state.isEqual(1) && properties.playlists_dark_theme && layout_state.isEqual(0) && properties.darklayout):
@@ -1017,6 +1015,15 @@ function setVolume(val){
 	
 	fb.Volume = 100 * (Math.pow(volume_log,1/2) - 1);
 }
+function fbVolumeFromX(x){
+	var volume = (x-volume_vars.margin_left) / volume_vars.width;
+	volume = (volume<0) ? 0 : (volume<1) ? volume : 1;
+	
+	volume_log = (volume==0)?0:1/2*Math.log10(volume)+1;
+	volum_return = 100 * (Math.pow(volume_log,1/2) - 1)
+	if(isNaN(volum_return)) volum_return = -100;	
+	return volum_return;	
+}
 function getVolume(){
 	volume_log = Math.pow(fb.Volume/100 + 1,2);
 	volume_linear = (volume_log==0)?0:Math.pow(10,2*(volume_log-1));
@@ -1124,7 +1131,10 @@ function on_mouse_move(x,y,m){
 					volume_vars.height=volume_vars.height_hover;
 					repaint = true;
 				}
-			}
+				var volume = fbVolumeFromX(x);			
+				new_tooltip_text=volume.toFixed(2) + ' dB';
+				g_tooltip.Activate(new_tooltip_text, Math.min(Math.max(x-17,volume_vars.margin_left),volume_vars.margin_left+volume_vars.volumesize), volume_vars.margin_top-35, 0, false, 'volume_level');
+			} else if (g_tooltip.activeZone == 'volume_level') g_tooltip.Deactivate();
 			else if(!volume_vars.drag){ResetVolume();}
 		} else if(hoovervolume && !volume_vars.drag){
 			ResetVolume();
@@ -1134,10 +1144,12 @@ function on_mouse_move(x,y,m){
 			showVolumeSlider(false);
 		}
 
-		if(is_hover_volume_btn(x,y) && layout_state.isEqual(0) && !VolumeSliderActive) {showVolumeSlider(true);repaint = true;}
+		if(is_hover_volume_btn(x,y) && layout_state.isEqual(0) && !VolumeSliderActive) {
+			showVolumeSlider(true);repaint = true;		
+		}
 
 		if(volume_vars.drag){
-			setVolume(x);
+			setVolume(x);	
 		}
 	}
 	if(is_hover_time_elapsed(x,y) && TimeTotalSeconds!="ON AIR"){
@@ -1735,18 +1747,6 @@ function on_notify_data(name, info) {
 		case "DiskCacheState":
 			globalProperties.enableDiskCache = info;
 			window.SetProperty("COVER Disk Cache", globalProperties.enableDiskCache);
-			window.Repaint();
-		break;
-		case "enable_screensaver":
-			globalProperties.enable_screensaver = info;
-			window.SetProperty("GLOBAL enable screensaver", globalProperties.enable_screensaver);
-		break;
-		case "screensaver_state":
-			screensaver_state.value=info;
-		break;
-		case "screensaver_dark_theme":
-			properties.screensaver_dark_theme=info;
-			window.SetProperty("SCREENSAVER dark theme", properties.screensaver_dark_theme);
 			window.Repaint();
 		break;
 		case "RefreshImageCover":

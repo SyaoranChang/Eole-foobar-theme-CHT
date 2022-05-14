@@ -1,4 +1,4 @@
-﻿var colors = {};
+var colors = {};
 var properties = {
 	panelName: 'WSHcoverpanel',
     enableDiskCache: window.GetProperty("COVER Disk Cache", true),
@@ -9,7 +9,6 @@ var properties = {
 	minidarklayout: window.GetProperty("_DISPLAY: Mini layout:Dark", true),
     minimode_dark_theme: window.GetProperty("MINIMODE dark theme", true),
     library_dark_theme: window.GetProperty("LIBRARY dark theme", true),
-    screensaver_dark_theme: window.GetProperty("SCREENSAVER dark theme", true),
     playlists_dark_theme: window.GetProperty("PLAYLISTS dark theme", true),
     bio_dark_theme: window.GetProperty("BIO dark theme", true),
     dble_click_action: window.GetProperty("PROPERTY double click action", 0),
@@ -141,15 +140,9 @@ function startAnimation(){
 		animationStartTime = Date.now();
 	}catch(e){}
 	animationCounter = 0;
-	if(properties.showVisualization>0 || globalProperties.enable_screensaver){
+	if(properties.showVisualization>0){
 		animationTimer = setInterval(function() {
 			animationCounter++;
-			if(fb.IsPlaying && globalProperties.enable_screensaver && !screensaver_state.isActive() && layout_state.isEqual(0) && !main_panel_state.isEqual(3)){
-				current_ms = (new Date).getTime();
-				if(current_ms >= last_mouse_move_notified+globalProperties.mseconds_before_screensaver){
-					screensaver_state.setValue(1);
-				}
-			}
 			if(fb.IsPlaying && !fb.IsPaused && !Randomsetfocus && window.IsVisible) {
 				//Restart if the animation is desyncronised
 				try{
@@ -177,19 +170,19 @@ function startAnimation(){
 function setTooltipDoubleClicText(){
 	switch(true){
 		case (properties.dble_click_action==0):
-			tooltipDoubleClicText = "暫停播放";
+			tooltipDoubleClicText = "pause playback";
 		break;
 		case (properties.dble_click_action==1):
-			tooltipDoubleClicText = "在全部的面板顯示現在播放中";
+			tooltipDoubleClicText = "show on all panels";
 		break;
 		case (properties.dble_click_action==2):
-			tooltipDoubleClicText = "以全尺寸/原尺寸開啟專輯封面";
+			tooltipDoubleClicText = "open cover in its full/original size";
 		break;
 		case (properties.dble_click_action==3):
-			tooltipDoubleClicText = "開啟所在資料夾";
+			tooltipDoubleClicText = "open containing folder";
 		break;
 		case (properties.dble_click_action==4):
-			tooltipDoubleClicText = "啟用/退出袖珍播放器";
+			tooltipDoubleClicText = "activate/quit mini player";
 		break;
 	}
 }
@@ -290,6 +283,7 @@ function calculate_visu_margin_left(){
 
 function on_paint(gr) {
 	dont_resize = false;
+	if(ww == 0 || wh == 0) return;
 	if(!fb.IsPlaying){
 		if(layout_state.isEqual(0) && mini_controlbar.isActive() && showtrackinfo_big.isActive()) {
 			g_cover.setArtwork(images.nothing_played_compact,false,true);
@@ -348,7 +342,7 @@ function on_size(w, h) {
     wh = h;
 	calculate_visu_margin_left();
 	text_height=wh-8;
-	if(properties.showVisualization>0 || globalProperties.enable_screensaver) startAnimation();
+	if(properties.showVisualization>0) startAnimation();
     positionButtons();
 	g_cover.setSize(ww,wh);
 }
@@ -394,8 +388,7 @@ function on_mouse_lbtn_dblclk(x, y) {
 				if(!g_cover.isFiller()) openCoverFullscreen(fb.GetNowPlaying());
 			break;
 			case (properties.dble_click_action==3):
-				//fb.RunContextCommandWithMetadb("Open containing folder", fb.GetNowPlaying(), 8);
-				fb.RunContextCommandWithMetadb("開啟所在資料夾", fb.GetNowPlaying(), 8);
+				fb.RunContextCommandWithMetadb("Open containing folder", fb.GetNowPlaying(), 8);
 			break;
 			case (properties.dble_click_action==4):
 				window.NotifyOthers('toggleLayoutMode',true);
@@ -409,11 +402,11 @@ function on_mouse_move(x, y, m) {
 	g_cursor.onMouse("move", x, y, m);
 	g_cover.onMouse("move", x, y, m);
     if(!fb.IsPlaying) {
-        tooltip_text = "播放隨機化"
+        tooltip_text = "Play randomly"
     } else if(!fb.IsPaused) {
-        tooltip_text = "顯示現在播放中\n雙擊 : "+tooltipDoubleClicText;
+        tooltip_text = "Show now playing\nDouble-click : "+tooltipDoubleClicText;
     } else {
-		tooltip_text = "繼續播放"
+		tooltip_text = "Resume playback"
 	}
 	g_tooltip.ActivateDelay(tooltip_text, x+10, y+20, globalProperties.tooltip_delay, 1200, false, 'track_title');
 }
@@ -430,7 +423,7 @@ function on_mouse_leave() {
 }
 
 function on_playback_stop(){
-	if(!globalProperties.enable_screensaver) resetAnimation();
+	resetAnimation();
 	window.Repaint();
 }
 
@@ -646,13 +639,13 @@ function on_playback_new_track(metadb) {
 	if (metadb)	{
 		//current_played_track = metadb;
 		g_cover.getArtwork(metadb);
-		if(!animationTimer && (properties.showVisualization>0 || globalProperties.enable_screensaver)) startAnimation();
+		if(!animationTimer && properties.showVisualization>0) startAnimation();
 		//setRatingBtn(metadb);
 	}
 	window.Repaint();
 }
 function on_playback_time() {
-	if(!animationTimer && (properties.showVisualization>0 || globalProperties.enable_screensaver)) {startAnimation();}
+	if(!animationTimer && properties.showVisualization>0) {startAnimation();}
 }
 function on_layout_change() {
 	if(layout_state.isEqual(0)) properties.darklayout = properties.maindarklayout;
@@ -736,17 +729,6 @@ function on_notify_data(name, info) {
 		case "mini_controlbar":
 			mini_controlbar.value = info;
 			on_layout_change()
-		break;
-		case "enable_screensaver":
-			globalProperties.enable_screensaver = info;
-			window.SetProperty("GLOBAL enable screensaver", globalProperties.enable_screensaver);
-		break;
-		case "escape_screensaver":
-			last_mouse_move_notified = (new Date).getTime();
-		break;
-		case "mseconds_before_screensaver":
-			globalProperties.mseconds_before_screensaver = info;
-			window.SetProperty("GLOBAL screensaver mseconds before activation", globalProperties.mseconds_before_screensaver);
 		break;
 		case "DiskCacheState":
 			globalProperties.enableDiskCache = info;
@@ -852,15 +834,6 @@ function on_notify_data(name, info) {
 			on_layout_change();
 			window.Repaint();
 		break;
-		case "screensaver_dark_theme":
-			properties.screensaver_dark_theme=info;
-			window.SetProperty("SCREENSAVER dark theme", properties.screensaver_dark_theme);
-			on_layout_change();
-			window.Repaint();
-		break;
-		case "screensaver_state":
-			screensaver_state.value=info;
-		break;
 		case "Randomsetfocus":
 			Randomsetfocus = info;
 			if (!Randomsetfocus && properties.random_function >= 1000 && properties.random_function < 2001){
@@ -955,62 +928,61 @@ function on_mouse_rbtn_up(x, y){
 	var context_menu = window.CreatePopupMenu();	
 	var idx;
 
-	main_menu.AppendMenuItem(MF_STRING, 35, "設定...");
+	main_menu.AppendMenuItem(MF_STRING, 35, "Settings...");
 	main_menu.AppendMenuSeparator();
 	if(fb.IsPlaying){
 		var now_playing_track = fb.GetNowPlaying();
-		main_menu.AppendMenuItem(MF_STRING, 1, "以全尺寸/原尺寸開啟專輯封面");
-		main_menu.AppendMenuItem(MF_STRING, 9, "在全部的面板顯示現在播放中");
-		main_menu.AppendMenuItem(MF_STRING, 6, "打開包含的文件夾");
-		main_menu.AppendMenuItem(MF_STRING, 8, "更新此圖片");
+		main_menu.AppendMenuItem(MF_STRING, 1, "Open cover in its full/original size");
+		main_menu.AppendMenuItem(MF_STRING, 9, "Show now playing on all panels");
+		main_menu.AppendMenuItem(MF_STRING, 6, "Open containing folder");
+		main_menu.AppendMenuItem(MF_STRING, 8, "Refresh this image");
 		var quickSearchMenu = window.CreatePopupMenu();
-		quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
-		quickSearchMenu.AppendTo(main_menu, MF_STRING, "快速搜尋...");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 34,"Same title");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 30,"Same artist");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 31,"Same album");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 32,"Same genre");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 33,"Same date");
+		quickSearchMenu.AppendTo(main_menu, MF_STRING, "Quick search for...");
 		main_menu.AppendMenuSeparator();
 	} else {
 		var checked_item_menu=3;
-		main_menu.AppendMenuItem(MF_DISABLED, 0, "播放隨機化 :");
+		main_menu.AppendMenuItem(MF_DISABLED, 0, "Play randomly :");
 		main_menu.AppendMenuSeparator();
-		main_menu.AppendMenuItem(MF_STRING, 3, "曲目");
+		main_menu.AppendMenuItem(MF_STRING, 3, "Tracks");
 			if(properties.random_function=='200_tracks') checked_item_menu=3;
-		main_menu.AppendMenuItem(MF_STRING, 2, "專輯");
+		main_menu.AppendMenuItem(MF_STRING, 2, "Albums");
 			if(properties.random_function=='20_albums') checked_item_menu=2;
-		main_menu.AppendMenuItem(MF_STRING, 5, "演出者");
+		main_menu.AppendMenuItem(MF_STRING, 5, "Artist");
 			if(properties.random_function=='1_artist') checked_item_menu=5;
 
 		var genreValue=parseInt(properties.random_function);
-			main_menu.AppendMenuItem(MF_STRING, 4, "音樂類型");
+			main_menu.AppendMenuItem(MF_STRING, 4, "Genre");
 		if((genreValue >= 1000 && genreValue < 2001) || properties.random_function=='1_genre')	checked_item_menu=4;
 
 		main_menu.CheckMenuRadioItem(2, 5, checked_item_menu);
 
 		var genrePopupMenu = window.CreatePopupMenu();
 		createGenrePopupMenu(false, -1, genrePopupMenu);
-		genrePopupMenu.AppendTo(main_menu, MF_STRING, "特定音樂類型");
+		genrePopupMenu.AppendTo(main_menu, MF_STRING, "A specific genre");
 	}
 	
 	if(fb.IsPlaying){
 		//Context.InitContext(new FbMetadbHandleList(fb.GetNowPlaying()));
 		//Context.BuildMenu(context_menu, 100, -1);
 		//context_menu.AppendTo(main_menu, MF_STRING, "Track properties");
-		main_menu.AppendMenuItem(MF_STRING, 2, "屬性");
+		main_menu.AppendMenuItem(MF_STRING, 2, "Properties");
 	}
 	if(utils.IsKeyPressed(VK_SHIFT)) {
 		main_menu.AppendMenuSeparator();
-		main_menu.AppendMenuItem(MF_STRING, 100, "面板屬性");
-		main_menu.AppendMenuItem(MF_STRING, 101, "配置...");
+		main_menu.AppendMenuItem(MF_STRING, 100, "Properties ");
+		main_menu.AppendMenuItem(MF_STRING, 101, "Configure...");
 		main_menu.AppendMenuSeparator();
-		main_menu.AppendMenuItem(MF_STRING, 102, "重新載入");
+		main_menu.AppendMenuItem(MF_STRING, 102, "Reload");
 	}
 	idx = main_menu.TrackPopupMenu(x,y,0x0020);
 	switch(true) {
 		case (idx == 2):
-			//fb.RunContextCommandWithMetadb("Properties", fb.GetNowPlaying());
-			fb.RunContextCommandWithMetadb("屬性", fb.GetNowPlaying());
+			fb.RunContextCommandWithMetadb("Properties", fb.GetNowPlaying());
 		break;
 		case (idx == 100):
 			window.ShowProperties();
@@ -1061,8 +1033,7 @@ function on_mouse_rbtn_up(x, y){
 			play_random(properties.random_function);
 			break;
 		case (idx == 6):
-			//fb.RunContextCommandWithMetadb("Open containing folder", now_playing_track, 8);
-			fb.RunContextCommandWithMetadb("開啟所在資料夾", now_playing_track, 8);
+			fb.RunContextCommandWithMetadb("Open containing folder", now_playing_track, 8);
 			break;
 		case (idx == 8):
 			g_cover.refresh(now_playing_track, true);
@@ -1122,25 +1093,25 @@ function draw_settings_menu(x,y){
         var idx;
 
 		var _dble_click_menu = window.CreatePopupMenu();
-		_dble_click_menu.AppendMenuItem(MF_STRING, 3, "暫停播放");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 4, "在全部的面板顯示現在播放中");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 5, "以全尺寸/原尺寸開啟專輯封面");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 6, "開啟所在資料夾");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 7, "啟用/退出袖珍播放器");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 3, "Pause playback");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 4, "Show now playing on all panels");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 5, "Open cover in its full/original size");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 6, "Open containing folder");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 7, "Activate/quit mini player");
 		_dble_click_menu.CheckMenuRadioItem(3, 7, 3+properties.dble_click_action);
-		_dble_click_menu.AppendTo(_menu, MF_STRING, "雙擊的作用");
+		_dble_click_menu.AppendTo(_menu, MF_STRING, "Double click action");
 		_menu.AppendMenuSeparator();
 
 		var _visu_menu = window.CreatePopupMenu();
-		_visu_menu.AppendMenuItem(MF_STRING, 8, "總是顯示");
+		_visu_menu.AppendMenuItem(MF_STRING, 8, "Always show");
 		_visu_menu.CheckMenuItem(8,properties.showVisualization==2);
-		_visu_menu.AppendMenuItem(MF_STRING, 10, "從不顯示");
+		_visu_menu.AppendMenuItem(MF_STRING, 10, "Never");
 		_visu_menu.CheckMenuItem(10,properties.showVisualization==0);
 		
-		_menu.AppendMenuItem(MF_STRING, 8, "播放時的動畫");
+		_menu.AppendMenuItem(MF_STRING, 8, "Animation on playback");
 		_menu.CheckMenuItem(8,properties.showVisualization==2);
 
-		_menu.AppendMenuItem(MF_STRING, 2, "顯示播放中的專輯封面");
+		_menu.AppendMenuItem(MF_STRING, 2, "Show now playing artwork");
 		_menu.CheckMenuItem(2, (layout_state.isEqual(0)?coverpanel_state_big.isActive():coverpanel_state_mini.isActive()));
 
 
@@ -1174,7 +1145,7 @@ function draw_settings_menu(x,y){
 				if(properties.showVisualization==0) properties.showVisualization = 2;
 				else properties.showVisualization = 0;
 				window.SetProperty("Show Visualization", properties.showVisualization);
-				if(!globalProperties.enable_screensaver) resetAnimation();
+				resetAnimation();
 				calculate_visu_margin_left();
 				window.Repaint();
 				break;

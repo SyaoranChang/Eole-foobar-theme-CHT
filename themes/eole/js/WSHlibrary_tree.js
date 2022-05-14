@@ -1,4 +1,4 @@
-﻿var properties = {
+var properties = {
 	panelName: 'WSHlibrary_tree',
     darklayout: window.GetProperty("_DISPLAY: Dark layout", false),
     showwallpaper: window.GetProperty("_DISPLAY: Show Wallpaper", false),
@@ -12,7 +12,8 @@
     showInLibrary_RightPlaylistOn: window.GetProperty("MAINPANEL adapt now playing to left menu righ playlist on", true),
     showInLibrary_RightPlaylistOff: window.GetProperty("MAINPANEL adapt now playing to left menu righ playlist off", true),
 	headerbar_height:39,
-	TagSwitcherBarHeight: 30,
+	TagSwitcherBarHeight: 40,
+    TagSwitcherBarHeight_old: 30,		
 	panelFontAdjustement: -1,
 	showLibraryTreeSwitch:true,
 	DropInplaylist: true
@@ -79,7 +80,7 @@ String.prototype.trim = function() {
     return this.replace(/^\s+|[\n\s]+$/g, "");
 }
 
-oTagSwitcherBar = function() {
+oTagSwitcherBar_old = function() {
     this.setItems_infos = function(){
 		this.items_functions = new Array(
 			function() {}
@@ -104,8 +105,8 @@ oTagSwitcherBar = function() {
 		);
 		this.items_width = new Array(0, 0, 0, 0);
 		this.items_x = new Array(0, 0, 0, 0);
-		this.items_txt = new Array("T","專輯", "演出者", "音樂類型");
-		this.items_tooltips = new Array("媒體櫃樹狀欄","專輯 篩選器", "演出者 篩選器", "音樂類型 篩選器");
+		this.items_txt = new Array("T","ALBUM", "ARTIST", "GENRE");
+		this.items_tooltips = new Array("Library tree","Album filter", "Artist filter", "Genre filter");
 		properties.album_label = this.items_txt[1];
 		properties.artist_label = this.items_txt[2];
 		properties.genre_label = this.items_txt[3];		
@@ -140,7 +141,8 @@ oTagSwitcherBar = function() {
 	this.margin_left = 6;
 	this.images = {};
 	this.hide_bt = false;
-
+	this.default_height = properties.TagSwitcherBarHeight_old;
+	
     this.setHideButton = function(){
 		this.hscr_btn_w = 18
 		var xpts_mtop = Math.ceil((this.h-9)/2);
@@ -161,7 +163,7 @@ oTagSwitcherBar = function() {
 			gb.FillPolygon(colors.normal_txt, 0, xpts3);
 			gb.FillPolygon(colors.normal_txt, 0, xpts4);
 		this.hide_bt_ov.ReleaseGraphics(gb);
-		this.hide_bt = new button(this.hide_bt_off, this.hide_bt_ov, this.hide_bt_ov,"hide_filters", "隱藏此選單面板");
+		this.hide_bt = new button(this.hide_bt_off, this.hide_bt_ov, this.hide_bt_ov,"hide_filters", "Hide this menu");
 	}
     this.getImages = function() {
 		if(properties.darklayout) icon_theme_subfolder = "\\white";
@@ -267,7 +269,220 @@ oTagSwitcherBar = function() {
         };
     };
 };
+oTagSwitcherBar = function() {
+    this.setItems_infos = function(){
+		this.items_functions = new Array(
+			function() {}
+		,
+			function() {
+				window.NotifyOthers("libraryFilter_tagMode",1);
+				librarytree.setValue(0);
+				window.NotifyOthers("left_filter_state","album");
+			}
+		,
+			function() {
+				window.NotifyOthers("libraryFilter_tagMode",2);
+				librarytree.setValue(0);
+				window.NotifyOthers("left_filter_state","artist");
+			}
+		,
+			function() {
+				window.NotifyOthers("libraryFilter_tagMode",3);
+				librarytree.setValue(0);
+				window.NotifyOthers("left_filter_state","genre");
+			}
+		);
+		this.items_width = new Array(0, 0, 0, 0);
+		this.items_x = new Array(0, 0, 0, 0);
+		this.items_txt = new Array("Library Tree","Albums", "Artists", "Genres");
+		this.items_tooltips = new Array("Library tree","Album filter", "Artist filter", "Genre filter");
+		properties.album_label = this.items_txt[1];
+		properties.artist_label = this.items_txt[2];
+		properties.genre_label = this.items_txt[3];		
+		if(properties.album_customGroup_label != this.items_txt[1] && properties.album_customGroup_label!=""){
+			properties.album_label = properties.album_customGroup_label;			
+			this.items_txt[1] = properties.album_customGroup_label;
+			this.items_tooltips[1] = properties.album_customGroup_label+" filter";
+		}
+		if(properties.artist_customGroup_label != this.items_txt[2] && properties.artist_customGroup_label!=""){
+			properties.artist_label = properties.artist_customGroup_label;			
+			this.items_txt[2] = properties.artist_customGroup_label;
+			this.items_tooltips[2] = properties.artist_customGroup_label+" filter";
+		}
+		if(properties.genre_customGroup_label != this.items_txt[3] && properties.genre_customGroup_label!=""){
+			properties.genre_label = properties.genre_customGroup_label;			
+			this.items_txt[3] = properties.genre_customGroup_label;
+			this.items_tooltips[3] = properties.genre_customGroup_label+" filter";
+		}
+		if(!properties.showLibraryTreeSwitch){
+			this.items_txt.shift();
+			this.items_width.shift();
+			this.items_x.shift();
+			this.items_functions.shift();
+		}
+	}
 
+	this.setItems_infos();
+	this.hoverItem = -1;
+	this.txt_top_margin = 0;
+	this.margin_right = 2;
+	this.margin_left = 6;
+	this.images = {};
+	this.hide_bt = false;
+	this.default_height = properties.TagSwitcherBarHeight;
+	
+    this.setHideButton = function(){
+		this.hscr_btn_w = 18
+		var xpts_mtop = Math.ceil((this.h-9)/2);
+		var xpts_mright_prev = Math.floor((this.hscr_btn_w-5)/2);
+		this.hide_bt_off = gdi.CreateImage(this.hscr_btn_w, this.h);
+		gb = this.hide_bt_off.GetGraphics();
+			gb.FillSolidRect(0, 0, 1, this.h-1, colors.sidesline);
+			var xpts3 = Array(4+xpts_mright_prev,xpts_mtop, xpts_mright_prev,4+xpts_mtop, 4+xpts_mright_prev,8+xpts_mtop, 5+xpts_mright_prev,7+xpts_mtop, 2+xpts_mright_prev,4+xpts_mtop, 5+xpts_mright_prev,1+xpts_mtop);
+			var xpts4 = Array(4+xpts_mright_prev,1+xpts_mtop, 1+xpts_mright_prev,4+xpts_mtop, 4+xpts_mright_prev,7+xpts_mtop, 1+xpts_mright_prev,4+xpts_mtop);
+			gb.FillPolygon(colors.inactive_txt, 0, xpts3);
+			gb.FillPolygon(colors.inactive_txt, 0, xpts4);
+		this.hide_bt_off.ReleaseGraphics(gb);
+		this.hide_bt_ov = gdi.CreateImage(this.hscr_btn_w, this.h);
+		gb = this.hide_bt_ov.GetGraphics();
+			gb.FillSolidRect(0, 0, 1, this.h-1, colors.sidesline);
+			var xpts3 = Array(4+xpts_mright_prev,xpts_mtop, xpts_mright_prev,4+xpts_mtop, 4+xpts_mright_prev,8+xpts_mtop, 5+xpts_mright_prev,7+xpts_mtop, 2+xpts_mright_prev,4+xpts_mtop, 5+xpts_mright_prev,1+xpts_mtop);
+			var xpts4 = Array(4+xpts_mright_prev,1+xpts_mtop, 1+xpts_mright_prev,4+xpts_mtop, 4+xpts_mright_prev,7+xpts_mtop, 1+xpts_mright_prev,4+xpts_mtop);
+			gb.FillPolygon(colors.normal_txt, 0, xpts3);
+			gb.FillPolygon(colors.normal_txt, 0, xpts4);
+		this.hide_bt_ov.ReleaseGraphics(gb);
+		this.hide_bt = new button(this.hide_bt_off, this.hide_bt_ov, this.hide_bt_ov,"hide_filters", "Hide this menu");
+	}
+    this.getImages = function() {
+		if(properties.darklayout) icon_theme_subfolder = "\\white";
+		else icon_theme_subfolder = "";
+		this.images.library_tree = gdi.Image(theme_img_path + "\\icons"+icon_theme_subfolder+"\\icon_tree.png");
+		if(this.hide_bt) this.setHideButton();
+		this.images.search_history_icon = gdi.Image(theme_img_path  + "\\icons"+icon_theme_subfolder+"\\search_history.png");
+		this.images.search_history_hover_icon = gdi.Image(theme_img_path  + "\\icons"+icon_theme_subfolder+"\\search_history_hover.png");
+		this.search_history_bt = new button(this.images.search_history_icon, this.images.search_history_hover_icon, this.images.search_history_hover_icon,"search_history_bt","Change grouping");		
+	};
+	this.getImages();
+	this.on_init = function() {
+		this.setItems_infos();
+		this.activeItem = properties.tagMode+((properties.showLibraryTreeSwitch)?0:1);
+    };
+	this.on_init();
+
+    this.setSize = function(w, h, font_size) {
+        this.w = w;
+		this.h = h;
+		this.font_size = font_size;
+		if(!this.hide_bt) this.setHideButton();
+    };
+	this.draw = function(gr, x, y) {
+		this.x = x;
+		this.y = y;
+		var prev_text_width=0;
+
+		// draw background part above playlist (headerbar)
+		gr.FillSolidRect(this.x, this.y, this.w, this.h-1, colors.headerbar_bg);
+		gr.FillSolidRect(this.x, this.y+this.h-1, this.w - this.x, 1, colors.headerbar_line);
+
+		//Calculate text size
+		total_txt_size = 0
+		for(i = this.items_txt.length-1; i >= 0; i--) {
+			this.items_width[i] = gr.CalcTextWidth(this.items_txt[i],g_font.min1);
+			total_txt_size += this.items_width[i];
+		}
+		var tx = this.x + this.margin_left;
+
+		//Draw texts	
+		var text_x = 16;
+		gr.GdiDrawText(this.items_txt[0], g_font.normal, colors.full_txt, text_x, this.txt_top_margin, this.w, this.h, DT_LEFT | DT_VCENTER | DT_CALCRECT | DT_NOPREFIX | DT_END_ELLIPSIS);
+		var switcher_x = gr.CalcTextWidth(this.items_txt[0],g_font.normal)+text_x;
+		this.search_history_bt.draw(gr, switcher_x, this.y+Math.round(this.h/2 - this.images.search_history_icon.Height/2), 255);
+		
+		if(p.showFiltersTogglerBtn) this.hide_bt.draw(gr, this.x+this.w-(this.hide_bt.w), this.y, 255);
+    };
+    this.setHoverStates = function(x, y){
+		var prev_hover_item = this.hoverItem;
+		this.hoverItem = -1;
+		for(i = 0; i < this.items_txt.length; i++) {
+			if (x > this.items_x[i] && x < this.items_x[i]+this.items_width[i] && y > this.y && y < this.y + this.h) this.hoverItem = i;
+		}
+		if(prev_hover_item!=this.hoverItem){
+			if(this.hoverItem==-1) g_cursor.setCursor(IDC_ARROW,20);
+			else g_cursor.setCursor(IDC_HAND,this.items_txt[this.hoverItem]);
+		}
+		return (prev_hover_item!=this.hoverItem);
+	}
+	this.drawSwitchMenu = function(x, y) {
+		var basemenu = window.CreatePopupMenu();
+		if (typeof x == "undefined") x=ww;
+		if (typeof y == "undefined") y=30;
+		
+		this.search_history_bt.changeState(ButtonStates.normal);
+		
+		basemenu.AppendMenuItem(MF_GRAYED, 0, "Group by:");
+		basemenu.AppendMenuSeparator();
+		
+		for(i = this.items_txt.length-1; i >= 0; i--) {
+			basemenu.AppendMenuItem(MF_STRING, i+1, this.items_txt[i]);
+		}
+		//basemenu.AppendMenuSeparator();
+		//basemenu.AppendMenuItem(MF_STRING, 0, "Custom grouping");
+		
+		idx = 0;
+		idx = basemenu.TrackPopupMenu(x, y, 0x0008);
+
+		switch (true) {
+			case (idx > 0 && idx <= this.items_txt.length):
+				if((idx-1)!=this.activeItem) {
+					this.items_functions[idx-1]();
+					if(p.s_txt.length>0) sL.clear();
+				}			
+			break;
+			case (idx == properties.searchHistory_max_items+10):
+				g_searchHistory.reset();
+			break;
+		}
+		basemenu = undefined;
+	}	
+    this.on_mouse = function(event, x, y, delta) {
+        switch(event) {
+            case "lbtn_down":	
+				if(this.search_history_bt.state == ButtonStates.hover) this.drawSwitchMenu(this.x+this.w,this.h+this.y-1);
+				
+				if(this.hoverItem != properties.tagMode-((properties.showLibraryTreeSwitch)?0:1) && this.hoverItem>-1) {
+					this.items_functions[this.hoverItem]();
+					if(g_filterbox.inputbox.text.length > 0) {
+						g_filterbox.inputbox.text = "";
+						g_filterbox.inputbox.offset = 0;
+						filter_text = "";
+						g_sendResponse();
+					}
+				}
+				if(p.showFiltersTogglerBtn && this.hide_bt.checkstate("hover", x, y)){
+					this.hide_bt.checkstate("up", -1, -1);
+					this.hide_bt.checkstate("leave", -1, -1);
+					libraryfilter_state.toggleValue();
+				}
+				g_tooltip.Deactivate();
+				break;
+            case "lbtn_up":
+                break;
+            case "lbtn_dblclk":
+                break;
+            case "rbtn_down":
+                break;
+            case "move":
+				if(p.showFiltersTogglerBtn) this.hide_bt.checkstate("move", x, y);
+				if(x<this.search_history_bt.x) x = this.search_history_bt.x+10;
+				this.search_history_bt.checkstate("move", x, y);				
+                break;
+            case "leave":
+				this.search_history_bt.changeState(ButtonStates.normal);
+				if(p.showFiltersTogglerBtn) this.hide_bt.checkstate("leave", x, y);
+                break;
+        };
+    };
+};
 oPlaylist = function(idx, rowId) {
     this.idx = idx;
     this.rowId = rowId;
@@ -415,7 +630,7 @@ oPlaylistManager = function(name) {
             };
 
 			//Overlay
-			//height_top_fix = (properties.showHeaderBar ? (properties.showTagSwitcherBar ? properties.TagSwitcherBarHeight+properties.headerBarHeight : properties.headerBarHeight) : 0)
+			//height_top_fix = (properties.showHeaderBar ? (properties.showTagSwitcherBar ? g_tagswitcherbar.default_height+properties.headerBarHeight : properties.headerBarHeight) : 0)
 			height_top_fix = 0;
             gr.FillSolidRect(0, height_top_fix+1, ui.w, ui.h-height_top_fix-1, colors.pm_overlay);
 
@@ -600,8 +815,7 @@ oPlaylistManager = function(name) {
                         if(this.activeRow == 0) {
                             // send to a new playlist
                             this.drop_done = true;
-                            //fb.RunMainMenuCommand("File/New playlist");
-							fb.RunMainMenuCommand("檔案/新增播放");
+                            fb.RunMainMenuCommand("File/New playlist");
                             plman.InsertPlaylistItems(plman.PlaylistCount-1, 0, this.metadblist_selection, false);
                         } else {
                             // send to selected (hover) playlist
@@ -1146,33 +1360,7 @@ function scrollbar() {
 }
 
 function panel_operations() {
-	ViewIsInited = window.GetProperty("View: View Is Inited", false);
-	if(!ViewIsInited)
-	{
-		window.SetProperty("View by Folder Structure: Name // Pattern", "按文件夾結構檢視 // 模式不可配置");
-		
-		window.SetProperty("View 01: Name // Pattern", "按 演出者 檢視 // %artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
-		window.SetProperty("View 02: Name // Pattern", "按 專輯 演出者 檢視 // %album artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
-		window.SetProperty("View 03: Name // Pattern", "按 專輯 演出者 - 專輯 檢視 // [%album artist% - ]['['%date%']' ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
-		window.SetProperty("View 04: Name // Pattern", "按 專輯 檢視 // %album%[ '['%album artist%']']|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
-		window.SetProperty("View 05: Name // Pattern", "按 音樂類型 檢視 // %genre%|[%album artist% - ][(%date%) ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
-		window.SetProperty("View 06: Name // Pattern", "按 年份 檢視 // %date%|[%album artist% - ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
-		
-		window.SetProperty("View Filter 01: Name // Query", "無 // Query Not Configurable");
-		window.SetProperty("View Filter 02: Name // Query", "無損 // \"$info(encoding)\" IS lossless");
-		window.SetProperty("View Filter 03: Name // Query", "有損 // \"$info(encoding)\" IS lossy");
-		window.SetProperty("View Filter 04: Name // Query", "遺失播放增益 // %replaygain_track_gain% MISSING");
-		window.SetProperty("View Filter 05: Name // Query", "從未播放 // %play_count% MISSING");
-		window.SetProperty("View Filter 06: Name // Query", "播放次數最多 // %play_count% GREATER 9");
-		window.SetProperty("View Filter 07: Name // Query", "過去2周新增加 // %added% DURING LAST 2 WEEKS");
-		window.SetProperty("View Filter 08: Name // Query", "過去2周播放 // %last_played% DURING LAST 2 WEEKS");
-		window.SetProperty("View Filter 09: Name // Query", "評等最高 // " + (globalProperties.use_ratings_file_tags ? "$meta(rating)" : "%rating%") + " GREATER 3");
-		
-		window.SetProperty("View: View Is Inited", true);
-	}
-	
-	
-    var def_ppt = window.GetProperty("View by Folder Structure: Name // Pattern", "按文件夾結構檢視 // 模式不可配置");
+    var def_ppt = window.GetProperty("View by Folder Structure: Name // Pattern", "View by Folder Structure // Pattern Not Configurable");
     var DT_LEFT = 0x00000000,
         DT_CENTER = 0x00000001,
         DT_RIGHT = 0x00000002,
@@ -1185,30 +1373,30 @@ function panel_operations() {
         i = 0,
         sort = "";
     var view_ppt = [
-        window.GetProperty("View 01: Name // Pattern", "按 演出者 檢視 // %artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
-        window.GetProperty("View 02: Name // Pattern", "按 專輯 演出者 檢視 // %album artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
-        window.GetProperty("View 03: Name // Pattern", "按 專輯 演出者 - 專輯 檢視 // [%album artist% - ]['['%date%']' ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
-        window.GetProperty("View 04: Name // Pattern", "按 專輯 檢視 // %album%[ '['%album artist%']']|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
-        window.GetProperty("View 05: Name // Pattern", "按 音樂類型 檢視 // %genre%|[%album artist% - ][(%date%) ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
-        window.GetProperty("View 06: Name // Pattern", "按 年份 檢視 // %date%|[%album artist% - ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%")
+        window.GetProperty("View 01: Name // Pattern", "View by Artist // %artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
+        window.GetProperty("View 02: Name // Pattern", "View by Album Artist // %album artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
+        window.GetProperty("View 03: Name // Pattern", "View by Album Artist - Album // [%album artist% - ]['['%date%']' ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
+        window.GetProperty("View 04: Name // Pattern", "View by Album // %album%[ '['%album artist%']']|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
+        window.GetProperty("View 05: Name // Pattern", "View by Genre // %genre%|[%album artist% - ][(%date%) ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
+        window.GetProperty("View 06: Name // Pattern", "View by Year // %date%|[%album artist% - ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%")
     ];
     var nm = "",
         ppt_l = view_ppt.length + 1;
     for (i = ppt_l; i < ppt_l + 93; i++) {
-        nm = window.GetProperty("檢視 " + (i < 10 ? "0" + i : i) + ": Name // Pattern");
-        if (nm && nm != " // ") view_ppt.push(window.GetProperty("檢視 " + (i < 10 ? "0" + i : i) + ": Name // Pattern"));
+        nm = window.GetProperty("View " + (i < 10 ? "0" + i : i) + ": Name // Pattern");
+        if (nm && nm != " // ") view_ppt.push(window.GetProperty("View " + (i < 10 ? "0" + i : i) + ": Name // Pattern"));
     }
 
     var filter_ppt = [
-        window.GetProperty("View Filter 01: Name // Query", "無 // Query Not Configurable"),
-        window.GetProperty("View Filter 02: Name // Query", "無損 // \"$info(encoding)\" IS lossless"),
-        window.GetProperty("View Filter 03: Name // Query", "有損 // \"$info(encoding)\" IS lossy"),
-        window.GetProperty("View Filter 04: Name // Query", "遺失播放增益 // %replaygain_track_gain% MISSING"),
-        window.GetProperty("View Filter 05: Name // Query", "從未播放 // %play_count% MISSING"),
-        window.GetProperty("View Filter 06: Name // Query", "播放次數最多 // %play_count% GREATER 9"),
-        window.GetProperty("View Filter 07: Name // Query", "過去2周新增加 // %added% DURING LAST 2 WEEKS"),
-        window.GetProperty("View Filter 08: Name // Query", "過去2周播放 // %last_played% DURING LAST 2 WEEKS"),
-        window.GetProperty("View Filter 09: Name // Query", "評等最高 // " + (globalProperties.use_ratings_file_tags ? "$meta(rating)" : "%rating%") + " GREATER 3")
+        window.GetProperty("View Filter 01: Name // Query", "No // Query Not Configurable"),
+        window.GetProperty("View Filter 02: Name // Query", "Lossless // \"$info(encoding)\" IS lossless"),
+        window.GetProperty("View Filter 03: Name // Query", "Lossy // \"$info(encoding)\" IS lossy"),
+        window.GetProperty("View Filter 04: Name // Query", "Missing Replaygain // %replaygain_track_gain% MISSING"),
+        window.GetProperty("View Filter 05: Name // Query", "Never Played // %play_count% MISSING"),
+        window.GetProperty("View Filter 06: Name // Query", "Played Often // %play_count% GREATER 9"),
+        window.GetProperty("View Filter 07: Name // Query", "Recently Added // %added% DURING LAST 2 WEEKS"),
+        window.GetProperty("View Filter 08: Name // Query", "Recently Played // %last_played% DURING LAST 2 WEEKS"),
+        window.GetProperty("View Filter 09: Name // Query", "Top Rated // " + (globalProperties.use_ratings_file_tags ? "$meta(rating)" : "%rating%") + " GREATER 3")
     ];
     var filt_l = filter_ppt.length + 1;
     for (i = filt_l; i < filt_l + 90; i++) {
@@ -1404,9 +1592,9 @@ function panel_operations() {
         this.s_w2 = this.s_show > 1 ? this.f_x1 - this.s_x - 11 : this.s_w1 - Math.round(ui.row_h * 0.75) - this.s_x + 1;
         this.ln_sp = this.s_show ? ui.row_h * 0.1 : 0;
         //this.s_h = this.s_show ? ui.row_h + this.ln_sp : ui.margin;
-		this.s_h = properties.headerbar_height + ((p.tag_switcherbar)?properties.TagSwitcherBarHeight:0);
-		if (!p.s_show) this.s_h = ((p.tag_switcherbar)?properties.TagSwitcherBarHeight-1:0);
-        this.s_sp = this.s_h - ((p.tag_switcherbar)?properties.TagSwitcherBarHeight:0);
+		this.s_h = properties.headerbar_height + ((p.tag_switcherbar)?g_tagswitcherbar.default_height:0);
+		if (!p.s_show) this.s_h = ((p.tag_switcherbar)?g_tagswitcherbar.default_height-1:0);
+        this.s_sp = this.s_h - ((p.tag_switcherbar)?g_tagswitcherbar.default_height:0);
         this.sp = ui.h - this.s_h - (this.s_show ? 0 : ui.margin);
         this.rows = this.sp / ui.row_h;
         if (this.autofit) {
@@ -1706,7 +1894,7 @@ function library_manager() {
             }
 			if(pop.show_aggregate_item && this.root.length>1){
 				all_elems = {
-					name: "全部 ("+this.root.length+" 個群組)",
+					name: "All ("+this.root.length+" elements)",
 					sel: false,
 					totop: true,
 					child: [],
@@ -1717,7 +1905,7 @@ function library_manager() {
 			}
         } else {
             this.root[0] = {
-                name: "全部音樂",
+                name: "All Music",
                 sel: false,
                 child: [],
                 item: []
@@ -1849,7 +2037,7 @@ function populate() {
     var dbl_action = window.GetProperty("Double-Click Action: ExplorerStyle-0 Play-1", 1);
     var alt_lbtn_pl = btn_pl[3] == 1 ? true : false,
         mbtn_pl = btn_pl[5] == 1 ? true : false;
-    var lib_playlist = globalProperties.selection_playlist;
+	var lib_playlist = globalProperties.selection_playlist;
     this.show_counts = window.GetProperty("Node: Show Item Counts", false);
 	this.autoExpandSingleChild = window.GetProperty("Node: Auto Expand Single Childs", false);
     this.show_aggregate_item = window.GetProperty("Node: Show Aggregate Item", false);
@@ -2405,9 +2593,9 @@ function populate() {
 				var px = 0;
 				var line_width = Math.min(130,Math.round(ui.w-40));
 				var py = p.s_h + Math.round((ui.h-p.s_h)  / 2)-1;
-				gr.GdiDrawText("載入中...", g_font.plus3, colors.normal_txt, px, py - 40, ui.w, 36, DT_CENTER | DT_BOTTOM | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+				gr.GdiDrawText("Loading...", g_font.plus3, colors.normal_txt, px, py - 40, ui.w, 36, DT_CENTER | DT_BOTTOM | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 				gr.FillSolidRect(px+Math.round(ui.w/2-line_width/2),py, line_width, 1, colors.border);
-				gr.GdiDrawText("媒體櫃樹狀欄", g_font.italicplus1, colors.faded_txt, px, py + 6, ui.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+				gr.GdiDrawText("library tree", g_font.italicplus1, colors.faded_txt, px, py + 6, ui.w, 20, DT_CENTER | DT_TOP | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 				return;
 				//return gr.GdiDrawText(lib.none, ui.font, ui.textcol, ui.margin, p.s_h, ui.w - p.r_mg, ui.row_h * (lib.none.length > 14 ? 5 : 1), 0x00000004 | 0x00000400);
 			}
@@ -2688,7 +2876,7 @@ function populate() {
 					show_text : false,
 					use_album_art : false,
 					use_theming : false,
-					custom_image : createDragText(drag_text, items.Count+" 曲目", 220),
+					custom_image : createDragText(drag_text, items.Count+" tracks", 220),
 				}
 				var effect = fb.DoDragDrop(window.ID, items, g_drop_effect.copy | g_drop_effect.move | g_drop_effect.link, options); // effects can be combined
 				// nothing happens here until the mouse button is released
@@ -2878,7 +3066,7 @@ function on_size(w, h) {
 		jS.on_size();
 		if(properties.DropInplaylist) pman.setSize(ui.w, 0, ui.w, ui.h);
 
-		g_tagswitcherbar.setSize(ui.w, properties.TagSwitcherBarHeight, g_fsize-1);
+		g_tagswitcherbar.setSize(ui.w, g_tagswitcherbar.default_height, g_fsize-1);
 
 		// set wallpaper
 		if(properties.showwallpaper){
@@ -3259,7 +3447,7 @@ function searchLibrary() {
     }
 	this.setSize = function(w,h,x,y){
 		this.x = x;
-		this.y = ((p.tag_switcherbar)?properties.TagSwitcherBarHeight:0);
+		this.y = ((p.tag_switcherbar)?g_tagswitcherbar.default_height:0);
 		this.w = w;
 		this.h = h;
 	}
@@ -3267,7 +3455,7 @@ function searchLibrary() {
         s = Math.min(Math.max(s, 0), p.s_txt.length);
         e = Math.min(Math.max(e, 0), p.s_txt.length);
         cx = Math.min(Math.max(cx, 0), p.s_txt.length);
-        gr.FillSolidRect(0, this.y, ui.w, p.s_sp, colors.headerbar_bg);
+        gr.FillSolidRect(0, this.y-1, ui.w, p.s_sp+1, colors.headerbar_bg);
        // gr.DrawLine(0, this.y+p.s_sp, ww -((draw_right_line)?2:1), this.y+p.s_sp, 1,colors.headerbar_line);
 		gr.FillSolidRect(0, this.y+p.s_sp, ww -((draw_right_line)?1:0), 1,colors.headerbar_line);
 
@@ -3276,7 +3464,7 @@ function searchLibrary() {
             this.drawsel(gr);
             get_offset(gr);
             gr.GdiDrawText(p.s_txt.substr(offset), ui.font, colors.normal_txt, p.s_x, this.y, p.s_w2, p.s_sp, p.l);
-        } else if(!(p.s_search)) gr.GdiDrawText("篩選...", g_font.plus1, colors.normal_txt, p.s_x, this.y, p.s_w2-5, p.s_sp-1, p.l | DT_END_ELLIPSIS);
+        } else if(!(p.s_search)) gr.GdiDrawText("Filter...", g_font.plus1, colors.normal_txt, p.s_x, this.y, p.s_w2-5, p.s_sp-1, p.l | DT_END_ELLIPSIS);
         sL.drawcursor(gr);
 
         if (p.s_show > 1) {
@@ -3605,26 +3793,26 @@ function button_manager() {
                 hover: images.search_icon
             }, function() {
 				sL.activate(0,0);
-            }, "", "篩選媒體櫃樹");
+            }, "", "Filter tree");
             this.btns.cross1 = new btn(qx, qy-2, qh, qh, 3, "", "", "", {
                 normal: images.resetIcon_off,
                 hover: images.resetIcon_ov
             }, "", function() {
                 if(!sL.lbtn_down) sL.clear();
-            }, "重置篩選器");
+            }, "Reset filter");
             this.btns.cross2 = new btn(qx+2, qy-2, qh, qh, 3, "", "", "", {
                 normal: images.resetIcon_off,
                 hover: images.resetIcon_ov
             }, "", function() {
                 if(!sL.lbtn_down) sL.clear();
-            }, "重置篩選器");
+            }, "Reset filter");
             this.btns.filter = new btn(p.f_x1 - 12, sL.y, fw, p.s_sp, 5, ui.font, "", "", {
                 normal: images.settings_off,
                 hover: images.settings_hover
             }, "", function() {
                 if(!sL.lbtn_down) men.button(p.f_x1, p.s_h);
                 but.refresh(true)
-            }, "設定...");
+            }, "Settings...");
         }
 
     }
@@ -3650,7 +3838,7 @@ function menu_object() {
     }
     this.PlaylistTypeMenu = function(Menu, StartIndex) {
         var Index = StartIndex,
-            n = ["傳送到當前播放清單", "插入到當前播放清單", "新增到當前播放清單"];
+            n = ["Send to Current Playlist", "Insert in Current Playlist", "Add to Current Playlist"];
         for (i = 0; i < 3; i++) {
             this.NewMenuItem(Index, "Playlist", i + 1);
             Menu.AppendMenuItem(MF_STRING, Index, n[i]);
@@ -3662,86 +3850,86 @@ function menu_object() {
         var Index = StartIndex,
             mt = p.syncType ? 1 : 0;
 		if(!reduced){
-			Menu.AppendMenuItem(MF_STRING, 7000, "切換到篩選器");
+			Menu.AppendMenuItem(MF_STRING, 7000, "Switch to filters");
 			Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);
 
 			var menuDisplay = window.CreatePopupMenu();
 
-			menuDisplay.AppendMenuItem(MF_STRING, 7017, "標籤篩選器欄");
+			menuDisplay.AppendMenuItem(MF_STRING, 7017, "Tag switcher bar");
 			menuDisplay.CheckMenuItem(7017,p.tag_switcherbar)
-			menuDisplay.AppendMenuItem(MF_STRING, 7018, "隱藏選單按鈕");
+			menuDisplay.AppendMenuItem(MF_STRING, 7018, "Hide menu button");
 			menuDisplay.CheckMenuItem(7018,p.showFiltersTogglerBtn)
 			var searchbar = window.CreatePopupMenu();
-			searchbar.AppendMenuItem(MF_STRING, 7005, "隱藏");
-			searchbar.AppendMenuItem(MF_STRING, 7006, "只有搜尋欄");
-			searchbar.AppendMenuItem(MF_STRING, 7007, "搜尋欄 + 設定按鈕");
+			searchbar.AppendMenuItem(MF_STRING, 7005, "Hide");
+			searchbar.AppendMenuItem(MF_STRING, 7006, "Search bar only");
+			searchbar.AppendMenuItem(MF_STRING, 7007, "Search bar + settings button");
 			searchbar.CheckMenuRadioItem(7005, 7007, (p.s_show==0) ? 7005 : (p.s_show==1) ? 7006 : 7007);
-			searchbar.AppendTo(menuDisplay, MF_STRING, "搜尋欄");
+			searchbar.AppendTo(menuDisplay, MF_STRING, "Search bar");
 
 			menuDisplay.AppendMenuItem(MF_SEPARATOR, 0, 0);
 
 			var nodeStyle = window.CreatePopupMenu();
-			nodeStyle.AppendMenuItem(MF_STRING, 7010, "+/- 節點");
-			nodeStyle.AppendMenuItem(MF_STRING, 7011, "正方形節點");
-			nodeStyle.AppendMenuItem(MF_STRING, 7012, "三角形節點");
+			nodeStyle.AppendMenuItem(MF_STRING, 7010, "+/- nodes");
+			nodeStyle.AppendMenuItem(MF_STRING, 7011, "Squares nodes");
+			nodeStyle.AppendMenuItem(MF_STRING, 7012, "Triangles nodes");
 			nodeStyle.CheckMenuRadioItem(7010, 7012, (ui.node_style==0) ? 7010 : (ui.node_style==1) ? 7011 : 7012);
-			nodeStyle.AppendTo(menuDisplay, MF_STRING, "節點樣式");
+			nodeStyle.AppendTo(menuDisplay, MF_STRING, "Node style");
 
 			var lineStyle = window.CreatePopupMenu();
-			lineStyle.AppendMenuItem(MF_STRING, 7030, "無線條");
-			lineStyle.AppendMenuItem(MF_STRING, 7031, "線條在曲目上");
-			lineStyle.AppendMenuItem(MF_STRING, 7032, "線條到處可見");
+			lineStyle.AppendMenuItem(MF_STRING, 7030, "No lines");
+			lineStyle.AppendMenuItem(MF_STRING, 7031, "lines on tracks");
+			lineStyle.AppendMenuItem(MF_STRING, 7032, "lines everywhere");
 			lineStyle.CheckMenuRadioItem(7030, 7032, (ui.linestyle==0) ? 7030 : (ui.linestyle==1) ? 7032 : 7031);
-			lineStyle.AppendTo(menuDisplay, MF_STRING, "線條樣式");
+			lineStyle.AppendTo(menuDisplay, MF_STRING, "Lines style");
 
-			menuDisplay.AppendMenuItem(MF_STRING, 7009, "匯總項目");
+			menuDisplay.AppendMenuItem(MF_STRING, 7009, "Aggregate item");
 			menuDisplay.CheckMenuItem(7009,pop.show_aggregate_item)
-			menuDisplay.AppendMenuItem(MF_STRING, 7008, "顯示項目數量");
+			menuDisplay.AppendMenuItem(MF_STRING, 7008, "Show items count");
 			menuDisplay.CheckMenuItem(7008,pop.show_counts)
-			menuDisplay.AppendMenuItem(MF_STRING, 7016, "顯示游標提示");
+			menuDisplay.AppendMenuItem(MF_STRING, 7016, "Show Tooltips");
 			menuDisplay.CheckMenuItem(7016,p.tooltip)
 
-			menuDisplay.AppendTo(Menu,MF_STRING, "顯示");
+			menuDisplay.AppendTo(Menu,MF_STRING, "Display");
 
 			var rowPadding = window.CreatePopupMenu();
-			rowPadding.AppendMenuItem(MF_STRING, 7020, "增加");
-			rowPadding.AppendMenuItem(MF_STRING, 7021, "減少");
+			rowPadding.AppendMenuItem(MF_STRING, 7020, "Increase");
+			rowPadding.AppendMenuItem(MF_STRING, 7021, "Decrease");
 			rowPadding.AppendMenuItem(MF_SEPARATOR, 0, 0);
-			rowPadding.AppendMenuItem(MF_DISABLED, 0, "提示：");
-			rowPadding.AppendMenuItem(MF_DISABLED, 0, "按住SHIFT鍵，在面板上使用滑鼠滾輪！");
-			rowPadding.AppendTo(Menu, MF_STRING, "行高");
+			rowPadding.AppendMenuItem(MF_DISABLED, 0, "Tip: Hold SHIFT and use your");
+			rowPadding.AppendMenuItem(MF_DISABLED, 0, "mouse wheel over the panel!");
+			rowPadding.AppendTo(Menu, MF_STRING, "Row height");
 
 			var _panelWidth = window.CreatePopupMenu();
-			_panelWidth.AppendMenuItem(MF_STRING, 1030, "增加寬度");
-			_panelWidth.AppendMenuItem(MF_STRING, 1031, "減少寬度");
-			_panelWidth.AppendMenuItem(MF_STRING, 1033, "自定義寬度...");
-			_panelWidth.AppendMenuItem(MF_STRING, 1032, "重置");
+			_panelWidth.AppendMenuItem(MF_STRING, 1030, "Increase width");
+			_panelWidth.AppendMenuItem(MF_STRING, 1031, "Decrease width");
+			_panelWidth.AppendMenuItem(MF_STRING, 1033, "Custom width...");
+			_panelWidth.AppendMenuItem(MF_STRING, 1032, "Reset");
 
-			_panelWidth.AppendTo(Menu,MF_STRING, "面板寬度");
+			_panelWidth.AppendTo(Menu,MF_STRING, "Panel width");
 
 			var wallpaper = window.CreatePopupMenu();
-			wallpaper.AppendMenuItem(MF_STRING, 9000, "啟用");
+			wallpaper.AppendMenuItem(MF_STRING, 9000, "Enable");
 			wallpaper.CheckMenuItem(9000, properties.showwallpaper);
-			wallpaper.AppendMenuItem(MF_STRING, 9020, "模糊化");
+			wallpaper.AppendMenuItem(MF_STRING, 9020, "Blur");
 			wallpaper.CheckMenuItem(9020, properties.wallpaperblurred);
 			var wallpaper2 = window.CreatePopupMenu();
-			wallpaper2.AppendMenuItem(MF_STRING, 9021, "填滿");
+			wallpaper2.AppendMenuItem(MF_STRING, 9021, "Filling");
 			wallpaper2.CheckMenuItem(9021, properties.wallpaperdisplay==0);
-			wallpaper2.AppendMenuItem(MF_STRING, 9022, "調整圖片符合視窗大小");
+			wallpaper2.AppendMenuItem(MF_STRING, 9022, "Adjust");
 			wallpaper2.CheckMenuItem(9022, properties.wallpaperdisplay==1);
-			wallpaper2.AppendMenuItem(MF_STRING, 9023, "延展");
+			wallpaper2.AppendMenuItem(MF_STRING, 9023, "Stretch");
 			wallpaper2.CheckMenuItem(9023, properties.wallpaperdisplay==2);
-			wallpaper2.AppendTo(wallpaper,MF_STRING, "壁紙尺寸");
-			wallpaper.AppendTo(Menu,MF_STRING, "背景壁紙");
+			wallpaper2.AppendTo(wallpaper,MF_STRING, "Wallpaper size");
+			wallpaper.AppendTo(Menu,MF_STRING, "Background Wallpaper");
 
 			Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);
 
-			Menu.AppendMenuItem(MF_STRING, 7015, "自動折疊");
+			Menu.AppendMenuItem(MF_STRING, 7015, "Auto collapse");
 			Menu.CheckMenuItem(7015,pop.auto);
-			Menu.AppendMenuItem(MF_STRING, 7023, "自動展開 只有子元件");
+			Menu.AppendMenuItem(MF_STRING, 7023, "Auto expand only children");
 			Menu.CheckMenuItem(7023,pop.autoExpandSingleChild);
 		} else {
-			Menu.AppendMenuItem(MF_STRING, 7024, "設定...");
+			Menu.AppendMenuItem(MF_STRING, 7024, "Settings...");
 		}
 		Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);
         for (i = 0; i < p.menu.length; i++) {
@@ -3767,7 +3955,7 @@ function menu_object() {
         var Index = StartIndex;
         for (i = 0; i < p.f_menu.length; i++) {
             this.NewMenuItem(Index, "Filter", i + 1);
-            Menu.AppendMenuItem(MF_STRING, Index, i != p.f_menu.length ? (!i ? "無篩選" : ""+ p.f_menu[i]) : "Reset Scroll");
+            Menu.AppendMenuItem(MF_STRING, Index, i != p.f_menu.length ? (!i ? "No Filter" : ""+ p.f_menu[i]) : "Reset Scroll");
 			if(i==0) Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);
             Menu.CheckMenuItem(Index++, i < p.f_menu.length ? i == p.filter_by : p.reset);
             //if (i == p.f_menu.length - 1) Menu.AppendMenuItem(MF_SEPARATOR, 0, 0);
@@ -3825,9 +4013,9 @@ function menu_object() {
 			show_open_folder = false;
             ix = Math.round((y + sbar.delta - p.s_h - ui.row_h * 0.5) / ui.row_h);
         if (y > p.s_h && pop.tree.length > ix && ix >= 0 && pop.check_ix(pop.tree[ix], x, y, false)) {
-            menu.AppendMenuItem(MF_STRING, 7004, "設定...");
+            menu.AppendMenuItem(MF_STRING, 7004, "Settings...");
             menu.AppendMenuSeparator();
-            menu.AppendMenuItem(MF_STRING, 7006, "定位正在播放的群組");
+            menu.AppendMenuItem(MF_STRING, 7006, "Locate now playing group");
             menu.AppendMenuSeparator();
 
 			var show_collapse = false
@@ -3838,7 +4026,7 @@ function menu_object() {
 			}
 
 			if(ui.show_collapse_rclick && !pop.auto){
-				menu.AppendMenuItem(MF_STRING, 7005, "摺疊全部");
+				menu.AppendMenuItem(MF_STRING, 7005, "Collapse all");
 				menu.AppendMenuSeparator();
 			}
             if (!pop.tree[ix].sel) {
@@ -3861,8 +4049,8 @@ function menu_object() {
 				var items = p.items();
 				for (var i = 0; i < list.length; i++) items.Add(p.list[list[i]]);
 				this.metadblist_selection = items;
-				sendTo.AppendTo(menu, MF_STRING, "傳送到...");
-				sendTo.AppendMenuItem(MF_STRING, 10000, "一個新的播放清單...");
+				sendTo.AppendTo(menu, MF_STRING, "Send to...");
+				sendTo.AppendMenuItem(MF_STRING, 10000, "A new playlist...");
 				var pl_count = plman.PlaylistCount;
 				if(pl_count > 1) {
 					sendTo.AppendMenuItem(MF_SEPARATOR, 0, "");
@@ -3886,16 +4074,16 @@ function menu_object() {
             Context.BuildMenu(menu, 5000, -1);
 			if(show_open_folder && p.view_by == p.folder_view) {
 				menu.AppendMenuSeparator();
-				menu.AppendMenuItem(MF_STRING, 9999, "開啟文件夾");
+				menu.AppendMenuItem(MF_STRING, 9999, "Open Folder");
 			}
         } else showOptionsMenu(x,y,false);
 
 		if(utils.IsKeyPressed(VK_SHIFT)) {
 			menu.AppendMenuSeparator();
-			menu.AppendMenuItem(MF_STRING, 7001, "面板屬性");
-			menu.AppendMenuItem(MF_STRING, 7002, "配置...");
+			menu.AppendMenuItem(MF_STRING, 7001, "Properties");
+			menu.AppendMenuItem(MF_STRING, 7002, "Configure...");
 			menu.AppendMenuSeparator();
-			menu.AppendMenuItem(MF_STRING, 7003, "重新載入");
+			menu.AppendMenuItem(MF_STRING, 7003, "Reload");
 		}
 
         idx = menu.TrackPopupMenu(x, y);
@@ -3916,8 +4104,7 @@ function menu_object() {
 			if(pop.show_aggregate_item && ix==0) openFolder(first_item,-1);
 			else openFolder(first_item,pop.tree[ix].tr);
         } else if (idx == 10000) {
-			//fb.RunMainMenuCommand("File/New playlist");
-			fb.RunMainMenuCommand("檔案/新增播放");
+			fb.RunMainMenuCommand("File/New playlist");
 			plman.InsertPlaylistItems(plman.PlaylistCount-1, 0, this.metadblist_selection, false);
         } else if (idx >= 10000) {
 			var insert_index = plman.PlaylistItemCount(idx-10001);
@@ -3999,85 +4186,85 @@ function openFolder(item,level){
 function showSettingsMenu(x,y){
 	var menu = window.CreatePopupMenu();
 
-	menu.AppendMenuItem(MF_STRING, 7000, "切換到篩選器");
+	menu.AppendMenuItem(MF_STRING, 7000, "Switch to filters");
 	menu.AppendMenuItem(MF_SEPARATOR, 0, 0);
 
 	var menuDisplay = window.CreatePopupMenu();
 
-	menuDisplay.AppendMenuItem(MF_STRING, 7017, "標籤篩選器欄");
+	menuDisplay.AppendMenuItem(MF_STRING, 7017, "Tag switcher bar");
 	menuDisplay.CheckMenuItem(7017,p.tag_switcherbar)
-	menuDisplay.AppendMenuItem(MF_STRING, 7018, "隱藏選單按鈕");
+	menuDisplay.AppendMenuItem(MF_STRING, 7018, "Hide menu button");
 	menuDisplay.CheckMenuItem(7018,p.showFiltersTogglerBtn)
 	var searchbar = window.CreatePopupMenu();
-	searchbar.AppendMenuItem(MF_STRING, 7005, "隱藏");
-	searchbar.AppendMenuItem(MF_STRING, 7006, "只有搜尋欄");
-	searchbar.AppendMenuItem(MF_STRING, 7007, "搜尋欄 + 設定按鈕");
+	searchbar.AppendMenuItem(MF_STRING, 7005, "Hide");
+	searchbar.AppendMenuItem(MF_STRING, 7006, "Search bar only");
+	searchbar.AppendMenuItem(MF_STRING, 7007, "Search bar + settings button");
 	searchbar.CheckMenuRadioItem(7005, 7007, (p.s_show==0) ? 7005 : (p.s_show==1) ? 7006 : 7007);
-	searchbar.AppendTo(menuDisplay, MF_STRING, "搜尋欄");
+	searchbar.AppendTo(menuDisplay, MF_STRING, "Search bar");
 
 	menuDisplay.AppendMenuItem(MF_SEPARATOR, 0, 0);
 
 	var nodeStyle = window.CreatePopupMenu();
-	nodeStyle.AppendMenuItem(MF_STRING, 7010, "+/- 節點");
-	nodeStyle.AppendMenuItem(MF_STRING, 7011, "正方形節點");
-	nodeStyle.AppendMenuItem(MF_STRING, 7012, "三角形節點");
+	nodeStyle.AppendMenuItem(MF_STRING, 7010, "+/- nodes");
+	nodeStyle.AppendMenuItem(MF_STRING, 7011, "Squares nodes");
+	nodeStyle.AppendMenuItem(MF_STRING, 7012, "Triangles nodes");
 	nodeStyle.CheckMenuRadioItem(7010, 7012, (ui.node_style==0) ? 7010 : (ui.node_style==1) ? 7011 : 7012);
-	nodeStyle.AppendTo(menuDisplay, MF_STRING, "節點樣式");
+	nodeStyle.AppendTo(menuDisplay, MF_STRING, "Node style");
 
 	var lineStyle = window.CreatePopupMenu();
-	lineStyle.AppendMenuItem(MF_STRING, 7030, "無線條");
-	lineStyle.AppendMenuItem(MF_STRING, 7031, "線條在曲目上");
-	lineStyle.AppendMenuItem(MF_STRING, 7032, "線條到處可見");
+	lineStyle.AppendMenuItem(MF_STRING, 7030, "No lines");
+	lineStyle.AppendMenuItem(MF_STRING, 7031, "lines on tracks");
+	lineStyle.AppendMenuItem(MF_STRING, 7032, "lines everywhere");
 	lineStyle.CheckMenuRadioItem(7030, 7032, (ui.linestyle==0) ? 7030 : (ui.linestyle==1) ? 7032 : 7031);
-	lineStyle.AppendTo(menuDisplay, MF_STRING, "線條樣式");
+	lineStyle.AppendTo(menuDisplay, MF_STRING, "Lines style");
 
-	menuDisplay.AppendMenuItem(MF_STRING, 7009, "匯總項目");
+	menuDisplay.AppendMenuItem(MF_STRING, 7009, "Aggregate item");
 	menuDisplay.CheckMenuItem(7009,pop.show_aggregate_item)
-	menuDisplay.AppendMenuItem(MF_STRING, 7008, "顯示項目數量");
+	menuDisplay.AppendMenuItem(MF_STRING, 7008, "Show items count");
 	menuDisplay.CheckMenuItem(7008,pop.show_counts)
-	menuDisplay.AppendMenuItem(MF_STRING, 7016, "顯示游標提示");
+	menuDisplay.AppendMenuItem(MF_STRING, 7016, "Show Tooltips");
 	menuDisplay.CheckMenuItem(7016,p.tooltip)
 
 	menuDisplay.AppendMenuItem(MF_SEPARATOR, 0, 0);
 
-	menuDisplay.AppendTo(menu,MF_STRING, "顯示");
+	menuDisplay.AppendTo(menu,MF_STRING, "Display");
 
 	var rowPadding = window.CreatePopupMenu();
-	rowPadding.AppendMenuItem(MF_STRING, 7020, "增加");
-	rowPadding.AppendMenuItem(MF_STRING, 7021, "減少");
+	rowPadding.AppendMenuItem(MF_STRING, 7020, "Increase");
+	rowPadding.AppendMenuItem(MF_STRING, 7021, "Decrease");
 	rowPadding.AppendMenuItem(MF_SEPARATOR, 0, 0);
-	rowPadding.AppendMenuItem(MF_DISABLED, 0, "提示：");
-	rowPadding.AppendMenuItem(MF_DISABLED, 0, "按住SHIFT鍵，在面板上使用滑鼠滾輪！");
-	rowPadding.AppendTo(menu, MF_STRING, "行高");
+	rowPadding.AppendMenuItem(MF_DISABLED, 0, "Tip: Hold SHIFT and use your");
+	rowPadding.AppendMenuItem(MF_DISABLED, 0, "mouse wheel over the panel!");
+	rowPadding.AppendTo(menu, MF_STRING, "Row height");
 
 	var _panelWidth = window.CreatePopupMenu();
-	_panelWidth.AppendMenuItem(MF_STRING, 1030, "增加寬度");
-	_panelWidth.AppendMenuItem(MF_STRING, 1031, "減少寬度");
-	_panelWidth.AppendMenuItem(MF_STRING, 1033, "自定義寬度...");
-	_panelWidth.AppendMenuItem(MF_STRING, 1032, "重置");
-	_panelWidth.AppendTo(menu,MF_STRING, "面板寬度");
+	_panelWidth.AppendMenuItem(MF_STRING, 1030, "Increase width");
+	_panelWidth.AppendMenuItem(MF_STRING, 1031, "Decrease width");
+	_panelWidth.AppendMenuItem(MF_STRING, 1033, "Custom width...");
+	_panelWidth.AppendMenuItem(MF_STRING, 1032, "Reset");
+	_panelWidth.AppendTo(menu,MF_STRING, "Panel width");
 
 	var wallpaper = window.CreatePopupMenu();
-	wallpaper.AppendMenuItem(MF_STRING, 9000, "啟用");
+	wallpaper.AppendMenuItem(MF_STRING, 9000, "Enable");
 	wallpaper.CheckMenuItem(9000, properties.showwallpaper);
-	wallpaper.AppendMenuItem(MF_STRING, 9020, "模糊化");
+	wallpaper.AppendMenuItem(MF_STRING, 9020, "Blur");
 	wallpaper.CheckMenuItem(9020, properties.wallpaperblurred);
 
 	var wallpaper2 = window.CreatePopupMenu();
-	wallpaper2.AppendMenuItem(MF_STRING, 9021, "填滿");
+	wallpaper2.AppendMenuItem(MF_STRING, 9021, "Filling");
 	wallpaper2.CheckMenuItem(9021, properties.wallpaperdisplay==0);
-	wallpaper2.AppendMenuItem(MF_STRING, 9022, "調整圖片符合視窗大小");
+	wallpaper2.AppendMenuItem(MF_STRING, 9022, "Adjust");
 	wallpaper2.CheckMenuItem(9022, properties.wallpaperdisplay==1);
-	wallpaper2.AppendMenuItem(MF_STRING, 9023, "延展");
+	wallpaper2.AppendMenuItem(MF_STRING, 9023, "Stretch");
 	wallpaper2.CheckMenuItem(9023, properties.wallpaperdisplay==2);
-	wallpaper2.AppendTo(wallpaper,MF_STRING, "壁紙尺寸");
-	wallpaper.AppendTo(menu,MF_STRING, "背景壁紙");
+	wallpaper2.AppendTo(wallpaper,MF_STRING, "Wallpaper size");
+	wallpaper.AppendTo(menu,MF_STRING, "Background Wallpaper");
 
 	menu.AppendMenuItem(MF_SEPARATOR, 0, 0);
 
-	menu.AppendMenuItem(MF_STRING, 7015, "自動折疊");
+	menu.AppendMenuItem(MF_STRING, 7015, "Auto collapse");
 	menu.CheckMenuItem(7015,pop.auto);
-	menu.AppendMenuItem(MF_STRING, 7023, "自動折疊 只有子元件");
+	menu.AppendMenuItem(MF_STRING, 7023, "Auto expand only children");
 	menu.CheckMenuItem(7023,pop.autoExpandSingleChild);
 
 	idx = menu.TrackPopupMenu(x, y);
@@ -4175,7 +4362,7 @@ function showSettingsMenu(x,y){
 	} else if(idx==1032){
 		libraryfilter_width.setDefault();
 	} else if(idx==1033){
-		libraryfilter_width.userInputValue("以像素為單位輸入所需的寬度。\n預設寬度為210px。\n最小寬度：100px。 最大寬度：900px", "自定義左側選單寬度");
+		libraryfilter_width.userInputValue("Enter the desired width in pixel.\nDefault width is 210px.\nMinimum width: 100px. Maximum width: 900px", "Custom left menu width");
 	} else if(idx==9000){
 		toggleWallpaper();
 	} else if(idx==9020){
@@ -4219,14 +4406,14 @@ function showOptionsMenu(x,y,reduced){
 
 	menu.AppendMenuSeparator();
 	FilterEndIndex = men.FilterMenu(menuFilter, FilterStartIndex);
-	menuFilter.AppendTo(menu, (p.filter_by==0)?MF_STRING:MF_CHECKED, "通過...篩選");
+	menuFilter.AppendTo(menu, (p.filter_by==0)?MF_STRING:MF_CHECKED, "Filter by");
 
 	if(utils.IsKeyPressed(VK_SHIFT)) {
 		menu.AppendMenuSeparator();
-		menu.AppendMenuItem(MF_STRING, 7001, "面板屬性");
-		menu.AppendMenuItem(MF_STRING, 7002, "配置...");
+		menu.AppendMenuItem(MF_STRING, 7001, "Properties");
+		menu.AppendMenuItem(MF_STRING, 7002, "Configure...");
 		menu.AppendMenuSeparator();
-		menu.AppendMenuItem(MF_STRING, 7003, "重新載入");
+		menu.AppendMenuItem(MF_STRING, 7003, "Reload");
 	}
 
 	idx = menu.TrackPopupMenu(x, y);
@@ -4658,7 +4845,7 @@ function on_drag_over(action, x, y, mask) {
 		pman.on_mouse("move", x, y);
 	};
 	try{
-		action.Text = "Insert";
+		//action.Text = "Insert";
 	} catch(e){}
     p.m_x = x;
     p.m_y = y;
@@ -4916,10 +5103,6 @@ function on_notify_data(name, info) {
 			on_font_changed();
 			window.Repaint();
 		break;
-		case "enable_screensaver":
-			globalProperties.enable_screensaver = info;
-			window.SetProperty("GLOBAL enable screensaver", globalProperties.enable_screensaver);
-		break;
 		case"library_dark_theme":
 			properties.darklayout = info;
 			window.SetProperty("_DISPLAY: Dark layout", properties.darklayout);
@@ -5014,7 +5197,8 @@ function on_init() {
 	get_images();
 	g_tooltip = new oTooltip('ui');
 	g_cursor = new oCursor();
-	g_resizing = new Resizing("libraryfilter",false,true,properties.TagSwitcherBarHeight);
+	g_tagswitcherbar = new oTagSwitcherBar();	
+	g_resizing = new Resizing("libraryfilter",false,true,g_tagswitcherbar.default_height);
 	ui = new userinterface();
 	sbar = new scrollbar();
 	p = new panel_operations();
@@ -5030,7 +5214,7 @@ function on_init() {
 	timer = new oTimers();
 	timer.lib('on_init');
 
-	g_tagswitcherbar = new oTagSwitcherBar();
+
 
 	if (timer.init === 0) {
 		lib.get_library();

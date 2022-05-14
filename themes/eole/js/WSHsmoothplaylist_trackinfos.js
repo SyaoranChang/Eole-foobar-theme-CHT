@@ -17,7 +17,6 @@
     expandBySingleClick: window.GetProperty("BIG:expandBySingleClick", true),
     minimode_dark_theme: window.GetProperty("BIG:minimode_dark_theme", true),
     library_dark_theme: window.GetProperty("BIG:library_dark_theme", false),
-    screensaver_dark_theme: window.GetProperty("BIG:screensaver_dark_theme", false),
     playlists_dark_theme: window.GetProperty("BIG:playlists_dark_theme", false),
     bio_dark_theme: window.GetProperty("BIG:bio_dark_theme", false),
 	bio_stick2darklayout: window.GetProperty("BIG:bio_stick2darklayout",true),
@@ -74,7 +73,6 @@ var properties_mini = {
 	darklayout: window.GetProperty("MINI:darklayout", true),
     minimode_dark_theme: window.GetProperty("MINI:minimode_dark_theme", true),
     library_dark_theme: window.GetProperty("MINI:library_dark_theme", false),
-    screensaver_dark_theme: window.GetProperty("MINI:screensaver_dark_theme", false),
     playlists_dark_theme: window.GetProperty("MINI:playlists_dark_theme", false),
     bio_dark_theme: window.GetProperty("MINI:bio_dark_theme", false),
 	bio_stick2darklayout: window.GetProperty("MINI:bio_stick2darklayout",false),
@@ -1553,6 +1551,7 @@ oBrowser = function(name) {
 	this.rating_rowId = -1;
 	this.dont_scroll_to_focus = false;
 	this.expanded_group = -1;
+	this.playlistId2row = Array();
     this.launch_populate = function() {
         var launch_timer = setTimeout(function(){
             // populate browser with items
@@ -1641,7 +1640,7 @@ oBrowser = function(name) {
 		var tot = this.rows.length;
 		for(r = 0; r < tot; r++) {
 			if(this.rows[r].type != 99)
-				this.rows[r].selected = plman.IsPlaylistItemSelected(g_active_playlist, this.rows[r].playlistTrackId);
+				this.rows[r].selected = plman.IsPlaylistItemSelected(g_active_playlist, this.rows[r].playlistTrackId_original);
 				if(this.rows[r].selected)
 					this.groups[this.rows[r].albumId].selected = true;
 		}
@@ -1649,6 +1648,7 @@ oBrowser = function(name) {
 
     this.showNowPlaying = function(flash_nowplaying) {
 		var flash_nowplaying = typeof flash_nowplaying !== 'undefined' ? flash_nowplaying : true;
+
         if(fb.IsPlaying) {
 			g_filterbox.clearInputbox();
             try {
@@ -1697,7 +1697,6 @@ oBrowser = function(name) {
 
     this.showFocusedItem = function(g_focus_row) {
 		g_focus_row = typeof g_focus_row !== 'undefined' ? g_focus_row : this.getOffsetFocusItem(g_focus_id);
-
        // if(g_focus_row < scroll / properties.rowHeight || g_focus_row > scroll / properties.rowHeight + this.totalRowsVis) {
 		   if(properties.showGroupHeaders) {
 				scroll_to_track = (g_focus_row - Math.floor(this.totalRowsVis/4)) * properties.rowHeight;
@@ -1772,11 +1771,32 @@ oBrowser = function(name) {
             return -1;
         };
     };
-
+    this.getRowIdfromPlaylistTrackId = function(valeur) { // fixed!
+        if(valeur < 0) {
+            return -1;
+        } else {
+            var diff = 0;
+			var albumId = this.getAlbumIdfromTrackId(valeur);
+			var return_row = this.groups[albumId].rowId;
+			var fin = this.rows.length-1;//rowId + this.groups[albumId].count - 1;
+            while(return_row <= fin){
+				while(this.rows[return_row].type != 0) {
+					return_row = return_row+1;
+				};				
+				if(valeur == this.rows[return_row].playlistTrackId_original) {
+					return return_row;
+				} else return_row = return_row+1;
+            };
+            return -1;
+        };
+    };
     this.getOffsetFocusItem = function(fid) { // fixed!
         var row_idx = 0;
 
         if(fid > -1) {
+			if(!(properties.autocollapse && properties.showGroupHeaders)) return this.playlistId2row[fid];
+			
+			//return this.getRowIdfromPlaylistTrackId(fid);
             if(properties.showGroupHeaders) {
                 // fid = no item dans la playlist (focus id)
                 // this.rows[] => albumId
@@ -1868,7 +1888,7 @@ oBrowser = function(name) {
         var g = 0, t = 0, r = 0, j = 0;
         var arr = [];
         var tr = [];
-
+		
         var total = this.list.Count;
         this.totaltracks = 0;
 		if(plman.PlaylistItemCount(g_active_playlist) > 0) {
@@ -1903,6 +1923,7 @@ oBrowser = function(name) {
 								this.rows[r] = new Object();
 								this.rows[r].selected = false;
 								this.rows[r].type = 99; // extra row at bottom of the album/group
+								this.rows[r].albumId = g;
 								r++;
 							};
 						}
@@ -1927,9 +1948,10 @@ oBrowser = function(name) {
 								this.rows[r].albumId = g;
 								this.rows[r].albumTrackId = 0;
 								this.rows[r].playlistTrackId = this.groups[g].start;
+								this.rows[r].playlistTrackId_original = i;								
 								this.rows[r].groupkey = this.groups[g].groupkey;;
 								this.rows[r].groupkeysplit = this.groups[g].groupkeysplit;
-								this.rows[r].selected = plman.IsPlaylistItemSelected(g_active_playlist, this.rows[r].playlistTrackId);
+								this.rows[r].selected = plman.IsPlaylistItemSelected(g_active_playlist, this.rows[r].playlistTrackId_original);
 								r++;
 							};
 							this.groups[g].headerTotalRows = properties.groupHeaderRowsNumber;
@@ -1938,13 +1960,15 @@ oBrowser = function(name) {
 							this.rows[r] = new Object();
 							this.rows[r].type = 0; // track
 							this.rows[r].metadb = this.list[this.groups[g].start];
+							this.playlistId2row[i] = r;
 							this.rows[r].albumId = g;
 							this.rows[r].albumTrackId = 0;
 							this.rows[r].playlistTrackId = this.groups[g].start;
+							this.rows[r].playlistTrackId_original = i;							
 							this.rows[r].groupkey = this.groups[g].groupkey;
 							this.rows[r].groupkeysplit = this.groups[g].groupkeysplit;
 							this.rows[r].tracktype = TrackType(this.rows[r].metadb);
-							this.rows[r].selected = plman.IsPlaylistItemSelected(g_active_playlist, this.rows[r].playlistTrackId);
+							this.rows[r].selected = plman.IsPlaylistItemSelected(g_active_playlist, this.rows[r].playlistTrackId_original);
 							//if(this.rows[r].selected)
 								//this.groups[g-1].selected = true;
 							this.rows[r].rating = -1;
@@ -1962,14 +1986,16 @@ oBrowser = function(name) {
 					if(!(properties.autocollapse && properties.showGroupHeaders)) {
 						this.rows[r] = new Object();
 						this.rows[r].type = 0; // track
-						this.rows[r].metadb = this.list[this.groups[g-1].start + j];
+						this.rows[r].metadb = this.list[i];
+						this.playlistId2row[i] = r;
 						this.rows[r].albumId = g-1;
 						this.rows[r].albumTrackId = j;
 						this.rows[r].playlistTrackId = this.groups[g-1].start + j;
+						this.rows[r].playlistTrackId_original = i;						
 						this.rows[r].groupkey = this.groups[g-1].groupkey;
 						this.rows[r].groupkeysplit = this.groups[g-1].groupkeysplit;
 						this.rows[r].tracktype = TrackType(this.rows[r].metadb);
-						this.rows[r].selected = plman.IsPlaylistItemSelected(g_active_playlist, this.rows[r].playlistTrackId);
+						this.rows[r].selected = plman.IsPlaylistItemSelected(g_active_playlist, this.rows[r].playlistTrackId_original);
 						//if(this.rows[r].selected)
 							//this.groups[g-1].selected = true;
 						this.rows[r].rating = -1;
@@ -1978,7 +2004,7 @@ oBrowser = function(name) {
 					}
                     t++;
                 };
-            };
+            }
 		};
 
         this.rowsCount = r;
@@ -1989,70 +2015,6 @@ oBrowser = function(name) {
 		if(brw.groups.length==1) {
 			this.expand_group(0);
 		}
-    };
-    this.setList_nolist = function(finalize_groups) {
-		var finalize_groups = typeof finalize_groups !== 'undefined' ? finalize_groups : false;
-        this.rows_new = [];
-        var r = 0, i = 0, j = 0, m = 0, n = 0, p = 0, r_beggining = 0;
-        var headerTotalRows = properties.groupHeaderRowsNumber;
-
-        var end = this.groups.length;
-        for(i = 0; i < end; i++) {
-
-			if(finalize_groups) this.groups[i].finalize(this.groups[i].count, this.groups[i].tracks);
-
-			r_beggining = r;
-			if(properties.showGroupHeaders) {
-				for(k=0; k < headerTotalRows; k++) {
-					this.rows_new[r] = new Object();
-					this.rows_new[r].type = k + 1; // 1st line of group header
-					this.rows_new[r].metadb = this.groups[i].metadb;
-					this.rows_new[r].albumId = i;
-					this.rows_new[r].albumTrackId = 0;
-					this.rows_new[r].playlistTrackId = this.groups[i].start;
-					this.rows_new[r].groupkey = this.groups[i].groupkey;
-					this.rows_new[r].groupkeysplit = this.groups[i].groupkeysplit;
-					this.rows_new[r].selected = plman.IsPlaylistItemSelected(g_active_playlist, this.rows[this.groups[i].rowId + k].playlistTrackId);
-					r++;
-				};
-			};
-
-            if(!(this.groups[i].collapsed && properties.showGroupHeaders)) {
-                // tracks
-                m = this.groups[i].count;
-                for(j = 0; j < m; j++) {
-                    this.rows_new[r] = new Object();
-                    this.rows_new[r].type = 0; // track
-                    this.rows_new[r].metadb = this.rows[this.groups[i].rowId + this.groups[i].headerTotalRows + j].metadb;  //this.list[this.groups[i].start + j];
-                    this.rows_new[r].albumId = i;
-                    this.rows_new[r].albumTrackId = j;
-                    this.rows_new[r].playlistTrackId = this.groups[i].start + j;
-                    this.rows_new[r].groupkey = this.groups[i].groupkey;
-					this.rows_new[r].groupkeysplit = this.groups[i].groupkeysplit;
-                    this.rows_new[r].tracktype = TrackType(this.rows[this.groups[i].rowId + this.groups[i].headerTotalRows + j]);
-					this.rows_new[r].selected = plman.IsPlaylistItemSelected(g_active_playlist, this.rows[this.groups[i].rowId + this.groups[i].headerTotalRows + j].playlistTrackId);
-					if(this.rows_new[r].selected)
-						this.groups[i].selected = true;
-                    this.rows_new[r].rating = -1;
-                    r++;
-                };
-            };
-
-			this.groups[i].rowId = r_beggining;
-
-			if(properties.showGroupHeaders)
-				this.groups[i].headerTotalRows = headerTotalRows;
-			else this.groups[i].headerTotalRows = 0;
-
-			p = this.groups[i].rowsToAdd;
-			for(n = 0; n < p; n++) {
-				this.rows_new[r] = new Object();
-				this.rows_new[r].selected = false;
-				this.rows_new[r].type = 99; // extra row at bottom of the album/group
-				r++;
-			};
-        };
-        this.rowsCount = r;
     };
     this.setList = function(finalize_groups) {
 		var finalize_groups = typeof finalize_groups !== 'undefined' ? finalize_groups : false;
@@ -2075,9 +2037,10 @@ oBrowser = function(name) {
 					this.rows[r].albumId = i;
 					this.rows[r].albumTrackId = 0;
 					this.rows[r].playlistTrackId = this.groups[i].start;
+					this.rows[r].playlistTrackId_original = this.groups[i].start;						
 					this.rows[r].groupkey = this.groups[i].groupkey;
 					this.rows[r].groupkeysplit = this.groups[i].groupkeysplit;
-					this.rows[r].selected = plman.IsPlaylistItemSelected(g_active_playlist, this.rows[r].playlistTrackId);
+					this.rows[r].selected = plman.IsPlaylistItemSelected(g_active_playlist, this.rows[r].playlistTrackId_original);
 					r++;
 				};
 			};
@@ -2089,13 +2052,15 @@ oBrowser = function(name) {
                     this.rows[r] = new Object();
                     this.rows[r].type = 0; // track
                     this.rows[r].metadb = this.list[this.groups[i].start + j];
+					this.playlistId2row[this.groups[i].start + j] = r;
                     this.rows[r].albumId = i;
                     this.rows[r].albumTrackId = j;
                     this.rows[r].playlistTrackId = this.groups[i].start + j;
+					this.rows[r].playlistTrackId_original = this.groups[i].start + j;					
                     this.rows[r].groupkey = this.groups[i].groupkey;
 					this.rows[r].groupkeysplit = this.groups[i].groupkeysplit;
                     this.rows[r].tracktype = TrackType(this.rows[r].metadb);
-					this.rows[r].selected = plman.IsPlaylistItemSelected(g_active_playlist, this.rows[r].playlistTrackId);
+					this.rows[r].selected = plman.IsPlaylistItemSelected(g_active_playlist, this.rows[r].playlistTrackId_original);
 					if(this.rows[r].selected)
 						this.groups[i].selected = true;
                     this.rows[r].rating = -1;
@@ -2108,6 +2073,7 @@ oBrowser = function(name) {
 				this.rows[r] = new Object();
 				this.rows[r].selected = false;
 				this.rows[r].type = 99; // extra row at bottom of the album/group
+				this.rows[r].albumId = i;
 				r++;
 			};
         };
@@ -2117,6 +2083,7 @@ oBrowser = function(name) {
     this.populate = function(is_first_populate,call_id, set_active_playlist) {
 		var set_active_playlist = typeof set_active_playlist !== 'undefined' ? set_active_playlist : true;
         if(this.list) this.list = undefined;
+        this.playlistId2row.splice(0, this.playlistId2row.length);		
 		if(this.playlist_on_next_populate>-1){
 			g_active_playlist = this.playlist_on_next_populate;
 			this.playlist_on_next_populate = -1;
@@ -2687,7 +2654,7 @@ oBrowser = function(name) {
                                     var ay_2 = ay + ah_1 - 2;
                                     var ah_2 = ah - Math.floor(ah /2);
 
-                                    if(this.nowplaying && this.rows[i].playlistTrackId == this.nowplaying.PlaylistItemIndex){ // now playing track
+                                    if(this.nowplaying && this.rows[i].playlistTrackId_original == this.nowplaying.PlaylistItemIndex){ // now playing track
 
 										this.groups[this.rows[i].albumId].isPlaying = true;
 										this.isPlayingIdx = this.rows[i].albumId;
@@ -2783,7 +2750,7 @@ oBrowser = function(name) {
 													};
 													pt.DrawImage(this.groups[this.rows[i].albumId].g_wallpaperImg, 0, 0, total_size+15,  ah, 0, 0, this.groups[this.rows[i].albumId].g_wallpaperImg.Width, ah);
 													pt.FillSolidRect(0, 0, total_size+15, ah,colors.albumartprogressbar_overlay)
-
+													pt.SetTextRenderingHint(5);
 													pt.DrawString(track_time_part, g_font.normal, colors.albumartprogressbar_txt, 0, 1, total_size+6, ah_1, 554696704);
 												playingText.ReleaseGraphics(pt);
 
@@ -3006,7 +2973,7 @@ oBrowser = function(name) {
                                 } else {
 
                                     // calc text part width + dtaw text
-                                    if(this.nowplaying && this.rows[i].playlistTrackId == this.nowplaying.PlaylistItemIndex) { // now playing track
+                                    if(this.nowplaying && this.rows[i].playlistTrackId_original == this.nowplaying.PlaylistItemIndex) { // now playing track
 										this.groups[this.rows[i].albumId].isPlaying = true;
 										this.isPlayingIdx = this.rows[i].albumId;
 										if(cNowPlaying.flashEnable && cNowPlaying.flash){
@@ -3131,7 +3098,7 @@ oBrowser = function(name) {
 													};
 													pt.DrawImage(this.groups[this.rows[i].albumId].g_wallpaperImg, 0, 0, total_size+15,  ah, 0, 0, this.groups[this.rows[i].albumId].g_wallpaperImg.Width, ah);
 													pt.FillSolidRect(0, 0, total_size+15, ah,colors.albumartprogressbar_overlay)
-
+													pt.SetTextRenderingHint(5);
 													pt.DrawString(track_time_part, g_font.normal, colors.albumartprogressbar_txt, 0, 0, total_size+6, ah, 554696704);
 												playingText.ReleaseGraphics(pt);
 												var progress_x = ax+22-properties.track_gradient_size
@@ -3485,7 +3452,7 @@ oBrowser = function(name) {
 							}							
                             break;
                         case (rowType == 0):                    // ----------------> track row
-                            var playlistTrackId = this.rows[this.activeRow].playlistTrackId;
+                            var playlistTrackId = this.rows[this.activeRow].playlistTrackId_original;
                             if(utils.IsKeyPressed(VK_SHIFT)) {
                                 if(g_focus_id != playlistTrackId) {
                                     if (this.SHIFT_start_id != null) {
@@ -3559,7 +3526,7 @@ oBrowser = function(name) {
                             //var playlistTrackId = this.rows[this.activeRow].playlistTrackId;
                             break;
                         case (rowType == 0):                    // ----------------> track row
-                            var playlistTrackId = this.rows[this.activeRow].playlistTrackId;
+                            var playlistTrackId = this.rows[this.activeRow].playlistTrackId_original;
                             if(!utils.IsKeyPressed(VK_SHIFT) && !utils.IsKeyPressed(VK_CONTROL)) {
                                 if(plman.IsPlaylistItemSelected(g_active_playlist, playlistTrackId)) {
                                     if(this.metadblist_selection.Count > 1 && !this.track_rating) {
@@ -3623,11 +3590,10 @@ oBrowser = function(name) {
                             break;
                         case (rowType == 0): // track
 							plman.FlushPlaybackQueue();
-
 							plman.PlayingPlaylist = g_active_playlist;
-							plman.SetPlaylistFocusItem(g_active_playlist,this.rows[this.activeRow].playlistTrackId);
+							plman.SetPlaylistFocusItem(g_active_playlist,this.rows[this.activeRow].playlistTrackId_original);
 							focus_changes.collapse = true;
-							plman.AddPlaylistItemToPlaybackQueue(g_active_playlist, this.rows[this.activeRow].playlistTrackId);
+							plman.AddPlaylistItemToPlaybackQueue(g_active_playlist, this.rows[this.activeRow].playlistTrackId_original);
 							if(fb.IsPaused || fb.IsPlaying) fb.Next();
 							else fb.Play();
 							//previous_active_playlist = plman.ActivePlaylist;
@@ -3664,7 +3630,7 @@ oBrowser = function(name) {
 								timers.showPlaylistManager = setInterval(pman.showPanel, 25);
 							};
 							var items = plman.GetPlaylistSelectedItems(g_active_playlist);
-							if(this.activeRow>-1 && this.rows[this.activeRow].type==2 || this.rows[this.activeRow].type==1){
+							if(this.activeRow>-1 && (this.rows[this.activeRow].type==2 || this.rows[this.activeRow].type==1)){
 								album_info=this.rows[this.activeRow].groupkeysplit;
 								if(items.Count>1) {
 									var line1 = "Dragging";
@@ -3699,7 +3665,8 @@ oBrowser = function(name) {
 								g_tooltip.Deactivate();
 								on_drag_over(null, x, y, null);
 								var items = plman.GetPlaylistSelectedItems(g_active_playlist);
-								if(this.activeRow>-1 && this.rows[this.activeRow].type==2 || this.rows[this.activeRow].type==1){
+
+								if(this.activeRow>-1 && (this.rows[this.activeRow].type==2 || this.rows[this.activeRow].type==1)){
 									album_info=this.rows[this.activeRow].groupkeysplit;
 									if(items.Count>1) {
 										var line1 = "Dragging";
@@ -5588,6 +5555,7 @@ function on_script_unload() {
 
 //=================================================// Keyboard Callbacks
 function on_key_up(vkey) {
+	//console.log("g_focus_row"+g_focus_row+"  getRowIdfromPlaylistTrackId"+brw.getRowIdfromPlaylistTrackId(g_focus_id)); 
     if(cSettings.visible) {
 
     } else {
@@ -5613,7 +5581,8 @@ function vk_up() {
     var scrollstep = 1;
     var new_focus_id = 0, new_row = 0;
 
-    new_row = g_focus_row - scrollstep;
+    //new_row = g_focus_row - scrollstep;
+	new_row = brw.getOffsetFocusItem(g_focus_id) - scrollstep; //brw.getRowIdfromPlaylistTrackId(g_focus_id) - scrollstep;
     if(new_row < 0) {
         if(brw.groups[0].collapsed) {
             new_row = 0;
@@ -5629,6 +5598,7 @@ function vk_up() {
         cScrollBar.timerID && clearTimeout(cScrollBar.timerID);
         cScrollBar.timerID = false;
     } else {
+		
         switch(brw.rows[new_row].type) {
             case 0: // track row
                 // RAS
@@ -5647,10 +5617,11 @@ function vk_up() {
         };
     };
     if(new_row >= 0) {
+			
         while(brw.rows[new_row].type == 99) {
             if(new_row > 0) new_row -= 1;
         };
-        new_focus_id = brw.rows[new_row].playlistTrackId;
+        new_focus_id = brw.rows[new_row].playlistTrackId_original;
         plman.ClearPlaylistSelection(g_active_playlist);
         plman.SetPlaylistSelectionSingle(g_active_playlist, new_focus_id, true);
         plman.SetPlaylistFocusItem(g_active_playlist, new_focus_id);
@@ -5666,7 +5637,8 @@ function vk_up() {
 function vk_down() {
     var scrollstep = 1;
     var new_focus_id = 0, new_row = 0;	
-    new_row = g_focus_row + scrollstep;
+    //new_row = g_focus_row + scrollstep;
+	new_row = brw.getOffsetFocusItem(g_focus_id) + 1; //new_row = brw.getRowIdfromPlaylistTrackId(g_focus_id) + 1;
     if(new_row > brw.rowsCount - 1) {
         new_row = brw.rowsCount - 1;
         if(brw.groups[brw.rows[new_row].albumId].collapsed) {
@@ -5677,6 +5649,8 @@ function vk_down() {
         cScrollBar.timerID && clearTimeout(cScrollBar.timerID);
         cScrollBar.timerID = false;
     } else {
+		//console.log("new_row"+new_row+" g_focus_id"+g_focus_id+" brw.row lenght"+brw.rows.length+" brw.rows[new_row].albumId"+brw.rows[new_row].albumId+" brw.rows[new_row].type"+brw.rows[new_row].type+"brw.groups[brw.rows[new_row]"+brw.groups[brw.rows[new_row]]+"brw.groups length"+brw.groups.length+" brw.groups[new_row]"+brw.groups[new_row].collapsed)		
+		if(typeof brw.rows[new_row] == 'undefined') return;
         switch(brw.rows[new_row].type) {
             case 0: // track row
                 // RAS
@@ -5713,10 +5687,11 @@ function vk_down() {
         };
     };
     if(new_row < brw.rowsCount) {
+		
         while(brw.rows[new_row].type == 99) {
             if(new_row < brw.rowsCount - 1) new_row += 1;
         };
-        new_focus_id = brw.rows[new_row].playlistTrackId;
+        new_focus_id = brw.rows[new_row].playlistTrackId_original;
         plman.ClearPlaylistSelection(g_active_playlist);
         plman.SetPlaylistSelectionSingle(g_active_playlist, new_focus_id, true);
         plman.SetPlaylistFocusItem(g_active_playlist, new_focus_id);
@@ -6563,7 +6538,7 @@ function checkMediaLibrayPlaylist() {
     var isMediaLibraryFound = false;
     var total = plman.PlaylistCount;
     for (var i = 0; i < total; i++) {
-        if(plman.GetPlaylistName(i) == "Media Library") {
+        if(plman.GetPlaylistName(i) == globalProperties.media_library) {
             var mediaLibraryIndex = i;
             isMediaLibraryFound = true;
             break;
@@ -6574,8 +6549,8 @@ function checkMediaLibrayPlaylist() {
         // > sort: sort string expression.
         // > flags: 1 - always sort.
         // > boolean CreateAutoPlaylist(idx, name, query, sort = "", flags = 0);
-        plman.CreateAutoPlaylist(total, "Media Library", "%path% PRESENT", "%album artist% | $if(%album%,%date%,'9999') | %album% | %discnumber% | %tracknumber% | %title%", 1);
-        //plman.CreateAutoPlaylist(total, "Media Library", "%album% PRESENT", "%album artist% | %date% | %album% | %discnumber% | %tracknumber% | %title%", 1);
+        plman.CreateAutoPlaylist(total, globalProperties.media_library, "%path% PRESENT", "%album artist% | $if(%album%,%date%,'9999') | %album% | %discnumber% | %tracknumber% | %title%", 1);
+        //plman.CreateAutoPlaylist(total, globalProperties.media_library, "%album% PRESENT", "%album artist% | %date% | %album% | %discnumber% | %tracknumber% | %title%", 1);
         // Move it to the top
         plman.MovePlaylist(total, 0);
     } else if(mediaLibraryIndex > 0) {
@@ -6689,10 +6664,6 @@ function on_notify_data(name, info) {
 			globalProperties.fontAdjustement = info;
 			window.SetProperty("GLOBAL Font Adjustement", globalProperties.fontAdjustement);
 			on_font_changed();
-		break;
-		case "enable_screensaver":
-			globalProperties.enable_screensaver = info;
-			window.SetProperty("GLOBAL enable screensaver", globalProperties.enable_screensaver);
 		break;
         case "FocusOnNowPlayingForce":
         case "FocusOnNowPlaying":
@@ -7008,8 +6979,8 @@ function on_drag_over(action, x, y, mask) {
     g_dragndrop_bottom = false;
     brw.on_mouse("drag_over", x, y);
 	try{
-		if(brw.drag_tracks) action.Text = "Move";
-		else action.Text = "Insert";
+		//if(brw.drag_tracks) action.Text = "Move";
+		//else action.Text = "Insert";
 	} catch(e){}
 	if(scroll > 0 && y < brw.y + ((properties.doubleRowText)?properties.rowHeight:properties.rowHeight*2)) {
 		if(!brw.buttonclicked) {

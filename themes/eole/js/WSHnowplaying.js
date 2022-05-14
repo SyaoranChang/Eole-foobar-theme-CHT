@@ -1,4 +1,4 @@
-﻿var colors = {};
+var colors = {};
 var properties = {
 	panelName: 'WSHcoverpanel',
     enableDiskCache: window.GetProperty("COVER Disk Cache", true),
@@ -9,7 +9,6 @@ var properties = {
 	darklayout: window.GetProperty("_DISPLAY: Main layout:Dark", true),
     minimode_dark_theme: window.GetProperty("MINIMODE dark theme", true),
     library_dark_theme: window.GetProperty("LIBRARY dark theme", true),
-    screensaver_dark_theme: window.GetProperty("SCREENSAVER dark theme", true),
     visualization_dark_theme: window.GetProperty("VISUALIZATION dark theme", true),
     playlists_dark_theme: window.GetProperty("PLAYLISTS dark theme", false),
     bio_dark_theme: window.GetProperty("BIO dark theme", true),
@@ -20,6 +19,7 @@ var properties = {
 	follow_cursor: window.GetProperty("_DISPLAY: cover follow cursor", false),
 	circleMode: window.GetProperty("_DISPLAY: circle mode", true),
 	doubleRowText: window.GetProperty("_DISPLAY: doubleRowText", false),
+	customInfos: window.GetProperty("_DISPLAY: infos titleformat", ""),	
     showwallpaper: window.GetProperty("_DISPLAY: Show Wallpaper", false),
     wallpaperblurred: window.GetProperty("_DISPLAY: Wallpaper Blurred", true),
     wallpaperblurvalue: window.GetProperty("_DISPLAY: Wallpaper Blur Value", 1.05),
@@ -28,6 +28,7 @@ var properties = {
 	showRating: window.GetProperty("_DISPLAY: showRating", true),
 	tintOnHover : true,
 	coverNoPadding : window.GetProperty("_DISPLAY: cover no padding", true),
+	disableCoverCache : window.GetProperty("_DISPLAY: disable cover cache", false),
 	rawBitmap: false,
 	panelFontAdjustement: 0,
 	showInfos:true,
@@ -96,11 +97,13 @@ g_tfo = {
 	title: fb.TitleFormat("$if2(%title%,)"),
 	artist: fb.TitleFormat("$if2(%artist%,)"),
 	album: fb.TitleFormat("$if(%album%,  |  %album%,)"),
-	codec: fb.TitleFormat("%codec%"),
-	playcount: fb.TitleFormat("$if2(%play_count%,0)"),
 	bitrate: fb.TitleFormat("$if(%codec_profile%, | %codec_profile% | %bitrate%,  | %bitrate%)"),
-	allinfos: fb.TitleFormat((globalProperties.use_ratings_file_tags ? "$meta(rating)" : "%rating%") + " ^^ $if2(%title%,) ^^ $if2(%artist%,) ^^ $if(%album%,  |  %album%,) ^^ $if2(%date%,?) ^^ %codec% ^^ $if2(%play_count%,0) ^^ $if(%codec_profile%, | %codec_profile%)$if(%bitrate%, | %bitrate%K)"),
+	defaultinfos: fb.TitleFormat((globalProperties.use_ratings_file_tags ? "$meta(rating)" : "%rating%") + " ^^ $if2(%title%,) ^^ $if2(%artist%,)$if(%album%,  |  %album%,)$if(%date%,' ('%date%')') ^^ %codec%$if(%codec_profile%, | %codec_profile%)$if(%bitrate%, | %bitrate%K) ^^ $if2(%play_count%,0)"),
 }
+function setCustominfos(){
+	g_tfo.customInfos = fb.TitleFormat((globalProperties.use_ratings_file_tags ? "$meta(rating)" : "%rating%") + " ^^ $if2(%title%,) ^^ "+properties.customInfos);
+}
+setCustominfos();
 function setButtons(){
 	buttons = {
 		Pause: new SimpleButton(ww/2-images.pause_img.Width/2,wh/2-images.pause_img.Height/2, images.pause_img.Width, 74, "Pause", "Resume Playback", function () {
@@ -117,8 +120,7 @@ function setButtons(){
 				plman.ActivePlaylist = g_cover.playlistIndex;		
 				if(fb.IsPaused) fb.Stop();
 				plman.FlushPlaybackQueue();
-				//fb.RunContextCommandWithMetadb("Add to playback queue", g_cover.metadb);
-				fb.RunContextCommandWithMetadb("新增到播放佇列", g_cover.metadb);
+				fb.RunContextCommandWithMetadb("Add to playback queue", g_cover.metadb);
 				fb.Play();
 			}
 		},function () {},images.play_img,images.play_img),
@@ -201,7 +203,7 @@ function SimpleButton(x, y, w, h, text, tooltip_text, fonClick, fonDbleClick, N_
                 this.state = ButtonStates.hide;return;
             } else this.state = ButtonStates.normal;
         } else if(this.text=='Pause'){
-			this.tooltip_text = fb.IsPaused?"繼續播放":"暫停播放";
+			this.tooltip_text = fb.IsPaused?"Resume Playback":"Pause playback";
 			var play_pause = (fb.IsPaused || (g_cover.isPlaying() && g_cover.isHover));
             if(!play_pause || Randomsetfocus || !g_cover.isPlaying() || properties.single_click_action!=0){
                 this.state = ButtonStates.hide;
@@ -327,8 +329,10 @@ function on_paint(gr) {
 		try{
 			tracktype = TrackType(fb.GetNowPlaying());
 			if(tracktype == 3) g_cover.setArtwork(globalProperties.stream_img,true,true)
-			else g_cover.setArtwork(globalProperties.nocover_img,true,true);
-		} catch (e){g_cover.setArtwork(globalProperties.nocover_img,true,true)}
+			else g_cover.setArtwork(img_blank_cover,true,true);
+		} catch (e){
+			g_cover.setArtwork(img_blank_cover,true,true)
+		}
 	}
 	setButtonStates();
 	g_cover.draw(gr,0,0);
@@ -413,16 +417,14 @@ function on_mouse_lbtn_dblclk(x, y) {
 				if(!g_cover.isFiller()) openCoverFullscreen(g_cover.metadb);
 			break;
 			case (properties.dble_click_action==3):
-				//fb.RunContextCommandWithMetadb("Open containing folder", fb.GetNowPlaying(), 8);
-				fb.RunContextCommandWithMetadb("開啟所在資料夾", fb.GetNowPlaying(), 8);
+				fb.RunContextCommandWithMetadb("Open containing folder", fb.GetNowPlaying(), 8);
 			break;
 			case (properties.dble_click_action==4):
 				window.NotifyOthers('toggleLayoutMode',true);
 			break;
 			case (properties.dble_click_action==5):
 				if (g_infos.metadb && TextBtn_info.isXYInButton(x, y)) {
-					//fb.RunContextCommandWithMetadb("Properties", g_infos.metadb);
-					fb.RunContextCommandWithMetadb("屬性", g_infos.metadb);
+					fb.RunContextCommandWithMetadb("Properties", g_infos.metadb);
 				}
 			break;
 		}
@@ -569,11 +571,12 @@ oImageCache = function () {
 		if (typeof(img) == "undefined" || img == null && globalProperties.enableDiskCache ) {
 			cache_filename = check_cache(metadb, 0, g_cover.cachekey);
 			// load img from cache
-			if(cache_filename) {
+			if(cache_filename && !properties.disableCoverCache) {
 				img = load_image_from_cache_direct(cache_filename);
 				cover_path = cache_filename;
-			} else get_albumArt_async(metadb,AlbumArtId.front, g_cover.cachekey, false, false, false, {isplaying:is_playing});
-		} else if(nowPlaying_cachekey==old_cachekey) return "unchanged";
+			} else
+				get_albumArt_async(metadb,AlbumArtId.front, g_cover.cachekey, false, false, false, {isplaying:is_playing});
+		} else if(typeof(nowPlaying_cachekey) !== "undefined" && nowPlaying_cachekey==old_cachekey) return "unchanged";
 		return img;
     };
     this.reset = function(key) {
@@ -608,6 +611,7 @@ oCover = function() {
 	this.padding_norating = Array(20,7,0,7);	
 	this.padding_noinfos = Array(24,24,24,24);
 	this.nopadding = Array(0,0,0,0);	
+	this.padding = this.padding_default;
 	this.repaint = function() {window.Repaint()}
 	this.borders = true;
 	this.is_playing = false;
@@ -672,7 +676,10 @@ oCover = function() {
 	}
 	this.setArtwork = function(image, resize, filler, is_playing, metadb, cachekey, playlistIndex) {
 		this.filler = typeof filler !== 'undefined' ? filler : false;
-		if(typeof cachekey !== 'undefined') this.cachekey = cachekey;
+		if(typeof cachekey !== 'undefined') {
+			this.cachekey = cachekey;
+			g_image_cache.cachelist[cachekey] = image;
+		}
 		if(typeof playlistIndex !== 'undefined') this.playlistIndex = playlistIndex;
 		this.resized = false;
 		this.artwork = image;
@@ -1024,7 +1031,7 @@ function on_notify_data(name, info) {
 			metadb = new FbMetadbHandleList(info.metadb);
 			if(info.tracklist) var tracklist = new FbMetadbHandleList(info.tracklist);
 			else var tracklist = null;
-			if(info.cover_img==null) {
+			if(info.cover_img==null || properties.disableCoverCache) {
 				g_cover.on_item_focus_change(info.playlist, -1, info.trackIndex, metadb[0]);
 				if (properties.follow_cursor) {
 					g_infos.updateInfos(info.firstRow, info.secondRow+" | "+info.length+' | '+info.totalTracks, info.genre, metadb, true, undefined, tracklist)
@@ -1125,17 +1132,6 @@ function on_notify_data(name, info) {
 			mini_controlbar.value = info;
 			on_layout_change()
 		break;
-		case "enable_screensaver":
-			globalProperties.enable_screensaver = info;
-			window.SetProperty("GLOBAL enable screensaver", globalProperties.enable_screensaver);
-		break;
-		case "escape_screensaver":
-			last_mouse_move_notified = (new Date).getTime();
-		break;
-		case "mseconds_before_screensaver":
-			globalProperties.mseconds_before_screensaver = info;
-			window.SetProperty("GLOBAL screensaver mseconds before activation", globalProperties.mseconds_before_screensaver);
-		break;
 		case "DiskCacheState":
 			globalProperties.enableDiskCache = info;
 			window.SetProperty("COVER Disk Cache", globalProperties.enableDiskCache);
@@ -1229,15 +1225,6 @@ function on_notify_data(name, info) {
 			window.SetProperty("BIO dark theme", properties.bio_dark_theme);
 			on_layout_change();
 			window.Repaint();
-		break;
-		case "screensaver_dark_theme":
-			properties.screensaver_dark_theme=info;
-			window.SetProperty("SCREENSAVER dark theme", properties.screensaver_dark_theme);
-			on_layout_change();
-			window.Repaint();
-		break;
-		case "screensaver_state":
-			screensaver_state.value=info;
 		break;
 		case "Randomsetfocus":
 			Randomsetfocus = info;
@@ -1335,6 +1322,7 @@ var TextBtn_info = new TextBtn();
  *****************************************/
 function ButtonUI_R() {
 	this.y = 10;
+	this.x = 10;	
 	this.width = imgw;
 	this.height = imgh;
 
@@ -1476,19 +1464,37 @@ function oInfos() {
 		}
 	}
 	this.getTrackInfos = function(){
-		var allinfos = g_tfo.allinfos.EvalWithMetadb(this.metadb);
-		allinfos = allinfos.split(" ^^ ");
+		if(properties.customInfos!="") {
+			this.getTrackInfosCustom();
+		} else {
+			var defaultinfos = g_tfo.defaultinfos.EvalWithMetadb(this.metadb);
+			defaultinfos = defaultinfos.split(" ^^ ");
 
-		this.rating = allinfos[0];
+			this.rating = defaultinfos[0];
 
-		var txt_title = allinfos[1];
-		var txt_info = allinfos[2] + allinfos[3] + (allinfos[4]!='?'?" ("+allinfos[4]+")":"");
-		var _playcount = allinfos[6];
-		//if(foo_playcount) var txt_profile = allinfos[5] + allinfos[7] + " | " + _playcount + (_playcount > 1 ? " plays" : " play");
-		if(foo_playcount) var txt_profile = allinfos[5] + allinfos[7] + " | " + _playcount + " 次播放";
-		else var txt_profile = allinfos[5] + allinfos[7];
+			var row1 = defaultinfos[1];
+			var row2 = defaultinfos[2];
+			var _playcount = defaultinfos[4];
+			if(foo_playcount) var row3 = defaultinfos[3] + " | " + _playcount + (_playcount > 1 ? " plays" : " play");
+			else var row3 = defaultinfos[3];
+			this.show_info = true;
+			this.updateInfos(row1, row2, row3, this.metadb, false, this.rating);
+		}		
+	}
+	this.getTrackInfosCustom = function(metadb, album_infos, rating, tracklist){
+		var customInfos = g_tfo.customInfos.EvalWithMetadb(this.metadb);
+		customInfos = customInfos.split(" ^^ ");
+		this.rating = customInfos[0];
+		var row1 = customInfos[1];
+		var row2 = customInfos[2];
+		var row3 = customInfos[3];
 		this.show_info = true;
-		this.updateInfos(txt_title, txt_info, txt_profile, this.metadb, false, this.rating);
+		if(typeof metadb != "undefined") this.metadb = metadb;
+		if(typeof album_infos != "undefined") this.album_infos = album_infos;
+		else this.album_infos = false;
+		if(typeof rating != "undefined") this.rating = rating;		
+		if(typeof tracklist != "undefined") this.tracklist = tracklist;			
+		this.updateInfos(row1, row2, row3, this.metadb, this.album_infos, this.rating, this.tracklist);
 	}
 	this.updateInfos = function(row1, row2, row3, metadb, album_infos, rating, tracklist){
 		this.txt_line1 = row1;
@@ -1637,38 +1643,37 @@ function on_mouse_rbtn_up(x, y){
 	var main_menu = window.CreatePopupMenu();
 	var idx;
 
-	main_menu.AppendMenuItem(MF_STRING, 35, "設定...");
+	main_menu.AppendMenuItem(MF_STRING, 35, "Settings...");
 	main_menu.AppendMenuSeparator();
 	if(g_cover.isValid()){
 		var now_playing_track = fb.GetNowPlaying();
-		main_menu.AppendMenuItem(MF_STRING, 1, "以全尺寸/原尺寸開啟專輯封面");
-		main_menu.AppendMenuItem(MF_STRING, 6, "打開包含的文件夾");
-		main_menu.AppendMenuItem(MF_STRING, 8, "更新此圖片");
+		main_menu.AppendMenuItem(MF_STRING, 1, "Open cover in its full/original size");
+		main_menu.AppendMenuItem(MF_STRING, 6, "Open containing folder");
+		main_menu.AppendMenuItem(MF_STRING, 8, "Refresh this image");
 		var quickSearchMenu = window.CreatePopupMenu();
-		quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
-		quickSearchMenu.AppendTo(main_menu, MF_STRING, "快速搜尋...");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 34,"Same title");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 30,"Same artist");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 31,"Same album");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 32,"Same genre");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 33,"Same date");
+		quickSearchMenu.AppendTo(main_menu, MF_STRING, "Quick search for...");
 	}
 	
 	main_menu.AppendMenuSeparator();
-	main_menu.AppendMenuItem(MF_STRING, 9, "顯示現在播放中");
+	main_menu.AppendMenuItem(MF_STRING, 9, "Show now playing");
 	main_menu.AppendMenuSeparator();
-	main_menu.AppendMenuItem(MF_STRING, 2, "屬性");
+	main_menu.AppendMenuItem(MF_STRING, 2, "Properties");
 	if(utils.IsKeyPressed(VK_SHIFT)) {
 		main_menu.AppendMenuSeparator();
-		main_menu.AppendMenuItem(MF_STRING, 100, "面板屬性");
-		main_menu.AppendMenuItem(MF_STRING, 101, "配置...");
+		main_menu.AppendMenuItem(MF_STRING, 100, "Properties ");
+		main_menu.AppendMenuItem(MF_STRING, 101, "Configure...");
 		main_menu.AppendMenuSeparator();
-		main_menu.AppendMenuItem(MF_STRING, 102, "重新載入");
+		main_menu.AppendMenuItem(MF_STRING, 102, "Reload");
 	}
 	idx = main_menu.TrackPopupMenu(x,y);
 	switch(true) {
 		case (idx == 2):
-			//fb.RunContextCommandWithMetadb("Properties", fb.GetNowPlaying());
-			fb.RunContextCommandWithMetadb("屬性", fb.GetNowPlaying());
+			fb.RunContextCommandWithMetadb("Properties", fb.GetNowPlaying());
 		break;
 		case (idx == 11):
 			properties.circleMode = !properties.circleMode;
@@ -1735,8 +1740,7 @@ function on_mouse_rbtn_up(x, y){
 			play_random(properties.random_function);
 			break;
 		case (idx == 6):
-			//fb.RunContextCommandWithMetadb("Open containing folder", now_playing_track, 8);
-			fb.RunContextCommandWithMetadb("開啟所在資料夾", now_playing_track, 8);
+			fb.RunContextCommandWithMetadb("Open containing folder", now_playing_track, 8);
 			break;
 		case (idx == 8):
 			window.NotifyOthers("RefreshImageCover",g_cover.metadb);
@@ -1780,51 +1784,55 @@ function draw_settings_menu(x,y){
 		var wallpapper_menub = window.CreatePopupMenu();
         var idx;
 
-		_menu.AppendMenuItem(MF_STRING, 10, "專輯封面始終跟隨滑鼠點擊的項目變更");
+		_menu.AppendMenuItem(MF_STRING, 10, "Cover always follow cursor");
 		_menu.CheckMenuItem(10,properties.follow_cursor);
-		_menu.AppendMenuItem(MF_STRING, 11, "圓形專輯封面");
+		_menu.AppendMenuItem(MF_STRING, 11, "Circle artwork");
 		_menu.CheckMenuItem(11,properties.circleMode);
-		_menu.AppendMenuItem(MF_STRING, 12, "維持比例")
+		_menu.AppendMenuItem(MF_STRING, 12, "Keep proportion")
 		_menu.CheckMenuItem(12,globalProperties.keepProportion);
-		_menu.AppendMenuItem(MF_STRING, 13, "填滿整個空間");
+		_menu.AppendMenuItem(MF_STRING, 13, "Fill the whole space");
+		_menu.AppendMenuItem(MF_STRING, 20, "Disable cover cache for this artwork");
+		_menu.CheckMenuItem(20,properties.disableCoverCache);		
 		_menu.CheckMenuItem(13,!trackinfostext_state.isActive() && properties.coverNoPadding);				
 		_menu.AppendMenuSeparator();
-		_menu.AppendMenuItem(MF_STRING, 18, "顯示曲目的細節");
+		_menu.AppendMenuItem(MF_STRING, 18, "Show track details");
 		_menu.CheckMenuItem(18, trackinfostext_state.isActive());		
-		_menu.AppendMenuItem(trackinfostext_state.isActive()?MF_STRING:MF_GRAYED, 17, "雙行顯示細節");
+		_menu.AppendMenuItem(trackinfostext_state.isActive()?MF_STRING:MF_GRAYED, 17, "Show details on 2 rows");
 		_menu.CheckMenuItem(17, properties.doubleRowText);
-		_menu.AppendMenuItem(trackinfostext_state.isActive()?MF_STRING:MF_GRAYED, 16, "顯示評等");
+		_menu.AppendMenuItem(trackinfostext_state.isActive()?MF_STRING:MF_GRAYED, 19, "Edit displayed infos");	
+		_menu.CheckMenuItem(19, properties.customInfos!="");
+		_menu.AppendMenuItem(trackinfostext_state.isActive()?MF_STRING:MF_GRAYED, 16, "Show rating");
 		_menu.CheckMenuItem(16,properties.showRating);		
 		_menu.AppendMenuSeparator();
 
 		var _single_click_menu = window.CreatePopupMenu();
-		_single_click_menu.AppendMenuItem(MF_STRING, 14, "播放 / 暫停");
-		_single_click_menu.AppendMenuItem(MF_STRING, 15, "顯示現在播放中");
+		_single_click_menu.AppendMenuItem(MF_STRING, 14, "Play / pause");
+		_single_click_menu.AppendMenuItem(MF_STRING, 15, "Show now playing");
 		_single_click_menu.CheckMenuRadioItem(14, 15, 14+properties.single_click_action);
-		_single_click_menu.AppendTo(_menu, MF_STRING, "專輯封面按鈕");
+		_single_click_menu.AppendTo(_menu, MF_STRING, "Cover button");
 
 		var _dble_click_menu = window.CreatePopupMenu();
-		_dble_click_menu.AppendMenuItem(MF_STRING, 3, "暫停播放");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 4, "在全部的面板顯示現在播放中");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 5, "以全尺寸/原尺寸開啟專輯封面");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 6, "開啟所在資料夾");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 7, "啟用/退出袖珍播放器");
-		_dble_click_menu.AppendMenuItem(MF_STRING, 8, "編輯曲目的屬性");		
+		_dble_click_menu.AppendMenuItem(MF_STRING, 3, "Pause playback");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 4, "Show now playing on all panels");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 5, "Open cover in its full/original size");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 6, "Open containing folder");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 7, "Activate/quit mini player");
+		_dble_click_menu.AppendMenuItem(MF_STRING, 8, "Edit track properties");		
 		_dble_click_menu.CheckMenuRadioItem(3, 8, 3+properties.dble_click_action);
-		_dble_click_menu.AppendTo(_menu, MF_STRING, "雙擊的作用");
+		_dble_click_menu.AppendTo(_menu, MF_STRING, "Double click action");
 
-		wallpapper_menu.AppendMenuItem(MF_STRING, 200, "啟用");
+		wallpapper_menu.AppendMenuItem(MF_STRING, 200, "Enable");
 		wallpapper_menu.CheckMenuItem(200, properties.showwallpaper);
-		wallpapper_menu.AppendMenuItem(MF_STRING, 220, "模糊化");
+		wallpapper_menu.AppendMenuItem(MF_STRING, 220, "Blur");
 		wallpapper_menu.CheckMenuItem(220, properties.wallpaperblurred);
-		wallpapper_menub.AppendMenuItem(MF_STRING, 221, "填滿");
+		wallpapper_menub.AppendMenuItem(MF_STRING, 221, "Filling");
 		wallpapper_menub.CheckMenuItem(221, properties.wallpaperdisplay==0);
-		wallpapper_menub.AppendMenuItem(MF_STRING, 222, "調整圖片符合視窗大小");
+		wallpapper_menub.AppendMenuItem(MF_STRING, 222, "Adjust");
 		wallpapper_menub.CheckMenuItem(222, properties.wallpaperdisplay==1);
-		wallpapper_menub.AppendMenuItem(MF_STRING, 223, "延展");
+		wallpapper_menub.AppendMenuItem(MF_STRING, 223, "Stretch");
 		wallpapper_menub.CheckMenuItem(223, properties.wallpaperdisplay==2);
-		wallpapper_menub.AppendTo(wallpapper_menu,MF_STRING, "壁紙尺寸");
-		wallpapper_menu.AppendTo(_menu,MF_STRING, "背景壁紙");
+		wallpapper_menub.AppendTo(wallpapper_menu,MF_STRING, "Wallpaper size");
+		wallpapper_menu.AppendTo(_menu,MF_STRING, "Background Wallpaper");
 
         idx = _menu.TrackPopupMenu(x,y);
         switch(true) {
@@ -1866,6 +1874,7 @@ function draw_settings_menu(x,y){
 			case (idx == 11):
 				properties.circleMode = !properties.circleMode;
 				window.SetProperty("_DISPLAY: circle mode", properties.circleMode);
+				g_image_cache.resetCache();				
 				get_images();
 				adaptButtons();
 				g_cover.refreshCurrent();
@@ -1873,6 +1882,7 @@ function draw_settings_menu(x,y){
 				break;
 			case (idx == 12):
 				setGlobalParameter("keepProportion",!globalProperties.keepProportion, true);
+				g_image_cache.resetCache();
 				get_images();
 				adaptButtons();
 				g_cover.refreshCurrent(undefined,true);
@@ -1916,6 +1926,26 @@ function draw_settings_menu(x,y){
 				g_cover.refreshCurrent();
 				on_size(window.Width,window.Height);			
 				adaptButtons();				
+				window.Repaint();
+				break;					
+			case (idx == 19): 
+					var customInfos_splitted = properties.customInfos.split(" ^^ ");
+					if(typeof customInfos_splitted[1] === "undefined") customInfos_splitted[1] = "";
+					customNowPlayingInfos("Edit displayed infos"
+										,"<div class='titleBig'>Edit displayed infos</div><div class='separator'></div><br/>Enter a title formatting script for each line of informations displayed. Leave both lines empty for default informations. Default informations are:\n\n     Line 1: %artist%  |  %album% (%date%)\n     Line 2: %codec% | %codec_profile% | %bitrate%K | %play_count%\n\nYou can use the full foobar2000 title formatting syntax here.<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">Click here</a> for informations about foobar title formatting. (http://tinyurl.com/lwhay6f)<br/>"
+										,''
+										,'First line:##Second line:'
+										,customInfos_splitted[0]+'##'+customInfos_splitted[1]);
+		
+				window.Repaint();
+				break;				
+			case (idx == 20): 
+				properties.disableCoverCache = !properties.disableCoverCache;
+				window.SetProperty("_DISPLAY: disable cover cache", properties.disableCoverCache);
+				get_images();
+				adaptButtons();
+				g_image_cache.resetCache();
+				g_cover.refreshCurrent(undefined,true);
 				window.Repaint();
 				break;					
 			case (idx == 200):
@@ -2117,6 +2147,11 @@ function get_images(){
 		gb.FillPolygon(colors.rating_icon_off, 0, pointArr.p1);
 		gb.SetSmoothingMode(0);
 	img_rating_off.ReleaseGraphics(gb);
+	
+	img_blank_cover = gdi.CreateImage(10, 10);
+	gb = img_blank_cover.GetGraphics();
+		gb.FillSolidRect(0,0,10,10,colors.normal_bg);
+	img_blank_cover.ReleaseGraphics(gb);	
 }
 function toggleWallpaper(wallpaper_state){
 	wallpaper_state = typeof wallpaper_state !== 'undefined' ? wallpaper_state : !properties.showwallpaper;

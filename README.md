@@ -4,11 +4,7 @@ This is a skin for the [foobar2000](https://www.foobar2000.org) audio player.
 This theme require Foobar2000 1.4 (or superior).
 Follow the [instructions below](https://github.com/Ottodix/Eole-foobar-theme#installation) to install it properly
 
-# Eole Foobar theme CHT
-
-此為 Eole Foobar theme 的內容的繁體中文化
-
-## Participate to the theme
+## Contribute to the theme
 
 If you've got some knowledge in javascript, feel free to suggest code performance improvements, to report bugs and their fixes. Open an issue ticket, share the code, or do a pull request.
 
@@ -20,15 +16,15 @@ If you've got some knowledge in javascript, feel free to suggest code performanc
 
 0. Close foobar.
 
-1. Download this [github repository](https://github.com/Ottodix/Eole-foobar-theme/zipball/master/) and copy everything into your foobar profile directory (so the 3 folders: user-components, themes and plugins).
-   - STANDARD foobar2000 installation: your foobar profile directory is there: %AppData%/foobar2000
-   - PORTABLE foobar2000 installation: your foobar profile directory is a folder named "profile" inside your installation directory.
+1. Download this [github repository](https://github.com/Ottodix/Eole-foobar-theme/zipball/master/) and copy everything into your foobar profile directory (so the 3 folders: user-components, themes, and plugins).
+   - STANDARD foobar2000 installation: your foobar profile directory is in here: %AppData%/foobar2000
+   - PORTABLE foobar2000 installation: your foobar profile directory is in a folder named "profile" inside your installation directory.
 
 2. Run foobar, choose ColumnUI as user interface (from the prompt, or from File > Preferences > Display)
 
 3. From Columns UI in File > Preferences > Display > Columns UI, click on import, and select the following file: [FOOBAR_PROFILE_DIRECTORY]\themes\eole\columnsUI_eole.fcl.
 
-4. Configure the winamp directory in Shpeck for the visualisations, it's at the bottom of the preferences window: Click the Foobar button on top > File > Preferences > Visualisations > Shpeck. Click on the browse buttom and select the directory [FOOBAR_PROFILE_DIRECTORY]\plugins\winamp. Now on the visualisation tab, you can do a right click and select Milkdrop in the "Autostart Plugin" submenu.
+4. Configure the winamp directory in Shpeck for the visualisations, it's at the bottom of the preferences window: Click the Foobar button on top > File > Preferences > Visualisations > Shpeck. Click on the browse buttom and select the directory [FOOBAR_PROFILE_DIRECTORY]\plugins\winamp. Validate, quit the preferences, and go to the Visualisation tab of the skin. Do a right click and select Milkdrop in the "Autostart Plugin" submenu.
 
 5. Optionally, if you want an extra polish, change the systray icon: Click the Foobar button on top > File > Preferences > Display > Columns UI > On the right, notification area tab > Tick Use custom icon > Click Select icon... and select the file [FOOBAR_PROFILE_DIRECTORY]\themes\eole\img\systray icons\white\uniEC4F.ico (or any of the alternative icons in this folder)
 
