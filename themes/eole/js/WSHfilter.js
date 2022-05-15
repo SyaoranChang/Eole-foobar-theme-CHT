@@ -979,8 +979,8 @@ oTagSwitcherBar = function() {
 		);
 		this.items_width = new Array(0, 0, 0, 0);
 		this.items_x = new Array(0, 0, 0, 0);
-		this.items_txt = new Array("T","專輯", "演出者", "音樂類型");
-		this.items_tooltips = new Array("Library tree","專輯 篩選器", "演出者 篩選器", "音樂類型 篩選器");
+		this.items_txt = new Array("媒體櫃樹狀欄","專輯", "演出者", "音樂類型");
+		this.items_tooltips = new Array("媒體櫃樹狀欄","專輯 篩選器", "演出者 篩選器", "音樂類型 篩選器");
 		properties.album_label = this.items_txt[1];
 		properties.artist_label = this.items_txt[2];
 		properties.genre_label = this.items_txt[3];		
@@ -1105,7 +1105,7 @@ oTagSwitcherBar = function() {
 		
 		this.search_history_bt.changeState(ButtonStates.normal);
 		
-		basemenu.AppendMenuItem(MF_GRAYED, 0, "Group by:");
+		basemenu.AppendMenuItem(MF_GRAYED, 0, "依指定規則分組:");
 		basemenu.AppendMenuSeparator();
 		
 		for(i = this.items_txt.length-1; i >= 0; i--) {
@@ -1244,8 +1244,8 @@ oTagSwitcherBar_old = function() {
 		);
 		this.items_width = new Array(0, 0, 0, 0);
 		this.items_x = new Array(0, 0, 0, 0);
-		this.items_txt = new Array("T","專輯", "演出者", "音樂類型");
-		this.items_tooltips = new Array("Library tree","專輯 篩選器", "演出者 篩選器", "音樂類型 篩選器");
+		this.items_txt = new Array("媒體櫃樹狀欄","專輯", "演出者", "音樂類型");
+		this.items_tooltips = new Array("媒體櫃樹狀欄","專輯 篩選器", "演出者 篩選器", "音樂類型 篩選器");
 		properties.album_label = this.items_txt[1];
 		properties.artist_label = this.items_txt[2];
 		properties.genre_label = this.items_txt[3];		
