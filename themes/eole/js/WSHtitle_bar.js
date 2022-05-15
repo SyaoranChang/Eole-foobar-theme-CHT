@@ -1292,119 +1292,119 @@ function draw_layout_menu(x,y){
 	right_menu_trackdetails = window.CreatePopupMenu();
 	
 	wallpaper_visibility = window.CreatePopupMenu();
-	wallpaper_visibility.AppendMenuItem(MF_STRING, 4005, "Enable");
-	wallpaper_visibility.AppendMenuItem(MF_STRING, 4006, "Disable");
+	wallpaper_visibility.AppendMenuItem(MF_STRING, 4005, "啟用");
+	wallpaper_visibility.AppendMenuItem(MF_STRING, 4006, "關閉");
 	wallpaper_blur = window.CreatePopupMenu();
-	wallpaper_blur.AppendMenuItem(MF_STRING, 4007, "Enable");
-	wallpaper_blur.AppendMenuItem(MF_STRING, 4008, "Disable");
+	wallpaper_blur.AppendMenuItem(MF_STRING, 4007, "啟用");
+	wallpaper_blur.AppendMenuItem(MF_STRING, 4008, "關閉");
 
 	nowplaying = window.CreatePopupMenu();
 	var now_playing_state = getNowPlayingState();
-	if(now_playing_state==1) nowplaying.AppendMenuItem(MF_STRING, 4027, "Hide");
-	else nowplaying.AppendMenuItem(MF_STRING, 4027, "Show");
+	if(now_playing_state==1) nowplaying.AppendMenuItem(MF_STRING, 4027, "隱藏");
+	else nowplaying.AppendMenuItem(MF_STRING, 4027, "隱藏");
 	
-	right_menu_trackdetails.AppendMenuItem(MF_STRING, 202, "Show on top");	
-	right_menu_trackdetails.AppendMenuItem(MF_STRING, 203, "Show on bottom");			
-	right_menu_trackdetails.AppendMenuItem(MF_STRING, 204, "Hide");
+	right_menu_trackdetails.AppendMenuItem(MF_STRING, 202, "顯示在上方");	
+	right_menu_trackdetails.AppendMenuItem(MF_STRING, 203, "顯示在下方");			
+	right_menu_trackdetails.AppendMenuItem(MF_STRING, 204, "隱藏");
 	var track_infos_state = getTrackInfosState();
 	if(track_infos_state==0) var checked = 204;
 	else if(track_infos_state==1) var checked = 202;
 	else if(track_infos_state==2) var checked = 203;
 	right_menu_trackdetails.CheckMenuRadioItem(202, 204, checked);				
-	right_menu_trackdetails.AppendTo(nowplaying,MF_STRING, "Album art / track infos");	
+	right_menu_trackdetails.AppendTo(nowplaying,MF_STRING, "專輯封面 / 音軌資訊");	
 		
 	nowplaying.AppendMenuSeparator();
-	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4030, "Increase width");
-	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4031, "Decrease width");
-	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4033, "Custom width...");
-	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4032, "Reset");
+	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4030, "增加寬度");
+	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4031, "減少寬度");
+	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4033, "自定義寬度...");
+	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4032, "重置");
 
 	if(layout_state.isEqual(1)){
-		basemenu.AppendMenuItem(MF_GRAYED, 0, "Minimode Layout");
+		basemenu.AppendMenuItem(MF_GRAYED, 0, "袖珍播放器版面設計");
 		basemenu.AppendMenuSeparator();		
-		basemenu.AppendMenuItem(MF_STRING, 3990, "Dark theme");
+		basemenu.AppendMenuItem(MF_STRING, 3990, "灰暗主題");
 		basemenu.CheckMenuItem(3990, properties.minimode_dark_theme);
-		wallpaper_visibility.AppendTo(basemenu,MF_STRING, "Wallpapers visibility");
-		wallpaper_blur.AppendTo(basemenu,MF_STRING, "Wallpapers blur");
+		wallpaper_visibility.AppendTo(basemenu,MF_STRING, "壁紙可見性");
+		wallpaper_blur.AppendTo(basemenu,MF_STRING, "壁紙模糊");
 	} else if(main_panel_state.isEqual(0)){
-		basemenu.AppendMenuItem(MF_GRAYED, 0, "Library Layout");
+		basemenu.AppendMenuItem(MF_GRAYED, 0, "媒體櫃版面設計");
 		basemenu.AppendMenuSeparator();				
-		nowplaying.AppendTo(basemenu,MF_STRING, "Right playlist");
+		nowplaying.AppendTo(basemenu,MF_STRING, "右側邊欄播放清單");
 		left_menu = window.CreatePopupMenu();
-		left_menu.AppendTo(basemenu,MF_STRING, "Left menu");
-		if(libraryfilter_state.isActive()) left_menu.AppendMenuItem(MF_STRING, 4028, "Hide");
-		else left_menu.AppendMenuItem(MF_STRING, 4028, "Show");
+		left_menu.AppendTo(basemenu,MF_STRING, "左側選單");
+		if(libraryfilter_state.isActive()) left_menu.AppendMenuItem(MF_STRING, 4028, "隱藏");
+		else left_menu.AppendMenuItem(MF_STRING, 4028, "顯示");
 		left_menu.AppendMenuSeparator();
-		left_menu.AppendMenuItem((libraryfilter_state.isActive()?MF_STRING:MF_GRAYED), 4034, "Increase width");
-		left_menu.AppendMenuItem((libraryfilter_state.isActive()?MF_STRING:MF_GRAYED), 4035, "Decrease width");
-		left_menu.AppendMenuItem((libraryfilter_state.isActive()?MF_STRING:MF_GRAYED), 4037, "Custom width...");
-		left_menu.AppendMenuItem((libraryfilter_state.isActive()?MF_STRING:MF_GRAYED), 4036, "Reset");
+		left_menu.AppendMenuItem((libraryfilter_state.isActive()?MF_STRING:MF_GRAYED), 4034, "增加寬度");
+		left_menu.AppendMenuItem((libraryfilter_state.isActive()?MF_STRING:MF_GRAYED), 4035, "減少寬度");
+		left_menu.AppendMenuItem((libraryfilter_state.isActive()?MF_STRING:MF_GRAYED), 4037, "自定義寬度...");
+		left_menu.AppendMenuItem((libraryfilter_state.isActive()?MF_STRING:MF_GRAYED), 4036, "重置");
 		basemenu.AppendMenuSeparator();
-		basemenu.AppendMenuItem(MF_STRING, 4000, "Dark theme");
+		basemenu.AppendMenuItem(MF_STRING, 4000, "灰暗主題");
 		basemenu.CheckMenuItem(4000, properties.library_dark_theme);
-		wallpaper_visibility.AppendTo(basemenu,MF_STRING, "Wallpapers visibility");
-		wallpaper_blur.AppendTo(basemenu,MF_STRING, "Wallpapers blur");
+		wallpaper_visibility.AppendTo(basemenu,MF_STRING, "壁紙可見性");
+		wallpaper_blur.AppendTo(basemenu,MF_STRING, "壁紙模糊");
 	} else if(main_panel_state.isEqual(1)){
-		basemenu.AppendMenuItem(MF_GRAYED, 0, "Playlists Layout");
+		basemenu.AppendMenuItem(MF_GRAYED, 0, "播放清單版面設計");
 		basemenu.AppendMenuSeparator();				
-		nowplaying.AppendTo(basemenu,MF_STRING, "Right playlist");
+		nowplaying.AppendTo(basemenu,MF_STRING, "右側邊欄播放清單");
 		playlistpanel_menu = window.CreatePopupMenu();
-		playlistpanel_menu.AppendTo(basemenu,MF_STRING, "Playlist panel");
-		playlistpanel_menu.AppendMenuItem(MF_STRING, 4038, "Increase width");
-		playlistpanel_menu.AppendMenuItem(MF_STRING, 4039, "Decrease width");
-		playlistpanel_menu.AppendMenuItem(MF_STRING, 4041, "Custom width...");
-		playlistpanel_menu.AppendMenuItem(MF_STRING, 4040, "Reset");
+		playlistpanel_menu.AppendTo(basemenu,MF_STRING, "播放清單面板");
+		playlistpanel_menu.AppendMenuItem(MF_STRING, 4038, "增加寬度");
+		playlistpanel_menu.AppendMenuItem(MF_STRING, 4039, "減少寬度");
+		playlistpanel_menu.AppendMenuItem(MF_STRING, 4041, "自定義寬度...");
+		playlistpanel_menu.AppendMenuItem(MF_STRING, 4040, "重置");
 		var FiltersMenu = window.CreatePopupMenu();
 		if(filters_panel_state.value>0)
-			FiltersMenu.AppendMenuItem(MF_STRING, 4990, "Hide");
+			FiltersMenu.AppendMenuItem(MF_STRING, 4990, "隱藏");
 		else
-			FiltersMenu.AppendMenuItem(MF_STRING, 4988, "Show");
-		FiltersMenu.AppendMenuItem(MF_STRING, 4992, "Increase height");
-		FiltersMenu.AppendMenuItem((filters_panel_state.isActive()? MF_STRING : MF_GRAYED), 4991, "Decrease height");
+			FiltersMenu.AppendMenuItem(MF_STRING, 4988, "顯示");
+		FiltersMenu.AppendMenuItem(MF_STRING, 4992, "增加高度");
+		FiltersMenu.AppendMenuItem((filters_panel_state.isActive()? MF_STRING : MF_GRAYED), 4991, "減少高度");
 		FiltersMenu.AppendMenuSeparator();
-		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "Enable 1st filter");
+		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "啟用第1個篩選器 - 音樂類型");
 		FiltersMenu.CheckMenuItem(4993, (filter1_state.isActive()));
-		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "Enable 2nd filter");
+		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 演出者");
 		FiltersMenu.CheckMenuItem(4994, (filter2_state.isActive()));
-		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4995, "Enable 3rd filter");
+		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4995, "啟用第3個篩選器 - 專輯");
 		FiltersMenu.CheckMenuItem(4995, (filter3_state.isActive()));
-		FiltersMenu.AppendTo(basemenu, MF_STRING, "Filters");
-		if(!filters_panel_state.isMaximumValue()) basemenu.AppendMenuItem(MF_STRING, 4996, "Hide bottom playlist");
-		else basemenu.AppendMenuItem(MF_STRING, 4997, "Show bottom playlist");
+		FiltersMenu.AppendTo(basemenu, MF_STRING, "篩選器");
+		if(!filters_panel_state.isMaximumValue()) basemenu.AppendMenuItem(MF_STRING, 4996, "隱藏底部播放清單");
+		else basemenu.AppendMenuItem(MF_STRING, 4997, "顯示底部播放列表");
 		basemenu.AppendMenuSeparator();
-		basemenu.AppendMenuItem(MF_STRING, 4001, "Dark theme");
+		basemenu.AppendMenuItem(MF_STRING, 4001, "灰暗主題");
 		basemenu.CheckMenuItem(4001, properties.playlists_dark_theme);
-		wallpaper_visibility.AppendTo(basemenu,MF_STRING, "Wallpapers visibility");
-		wallpaper_blur.AppendTo(basemenu,MF_STRING, "Wallpapers blur");
+		wallpaper_visibility.AppendTo(basemenu,MF_STRING, "壁紙可見性");
+		wallpaper_blur.AppendTo(basemenu,MF_STRING, "壁紙模糊");
 	} else if(main_panel_state.isEqual(2)){
-		basemenu.AppendMenuItem(MF_GRAYED, 0, "Now playing Layout");
+		basemenu.AppendMenuItem(MF_GRAYED, 0, "正在播放版面設計");
 		basemenu.AppendMenuSeparator();				
-		nowplaying.AppendTo(basemenu,MF_STRING, "Right playlist");
+		nowplaying.AppendTo(basemenu,MF_STRING, "右側邊欄播放清單");
 
 		if(!lyrics_state.isActive()){
-			basemenu.AppendMenuItem(MF_STRING, 4999, "Show lyrics");
+			basemenu.AppendMenuItem(MF_STRING, 4999, "顯示歌詞");
 		} else {
 			var LyricsMenu = window.CreatePopupMenu();
-			LyricsMenu.AppendMenuItem(MF_STRING, 5000, "Hide");
+			LyricsMenu.AppendMenuItem(MF_STRING, 5000, "隱藏");
 			LyricsMenu.AppendMenuSeparator();
-			LyricsMenu.AppendMenuItem((!lyrics_state.isMaximumValue())?MF_STRING:MF_GRAYED, 4999, "Increase width");
-			LyricsMenu.AppendMenuItem(MF_STRING, 4998, "Decrease width");
-			LyricsMenu.AppendTo(basemenu, MF_STRING, "Lyrics panel");
+			LyricsMenu.AppendMenuItem((!lyrics_state.isMaximumValue())?MF_STRING:MF_GRAYED, 4999, "增加寬度");
+			LyricsMenu.AppendMenuItem(MF_STRING, 4998, "減少寬度");
+			LyricsMenu.AppendTo(basemenu, MF_STRING, "歌詞面板");
 			LyricsMenu.AppendMenuSeparator();
-			LyricsMenu.AppendMenuItem(MF_STRING, 6000, "Show toggle buttons");
-			LyricsMenu.AppendMenuItem(MF_STRING, 6001, "Hide toggle buttons");			
+			LyricsMenu.AppendMenuItem(MF_STRING, 6000, "顯示開關按鈕");
+			LyricsMenu.AppendMenuItem(MF_STRING, 6001, "隱藏開關按鈕");			
 		}
 		basemenu.AppendMenuSeparator();
-		basemenu.AppendMenuItem(MF_STRING, 4002, "Dark theme");
+		basemenu.AppendMenuItem(MF_STRING, 4002, "灰暗主題");
 		basemenu.CheckMenuItem(4002, properties.bio_dark_theme);
-		wallpaper_visibility.AppendTo(basemenu,MF_STRING, "Wallpapers visibility");
-		wallpaper_blur.AppendTo(basemenu,MF_STRING, "Wallpapers blur");
+		wallpaper_visibility.AppendTo(basemenu,MF_STRING, "壁紙可見性");
+		wallpaper_blur.AppendTo(basemenu,MF_STRING, "壁紙模糊");
 	} else if(main_panel_state.isEqual(3)){
-		basemenu.AppendMenuItem(MF_GRAYED, 0, "Visualization Layout");
+		basemenu.AppendMenuItem(MF_GRAYED, 0, "視覺效果版面設計");
 		basemenu.AppendMenuSeparator();				
-		nowplaying.AppendTo(basemenu,MF_STRING, "Right playlist");
+		nowplaying.AppendTo(basemenu,MF_STRING, "右側邊欄播放清單");
 		basemenu.AppendMenuSeparator();
-		basemenu.AppendMenuItem(MF_STRING, 4003, "Dark theme");
+		basemenu.AppendMenuItem(MF_STRING, 4003, "灰暗主題");
 		basemenu.CheckMenuItem(4003, properties.visualization_dark_theme);
 	}
 
@@ -1909,6 +1909,7 @@ function draw_main_menu(x,y){
 	}
 	skin_settings_menu.AppendMenuSeparator();
 	skin_settings_menu.AppendMenuItem(MF_GRAYED, 0, "Eole v"+globalProperties.theme_version);
+	skin_settings_menu.AppendMenuItem(MF_GRAYED, 0, "繁體化: SyaoranChang v"+ globalProperties.lastest_ChineseTraditionaltranslation_version);
 
 	skin_settings_menu.AppendTo(basemenu, MF_STRING, "Skin 設定");
 

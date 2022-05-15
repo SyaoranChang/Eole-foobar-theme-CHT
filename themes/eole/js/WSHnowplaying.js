@@ -1796,7 +1796,7 @@ function draw_settings_menu(x,y){
 		_menu.AppendMenuItem(MF_STRING, 12, "維持比例")
 		_menu.CheckMenuItem(12,globalProperties.keepProportion);
 		_menu.AppendMenuItem(MF_STRING, 13, "填滿整個空間");
-		_menu.AppendMenuItem(MF_STRING, 20, "Disable cover cache for this artwork");
+		_menu.AppendMenuItem(MF_STRING, 20, "停用此作品的封面快取");
 		_menu.CheckMenuItem(20,properties.disableCoverCache);		
 		_menu.CheckMenuItem(13,!trackinfostext_state.isActive() && properties.coverNoPadding);				
 		_menu.AppendMenuSeparator();
@@ -1804,7 +1804,7 @@ function draw_settings_menu(x,y){
 		_menu.CheckMenuItem(18, trackinfostext_state.isActive());		
 		_menu.AppendMenuItem(trackinfostext_state.isActive()?MF_STRING:MF_GRAYED, 17, "雙行顯示細節");
 		_menu.CheckMenuItem(17, properties.doubleRowText);
-		_menu.AppendMenuItem(trackinfostext_state.isActive()?MF_STRING:MF_GRAYED, 19, "Edit displayed infos");	
+		_menu.AppendMenuItem(trackinfostext_state.isActive()?MF_STRING:MF_GRAYED, 19, "編輯顯示的資訊");	
 		_menu.CheckMenuItem(19, properties.customInfos!="");
 		_menu.AppendMenuItem(trackinfostext_state.isActive()?MF_STRING:MF_GRAYED, 16, "顯示評等");
 		_menu.CheckMenuItem(16,properties.showRating);		
@@ -1936,10 +1936,10 @@ function draw_settings_menu(x,y){
 			case (idx == 19): 
 					var customInfos_splitted = properties.customInfos.split(" ^^ ");
 					if(typeof customInfos_splitted[1] === "undefined") customInfos_splitted[1] = "";
-					customNowPlayingInfos("Edit displayed infos"
-										,"<div class='titleBig'>Edit displayed infos</div><div class='separator'></div><br/>Enter a title formatting script for each line of informations displayed. Leave both lines empty for default informations. Default informations are:\n\n     Line 1: %artist%  |  %album% (%date%)\n     Line 2: %codec% | %codec_profile% | %bitrate%K | %play_count%\n\nYou can use the full foobar2000 title formatting syntax here.<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">Click here</a> for informations about foobar title formatting. (http://tinyurl.com/lwhay6f)<br/>"
+					customNowPlayingInfos("編輯顯示的資訊"
+										,"<div class='titleBig'>編輯顯示的資訊</div><div class='separator'></div><br/>為顯示的每一行輸入一個曲目名稱格式化腳本。 兩行保留空白將使用預設的資訊。 預設的資訊為:\n\n     第1行: %artist%  |  %album% (%date%)\n     第2行: %codec% | %codec_profile% | %bitrate%K | %play_count%\n\n你可以在這裡使用完整的foobar2000曲目名稱格式化語法。<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">點擊這裡</a> 瞭解關於foobar曲目名稱格式化的信息。 (http://tinyurl.com/lwhay6f)<br/>"
 										,''
-										,'First line:##Second line:'
+										,'第1行:##第2行:'
 										,customInfos_splitted[0]+'##'+customInfos_splitted[1]);
 		
 				window.Repaint();
