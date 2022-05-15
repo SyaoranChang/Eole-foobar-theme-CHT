@@ -160,8 +160,8 @@
 	<body>
 		<div style="background-color:#e5e5e5; clear:both;">
 		<div id="tablink2" class="tablink2">
-			<a onclick="openTab('PanelCfg', this, 'green')" id="PanelCfg">Panel Settings</a>
-			<a onclick="openTab('ServerCfg', this, '#004BD2')" id="ServerCfg"> Server Settings (All Panels) </a>
+			<a onclick="openTab('PanelCfg', this, 'green')" id="PanelCfg">面板設定</a>
+			<a onclick="openTab('ServerCfg', this, '#004BD2')" id="ServerCfg"> 伺服器設定 (所有面板) </a>
 		</div>
 		
 		
@@ -885,7 +885,7 @@ Improves search results if such phrases are used in album names.</div>
 				else {
 					if (!/title_format|download|photo|cover|tagger|misc/.test(cur.serverPage)) cur.serverPage = 'download'
 				}
-				document.title = 'Biography Options';
+				document.title = '人物傳記設定';
 				ppt = JSON.parse(parsed_args[0]);
 				cfg = JSON.parse(parsed_args[1]);				
 				cbox_h = Math.round(Math.max(em, 13));
