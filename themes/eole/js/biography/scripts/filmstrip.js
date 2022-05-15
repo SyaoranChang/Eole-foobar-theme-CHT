@@ -1,4 +1,4 @@
-class FilmStrip {
+﻿class FilmStrip {
 	constructor() {
 		this.accessed = 0;
 		this.blockSize = 80;
@@ -538,7 +538,7 @@ class FilmStrip {
 				const continue_confirmation = (status, confirmed) => {
 					if (confirmed) ppt.filmStripSize = 0.15;
 				}
-				popUpBox.confirm('Reset Filmstrip To Default Size', 'Continue?', 'Yes', 'No', continue_confirmation);
+				popUpBox.confirm('重置幻燈片為預設尺寸', '要繼續嗎?', '確定', '取消', continue_confirmation);
 				break;
 			}
 		}

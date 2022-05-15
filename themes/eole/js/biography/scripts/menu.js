@@ -127,7 +127,7 @@ class MenuItems {
 			artistClean: '',
 			blacklist: [],
 			blacklistStr: [],
-			covType: ['Front', 'Back', 'Disc', 'Icon', 'Artist', 'Cycle Above', 'Cycle From Folder'],
+			covType: ['前面', '後面', '光碟', '圖示', '演出者', '循環以上', '從文件夾循環'],
 			isLfm: true,
 			list: [],
 			name: ''
@@ -231,13 +231,14 @@ class MenuItems {
 		});
 
 		menu.newItem({
-			str: ppt.artistView ? 'Biography: switch to ' + (!ppt.allmusic_bio ? (!ppt.lockBio || ppt.bothBio ? 'prefer ' : '') + 'allmusic' + (ppt.bothBio ? ' first' : '') : (!ppt.lockBio || ppt.bothBio ? 'prefer ' : '') + 'last.fm' + (ppt.bothBio ? ' first' : '')) : 'Review: switch to ' + (!ppt.allmusic_alb ? (!ppt.lockRev || ppt.bothRev ? 'prefer ' : '') + 'allmusic' + (ppt.bothRev ? ' first' : '') : (!ppt.lockRev || ppt.bothRev ? 'prefer ' : '') + 'last.fm' + (ppt.bothRev ? ' first' : '')),
+			str: ppt.artistView ? '人物傳記: 切換到 ' + (!ppt.allmusic_bio ? (!ppt.lockBio || ppt.bothBio ? '傾向於 ' : '') + 'allmusic' + (ppt.bothBio ? ' first' : '') : (!ppt.lockBio || ppt.bothBio ? '傾向於 ' : '') + 'last.fm' + (ppt.bothBio ? ' first' : '')) : '評論: 切換到 ' + (!ppt.allmusic_alb ? (!ppt.lockRev || ppt.bothRev ? '傾向於 ' : '') + 'allmusic' + (ppt.bothRev ? ' first' : '') : (!ppt.lockRev || ppt.bothRev ? '傾向於 ' : '') + 'last.fm' + (ppt.bothRev ? ' first' : '')),
 			func: () => txt.toggle(ppt.artistView ? (!ppt.bothBio ? 0 : 6) : (!ppt.bothRev ? 1 : 7)),
 			separator: true
 		});
 
 		menu.newMenu({
-			menuName: 'Display'
+			menuName: 'Display',
+			str: '顯示'
 		});
 
 		for (let i = 0; i < 10; i++) menu.newItem({
@@ -255,18 +256,19 @@ class MenuItems {
 		});
 
 		menu.newMenu({
-			menuName: 'Sources'
+			menuName: 'Sources',
+			str: '資料來源'
 		});
 
 		menu.newMenu({
 			menuName: 'Biography',
-			str: 'Biography: ' + (ppt.allmusic_bio ? !ppt.bothBio ? (!ppt.lockBio ? 'prefer ' : '') + 'allmusic' : 'prefer both' : !ppt.bothBio ? (!ppt.lockBio ? 'prefer ' : '') + 'last.fm' : 'prefer both'),
+			str: '人物傳記: ' + (ppt.allmusic_bio ? !ppt.bothBio ? (!ppt.lockBio ? '傾向於 ' : '') + 'allmusic' : '傾向於兩者都有' : !ppt.bothBio ? (!ppt.lockBio ? '傾向於 ' : '') + 'last.fm' : '傾向於兩者都有'),
 			appendTo: 'Sources'
 		});
 
 		for (let i = 0; i < 4; i++) menu.newItem({
 			menuName: 'Biography',
-			str: [(!ppt.lockBio ? 'Prefer allmusic' : 'Allmusic'), (!ppt.lockBio ? 'Prefer last.fm' : 'Last.fm'), 'Prefer both', 'Lock to single source'][i],
+			str: [(!ppt.lockBio ? '傾向於 allmusic' : 'Allmusic'), (!ppt.lockBio ? '傾向於 last.fm' : 'Last.fm'), '傾向於兩者都有', '鎖定到單一來源'][i],
 			func: () => txt.toggle([0, 0, 4, 2][i]),
 			flags: (i < 2 || i == 3) && ppt.bothBio ? MF_GRAYED : MF_STRING,
 			checkItem: i > 1 && [ppt.bothBio, ppt.lockBio][i - 2],
@@ -276,13 +278,13 @@ class MenuItems {
 
 		menu.newMenu({
 			menuName: 'Review',
-			str: 'Review: ' + (ppt.allmusic_alb ? !ppt.bothRev ? (!ppt.lockRev ? 'prefer ' : '') + 'allmusic' : 'prefer both' : !ppt.bothRev ? (!ppt.lockRev ? 'prefer ' : '') + 'last.fm' : 'prefer both'),
+			str: '評論: ' + (ppt.allmusic_alb ? !ppt.bothRev ? (!ppt.lockRev ? '傾向於 ' : '') + 'allmusic' : '傾向於兩者都有' : !ppt.bothRev ? (!ppt.lockRev ? '傾向於 ' : '') + 'last.fm' : '傾向於兩者都有'),
 			appendTo: 'Sources'
 		});
 
 		for (let i = 0; i < 4; i++) menu.newItem({
 			menuName: 'Review',
-			str: [(!ppt.lockRev ? 'Prefer allmusic' : 'Allmusic'), (!ppt.lockRev ? 'Prefer last.fm' : 'Last.fm'), 'Prefer both', 'Lock to single source'][i],
+			str: [(!ppt.lockRev ? '傾向於 allmusic' : 'Allmusic'), (!ppt.lockRev ? '傾向於 last.fm' : 'Last.fm'), '傾向於兩者都有', '鎖定到單一來源'][i],
 			func: () => txt.toggle([1, 1, 5, 3][i]),
 			flags: (i < 2 || i == 3) && ppt.bothRev ? MF_GRAYED : MF_STRING,
 			checkItem: i > 1 && [ppt.bothRev, ppt.lockRev][i - 2],
@@ -292,10 +294,11 @@ class MenuItems {
 
 		menu.newMenu({
 			menuName: 'Last.fm type',
+			str: 'Last.fm 類型',
 			appendTo: 'Review'
 		});
 
-		['Album', 'Album + track', 'Track'].forEach((v, i) => menu.newItem({
+		['專輯', '專輯 + 曲目', '曲目'].forEach((v, i) => menu.newItem({
 			menuName: 'Last.fm type',
 			str: v,
 			func: () => {
@@ -319,10 +322,10 @@ class MenuItems {
 		menu.newMenu({
 			menuName: 'Photo',
 			appendTo: 'Sources',
-			str: 'Photo: ' + (ppt.cycPhoto ? 'cycle' : 'artist')
+			str: '圖片: ' + (ppt.cycPhoto ? '循環' : '演出者')
 		});
 
-		['Cycle from folder', 'Artist (single image [fb2k: display])'].forEach((v, i) => menu.newItem({
+		['從文件夾循環', '演出者 (single image [fb2k: display])'].forEach((v, i) => menu.newItem({
 			menuName: 'Photo',
 			str: v,
 			func: () => {
@@ -334,7 +337,7 @@ class MenuItems {
 
 		menu.newMenu({
 			menuName: 'Cover',
-			str: 'Cover: ' + (!panel.alb.ix || ppt.artistView ? ppt.loadCovAllFb || ppt.loadCovFolder ? 'cycle' : this.img.covType[ppt.covType] : 'front'),
+			str: '封面: ' + (!panel.alb.ix || ppt.artistView ? ppt.loadCovAllFb || ppt.loadCovFolder ? '循環' : this.img.covType[ppt.covType] : '前面'),
 			appendTo: 'Sources',
 			flags: !panel.alb.ix || ppt.artistView ? MF_STRING : MF_GRAYED
 		});
@@ -356,6 +359,7 @@ class MenuItems {
 
 		menu.newMenu({
 			menuName: 'Open containing folder',
+			str: '開啟所在資料夾',
 			appendTo: 'Sources'
 		});
 
@@ -390,13 +394,14 @@ class MenuItems {
 
 		menu.newItem({
 			menuName: 'Sources',
-			str: 'Force update',
+			str: '強制更新',
 			func: () => panel.callServer(1, ppt.focus, 'bio_forceUpdate', 0)
 		});
 
 		const style_arr = panel.style.name.slice();
 		menu.newMenu({
-			menuName: 'Layout'
+			menuName: 'Layout',
+			str: '版面設計'
 		});
 
 		style_arr.forEach((v, i) => menu.newItem({
@@ -417,10 +422,11 @@ class MenuItems {
 
 		menu.newMenu({
 			menuName: 'Create && manage styles',
+			str: '建立和管理樣式',
 			appendTo: 'Layout'
 		});
 
-		['Create new style...', 'Rename custom style...', 'Delete custom style...', 'Export custom style...', 'Reset style...'].forEach((v, i) => menu.newItem({
+		['建立新樣式...', '重新命名自定義的樣式...', '刪除自定義的樣式...', '匯出自定義的樣式...', '重置樣式...'].forEach((v, i) => menu.newItem({
 			menuName: 'Create && manage styles',
 			str: v,
 			func: () => this.setStyles(i),
@@ -435,10 +441,11 @@ class MenuItems {
 
 		menu.newMenu({
 			menuName: 'Filmstrip',
+			str: '幻燈片',
 			appendTo: 'Layout'
 		});
 
-		['Top', 'Right', 'Bottom', 'Left', 'Reset to default size...'].forEach((v, i) => menu.newItem({
+		['頂部', '右側', '底部', '左側', '重置為預設尺寸...'].forEach((v, i) => menu.newItem({
 			menuName: 'Filmstrip',
 			str: v,
 			func: () => filmStrip.set(i),
@@ -451,19 +458,20 @@ class MenuItems {
 			separator: true
 		});
 
-		['Reset zoom', 'Reload'].forEach((v, i) => menu.newItem({
+		['重置縮放', '重新載入'].forEach((v, i) => menu.newItem({
 			menuName: 'Layout',
 			str: v,
 			func: () => !i ? but.resetZoom() : window.Reload(),
 		}));
 
 		menu.newMenu({
-			menuName: 'Image'
+			menuName: 'Image',
+			str: '圖片',
 		});
 
 		menu.newItem({
 			menuName: 'Image',
-			str: 'Auto cycle',
+			str: '自動循環',
 			func: () => ppt.toggle('cycPic'),
 			checkItem: ppt.cycPic,
 			separator: true
@@ -471,13 +479,14 @@ class MenuItems {
 
 		menu.newMenu({
 			menuName: 'Alignment',
+			str: '對齊方式',
 			appendTo: 'Image',
 			hide: ppt.style > 3
 		});
 
 		for (let i = 0; i < 4; i++) menu.newItem({
 			menuName: 'Alignment',
-			str: ppt.style == 0 || ppt.style == 2 ? ['Left', 'Centre', 'Right', 'Align with text'][i] : ['Top', 'Centre', 'Bottom', 'Align with text'][i],
+			str: ppt.style == 0 || ppt.style == 2 ? ['左側', '中心', '右側', '與文字對齊'][i] : ['頂部', '中心', '底部', '與文字對齊'][i],
 			func: () => {
 				switch (i) {
 					case 3:
@@ -553,6 +562,7 @@ class MenuItems {
 
 		menu.newMenu({
 			menuName: 'Black list',
+			str: '黑名單',
 			appendTo: 'Image'
 		});
 
@@ -635,7 +645,7 @@ class MenuItems {
 		});
 
 		menu.newItem({
-			str: 'Options...',
+			str: '設定...',
 			func: () => cfg.open('PanelCfg'),
 		});
 	}
@@ -696,20 +706,20 @@ class MenuItems {
 			this.img.blacklist = this.img.list.blacklist[this.img.artistClean] || [];
 		}
 	
-		this.img.blacklistStr = [this.img.isLfm ? '+ Add' + (!panel.style.showFilmStrip ? '' : ' main image') + ' to black list: ' + this.img.artist + '_' + this.img.name : '+ Add to black list: ' + (this.img.name ? 'N/A - requires last.fm photo. Selected image : ' + this.img.name : 'N/A - no' + (!panel.style.showFilmStrip ? '' : '') + ' image file'), this.img.blacklist.length ? ' - Remove from black list (click name): ' : 'No black listed images for current artist', 'Undo'];
+		this.img.blacklistStr = [this.img.isLfm ? '+ 加入' + (!panel.style.showFilmStrip ? '' : ' 主要圖片') + ' 到黑名單: ' + this.img.artist + '_' + this.img.name : '+ 加入到黑名單: ' + (this.img.name ? '無 - 需要 last.fm 的演出者圖片. 選擇的圖片 : ' + this.img.name : '無 - 無圖片' + (!panel.style.showFilmStrip ? '' : '') + ' 圖片檔案'), this.img.blacklist.length ? ' - 從黑名單移除 (點擊名稱): ' : '目前的演出者沒有黑名單的圖片', '復原'];
 	}
 
 	getDisplayStr() {
 		const m = ppt.artistView ? ppt.bioMode : ppt.revMode;
 		this.display.check = [ppt.sameStyle ? !ppt.img_only && !ppt.text_only : m == 0, ppt.sameStyle ? ppt.img_only : m == 1, ppt.sameStyle ? ppt.text_only : m == 2, ppt.showFilmStrip, ppt.heading, ppt.artistView, !ppt.artistView, !ppt.focus, ppt.focus];
-		const n = [!panel.id.imgText ? 'Auto' : 'Image+text', 'Image', 'Text', 'Filmstrip', 'Heading', 'Artist view', 'Album view', 'Prefer nowplaying', 'Follow selected track (playlist)', !panel.id.imgText ? 'Toggle: auto vs image+text' : 'Toggle: image+text vs auto'];
+		const n = [!panel.id.imgText ? '自動顯示' : '圖片+文字', '只有圖片', '只有文字', '幻燈片', '標題', '查看演出者', '查看專輯', '傾向於播放中', '跟隨選擇的曲目（播放列表）', !panel.id.imgText ? 'Toggle: auto vs image+text' : 'Toggle: image+text vs auto'];
 		const click = [!this.display.check[0] ? '\tMiddle click' : '', !this.display.check[1] && !ppt.text_only && txt.text ? '\tMiddle click' : '', !this.display.check[2] && !ppt.img_only ? '\tMiddle click' : '', '\tALT+Middle click', '', !ppt.artistView ? (!ppt.dblClickToggle ? '\tClick' : '\tDouble click') : '', ppt.artistView ? (!ppt.dblClickToggle ? '\tClick' : '\tDouble click') : '', '', '', '', ''];
 		this.display.str = n.map((v, i) => v + click[i])
 	}
 
 	getOpenName() {
 		const fo = [this.path.img, this.path.am[3], this.path.lfm[3], this.path.tracks[3]];
-		this.openName = ['Image', ppt.artistView ? 'Biography [allmusic]' : 'Review [allmusic]', ppt.artistView ? 'Biography [last.fm]' : 'Review [last.fm]', ppt.artistView ? '' : 'Tracks [last.fm]'];
+		this.openName = ['圖片', ppt.artistView ? '人物傳記 [allmusic]' : '評論 [allmusic]', ppt.artistView ? '人物傳記 [last.fm]' : '評論 [last.fm]', ppt.artistView ? '' : '曲目 [last.fm]'];
 		let i = this.openName.length;
 		while (i--)
 			if (!fo[i]) {
@@ -920,7 +930,7 @@ class MenuItems {
 				this.sendToPlaylist(m, n2, n3);
 			}
 		}
-		popUpBox.confirm(this.popUpTitle, this.popUpText(n2, n3), 'OK', 'Cancel', continue_confirmation);
+		popUpBox.confirm(this.popUpTitle, this.popUpText(n2, n3), '確定', '取消', continue_confirmation);
 	}
 
 	missingBio(n1, n2, n3) {
@@ -950,7 +960,7 @@ class MenuItems {
 				this.sendToPlaylist(m, n2, n3);
 			}
 		}
-		popUpBox.confirm(this.popUpTitle, this.popUpText(n2, n3), 'OK', 'Cancel', continue_confirmation);
+		popUpBox.confirm(this.popUpTitle, this.popUpText(n2, n3), '確定', '取消', continue_confirmation);
 	}
 
 	missingRev(n1, n2, n3) {
@@ -987,7 +997,7 @@ class MenuItems {
 				this.sendToPlaylist(m, n2, n3);
 			}
 		}
-		popUpBox.confirm(this.popUpTitle, this.popUpText(n2, n3), 'OK', 'Cancel', continue_confirmation);
+		popUpBox.confirm(this.popUpTitle, this.popUpText(n2, n3), '確定', '取消', continue_confirmation);
 	}
 
 	playlists_changed() {
@@ -1094,6 +1104,7 @@ class MenuItems {
 				img.on_playback_new_track();
 				break;
 			case 9:
+				console.log("value = %s", i);
 				ppt.toggle('imgText');
 				txt.refresh(0);
 				break;

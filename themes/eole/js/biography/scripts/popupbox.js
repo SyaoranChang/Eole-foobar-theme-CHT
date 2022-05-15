@@ -1,4 +1,4 @@
-class PopUpBox {
+﻿class PopUpBox {
 	constructor() {
 		this.getHtmlCode();
 	}
@@ -49,13 +49,13 @@ class PopUpBox {
 
 	input(title, msg, ok_callback, input, def) {
 		utils.ShowHtmlDialog(window.ID, this.inputHtmlCode, {
-			data: [title, msg, 'Cancel', ok_callback, input, def]
+			data: [title, msg, '取消', ok_callback, input, def]
 		});
 	}
 
 	inputApply(title, msg, ok_callback, input, def) {
 		utils.ShowHtmlDialog(window.ID, this.inputApplyHtmlCode, {
-			data: [title, msg, 'Cancel', ok_callback, input, def]
+			data: [title, msg, '取消', ok_callback, input, def]
 		});
 	}
 

@@ -1,4 +1,4 @@
-class Panel {
+﻿class Panel {
 	constructor() {
 		this.arc = 10;
 		this.calc = true;
@@ -397,7 +397,7 @@ class Panel {
 				ns = input;
 			}
 		}
-		popUpBox.input('Create New Freestyle Layout', 'Enter new style name\n\nFreestyle layouts offer drag style positioning of image & text boxes + text overlay\n\nContinue?', ok_callback, '', 'My Style');
+		popUpBox.input('創建新的自由風格版面', '輸入新的樣式名稱\n\n自由的版面設定提供圖片和文字框的拖動式定位 + 文字疊加\n\n要繼續嗎?', ok_callback, '', '我的樣式');
 		if (!ns) return false;
 		let lines_drawn, imgs, te_t;
 		switch (ppt.style) {
@@ -527,7 +527,7 @@ class Panel {
 				txt.refresh(0);
 			}
 		}
-		popUpBox.confirm('Delete Current Style', 'Delete: ' + this.style.name[n] + '\n\nStyle will be set to top', 'OK', 'Cancel', continue_confirmation);
+		popUpBox.confirm('刪除當前的樣式', '刪除: ' + this.style.name[n] + '\n\n樣式將設置為最上面的', '確定', '取消', continue_confirmation);
 	}
 
 	draw(gr) {
@@ -569,7 +569,7 @@ class Panel {
 				window.NotifyOthers('bio_customStyle', JSON.stringify(this.style.free[n - 5]));
 			}
 		}
-		popUpBox.confirm('Export Current Style To Other Biography Panels', 'Export: ' + this.style.name[n], 'OK', 'Cancel', continue_confirmation);
+		popUpBox.confirm('將當前樣式匯出到其他人物介紹面板', '匯出: ' + this.style.name[n], '確定', '取消', continue_confirmation);
 
 	}
 
@@ -889,7 +889,7 @@ class Panel {
 	}
 
 	getStyleNames() {
-		this.style.name = ['Top', 'Right', 'Bottom', 'Left', 'Overlay'];
+		this.style.name = ['頂部', '右側', '底部', '左側', '疊加'];
 		this.style.free.forEach(v => this.style.name.push(v.name));
 	}
 
@@ -1115,7 +1115,7 @@ class Panel {
 				window.Repaint();
 			}
 		}
-		popUpBox.input('Rename Current Style', 'Rename style: ' + this.style.name[n] + '\n\nEnter new name\n\nContinue?', ok_callback, '', this.style.name[n]);
+		popUpBox.input('重新命名當前的樣式', '重新命名樣式: ' + this.style.name[n] + '\n\n輸入新的名稱\n\n要繼續嗎?', ok_callback, '', this.style.name[n]);
 	}
 
 	resetAlbumHistory() {
@@ -1156,7 +1156,7 @@ class Panel {
 				txt.refresh(5);
 			}
 		}
-		popUpBox.confirm('Reset Current Style', 'Reset to Default ' + (ppt.style < 4 ? this.style.name[n] : 'Overlay') + ' Style.\n\nContinue?', 'OK', 'Cancel', continue_confirmation);
+		popUpBox.confirm('重置當前的樣式', '重置為預設 ' + (ppt.style < 4 ? this.style.name[n] : '重疊') + ' 樣式。\n\n要繼續嗎?', '確定', '取消', continue_confirmation);
 	}
 
 	sameStyle() {
@@ -1183,7 +1183,7 @@ class Panel {
 				ppt.cycTimeItem = this.style.cycTimeItem;
 			}
 		}
-		popUpBox.input('Item: Cycle Time', 'Enter time in seconds\n\nMinimum = 30 seconds', ok_callback, '', this.style.cycTimeItem);
+		popUpBox.input('項目: 週期時間', '以秒為單位輸入時間\n\n最小 = 30 秒', ok_callback, '', this.style.cycTimeItem);
 	}
 
 	setCycPic() {
@@ -1195,7 +1195,7 @@ class Panel {
 				img.style.delay = Math.min(ppt.cycTimePic, 7) * 1000;
 			}
 		}
-		popUpBox.input('Photo: Cycle Time', 'Enter time in seconds', ok_callback, '', ppt.cycTimePic);
+		popUpBox.input('圖片: 週期時間', '以秒為單位輸入時間', ok_callback, '', ppt.cycTimePic);
 	}
 
 	setStyle(bypass) {
