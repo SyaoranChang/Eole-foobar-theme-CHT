@@ -4380,7 +4380,7 @@ oBrowser = function(name) {
 			_menuRating.AppendMenuItem(MF_STRING, 115, "顯示所選跟已評等的音軌的評等");
 			_menuRating.AppendMenuItem(MF_STRING, 116, "不顯示評等");
 			_menuRating.CheckMenuRadioItem(113, 117, (properties.showRating && !properties.showRatingSelected && !properties.showRatingRated) ? 113 : (properties.showRating && properties.showRatingSelected && !properties.showRatingRated) ? 114 : (properties.showRating && properties.showRatingRated && properties.showRatingSelected) ? 115 : (properties.showRating && properties.showRatingRated) ? 117 : 116);
-			_menuRating.AppendTo(_menu,MF_STRING, "評等顯示 ");
+			_menuRating.AppendTo(_menu,MF_STRING, "評等顯示");
 
 			if(layout_state.isEqual(0)){
 				var _panelWidth = window.CreatePopupMenu();

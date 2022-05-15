@@ -3316,7 +3316,7 @@ function draw_settings_menu(x,y,right_align,sort_group){
 	_menuRating.AppendMenuItem(MF_STRING, 34, "顯示所選跟已評等的音軌的評等");
 	_menuRating.AppendMenuItem(MF_STRING, 35, "不顯示評等");
 	_menuRating.CheckMenuRadioItem(32, 36, (properties.showRating && !properties.showRatingSelected && !properties.showRatingRated) ? 32 : (properties.showRating && properties.showRatingSelected && !properties.showRatingRated) ? 33 : (properties.showRating && properties.showRatingSelected && properties.showRatingRated) ? 34 : (properties.showRating && properties.showRatingRated) ? 36 : 35);
-	_menuRating.AppendTo(_menuTracklist,MF_STRING, "Rating");
+	_menuRating.AppendTo(_menuTracklist,MF_STRING, "評等顯示");
 
 	_menuTracklist.AppendMenuSeparator();
 
@@ -6515,7 +6515,7 @@ function on_mouse_rbtn_down(x, y){
 			quickSearchMenu.AppendTo(_menu, MF_STRING, "快速搜尋...");
 
 			var genrePopupMenu = createGenrePopupMenu(brw.groups[brw.groups_draw[check__]].pl[0]);
-			genrePopupMenu.AppendTo(_menu, MF_STRING, "Edit Genre");
+			genrePopupMenu.AppendTo(_menu, MF_STRING, "編輯類型");
 			_menu.AppendMenuSeparator();
 			_menu.AppendMenuItem(MF_STRING, 19, "刷新此圖片");
 			_menu.AppendMenuSeparator();

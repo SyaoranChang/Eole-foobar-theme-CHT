@@ -1917,11 +1917,11 @@ function createGenrePopupMenu(firstFile, checked_item, genrePopupMenu){
 		}
 	}
 	if(firstFile){
-		if(firstFileGenre!="") var currentGenre="Current genre: '"+firstFileGenre.replace("&","&&")+"'";
+		if(firstFileGenre!="") var currentGenre="目前類型: '"+firstFileGenre.replace("&","&&")+"'";
 
 		genrePopupMenu.AppendMenuSeparator();
 		genrePopupMenu.AppendMenuItem(MF_GRAYED, 0, currentGenre);
-		if(showBelow && firstFileGenre!="") genrePopupMenu.AppendMenuItem(MF_GRAYED, 0, "Genre guessed from path is the same");
+		if(showBelow && firstFileGenre!="") genrePopupMenu.AppendMenuItem(MF_GRAYED, 0, "從路徑猜測類型是相同的");
 	}
 	return genrePopupMenu;
 }
