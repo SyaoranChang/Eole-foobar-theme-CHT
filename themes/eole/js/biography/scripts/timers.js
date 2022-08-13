@@ -1,6 +1,8 @@
+﻿'use strict';
+
 class Timers {
 	constructor() {
-		['dl', 'img', 'sim1', 'sim2', 'source', 'transition', 'zSearch'].forEach(v => this[v] = {
+		['dl', 'img', 'lyrics', 'sim1', 'sim2', 'source', 'transition', 'zSearch'].forEach(v => this[v] = {
 			id: null
 		});
 
@@ -28,19 +30,19 @@ class Timers {
 		}
 		timer_dl();
 	}
-
+	
 	image() {
-		if (!panel.server) return;
+		if (!$.server) return;
 		this.clear(this.img);
 		this.img.id = setInterval(() => {
 			img.fresh();
 			men.fresh();
-			//window.NotifyOthers('bio_imgChange', 0);
+			window.NotifyOthers('bio_imgChange', 0);
 		}, 1000);
 	}
 
 	res(force) {
 		window.NotifyOthers('bio_getImg', force);
-		if (panel.server) img.grab(force);
+		if ($.server) img.grab(force);
 	}
 }

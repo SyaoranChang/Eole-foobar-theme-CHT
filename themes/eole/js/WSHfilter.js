@@ -43,9 +43,6 @@ var properties = {
     drawItemsCounter3: window.GetProperty("_PROPERTY: Show numbers of items for tag mode 3", true),
     drawAlternateBG: window.GetProperty("_PROPERTY: Alternate row background", true),
     filtred_playlist_idx: window.GetProperty("_PROPERTY: filtred playlist idx", -1),	
-    albumsTFsortingdefault: window.GetProperty("Sort Order - ALBUM", "%album artist% | %date% | %album% | %discnumber% | %tracknumber% | %title%"),
-    artistsTFsortingdefault: "$meta(artist) | %date% | %album% | %discnumber% | %tracknumber% | %title%",//window.GetProperty("Sort Order - ARTIST", "$meta(artist) | %date% | %album% | %discnumber% | %tracknumber% | %title%"),
-    genresTFsortingdefault: window.GetProperty("Sort Order - GENRE", "$meta(genre,0) | %album artist% | %date% | %album% | %discnumber% | %tracknumber% | %title%"),
 	deleteSpecificImageCache : window.GetProperty("COVER cachekey of covers to delete on next startup", ""),
     showAllItem: window.GetProperty("_PROPERTY: Show ALL item", true),
     showAllItem1: window.GetProperty("_PROPERTY: Show ALL item for tag mode 1", true),
@@ -82,6 +79,15 @@ var properties = {
     tf_groupkey_album: window.GetProperty("_PROPERTY Album TitleFormat", "%album artist% ^^ %album%"),
     tf_groupkey_album_default: "%album artist% ^^ %album%",
     tf_groupkey_album_addinfos: " ## %title% ## %date%",
+    albumsTFsortingdefault: "%album artist% | %date% | %album% | %discnumber% | %tracknumber% | %title%",
+    artistsTFsortingdefault: "$meta(artist) | %date% | %album% | %discnumber% | %tracknumber% | %title%",
+    genresTFsortingdefault: "$meta(genre,0) | %album artist% | %date% | %album% | %discnumber% | %tracknumber% | %title%",	
+	tf_sort_genre_default: "%album artist% | %date% | %album% | %discnumber% | %tracknumber% | %title%",
+	tf_sort_artist_default: "%date% | %album% | %discnumber% | %tracknumber% | %title%",	
+	tf_sort_album_default: "%date% | %album% | %discnumber% | %tracknumber% | %title%",		
+    tf_sort_genre: window.GetProperty("Sort Order - Genre TitleFormat", ""),	
+    tf_sort_artist: window.GetProperty("Sort Order - Artist TitleFormat", ""),	
+    tf_sort_album: window.GetProperty("Sort Order - Album TitleFormat", ""),
     genre_customGroup_label: window.GetProperty("_DISPLAY: genre customGroup name", ""),
     artist_customGroup_label: window.GetProperty("_DISPLAY: artist customGroup name", ""),
     album_customGroup_label: window.GetProperty("_DISPLAY: album customGroup name", ""),
@@ -2323,28 +2329,34 @@ oBrowser = function(name) {
         switch(properties.tagMode) {
             case 1: // album
 				if(properties.tf_groupkey_album == properties.tf_groupkey_album_default){
-					var TFsorting = properties.albumsTFsortingdefault;
+					if(properties.tf_sort_album=='') var TFsorting = properties.albumsTFsortingdefault;
+					else var TFsorting =  properties.tf_groupkey_album_default + " | " + properties.tf_sort_album;						
 					this.customGroups = false;
 				} else {
-					var TFsorting = properties.tf_groupkey_album + " | %date% | %album% | %discnumber% | %tracknumber% | %title%";
+					if(properties.tf_sort_album=='') var TFsorting = properties.tf_groupkey_album + " | " + properties.tf_sort_album_default;
+					else var TFsorting = properties.tf_groupkey_album + " | " + properties.tf_sort_album;					
 					this.customGroups = true;
                 }
 				break;
             case 2: // artist
 				if(properties.tf_groupkey_artist == properties.tf_groupkey_artist_default) {
-					var TFsorting = properties.artistsTFsortingdefault;
+					if(properties.tf_sort_artist=='') var TFsorting = properties.artistsTFsortingdefault;
+					else var TFsorting =  properties.tf_groupkey_artist_default + " | " + properties.tf_sort_artist;							
 					this.customGroups = false;
 				} else {
-					var TFsorting = properties.tf_groupkey_artist + " | %date% | %album% | %discnumber% | %tracknumber% | %title%";
+					if(properties.tf_sort_artist=='') var TFsorting = properties.tf_groupkey_artist + " | " + properties.tf_sort_artist_default;
+					else var TFsorting = properties.tf_groupkey_artist + " | " + properties.tf_sort_artist;
 					this.customGroups = true;
 				}
                 break;
             case 3: // genre
 				if(properties.tf_groupkey_genre == properties.tf_groupkey_genre_default) {
-					var TFsorting = properties.genresTFsortingdefault;
+					if(properties.tf_sort_genre=='') var TFsorting = properties.genresTFsortingdefault;
+					else var TFsorting =  properties.tf_groupkey_genre_default + " | " + properties.tf_sort_genre;					
 					this.customGroups = false;
 				} else {
-					var TFsorting = properties.tf_groupkey_genre + " | %album artist% | %date% | %album% | %discnumber% | %tracknumber% | %title%";
+					if(properties.tf_sort_genre=='') var TFsorting = properties.tf_groupkey_genre + " | " + properties.tf_sort_genre_default;
+					else var TFsorting = properties.tf_groupkey_genre + " | " + properties.tf_sort_genre;					
 					this.customGroups = true;
                 }
 				break;
@@ -3932,19 +3944,21 @@ oBrowser = function(name) {
 
 
             _menu13.AppendMenuItem(MF_STRING, 113, "預設為 (%genre%)");
-            _menu13.CheckMenuItem(113, properties.tf_groupkey_genre == properties.tf_groupkey_genre_default && properties.genre_customGroup_label == "");
+			console.log(properties.tf_sort_genre == properties.tf_sort_genre_default)
+            _menu13.CheckMenuItem(113, properties.tf_groupkey_genre == properties.tf_groupkey_genre_default && properties.genre_customGroup_label == "" && (properties.tf_sort_genre == properties.tf_sort_genre_default||properties.tf_sort_genre==''));
             _menu13.AppendMenuItem(MF_STRING, 116, "自定義格式化曲目名稱...");
-            _menu13.CheckMenuItem(116, !(properties.tf_groupkey_genre == properties.tf_groupkey_genre_default && properties.genre_customGroup_label == ""));
+            _menu13.CheckMenuItem(116, !(properties.tf_groupkey_genre == properties.tf_groupkey_genre_default && properties.genre_customGroup_label == "" && (properties.tf_sort_genre == properties.tf_sort_genre_default||properties.tf_sort_genre=='')));
 
             _menu12.AppendMenuItem(MF_STRING, 112, "預設為 (%artist%)");
-            _menu12.CheckMenuItem(112, properties.tf_groupkey_artist == properties.tf_groupkey_artist_default && properties.artist_customGroup_label == "");
+            _menu12.CheckMenuItem(112, properties.tf_groupkey_artist == properties.tf_groupkey_artist_default && properties.artist_customGroup_label == "" && (properties.tf_sort_artist == properties.tf_sort_artist_default||properties.tf_sort_artist==''));
             _menu12.AppendMenuItem(MF_STRING, 115, "自定義格式化曲目名稱...");
-            _menu12.CheckMenuItem(115, !(properties.tf_groupkey_artist == properties.tf_groupkey_artist_default && properties.artist_customGroup_label == ""));
+            _menu12.CheckMenuItem(115, !(properties.tf_groupkey_artist == properties.tf_groupkey_artist_default && properties.artist_customGroup_label == "" && (properties.tf_sort_artist == properties.tf_sort_artist_default||properties.tf_sort_artist=='')));
 
             _menu11.AppendMenuItem(MF_STRING, 111, "預設為 (%album%)");
-            _menu11.CheckMenuItem(111, properties.tf_groupkey_album == properties.tf_groupkey_album_default && properties.album_customGroup_label == "");
+
+            _menu11.CheckMenuItem(111, properties.tf_groupkey_album == properties.tf_groupkey_album_default && properties.album_customGroup_label == "" && (properties.tf_sort_album == properties.tf_sort_album_default||properties.tf_sort_album==''));
             _menu11.AppendMenuItem(MF_STRING, 114, "自定義格式化曲目名稱...");
-            _menu11.CheckMenuItem(114, !(properties.tf_groupkey_album == properties.tf_groupkey_album_default && properties.album_customGroup_label == ""));
+            _menu11.CheckMenuItem(114, !(properties.tf_groupkey_album == properties.tf_groupkey_album_default && properties.album_customGroup_label == "" && (properties.tf_sort_album == properties.tf_sort_album_default||properties.tf_sort_album=='')));
 
 			if(properties.showLibraryTreeSwitch) {
 				_menu.AppendMenuItem(MF_STRING, 990, "切換到媒體櫃樹狀結構");
@@ -4098,7 +4112,9 @@ oBrowser = function(name) {
                         case 1:
                             properties.albumArtId = 0;
 							properties.tf_groupkey_album = properties.tf_groupkey_album_default;
-							window.SetProperty("_PROPERTY Album TitleFormat", properties.tf_groupkey_album);
+							window.SetProperty("_PROPERTY Album TitleFormat", properties.tf_groupkey_album);								
+							properties.tf_sort_album = properties.tf_sort_album_default;
+							window.SetProperty("Sort Order - Album TitleFormat", properties.tf_sort_album);
 							properties.album_customGroup_label = "";
 							window.SetProperty("_DISPLAY: album customGroup name", properties.album_customGroup_label);
 							window.NotifyOthers("album_customGroup_label",properties.album_customGroup_label);
@@ -4106,6 +4122,8 @@ oBrowser = function(name) {
                         case 2:
 							properties.tf_groupkey_artist = properties.tf_groupkey_artist_default;
 							window.SetProperty("_PROPERTY Artist TitleFormat", properties.tf_groupkey_artist);
+							properties.tf_sort_artist = properties.tf_sort_artist_default;
+							window.SetProperty("Sort Order - Artist TitleFormat", properties.tf_sort_artist);								
                             properties.albumArtId = 4;
 							properties.artist_customGroup_label = "";
 							window.SetProperty("_DISPLAY: artist customGroup name", properties.artist_customGroup_label);
@@ -4114,6 +4132,8 @@ oBrowser = function(name) {
                         case 3:
 							properties.tf_groupkey_genre = properties.tf_groupkey_genre_default;
 							window.SetProperty("_PROPERTY Genre TitleFormat", properties.tf_groupkey_genre);
+							properties.tf_sort_genre = properties.tf_sort_genre_default;
+							window.SetProperty("Sort Order - Genre TitleFormat", properties.tf_sort_genre);							
                             properties.albumArtId = 5;
 							properties.genre_customGroup_label = "";
 							window.SetProperty("_DISPLAY: genre customGroup name", properties.genre_customGroup_label);
@@ -4133,8 +4153,8 @@ oBrowser = function(name) {
 								customFilterGrouping(properties.tagMode
 													,"<div class='titleBig'>自定義篩選器</div><div class='separator'></div><br/>輸入一個曲目名稱格式化腳本。\n你可以在這裡使用完整的foobar2000曲目名稱格式化語法。<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">點擊這裡</a> 瞭解關於foobar曲目名稱格式化的信息。 (http://tinyurl.com/lwhay6f)<br/>"
 													,''
-													,'標籤 (最多10個字符):##分組模式:'
-													,properties.album_label+'##'+properties.tf_groupkey_album);
+													,'標籤 (最多20個字符):##分組模式 (empty: reset to default value):##Sorting pattern (empty: reset to default value):'
+													,properties.album_label+'##'+properties.tf_groupkey_album+'##'+((properties.tf_sort_album=='')?properties.tf_sort_album_default:properties.tf_sort_album));
 								/*new_TFgrouping = utils.InputBox(window.ID, "Enter a title formatting script.\nYou can use the full foobar2000 title formatting syntax here.\n\nSee http://tinyurl.com/lwhay6f\nfor informations about foobar title formatting.", "Album grouping", properties.tf_groupkey_album, true);
 								if (!(new_TFgrouping == "" || typeof new_TFgrouping == 'undefined' || properties.tf_groupkey_album==new_TFgrouping)) {
 									properties.tf_groupkey_album = new_TFgrouping;
@@ -4152,8 +4172,8 @@ oBrowser = function(name) {
 								customFilterGrouping(properties.tagMode
 													,"<div class='titleBig'>自定義篩選器</div><div class='separator'></div><br/>輸入一個曲目名稱格式化腳本。\n你可以在這裡使用完整的foobar2000曲目名稱格式化語法。<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">點擊這裡</a> 瞭解關於foobar曲目名稱格式化的信息。 (http://tinyurl.com/lwhay6f)<br/>"
 													,''
-													,'標籤 (最多10個字符):##分組模式:'
-													,properties.artist_label+'##'+properties.tf_groupkey_artist);
+													,'標籤 (最多20個字符):##分組模式 (empty: reset to default value):##Sorting pattern (empty: reset to default value):'
+													,properties.artist_label+'##'+properties.tf_groupkey_artist+'##'+((properties.tf_sort_artist=='')?properties.tf_sort_artist_default:properties.tf_sort_artist));
 								/*new_TFgrouping = utils.InputBox(window.ID, "Enter a title formatting script.\nYou can use the full foobar2000 title formatting syntax here.\n\nSee http://tinyurl.com/lwhay6f\nfor informations about foobar title formatting.", "Artist grouping", properties.tf_groupkey_artist, true);
 								if (!(new_TFgrouping == "" || typeof new_TFgrouping == 'undefined')) {
 									properties.tf_groupkey_artist = new_TFgrouping;
@@ -4171,8 +4191,8 @@ oBrowser = function(name) {
 								customFilterGrouping(properties.tagMode
 													,"<div class='titleBig'>自定義篩選器</div><div class='separator'></div><br/>輸入一個曲目名稱格式化腳本。\n你可以在這裡使用完整的foobar2000曲目名稱格式化語法。<br/><a href=\"http://tinyurl.com/lwhay6f\" target=\"_blank\">點擊這裡</a> 瞭解關於foobar曲目名稱格式化的信息。 (http://tinyurl.com/lwhay6f)<br/>"
 													,''
-													,'標籤 (最多10個字符):##分組模式:'
-													,properties.genre_label+'##'+properties.tf_groupkey_genre);
+													,'標籤 (最多10個字符):##分組模式 (empty: reset to default value):##Sorting pattern (empty: reset to default value)::'
+													,properties.genre_label+'##'+properties.tf_groupkey_genre+'##'+((properties.tf_sort_genre=='')?properties.tf_sort_genre_default:properties.tf_sort_genre));
 								/*new_TFgrouping = utils.InputBox(window.ID, "Enter a title formatting script.\nYou can use the full foobar2000 title formatting syntax here.\n\nSee http://tinyurl.com/lwhay6f\nfor informations about foobar title formatting.", "Genre grouping", properties.tf_groupkey_genre, true);
 								if (!(new_TFgrouping == "" || typeof new_TFgrouping == 'undefined')) {
 									properties.tf_groupkey_genre = new_TFgrouping;

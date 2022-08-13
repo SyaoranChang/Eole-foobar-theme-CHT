@@ -23,9 +23,9 @@
 		<div id="div_text" class="container"></div>
 		<div id="input_container"></div>
 		<div id="btn_cnt"> 
-			<button id="btn_ok">確定</button>
-			<button class="button_apply" id="btn_apply">套用</button>
-			<button id="btn_cancel">取消</button>
+			<button id="btn_ok">OK</button>
+			<button class="button_apply" id="btn_apply">Apply</button>
+			<button id="btn_cancel">Cancel</button>
 		</div>					
 		<script>
 			function close_window() {

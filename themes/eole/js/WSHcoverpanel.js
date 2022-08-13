@@ -971,7 +971,7 @@ function on_mouse_rbtn_up(x, y){
 		//Context.InitContext(new FbMetadbHandleList(fb.GetNowPlaying()));
 		//Context.BuildMenu(context_menu, 100, -1);
 		//context_menu.AppendTo(main_menu, MF_STRING, "Track properties");
-		main_menu.AppendMenuItem(MF_STRING, 2, "屬性");
+		main_menu.AppendMenuItem(MF_STRING, 200, "屬性");
 	}
 	if(utils.IsKeyPressed(VK_SHIFT)) {
 		main_menu.AppendMenuSeparator();
@@ -982,10 +982,6 @@ function on_mouse_rbtn_up(x, y){
 	}
 	idx = main_menu.TrackPopupMenu(x,y,0x0020);
 	switch(true) {
-		case (idx == 2):
-			//fb.RunContextCommandWithMetadb("Properties", fb.GetNowPlaying());
-			fb.RunContextCommandWithMetadb("屬性", fb.GetNowPlaying());
-		break;
 		case (idx == 100):
 			window.ShowProperties();
 			break;
@@ -1078,6 +1074,10 @@ function on_mouse_rbtn_up(x, y){
 		case (idx == 35):
 			draw_settings_menu(x,y);
 			break;
+		case (idx == 200):
+			//fb.RunContextCommandWithMetadb("Properties", fb.GetNowPlaying());
+			fb.RunContextCommandWithMetadb("屬性", fb.GetNowPlaying());
+		break;			
 		case (idx >= 100 && idx < 800):
 			Context.ExecuteByID(idx - 100);
 			break;			

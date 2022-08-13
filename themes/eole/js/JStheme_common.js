@@ -23,9 +23,9 @@ var last_mouse_move_notified = (new Date).getTime();
 var foo_playcount = utils.CheckComponent("foo_playcount", true);
 var timers = []
 var globalProperties = {
-	theme_version: '1.2.3b20',
-	lastest_breaking_version: '1.2.3b19',
-	lastest_ChineseTraditionaltranslation_version: '2021.10.06 02:47',
+	theme_version: '1.2.3b21',
+	lastest_breaking_version: '1.2.3b20',
+	lastest_ChineseTraditionaltranslation_version: '2022.08.13 11:50',
     thumbnailWidthMax: window.GetProperty("GLOBAL thumbnail width max", 200),
     coverCacheWidthMax: window.GetProperty("GLOBAL cover cache width max", 400),
 	TextRendering: 4,
@@ -344,6 +344,7 @@ function chooseMemorySettings(title, top_msg, bottom_msg, dialog_name, inter_tex
 		data: [title, top_msg, 'Cancel', ok_callback,'0 - 最低限度(Minimum)##1 - 在記憶體中保持已載入的封面##2 - 啟動時載入所有封面##3 - 啟動時載入所有封面和演出者的快取縮圖',globalProperties.mem_solicitation,bottom_msg,globalProperties.coverCacheWidthMax,inter_text],
 	});
 }
+
 function customFilterGrouping(title, top_msg, bottom_msg, input_default_values, input_labels){
 	function ok_callback(status, input_values) {
 		if(status!="cancel"){
@@ -351,41 +352,59 @@ function customFilterGrouping(title, top_msg, bottom_msg, input_default_values, 
 			var refresh_filters = false;
 			switch(properties.tagMode) {
 				case 1:
-					if (!(input_values[0] == "" || typeof input_values[0] == 'undefined' || g_tagswitcherbar.items_txt[1]==input_values[0])) {
-						properties.album_customGroup_label = input_values[0].substring(0, 10);
+					if (!(typeof input_values[0] == 'undefined' || g_tagswitcherbar.items_txt[1]==input_values[0])) {
+						properties.album_customGroup_label = input_values[0].substring(0, 20);
 						window.SetProperty("_DISPLAY: album customGroup name", properties.album_customGroup_label);
 						window.NotifyOthers("album_customGroup_label",properties.album_customGroup_label);
 						refresh_filters = true;
 					}
-					if (!(input_values[1] == "" || typeof input_values[1] == 'undefined' || properties.tf_groupkey_album==input_values[1])) {
-						properties.tf_groupkey_album = input_values[1];
+					if (!(typeof input_values[1] == 'undefined' || properties.tf_groupkey_album==input_values[1])) {
+						if(input_values[1] == "") properties.tf_groupkey_album = properties.tf_groupkey_album_default;
+						else properties.tf_groupkey_album = input_values[1];
 						window.SetProperty("_PROPERTY Album TitleFormat", properties.tf_groupkey_album);
 						refresh_filters = true;
 					}
+					if (!(typeof input_values[2] == 'undefined' || properties.tf_sort_album==input_values[2])) {
+						properties.tf_sort_album = input_values[2];
+						window.SetProperty("Sort Order - Album TitleFormat", properties.tf_sort_album);
+						refresh_filters = true;
+					}					
 				break;
 				case 2:
-					if (!(input_values[0] == "" || typeof input_values[0] == 'undefined' || g_tagswitcherbar.items_txt[2]==input_values[0])) {
-						properties.artist_customGroup_label = input_values[0].substring(0, 10);
+					if (!(typeof input_values[0] == 'undefined' || g_tagswitcherbar.items_txt[2]==input_values[0])) {
+						properties.artist_customGroup_label = input_values[0].substring(0, 20);
 						window.SetProperty("_DISPLAY: artist customGroup name", properties.artist_customGroup_label);
 						window.NotifyOthers("artist_customGroup_label",properties.artist_customGroup_label);
 						refresh_filters = true;
 					}
-					if (!(input_values[1] == "" || typeof input_values[1] == 'undefined' || properties.tf_groupkey_artist==input_values[1])) {
-						properties.tf_groupkey_artist = input_values[1];
+					if (!(typeof input_values[1] == 'undefined' || properties.tf_groupkey_artist==input_values[1])) {
+						if(input_values[1] == "") properties.tf_groupkey_artist = properties.tf_groupkey_artist_default;
+						else properties.tf_groupkey_artist = input_values[1];
 						window.SetProperty("_PROPERTY Artist TitleFormat", properties.tf_groupkey_artist);
 						refresh_filters = true;
 					}
+					if (!(typeof input_values[2] == 'undefined' || properties.tf_sort_artist==input_values[2])) {
+						properties.tf_sort_artist = input_values[2];
+						window.SetProperty("Sort Order - Artist TitleFormat", properties.tf_sort_artist);
+						refresh_filters = true;
+					}					
 				break;
 				case 3:
-					if (!(input_values[0] == "" || typeof input_values[0] == 'undefined' || g_tagswitcherbar.items_txt[3]==input_values[0])) {
-						properties.genre_customGroup_label = input_values[0].substring(0, 10);
+					if (!(typeof input_values[0] == 'undefined' || g_tagswitcherbar.items_txt[3]==input_values[0])) {
+						properties.genre_customGroup_label = input_values[0].substring(0, 20);
 						window.SetProperty("_DISPLAY: genre customGroup name", properties.genre_customGroup_label);
 						window.NotifyOthers("genre_customGroup_label",properties.genre_customGroup_label);
 						refresh_filters = true;
 					}
-					if (!(input_values[1] == "" || typeof input_values[1] == 'undefined' || properties.tf_groupkey_genre==input_values[1])) {
-						properties.tf_groupkey_genre = input_values[1];
+					if (!(typeof input_values[1] == 'undefined' || properties.tf_groupkey_genre==input_values[1])) {
+						if(input_values[1] == "") properties.tf_groupkey_genre = properties.tf_groupkey_genre_default;
+						else properties.tf_groupkey_genre = input_values[1];
 						window.SetProperty("_PROPERTY Genre TitleFormat", properties.tf_groupkey_genre);
+						refresh_filters = true;
+					}
+					if (!(typeof input_values[2] == 'undefined' || properties.tf_sort_genre==input_values[2])) {
+						properties.tf_sort_genre = input_values[2];
+						window.SetProperty("Sort Order - Genre TitleFormat", properties.tf_sort_genre);
 						refresh_filters = true;
 					}
 				break;
@@ -3035,7 +3054,7 @@ const get_albumArt_async = async(metadb, albumIndex, cachekey, need_stub, only_e
     }
 	g_image_cache.loadCounter++;			
 	debugger_hint(window.TotalMemoryUsage+" - "+(window.MemoryLimit-window.TotalMemoryUsage-10000000));
-    let result = await utils.GetAlbumArtAsyncV2(window.ID, metadb, AlbumArtId.front, need_stub, only_embed, no_load);
+    let result = await utils.GetAlbumArtAsyncV2(0, metadb, AlbumArtId.front, need_stub, only_embed, no_load);
 	try {
 		if(isImage(result.image)) {
 			if(properties.disableCoverCache !== true) save_image_to_cache(result.image, albumIndex, cachekey, metadb);
