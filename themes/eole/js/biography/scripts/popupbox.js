@@ -51,7 +51,7 @@ class PopUpBox {
 
 	input(title, msg, ok_callback, input, def) {
 		utils.ShowHtmlDialog(0, this.inputHtmlCode, {
-			data: [title, msg, 'Cancel', ok_callback, input, def]
+			data: [title, msg, '取消', ok_callback, input, def]
 		});
 	}
 

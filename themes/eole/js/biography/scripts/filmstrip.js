@@ -572,9 +572,9 @@ class FilmStrip {
 				const continue_confirmation = (status, confirmed) => {
 					if (confirmed) ppt.filmStripSize = 0.15;
 				}
-				const caption = 'Reset Filmstrip To Default Size';
-				const prompt = 'Continue?';
-				const wsh = soFeatures.gecko && soFeatures.clipboard ? popUpBox.confirm(caption, prompt, 'Yes', 'No', continue_confirmation) : true;
+				const caption = '重置幻燈片為預設尺寸';
+				const prompt = '要繼續嗎?';
+				const wsh = soFeatures.gecko && soFeatures.clipboard ? popUpBox.confirm(caption, prompt, '確定', '取消', continue_confirmation) : true;
 				if (wsh) continue_confirmation('ok', $.wshPopup(prompt, caption));
 				break;
 			}

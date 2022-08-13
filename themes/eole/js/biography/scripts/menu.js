@@ -131,7 +131,7 @@ class MenuItems {
 			artistClean: '',
 			blacklist: [],
 			blacklistStr: [],
-			covType: ['Front', 'Back', 'Disc', 'Icon', 'Artist', 'Cycle above', 'Cycle from folder'],
+			covType: ['前面', '後面', '光碟', '圖示', '演出者', '循環以上', '從文件夾循環'],
 			isLfm: true,
 			list: [],
 			name: ''
@@ -178,7 +178,7 @@ class MenuItems {
 					separator: !i || v.type == 'similarend' || v.type == 'label' || v.type == 'tagend' || v.type == 'historyend'
 				}));
 				for (let i = 0; i < 4; i++) bMenu.newItem({
-					str: () => ['Manual cycle: wheel over button', 'Auto cycle items', popUpBox.ok ? 'Options...' : 'Options: see console', 'Reload'][i],
+					str: () => ['Manual cycle: wheel over button', 'Auto cycle items', popUpBox.ok ? '設定...' : '設定: 請開日誌查看問題', 'Reload'][i],
 					func: () => this.lookUpArtist(panel.art.list.length + i),
 					flags: !i ? MF_GRAYED : MF_STRING,
 					checkItem: i == 1 && ppt.cycItem,
@@ -216,7 +216,7 @@ class MenuItems {
 					separator: !i || v.type == 'albumend' || v.type == 'label' || v.type == 'historyend'
 				}));
 				for (let i = 0; i < 4; i++) bMenu.newItem({
-					str: () => ['Manual cycle: wheel over button', 'Auto cycle items', popUpBox.ok ? 'Options...' : 'Options: see console', 'Reload'][i],
+					str: () => ['Manual cycle: wheel over button', 'Auto cycle items', popUpBox.ok ? '設定...' : '設定: 請開日誌查看問題', 'Reload'][i],
 					func: () => this.lookUpAlbum(panel.alb.list.length + i),
 					flags: !i ? MF_GRAYED : MF_STRING,
 					checkItem: i == 1 && ppt.cycItem,
@@ -265,6 +265,7 @@ class MenuItems {
 
 		menu.newMenu({
 			menuName: loadName,
+			str: '載入',
 			hide: ppt.img_only
 		});
 
@@ -319,7 +320,8 @@ class MenuItems {
 		});
 
 		menu.newMenu({
-			menuName: 'Display'
+			menuName: 'Display',
+			str: '顯示'
 		});
 
 		for (let i = 0; i < 10; i++) menu.newItem({
@@ -337,17 +339,19 @@ class MenuItems {
 		});
 
 		menu.newMenu({
-			menuName: 'Sources'
+			menuName: 'Sources',
+			str: '資料來源'
 		});
 
 		menu.newMenu({
 			menuName: 'Text',
+			str: '文字',
 			appendTo: 'Sources'
 		});
 
 		for (let i = 0; i < 5; i++) menu.newItem({
 			menuName: 'Text',
-			str: ['Auto-fallback', 'Static', 'Amalgamate', 'Show track review options on load menu', 'Prefer composition reviews (allmusic && wikipedia)'][i],
+			str: ['自動應變', '靜態', '合併', '在載入選單上顯示曲目評論選項', '傾向作品評論 (allmusic && wikipedia)'][i],
 			func: () => {
 				switch (i) {
 					case 0:
@@ -385,10 +389,10 @@ class MenuItems {
 		menu.newMenu({
 			menuName: 'Photo',
 			appendTo: 'Sources',
-			str: 'Photo'
+			str: '圖片'
 		});
 
-		['Cycle from download folder', 'Cycle from custom folder [fallback to above]', 'Artist (single image [fb2k: display])'].forEach((v, i) => menu.newItem({
+		['從下載文件夾循環', '從自訂文件夾循環 [發生問題時自動應變退回上面選項]', '演出者 (單一圖片 [fb2k: display])'].forEach((v, i) => menu.newItem({
 			menuName: 'Photo',
 			str: v,
 			func: () => {
@@ -406,7 +410,7 @@ class MenuItems {
 
 		menu.newMenu({		
 			menuName: 'Cover',
-			str: 'Cover',
+			str: '封面',
 			appendTo: 'Sources',
 			flags: !panel.alb.ix || ppt.artistView ? MF_STRING : MF_GRAYED
 		});
@@ -428,6 +432,7 @@ class MenuItems {
 
 		menu.newMenu({
 			menuName: 'Open file location',
+			str: '開啟所在資料夾',
 			appendTo: 'Sources',
 			flags: this.path.img || this.path.am[3] || this.path.lfm[3] || this.path.wiki[3] || this.path.txt[3] || this.path.tracksAm[3] || this.path.tracksLfm[3] || this.path.tracksWiki[3] ? MF_STRING : MF_GRAYED,
 		});
@@ -465,13 +470,14 @@ class MenuItems {
 
 		menu.newItem({
 			menuName: 'Sources',
-			str: 'Force update',
+			str: '強制更新',
 			func: () => panel.callServer(1, panel.id.focus, 'bio_forceUpdate', 0)
 		});
 
 		const style_arr = panel.style.name.slice();
 		menu.newMenu({
-			menuName: 'Layout'
+			menuName: 'Layout',
+			str: '版面設計'
 		});
 
 		style_arr.forEach((v, i) => menu.newItem({
@@ -492,10 +498,11 @@ class MenuItems {
 
 		menu.newMenu({
 			menuName: 'Create && manage styles',
+			str: '建立和管理樣式',
 			appendTo: 'Layout'
 		});
 
-		['Create new style...', 'Rename custom style...', 'Delete custom style...', 'Export custom style...', 'Reset style...'].forEach((v, i) => menu.newItem({
+		['建立新樣式...', '重新命名自定義的樣式...', '刪除自定義的樣式...', '匯出自定義的樣式...', '重置樣式...'].forEach((v, i) => menu.newItem({
 			menuName: 'Create && manage styles',
 			str: v,
 			func: () => this.setStyles(i),
@@ -510,10 +517,11 @@ class MenuItems {
 
 		menu.newMenu({
 			menuName: 'Filmstrip',
+			str: '幻燈片',
 			appendTo: 'Layout'
 		});
 
-		['Top', 'Right', 'Bottom', 'Left', 'Overlay image area', 'Reset to default size...'].forEach((v, i) => menu.newItem({
+		['頂部', '右側', '底部', '左側', '重置為預設尺寸...'].forEach((v, i) => menu.newItem({
 			menuName: 'Filmstrip',
 			str: v,
 			func: () => {
@@ -530,19 +538,20 @@ class MenuItems {
 			separator: true
 		});
 
-		['Reset zoom', 'Reload'].forEach((v, i) => menu.newItem({
+		['重置縮放', '重新載入'].forEach((v, i) => menu.newItem({
 			menuName: 'Layout',
 			str: v,
 			func: () => !i ? but.resetZoom() : window.Reload(),
 		}));
 
 		menu.newMenu({
-			menuName: 'Image'
+			menuName: 'Image',
+			str: '圖片',
 		});
 
 		menu.newItem({
 			menuName: 'Image',
-			str: 'Auto cycle',
+			str: '自動循環',
 			func: () => ppt.toggle('cycPic'),
 			checkItem: ppt.cycPic,
 			separator: true
@@ -550,13 +559,14 @@ class MenuItems {
 
 		menu.newMenu({
 			menuName: 'Alignment',
+			str: '對齊方式',
 			appendTo: 'Image',
 			hide: ppt.style > 3
 		});
 
 		for (let i = 0; i < 4; i++) menu.newItem({
 			menuName: 'Alignment',
-			str: ppt.style == 0 || ppt.style == 2 ? ['Left', 'Centre', 'Right', 'Align with text'][i] : ['Top', 'Centre', 'Bottom', 'Align with text'][i],
+			str: ppt.style == 0 || ppt.style == 2 ? ['左側', '中心', '右側', '與文字對齊'][i] : ['頂部', '中心', '底部', '與文字對齊'][i],
 			func: () => {
 				switch (i) {
 					case 3:
@@ -632,6 +642,7 @@ class MenuItems {
 
 		menu.newMenu({
 			menuName: 'Black list',
+			str: '黑名單',
 			appendTo: 'Image'
 		});
 
@@ -715,7 +726,7 @@ class MenuItems {
 		});
 
 		for (let i = 0; i < 2; i++) menu.newItem({
-			str: () => [popUpBox.ok ? 'Options...' : 'Options: see console', 'Configure...'][i],
+			str: () => [popUpBox.ok ? '設定...' : '設定: 請開日誌查看問題', '設置...'][i],
 			func: () => !i ? cfg.open('PanelCfg') : window.EditScript(),
 			separator: !i && this.shift,
 			hide: i && !this.shift
@@ -784,20 +795,20 @@ class MenuItems {
 			this.img.blacklist = this.img.list.blacklist[this.img.artistClean] || [];
 		}
 	
-		this.img.blacklistStr = [this.img.isLfm ? '+ Add' + (!panel.style.showFilmStrip ? '' : ' main image') + ' to black list: ' + this.img.artist + '_' + this.img.name : '+ Add to black list: ' + (this.img.name ? 'N/A - requires last.fm photo. Selected image : ' + this.img.name : 'N/A - no' + (!panel.style.showFilmStrip ? '' : '') + ' image file'), this.img.blacklist.length ? ' - Remove from black list (click name): ' : 'No black listed images for current artist', 'Undo'];
+		this.img.blacklistStr = [this.img.isLfm ? '+ 加入' + (!panel.style.showFilmStrip ? '' : ' 主要圖片') + ' 到黑名單: ' + this.img.artist + '_' + this.img.name : '+ 加入到黑名單: ' + (this.img.name ? '無 - 需要 last.fm 的演出者圖片. 選擇的圖片 : ' + this.img.name : '無 - 無圖片' + (!panel.style.showFilmStrip ? '' : '') + ' 圖片檔案'), this.img.blacklist.length ? ' - 從黑名單移除 (點擊名稱): ' : '目前的演出者沒有黑名單的圖片', '復原'];
 	}
 
 	getDisplayStr() {
 		const m = ppt.artistView ? ppt.bioMode : ppt.revMode;
 		this.display.check = [ppt.sameStyle ? !ppt.img_only && !ppt.text_only : m == 0, ppt.sameStyle ? ppt.img_only : m == 1, ppt.sameStyle ? ppt.text_only : m == 2, ppt.showFilmStrip, ppt.heading, ppt.summaryShow, ppt.artistView, !ppt.artistView, !panel.id.focus, panel.id.focus];
-		const n = ['Image+text', 'Image', 'Text', 'Filmstrip', 'Heading', 'Summary', 'Artist view', 'Album view', 'Prefer nowplaying', !panel.id.lyricsSource ? 'Follow selected track (playlist)' : 'Follow selected track: N/A lyrics source enabled'];
+		const n = ['圖片+文字', '只有圖片', '只有文字', '幻燈片', '標題', '摘要', '查看演出者', '查看專輯', '傾向於播放中', !panel.id.lyricsSource ? '跟隨選擇的曲目（播放列表）' : '跟隨選擇的曲目: N/A lyrics source enabled'];
 		const click = [!this.display.check[0] ? '\tMiddle click' : '', !this.display.check[1] && !ppt.text_only && !ppt.img_only ? '\tMiddle click' : '', !this.display.check[2] && !ppt.img_only ? '\tMiddle click' : '', '\tALT+Middle click', '', '', !ppt.artistView ? (!ppt.dblClickToggle ? '\tClick' : '\tDouble click') : '', ppt.artistView ? (!ppt.dblClickToggle ? '\tClick' : '\tDouble click') : '', '', ''];
 		this.display.str = n.map((v, i) => v + click[i])
 	}
 
 	getOpenName() {
 		const fo = [this.path.img, this.path.am[3], this.path.lfm[3], this.path.wiki[3], this.path.tracksAm[3], this.path.tracksLfm[3], this.path.tracksWiki[3], this.path.txt[3]];
-		this.openName = ['Image', ppt.artistView ? 'Biography [allmusic]' : 'Review [allmusic]', ppt.artistView ? 'Biography [last.fm]' : 'Review [last.fm]', ppt.artistView ? 'Biography [wikipedia]' : 'Review [wikipedia]', ppt.artistView ? '' : 'Tracks [allmusic]', ppt.artistView ? '' : 'Tracks [last.fm]', ppt.artistView ? '' : 'Tracks [wikipedia]', ppt.artistView ? txt.bio.subhead.txt[0] : txt.rev.subhead.txt[0]];
+		this.openName = ['圖片', ppt.artistView ? '人物傳記 [allmusic]' : '評論 [allmusic]', ppt.artistView ? '人物傳記 [last.fm]' : '評論 [last.fm]', ppt.artistView ? '人物傳記 [wikipedia]' : '評論 [wikipedia]', ppt.artistView ? '' : '曲目 [allmusic]', ppt.artistView ? '' : '曲目 [last.fm]', ppt.artistView ? '' : '曲目 [wikipedia]', ppt.artistView ? txt.bio.subhead.txt[0] : txt.rev.subhead.txt[0]];
 		let i = this.openName.length;
 		while (i--)
 			if (!fo[i]) {
@@ -1027,7 +1038,7 @@ class MenuItems {
 		}
 		const caption = this.popUpTitle;
 		const prompt = this.popUpText(n2, n3);
-		const wsh = soFeatures.gecko && soFeatures.clipboard ? popUpBox.confirm(caption, prompt, 'OK', 'Cancel', continue_confirmation) : true;
+		const wsh = soFeatures.gecko && soFeatures.clipboard ? popUpBox.confirm(caption, prompt, '確定', '取消', continue_confirmation) : true;
 		if (wsh) continue_confirmation('ok', $.wshPopup(prompt, caption));
 	}
 
@@ -1060,7 +1071,7 @@ class MenuItems {
 		}
 		const caption = this.popUpTitle;
 		const prompt = this.popUpText(n2, n3);
-		const wsh = soFeatures.gecko && soFeatures.clipboard ? popUpBox.confirm(caption, prompt, 'OK', 'Cancel', continue_confirmation) : true;
+		const wsh = soFeatures.gecko && soFeatures.clipboard ? popUpBox.confirm(caption, prompt, '確定', '取消', continue_confirmation) : true;
 		if (wsh) continue_confirmation('ok', $.wshPopup(prompt, caption));
 	}
 
@@ -1104,7 +1115,7 @@ class MenuItems {
 		}
 		const caption = this.popUpTitle;
 		const prompt = this.popUpText(n2, n3);
-		const wsh = soFeatures.gecko && soFeatures.clipboard ? popUpBox.confirm(caption, prompt, 'OK', 'Cancel', continue_confirmation) : true;
+		const wsh = soFeatures.gecko && soFeatures.clipboard ? popUpBox.confirm(caption, prompt, '確定', '取消', continue_confirmation) : true;
 		if (wsh) continue_confirmation('ok', $.wshPopup(prompt, caption));
 	}
 

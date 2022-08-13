@@ -422,9 +422,9 @@ class Panel {
 				ns = input;
 			}
 		}
-		const caption = 'Create New Freestyle Layout';
-		const prompt = 'Enter new style name\n\nFreestyle layouts offer drag style positioning of image & text boxes + text overlay\n\nContinue?';
-		const fallback = soFeatures.gecko && soFeatures.clipboard ? popUpBox.input(caption, prompt, ok_callback, '', 'My Style') : true;
+		const caption = '創建新的自由風格版面';
+		const prompt = '輸入新的樣式名稱\n\n自由的版面設定提供圖片和文字框的拖動式定位 + 文字疊加\n\n要繼續嗎?';
+		const fallback = soFeatures.gecko && soFeatures.clipboard ? popUpBox.input(caption, prompt, ok_callback, '', '我的樣式') : true;
 		if (fallback) {
 			try {
 				ns = utils.InputBox(0, prompt, caption, 'My Style', true);
@@ -560,9 +560,9 @@ class Panel {
 				txt.refresh(0);
 			}
 		}
-		const caption = 'Delete Current Style';
-		const prompt = 'Delete: ' + this.style.name[n] + '\n\nStyle will be set to top';
-		const wsh = soFeatures.gecko && soFeatures.clipboard ? popUpBox.confirm(caption, prompt, 'OK', 'Cancel', continue_confirmation) : true;
+		const caption = '刪除當前的樣式';
+		const prompt = '刪除: ' + this.style.name[n] + '\n\n樣式將設置為最上面的';
+		const wsh = soFeatures.gecko && soFeatures.clipboard ? popUpBox.confirm(caption, prompt, '確定', '取消', continue_confirmation) : true;
 		if (wsh) continue_confirmation('ok', $.wshPopup(prompt, caption));
 	}
 
@@ -605,9 +605,9 @@ class Panel {
 				window.NotifyOthers('bio_customStyle', JSON.stringify(this.style.free[n - 5]));
 			}
 		}
-		const caption = 'Export Current Style To Other Biography Panels';
-		const prompt = 'Export: ' + this.style.name[n];
-		const wsh = soFeatures.gecko && soFeatures.clipboard ? popUpBox.confirm(caption, prompt, 'OK', 'Cancel', continue_confirmation) : true;
+		const caption = '將當前樣式匯出到其他人物介紹面板';
+		const prompt = '匯出: ' + this.style.name[n];
+		const wsh = soFeatures.gecko && soFeatures.clipboard ? popUpBox.confirm(caption, prompt, '確定', '取消', continue_confirmation) : true;
 		if (wsh) continue_confirmation('ok', $.wshPopup(prompt, caption));
 	}
 
@@ -940,7 +940,7 @@ class Panel {
 	}
 
 	getStyleNames() {
-		this.style.name = ['Top', 'Right', 'Bottom', 'Left', 'Overlay'];
+		this.style.name = ['頂部', '右側', '底部', '左側', '疊加'];
 		this.style.free.forEach(v => this.style.name.push(v.name));
 	}
 
@@ -1173,8 +1173,8 @@ class Panel {
 				window.Repaint();
 			}
 		}
-		const caption = 'Rename Current Style';
-		const prompt = 'Rename style: ' + this.style.name[n] + '\n\nEnter new name\n\nContinue?';
+		const caption = '重新命名當前的樣式';
+		const prompt = '重新命名樣式: ' + this.style.name[n] + '\n\n輸入新的名稱\n\n要繼續嗎?';
 		const fallback = soFeatures.gecko && soFeatures.clipboard ? popUpBox.input(caption, prompt, ok_callback, '', this.style.name[n]) : true;
 		if (fallback) {
 			let ns = '';
@@ -1226,9 +1226,9 @@ class Panel {
 				txt.refresh(5);
 			}
 		}
-		const caption = 'Reset Current Style';
-		const prompt = 'Reset to Default ' + (ppt.style < 4 ? this.style.name[n] : 'Overlay') + ' Style.\n\nContinue?'
-		const wsh = soFeatures.gecko && soFeatures.clipboard ? popUpBox.confirm(caption, prompt, 'OK', 'Cancel', continue_confirmation) : true;
+		const caption = '重置當前的樣式';
+		const prompt = '重置為預設 ' + (ppt.style < 4 ? this.style.name[n] : '重疊') + ' 樣式。\n\n要繼續嗎?'
+		const wsh = soFeatures.gecko && soFeatures.clipboard ? popUpBox.confirm(caption, prompt, '確定', '取消', continue_confirmation) : true;
 		if (wsh) continue_confirmation('ok', $.wshPopup(prompt, caption));
 	}
 
