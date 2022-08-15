@@ -6,7 +6,7 @@ Follow the [instructions below](https://github.com/Ottodix/Eole-foobar-theme#ins
 
 # Eole Foobar theme CHT
 
-這是 Eole Foobar theme 的個人中文化
+此為 Eole Foobar theme 的內容的繁體中文化
 
 ## Contribute to the theme
 
