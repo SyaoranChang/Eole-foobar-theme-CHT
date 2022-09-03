@@ -590,11 +590,12 @@ class MenuItems {
 
 		menu.newMenu({
 			menuName: 'Alignment horizontal',
+			str: '水平對齊',
 			appendTo: 'Image',
 			hide: ppt.style < 4
 		});
 
-		['Left', 'Centre', 'Right'].forEach((v, i) => menu.newItem({
+		['左邊', '中間', '右邊'].forEach((v, i) => menu.newItem({
 			menuName: 'Alignment horizontal',
 			str: v,
 			func: () => {
@@ -607,11 +608,12 @@ class MenuItems {
 
 		menu.newMenu({
 			menuName: 'Alignment vertical',
+			str: '垂直對齊',
 			appendTo: 'Image',
 			hide: ppt.style < 4
 		});
 
-		['Top', 'Centre', 'Bottom', 'Auto'].forEach((v, i) => menu.newItem({
+		['頂部', '中間', '底部', '自動'].forEach((v, i) => menu.newItem({
 			menuName: 'Alignment vertical',
 			str: v,
 			func: () => {
