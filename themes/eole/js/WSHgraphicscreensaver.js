@@ -3069,13 +3069,17 @@ oBrowser = function(name) {
 			totalS -= (totalH = Math.floor(totalS / 3600)) * 3600;
 			totalS -= (totalM = Math.floor(totalS / 60)) * 60;
 
-			//if (totalW != 0) time_txt += totalW + ((totalW > 1)? ' weeks': ' week');
-			if (totalW != 0) time_txt += totalW + ' 週';
-			//if (totalD != 0) time_txt += ' ' + totalD + ((totalD > 1)? ' days': ' day');
-			if (totalD != 0) time_txt += ' ' + totalD + ' 天';
-			if (totalH != 0) time_txt += ' ' + totalH + ' 小時';
-			if (totalM != 0) time_txt += ' ' + totalM + ' 分';
-			if (time_txt == '' || totalS != 0) time_txt += ' ' + totalS +' 秒';
+			//txt_week = (totalW > 0) ? `${totalW} week${totalW > 1 ? 's' : ''}, ` : '';
+			//txt_day = (totalD > 0) ? `${totalD} day${totalD > 1 ? 's' : ''}, ` : '';
+			//txt_hour = (totalH > 0) ? `${totalH} hour${totalH > 1 ? 's' : ''}, ` : '';
+			//txt_mins = (totalM > 0) ? `${totalM} min${totalM > 1 ? 's' : ''}, ` : '';
+
+			txt_week = (totalW > 0) ? `${totalW} 週${''}, ` : '';
+			txt_day = (totalD > 0) ? `${totalD} 天${''}, ` : '';
+			txt_hour = (totalH > 0) ? `${totalH} 小時${''}, ` : '';
+			txt_mins = (totalM > 0) ? `${totalM} 分${''}, ` : '';
+
+			time_txt = `${txt_week}${txt_day}${txt_hour}${txt_mins}${totalS} 秒`;
 		}
 		return time_txt;
 	}

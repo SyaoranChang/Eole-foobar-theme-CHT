@@ -141,97 +141,73 @@ var caption_title = caption_title_default;
 var Settings_width = 102;
 var btn_initialized = false;
 
-function setScheduler(schedulerState, dontNotify){
+function setScheduler(schedulerState, dontNotify) {
 	dontNotify = typeof dontNotify !== 'undefined' ? dontNotify : false;
-	if(!dontNotify) window.NotifyOthers("schedulerState",schedulerState);
-	switch (true) {
-		case (schedulerState == 0):
+	!dontNotify && window.NotifyOthers("schedulerState", schedulerState);
+
 			scheduler.hibernate_after_current = false;
 			scheduler.shutdown_after_current = false;
 			scheduler.hibernate_after_playlist = false;
 			scheduler.shutdown_after_playlist = false;
 			fb.StopAfterCurrent=false;
+
+	switch (schedulerState) {
+		case 0:
 			break;
-		case (schedulerState == 1):
-			scheduler.hibernate_after_current = false;
-			scheduler.shutdown_after_current = false;
-			scheduler.hibernate_after_playlist = false;
-			scheduler.shutdown_after_playlist = false;
+		case 1:
 			fb.StopAfterCurrent=true;
 			break;
-		case (schedulerState == 2):
+		case 2:
 			scheduler.hibernate_after_current = true;
-			scheduler.shutdown_after_current = false;
-			scheduler.hibernate_after_playlist = false;
-			scheduler.shutdown_after_playlist = false;
 			fb.StopAfterCurrent=true;
 			break;
-		case (schedulerState == 3):
-			scheduler.hibernate_after_current = false;
+		case 3:
 			scheduler.shutdown_after_current = true;
-			scheduler.hibernate_after_playlist = false;
-			scheduler.shutdown_after_playlist = false;
 			fb.StopAfterCurrent=true;
 			break;
-		case (schedulerState == 4):
-			scheduler.hibernate_after_current = false;
-			scheduler.shutdown_after_current = false;
+		case 4:
 			scheduler.hibernate_after_playlist = true;
-			scheduler.shutdown_after_playlist = false;
-			fb.StopAfterCurrent=false;
 			break;
-		case (schedulerState == 5):
-			scheduler.hibernate_after_current = false;
-			scheduler.shutdown_after_current = false;
-			scheduler.hibernate_after_playlist = false;
+		case 5:
 			scheduler.shutdown_after_playlist = true;
-			fb.StopAfterCurrent=false;
 			break;
 	}
 }
+
 var images = {}
-function build_images(){
-	if(properties.darklayout) colors.icons_folder = "white"; else colors.icons_folder = "";
 
-	images.config_layout_img = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\panel_settings.png");
+function build_images() {
+	properties.darklayout ? (colors.icons_folder = "white") : (colors.icons_folder = "");
+	const icon_prefix = layout_state === 1 ? "mini" : "";
 
-	images.artist_bio_img = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\artist_bio_icon.png");
-
-	images.playlist_img = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\playlist_icon.png");
-
-	images.visualization_img = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\nowplaying_icon.png");
-	
-	images.trackinfos_on = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\trackinfos_on.png");
-	images.trackinfos_off = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\trackinfos_off.png");	
-	
-	images.fullscreen_img = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\fullscreen_icon.png");
-
-	images.search_toggle_img = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\search_icon.png");
-
-	images.lightswitch_img = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\lightswitch_icon3.png");
-
-	images.minimode_on_img = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\minimode_on_icon.png");
-	images.minimode_off_img = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\minimode_off_icon.png");
-
-	images.library_img = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\library_icon.png");
-	images.global_settings_img = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\global_settings.png");
-
-	images.nowplaying_off_icon = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\nowplaying_off.png");
-	images.nowplaying_off_hover_icon = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\nowplaying_off_hover.png");
-	images.nowplaying_on_icon = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\nowplaying_on.png");
-	images.nowplaying_on_hover_icon = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\nowplaying_on_hover.png");
-
-	if(layout_state.isEqual(1)) var icon_prefix = "mini";
-	else var icon_prefix = "";
-	images.nowplaying_on_hover_icon = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\"+icon_prefix+"close_icon.png");
-	images.nowplaying_on_hover_icon_hover = gdi.Image(theme_img_path + "\\icons\\white\\"+icon_prefix+"close_icon.png");
-	images.max_icon = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\"+icon_prefix+"max_icon.png");
-	images.maxon_icon = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\"+icon_prefix+"maxon_icon.png");	
-	images.reduce_icon = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\"+icon_prefix+"reduce_icon.png");
-	images.mini_icon = gdi.Image(theme_img_path + "\\icons\\"+colors.icons_folder+"\\minimode_icon.png");
+	images = {
+		config_layout_img: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\panel_settings.png`),
+		artist_bio_img: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\artist_bio_icon.png`),
+		playlist_img: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\playlist_icon.png`),
+		visualization_img: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\nowplaying_icon.png`),
+		trackinfos_on: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\trackinfos_on.png`),
+		trackinfos_off: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\trackinfos_off.png`),
+		fullscreen_img: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\fullscreen_icon.png`),
+		search_toggle_img: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\search_icon.png`),
+		lightswitch_img: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\lightswitch_icon3.png`),
+		minimode_on_img: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\minimode_on_icon.png`),
+		minimode_off_img: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\minimode_off_icon.png`),
+		library_img: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\library_icon.png`),
+		global_settings_img: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\global_settings.png`),
+		nowplaying_off_icon: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\nowplaying_off.png`),
+		nowplaying_off_hover_icon: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\nowplaying_off_hover.png`),
+		nowplaying_on_icon: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\nowplaying_on.png`),
+		nowplaying_on_hover_icon: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\${icon_prefix}close_icon.png`),
+		nowplaying_on_hover_icon_hover: gdi.Image(`${theme_img_path}\\icons\\white\\${icon_prefix}close_icon.png`),
+		max_icon: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\${icon_prefix}max_icon.png`),
+		maxon_icon: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\${icon_prefix}maxon_icon.png`),
+		reduce_icon: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\${icon_prefix}reduce_icon.png`),
+		mini_icon: gdi.Image(`${theme_img_path}\\icons\\${colors.icons_folder}\\minimode_icon.png`)
+	}
 
 	build_buttons();
 }
+
 function setDarkLayout(){
 	switch(true){
 		case (main_panel_state.isEqual(0) && properties.library_dark_theme && layout_state.isEqual(0)):
@@ -246,6 +222,7 @@ function setDarkLayout(){
 		break;
 	}
 }
+
 function get_colors(){
 	setDarkLayout();
 	get_colors_global();
