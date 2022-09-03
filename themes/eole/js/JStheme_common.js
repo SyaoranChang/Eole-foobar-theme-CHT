@@ -25,7 +25,7 @@ var timers = []
 var globalProperties = {
 	theme_version: '1.2.3b21',
 	lastest_breaking_version: '1.2.3b20',
-	lastest_ChineseTraditionaltranslation_version: '2022.08.13 11:50',
+	lastest_ChineseTraditionaltranslation_version: '2022.09.04 02:08',
     thumbnailWidthMax: window.GetProperty("GLOBAL thumbnail width max", 200),
     coverCacheWidthMax: window.GetProperty("GLOBAL cover cache width max", 400),
 	TextRendering: 4,
