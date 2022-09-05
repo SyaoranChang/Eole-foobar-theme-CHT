@@ -282,7 +282,7 @@ function draw_settings_menu(x, y) {
 	FiltersMenu.AppendMenuSeparator();
 	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "啟用第1個篩選器 - 音樂類型");
 	FiltersMenu.CheckMenuItem(4993, (filter1_state.isActive()));
-	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 演出者");
+	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 表演者");
 	FiltersMenu.CheckMenuItem(4994, (filter2_state.isActive()));
 	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4995, "啟用第3個篩選器 - 專輯");
 	FiltersMenu.CheckMenuItem(4995, (filter3_state.isActive()));
@@ -382,7 +382,7 @@ function draw_menu(x, y) {
 	FiltersMenu.AppendMenuSeparator();
 	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "啟用第1個篩選器 - 音樂類型");
 	FiltersMenu.CheckMenuItem(4993, (filter1_state.isActive()));
-	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 演出者");
+	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 表演者");
 	FiltersMenu.CheckMenuItem(4994, (filter2_state.isActive()));
 	FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4995, "啟用第3個篩選器 - 專輯");
 	FiltersMenu.CheckMenuItem(4995, (filter3_state.isActive()));
@@ -398,7 +398,7 @@ function draw_menu(x, y) {
 		var SortMenu = window.CreatePopupMenu(); //Custom Entries
 		SortMenu.AppendTo(basemenu, MF_STRING, "排序");
 
-		SortMenu.AppendMenuItem(MF_STRING, 3001, "演出者 / 專輯 / 音軌編號");
+		SortMenu.AppendMenuItem(MF_STRING, 3001, "表演者 / 專輯 / 音軌編號");
 		SortMenu.AppendMenuItem(MF_STRING, 3003, "曲目名稱");
 		SortMenu.AppendMenuItem(MF_STRING, 3004, "音軌編號");
 		SortMenu.AppendMenuSeparator();
@@ -768,7 +768,7 @@ playlistInfo = function(){
 				this.main_txt='播放清單 : '+this.playlist_name;
 			} else if(this.albums!=""){
 				if(this.artists!="") this.main_txt=this.albums+' - '+this.artists
-				else this.main_txt='多位演出者 - '+this.albums;
+				else this.main_txt='多位表演者 - '+this.albums;
 			} else if(this.artists!="") {
 				this.main_txt=this.artists+' - 數張專輯';
 			} else if(this.genres!="") {

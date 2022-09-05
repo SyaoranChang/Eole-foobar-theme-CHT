@@ -131,7 +131,7 @@ class MenuItems {
 			artistClean: '',
 			blacklist: [],
 			blacklistStr: [],
-			covType: ['前面', '後面', '光碟', '圖示', '演出者', '循環以上', '從文件夾循環'],
+			covType: ['前面', '後面', '光碟', '圖示', '表演者', '循環以上', '從文件夾循環'],
 			isLfm: true,
 			list: [],
 			name: ''
@@ -392,7 +392,7 @@ class MenuItems {
 			str: '圖片'
 		});
 
-		['從下載文件夾循環', '從自訂文件夾循環 [發生問題時自動應變退回上面選項]', '演出者 (單一圖片 [fb2k: display])'].forEach((v, i) => menu.newItem({
+		['從下載文件夾循環', '從自訂文件夾循環 [發生問題時自動應變退回上面選項]', '表演者 (單一圖片 [fb2k: display])'].forEach((v, i) => menu.newItem({
 			menuName: 'Photo',
 			str: v,
 			func: () => {
@@ -477,7 +477,7 @@ class MenuItems {
 		const style_arr = panel.style.name.slice();
 		menu.newMenu({
 			menuName: 'Layout',
-			str: '版面設計'
+			str: '佈局'
 		});
 
 		style_arr.forEach((v, i) => menu.newItem({
@@ -797,13 +797,13 @@ class MenuItems {
 			this.img.blacklist = this.img.list.blacklist[this.img.artistClean] || [];
 		}
 	
-		this.img.blacklistStr = [this.img.isLfm ? '+ 加入' + (!panel.style.showFilmStrip ? '' : ' 主要圖片') + ' 到黑名單: ' + this.img.artist + '_' + this.img.name : '+ 加入到黑名單: ' + (this.img.name ? '無 - 需要 last.fm 的演出者圖片. 選擇的圖片 : ' + this.img.name : '無 - 無圖片' + (!panel.style.showFilmStrip ? '' : '') + ' 圖片檔案'), this.img.blacklist.length ? ' - 從黑名單移除 (點擊名稱): ' : '目前的演出者沒有黑名單的圖片', '復原'];
+		this.img.blacklistStr = [this.img.isLfm ? '+ 加入' + (!panel.style.showFilmStrip ? '' : ' 主要圖片') + ' 到黑名單: ' + this.img.artist + '_' + this.img.name : '+ 加入到黑名單: ' + (this.img.name ? '無 - 需要 last.fm 的表演者圖片. 選擇的圖片 : ' + this.img.name : '無 - 無圖片' + (!panel.style.showFilmStrip ? '' : '') + ' 圖片檔案'), this.img.blacklist.length ? ' - 從黑名單移除 (點擊名稱): ' : '目前的表演者沒有黑名單的圖片', '復原'];
 	}
 
 	getDisplayStr() {
 		const m = ppt.artistView ? ppt.bioMode : ppt.revMode;
 		this.display.check = [ppt.sameStyle ? !ppt.img_only && !ppt.text_only : m == 0, ppt.sameStyle ? ppt.img_only : m == 1, ppt.sameStyle ? ppt.text_only : m == 2, ppt.showFilmStrip, ppt.heading, ppt.summaryShow, ppt.artistView, !ppt.artistView, !panel.id.focus, panel.id.focus];
-		const n = ['圖片+文字', '只有圖片', '只有文字', '幻燈片', '標題', '摘要', '查看演出者', '查看專輯', '傾向於播放中', !panel.id.lyricsSource ? '跟隨選擇的曲目（播放列表）' : '跟隨選擇的曲目: N/A lyrics source enabled'];
+		const n = ['圖片+文字', '只有圖片', '只有文字', '幻燈片', '標題', '摘要', '表演者檢視', '專輯檢視', '傾向於播放中', !panel.id.lyricsSource ? '跟隨選擇的曲目（播放列表）' : '跟隨選擇的曲目: N/A lyrics source enabled'];
 		const click = [!this.display.check[0] ? '\tMiddle click' : '', !this.display.check[1] && !ppt.text_only && !ppt.img_only ? '\tMiddle click' : '', !this.display.check[2] && !ppt.img_only ? '\tMiddle click' : '', '\tALT+Middle click', '', '', !ppt.artistView ? (!ppt.dblClickToggle ? '\tClick' : '\tDouble click') : '', ppt.artistView ? (!ppt.dblClickToggle ? '\tClick' : '\tDouble click') : '', '', ''];
 		this.display.str = n.map((v, i) => v + click[i])
 	}

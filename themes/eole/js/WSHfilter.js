@@ -833,7 +833,7 @@ oFilterBox = function() {
         this.inputbox.textcolor = colors.normal_txt;
         this.inputbox.backselectioncolor = colors.selected_bg;
 
-		var item_txt = new Array("", "專輯...", "演出者...", "音樂類型...");
+		var item_txt = new Array("", "專輯...", "表演者...", "音樂類型...");
 		if(!properties.showTagSwitcherBar) var boxText = item_txt[properties.tagMode];
 		else var boxText = "篩選...";
 		this.inputbox.empty_text = boxText;
@@ -985,8 +985,8 @@ oTagSwitcherBar = function() {
 		);
 		this.items_width = new Array(0, 0, 0, 0);
 		this.items_x = new Array(0, 0, 0, 0);
-		this.items_txt = new Array("媒體櫃樹狀欄","專輯", "演出者", "音樂類型");
-		this.items_tooltips = new Array("媒體櫃樹狀欄","專輯 篩選器", "演出者 篩選器", "音樂類型 篩選器");
+		this.items_txt = new Array("媒體櫃樹狀欄","專輯", "表演者", "音樂類型");
+		this.items_tooltips = new Array("媒體櫃樹狀欄","專輯 篩選器", "表演者 篩選器", "音樂類型 篩選器");
 		properties.album_label = this.items_txt[1];
 		properties.artist_label = this.items_txt[2];
 		properties.genre_label = this.items_txt[3];		
@@ -1250,8 +1250,8 @@ oTagSwitcherBar_old = function() {
 		);
 		this.items_width = new Array(0, 0, 0, 0);
 		this.items_x = new Array(0, 0, 0, 0);
-		this.items_txt = new Array("媒體櫃樹狀欄","專輯", "演出者", "音樂類型");
-		this.items_tooltips = new Array("媒體櫃樹狀欄","專輯 篩選器", "演出者 篩選器", "音樂類型 篩選器");
+		this.items_txt = new Array("媒體櫃樹狀欄","專輯", "表演者", "音樂類型");
+		this.items_tooltips = new Array("媒體櫃樹狀欄","專輯 篩選器", "表演者 篩選器", "音樂類型 篩選器");
 		properties.album_label = this.items_txt[1];
 		properties.artist_label = this.items_txt[2];
 		properties.genre_label = this.items_txt[3];		
@@ -3174,7 +3174,7 @@ oBrowser = function(name) {
 											break;
 										case 2: // artist
 											try{
-												gr.GdiDrawText("全部 ("+(total-1)+(!(properties.tf_groupkey_artist == properties.tf_groupkey_artist_default && properties.artist_customGroup_label == "")?' 個群組)':" 位演出者)"), g_font.normal, txt_color1, this.margin_left + ax + coverWidth + this.marginCover*2, ay, aw - coverWidth - this.marginCover*3-this.textMarginRight - items_counter_width, ah, DT_LEFT | DT_VCENTER | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
+												gr.GdiDrawText("全部 ("+(total-1)+(!(properties.tf_groupkey_artist == properties.tf_groupkey_artist_default && properties.artist_customGroup_label == "")?' 個群組)':" 位表演者)"), g_font.normal, txt_color1, this.margin_left + ax + coverWidth + this.marginCover*2, ay, aw - coverWidth - this.marginCover*3-this.textMarginRight - items_counter_width, ah, DT_LEFT | DT_VCENTER | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 												if(properties.drawItemsCounter) gr.GdiDrawText(items_counter_txt, g_font.min2, txt_color2, this.margin_left + ax + coverWidth + this.marginCover*2, ay, aw - coverWidth - this.marginCover*3-this.textMarginRight - this.margin_right, ah, DT_RIGHT | DT_VCENTER | DT_CALCRECT | DT_END_ELLIPSIS | DT_NOPREFIX);
 											} catch(e) {}
 											break;
@@ -3401,7 +3401,7 @@ oBrowser = function(name) {
 			this.draw_right_line = (properties.DrawRightLine && (!(properties.filterOrder==2) && !(!filter3_state.isActive() && properties.filterOrder==1) && !(!filter3_state.isActive() && !filter2_state.isActive() && properties.filterOrder==0) || main_panel_state.isEqual(0)));
             // draw top header bar
             if(properties.showHeaderBar) {
-                var item_txt = new Array("個群組", "張專輯", "位演出者", "種音樂類型");
+                var item_txt = new Array("個群組", "張專輯", "位表演者", "種音樂類型");
                 var nb_groups = (properties.showAllItem && total > 1 ? total - 1 : total);
 				var txt_id = this.customGroups?0:properties.tagMode;
                 //var boxText = nb_groups+" "+item_txt[txt_id]+(nb_groups > 1 ? "s  " : "  ");
@@ -4065,7 +4065,7 @@ oBrowser = function(name) {
 				_menu.AppendMenuSeparator();
 				_menu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 2993, "啟用第1個篩選器 - 音樂類型");
 				_menu.CheckMenuItem(2993, (filter1_state.isActive()));
-				_menu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 2994, "啟用第2個篩選器 - 演出者");
+				_menu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 2994, "啟用第2個篩選器 - 表演者");
 				_menu.CheckMenuItem(2994, (filter2_state.isActive()));
 				_menu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 2995, "啟用第3個篩選器 - 專輯");
 				_menu.CheckMenuItem(2995, (filter3_state.isActive()));

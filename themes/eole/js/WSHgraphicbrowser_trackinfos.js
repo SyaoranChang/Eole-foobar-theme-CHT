@@ -2881,7 +2881,7 @@ oHeaderBar = function(name) {
 
 			SortMenu.AppendMenuItem(MF_STRING, 2999, "不要排序（播放中的排序訂單）");
 			SortMenu.AppendMenuSeparator();
-			SortMenu.AppendMenuItem(MF_STRING, 3000, "演出者 / 專輯 / 音軌編號");
+			SortMenu.AppendMenuItem(MF_STRING, 3000, "表演者 / 專輯 / 音軌編號");
 			SortMenu.AppendMenuItem(MF_STRING, 3001, "曲目名稱");
 			SortMenu.AppendMenuItem(MF_STRING, 3002, "音軌編號");
 			SortMenu.AppendMenuItem(MF_STRING, 3003, "日期");
@@ -3008,7 +3008,7 @@ oHeaderBar = function(name) {
 		var GroupMenu = window.CreatePopupMenu(); //Custom Entries
 		GroupMenu.AppendTo(basemenu, MF_STRING, "群組");
 
-		GroupMenu.AppendMenuItem(MF_STRING, 4000, "預設 (專輯, 演出者)");
+		GroupMenu.AppendMenuItem(MF_STRING, 4000, "預設 (專輯, 表演者)");
 		GroupMenu.AppendMenuItem(MF_STRING, 4001, "自定義曲目名稱格式化...");
 		GroupMenu.AppendMenuSeparator();
 		GroupMenu.AppendMenuItem(MF_STRING, 4002, "合併一張多碟專輯的所有曲目");
@@ -3261,7 +3261,7 @@ function draw_settings_menu(x,y,right_align,sort_group){
 	if(properties.show2linesCustomTag!="")
 	_additionalInfos.AppendMenuItem(MF_STRING, 62, "重置");
 	_additionalInfos.AppendMenuSeparator();
-	_additionalInfos.AppendMenuItem(custom_tag?MF_GRAYED:MF_STRING, 28, "顯示每首曲目的演出者名稱");
+	_additionalInfos.AppendMenuItem(custom_tag?MF_GRAYED:MF_STRING, 28, "顯示每首曲目的表演者名稱");
 	_additionalInfos.CheckMenuItem(28, properties.showArtistName);
 	_additionalInfos.AppendMenuItem(custom_tag?MF_GRAYED:MF_STRING, 56, "顯示播放次數");
 	_additionalInfos.CheckMenuItem(56, properties.showPlaycount);
@@ -3272,7 +3272,7 @@ function draw_settings_menu(x,y,right_align,sort_group){
 	_additionalInfos.AppendMenuSeparator();
 	_additionalInfos.AppendMenuItem(MF_GRAYED, 0, "以此順序顯示 :");
 	//_additionalInfos.AppendMenuItem(MF_GRAYED, 0, "[Artist name] ([Playcount] - [Codec] - [Bitrate])");
-	_additionalInfos.AppendMenuItem(MF_GRAYED, 0, "[演出者名稱] ([播放次數] - [編解碼器] - [位元速率])");
+	_additionalInfos.AppendMenuItem(MF_GRAYED, 0, "[表演者名稱] ([播放次數] - [編解碼器] - [位元速率])");
 
 
 	_additionalInfos.AppendTo(_menuTracklist,MF_STRING, "曲目細節");
@@ -6488,7 +6488,7 @@ function on_mouse_rbtn_down(x, y){
 			metadblist_selection = brw.groups[brw.groups_draw[check__]].pl;
 
 			var quickSearchMenu = window.CreatePopupMenu();
-			quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的表演者");
 			quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
 			quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
 			quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
@@ -6532,7 +6532,7 @@ function on_mouse_rbtn_down(x, y){
 
 								var quickSearchMenu = window.CreatePopupMenu();
 								quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
-								quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
+								quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的表演者");
 								quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
 								quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
 								quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");

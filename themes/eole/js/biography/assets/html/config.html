@@ -220,7 +220,7 @@
 		<div id="behaviour" class="tabcontent">
 		<div class="row">
 			<div class="column50">
-				<div class="div_text6">布局</div>
+				<div class="div_text6">佈局</div>
 				<div id="layout"></div>
 				<div class="div_text6">查詢按鈕</div>
 				<div id="look_up"></div>
@@ -442,13 +442,13 @@
 		<div id="textreader" class="tabcontent">
 				<div class="div_text6">啟用</div>
 				<div id="cusText1"></div>
-				<div class="div_text2">查看藝術家</div>
+				<div class="div_text2">表演者檢視</div>
 				<span class="alignLeft2">Name</span>
 				<span class="alignRight1">完整路徑或標籤*</span>
 				<span class="alignRight1" style="float:right;">歌詞來源</span>
 				<div style="clear:both;"></div>
 				<div id="cusText2"></div>
-				<div class="div_text2">查看專輯</div>
+				<div class="div_text2">查專輯檢視</div>
 				<span class="alignLeft2">名稱</span>
 				<span class="alignRight1">完整路徑或標籤*</span>
 				<span class="alignRight1" style="float:right;">歌詞來源</span>
@@ -505,10 +505,10 @@
 <div class="info8"><b><i>捲動時間</i></b></div>
 <div class="info4">這是捲動一行所需的時間，以毫秒計。 建議範圍是400-1500。</div>
 <div class="info8"><b><i>覆蓋</i></b></div>
-<div class="info4">歌詞可以疊加在褪色的循環藝術家圖片或專輯封面之上，以獲得另一種觀點，例如</div>
+<div class="info4">歌詞可以疊加在褪色的循環表演者圖片或專輯封面之上，以獲得另一種觀點，例如</div>
 <div class="info4"><ul><li>啟用疊加佈局（選單 > 佈局）。按ctrl鍵並拖動紅線到頂部</li><li>圖像標籤：在圖像+文本下設置自動填充圖像類型</li><li>幻燈片：放在底部，例如用圓形的圖像類型</li><li>顯示標籤：將圖像邊距設為0，並根據需要調整文字邊距。 <i>(如果幻燈片被設定為覆蓋圖像，這可能是必要的)</i>。 將主題設定為黑暗、隨機或個人偏好</li><li>使用 shift + wheel 來調整圖像強度</li></ul></div>
 <div class="div_text3"><b>查詢（下拉式選單）</b></div>
-<div class="info4"><ul><li>使用方法是可選的</li><li>文字讀取器需要載入藝術家（藝術家檢視）或專輯（專輯檢視）的資訊。根據情況使用 %BIO_ARTIST%, %BIO_ALBUMARTIST% 或 %BIO_ALBUM%。</li><li>如果顯示歌詞，則自動顯示當前曲目的歌詞。</li></ul>
+<div class="info4"><ul><li>使用方法是可選的</li><li>文字讀取器需要載入表演者（表演者檢視）或專輯（專輯檢視）的資訊。根據情況使用 %BIO_ARTIST%, %BIO_ALBUMARTIST% 或 %BIO_ALBUM%。</li><li>如果顯示歌詞，則自動顯示當前曲目的歌詞。</li></ul>
 </div>
 </div>
 		</div>
@@ -518,7 +518,7 @@
 			<div class="div_text6">顏色和字型</div>
 			<div class="info1">
 使用者介面或主題設定是默認使用的。如果需要，可以啟用和組態自訂項目。
-在文字或按鈕上按下 Ctrl+wheel 也可以用來改變它們的大小[重置：選單\布局\重置縮放]。</div>
+在文字或按鈕上按下 Ctrl+wheel 也可以用來改變它們的大小[重置：選單\佈局\重置縮放]。</div>
 			<div class="column50">
 				<div class="info4"><b>字型</b></div>
 				<div class="info2" style="margin-left:8.5%">名稱,大小,樣式(0-4)</div>
@@ -621,7 +621,7 @@
 			<div style="clear:both;"></div>
 			<div id="supplCache0" class="div_text10">補充資料快取</div>
 			<div id="supplemental"></div>
-			<div id="supplCache1" class="info4">類似藝術家和頂級專輯等查詢項目可以單獨保存。尋找和替換適用於上述的保存資料夾。預覽顯示 last.fm 傳記的結果。</div>
+			<div id="supplCache1" class="info4">類似表演者和頂級專輯等查詢項目可以單獨保存。尋找和替換適用於上述的保存資料夾。預覽顯示 last.fm 傳記的結果。</div>
 			<div style="clear:both;"></div>
 			<div id="savePreview" class="div_text3">預覽</div>
 			<div id="prev"></div>
@@ -645,27 +645,27 @@
 			<div class="div_text8">自動加入新的</div>
 			<div id="input_cnt" class="input_cnt3">
 				<input id="photo_checkbox" name="photo_checkbox" type="checkbox" />
-				<label id="label_for_checkbox">對每個藝術家的固定數量的圖像停用</label>
+				<label id="label_for_checkbox">對每個表演者的固定數量的圖像停用</label>
 			</div>
-			<div class="div_text7">每個藝術家的限額</div>
+			<div class="div_text7">每個表演者的限額</div>
 			<div id="photo_limit"></div>
 			<div class="info10">限制是為了與自動新增新圖片一起使用。如果設定了，新的圖像會取代舊的。多餘的會被移到回收站。0 = 沒有限制。</div>
 			<div id="photoLimit" class="info9">如果項目被快取了28天或更短的時間，自動新增新項目就不會操作。</div>
 						<div class="div_text7">自訂載入資料夾</div>
 			<div id="artCusImgFolder"></div>
-			<div class="info4">為藝術家的照片提供一個備選的載入資料夾（只載入：這裡不保存圖像）。在選單>來源>照片上啟用。如果啟用，將首先檢查自訂資料夾。如果沒有找到圖像，則檢查 last.fm 照片下載資料夾。</div>
+			<div class="info4">為表演者的照片提供一個備選的載入資料夾（只載入：這裡不保存圖像）。在選單>來源>照片上啟用。如果啟用，將首先檢查自訂資料夾。如果沒有找到圖像，則檢查 last.fm 照片下載資料夾。</div>
 			<div id="pad" class="pad"></div>
-			<div style="padding:1.25em 0;"><a id="setSize" href="#" onclick="showPhotoSyntax();return false;">在其他藝術品查看器和播放列表中顯示下載的藝術家照片</a></div>
+			<div style="padding:1.25em 0;"><a id="setSize" href="#" onclick="showPhotoSyntax();return false;">在其他藝術品查看器和播放列表中顯示下載的表演者照片</a></div>
 			<div id="photo_help" style="display: none;">
 <div class="info12"><i>適用於大多數用途的簡單字串</i>
 </div>
 <div class="input_cnt3"><input class="input98" style="border:none; background:none;" value="...*你的路徑*...\art_img\$cut(%artist%,1)\%artist%\*"/></div>
 <div class="info12">	
-<i>更複雜的字串，適用於帶前導點的藝術家，例如.38 Special。傳記總是用下劃線替換前面的點，以阻止 foobar2000 因為它們卡住</i>
+<i>更複雜的字串，適用於帶前導點的表演者，例如.38 Special。傳記總是用下劃線替換前面的點，以阻止 foobar2000 因為它們卡住</i>
 </div>
 <div class="input_cnt3"><input class="input98" style="border:none; background:none;" value="...*你的路徑*...\art_img\$replace($cut(%artist%,1),.,_)\$if($stricmp($cut(%artist%,1),.),_$substr(%artist%,2,$len(%artist%)),%artist%)\*"/></div>
 <div class="info12"><b>
-把這個字串放在： 檔案>首選項>顯示>專輯藝術>藝術家模式中 (file>preferences>display>album art>artist pattern)。</b>
+把這個字串放在： 檔案>首選項>顯示>專輯藝術>表演者模式中 (file>preferences>display>album art>artist pattern)。</b>
 </div>
 <div class="info12"><b><i>
 根據需要修改...*你的路徑*...；模式假設傳記保存在默認位置</i></b>
@@ -687,7 +687,7 @@
 			<div style="clear:both;"></div>
 			<div class="div_text3">封面: 循環資料夾</div>
 			<div id="covCycleFolder"></div>
-			<div class="info4">能夠在相簿檢視中循環瀏覽圖片的資料夾。默認載入藝術家的照片。在選單菜單上選擇>資料來源>封面。</div>
+			<div class="info4">能夠在相簿檢視中循環瀏覽圖片的資料夾。默認載入表演者的照片。在選單菜單上選擇>資料來源>封面。</div>
 			<div class="div_text3">封面: 自訂路徑</div>
 			<div id="covCustom"></div>
 			<div class="info4">大多數使用者應該不需要這個功能，因為封面是由fb2k（首選項：顯示）或從保存位置自動載入的。如果需要，請啟用。使用全路徑減去副檔名。</div>
@@ -733,18 +733,18 @@ Last.fm 的標籤經過過濾，以去除無音樂類型的項目。允許的音
 <div class="info4"><i>Last.fm 音樂類型</i></div>白名單用於刪除任何無音樂類型的標籤。翻譯也是可用的。其他音樂類型的資源不需要這些。</div>
 <div class="info4"><i>統計資料</i></div>標記統計需要用傳記v1.2.0或更高版本建立或更新的檔案。 Last.fm 的播放次數（scrobbles）、聽眾和綜合得分（1-100）被寫成一個多值標籤。
 
-<div class="info4">分數將藝術家和專輯的長期受歡迎程度在1-100的範圍內用總的瀏覽量和聽眾進行排名。在 last.fm 得分最高的藝術家或專輯被設定為100分。</div>
+<div class="info4">分數將表演者和專輯的長期受歡迎程度在1-100的範圍內用總的瀏覽量和聽眾進行排名。在 last.fm 得分最高的表演者或專輯被設定為100分。</div>
 <div class="info4">訪問標籤，例如:</div>
 <div class="input_cnt2"><input class="input98" style="border:none; background:none;" value="$meta(Artist Statistics Last.fm,1[playcount])"/></div>
 <div class="input_cnt2"><input class="input98" style="border:none; background:none;" value="$meta(Artist Statistics Last.fm,3[listeners])"/></div>
 <div class="input_cnt2"><input class="input98" style="border:none; background:none;" value="$meta(Artist Statistics Last.fm,5[score])"/></div>
-<div class="info4">對於專輯統計，將藝術家改為專輯。</div>
+<div class="info4">對於專輯統計，將表演者改為專輯。</div>
 
 <div class="info4">如果在查詢、排序或算術標題格式化功能中使用，則從播放次數和聽眾中刪除標點符號，例如</div>
 <div class="input_cnt2"><input class="input98" style="border:none; background:none;" value="$replace($meta(Artist Statistics Last.fm,1[playcount]),',',,.,, ,)"/></div>
 <br>
 			<div class="info4"><b>通知標籤</b></div>
-			<div class="info4">如果選中，當前曲目的啟用標籤將被通知給其他 Spider Monkey Panels 的面板。這包括廣播流的藝術家資料。當收到新的或更新的資料時，會在曲目變化時傳送通知。
+			<div class="info4">如果選中，當前曲目的啟用標籤將被通知給其他 Spider Monkey Panels 的面板。這包括廣播流的表演者資料。當收到新的或更新的資料時，會在曲目變化時傳送通知。
 
 根據面板的顯示模式，當前的軌道將是正在播放的軌道或選定的軌道。如果有一個以上的傳記面板，不同的面板可能有所不同。選擇模式和控制代碼被傳送。使用默認的標籤名稱，而不是任何自訂的名稱，所以第三方指令碼知道該怎麼做。
 
@@ -1070,11 +1070,11 @@ info is an object:
 				var covLabels = ['自動下載 [lastfm 最佳品質]', '儲存資料夾', '儲存檔案名稱', '檢查自訂路徑', '自訂路徑1', '自訂路徑2', '自訂路徑3'];
 				var cusScrollLabels = ['步驟 (0 = 頁面)', '平滑持續最大時間 (毫秒)', '觸摸持續最大時間 (毫秒)', '觸摸靈敏度 0-10'];
 				var cusTextLabels = ['支援標籤或完整路徑：文字和歌詞。使用每個檢視的第一個發現。', '評論', '與新下載的同步', '同步的捲動', '未同步的捲動'];
-				var dlLabels = ['自訂', '默認（組件資料）', '評論', '傳記', '評論', '傳記', '照片', '評論專輯相冊', '類似的藝術家', '評論', '傳記', '啟用'];
+				var dlLabels = ['自訂', '默認（組件資料）', '評論', '傳記', '評論', '傳記', '照片', '評論專輯相冊', '類似的表演者', '評論', '傳記', '啟用'];
 				var fallbackLabels = ['傳記', '評論'];
 				var filmStripLabels = ['緊接', '與圖像對齊', '應用圖像邊距','與文字對齊', '應用文字邊距', ]
 				var filterLabels = ['KB 最大容量', 'KB 最小容量', '像素 最小解析度', '最小數量 (最優先)'];
-				var flaglabels = ['藝術家檢視', '專輯檢視'];
+				var flaglabels = ['表演者檢視', '專輯檢視'];
 				var fontLabels = ['主要', '標題'];
 				var fuzzyLabels = ['專輯評論', '曲目評論', '作曲評論'];
 				var headingLabels = ['隱藏', '顯示'];
@@ -1083,13 +1083,13 @@ info is an object:
 				var headingPaddingLabels = ['標題', '底部線條', '按鈕'];
 				var highlightLabels = ['按鈕', '標題', '線條', '圖片邊框', '疊加邊框', '評分星等', '子標題', '概括', '文字'];
 				var langLabels = ['English', 'Deutsch', 'Espa\u00f1ol', 'Fran\u00e7ais', 'Italiano', '\u65e5\u672c\u8a9e', 'Polski', 'Portugu\u00eas', '\u0420\u0443\u0441\u0441\u043a\u0438\u0439', 'Svenska', 'T\u00fcrk\u00e7e', '\u7b80\u4f53\u4e2d\u6587'];
-				var layoutLabels = ['連按兩下切換', '藝術家和專輯的佈局相同', '啟用相關項目的查詢'];
+				var layoutLabels = ['連按兩下切換', '表演者和專輯的佈局相同', '啟用相關項目的查詢'];
 				var lookupLabels = ['隱藏', '左上', '傾向於標題', '自動循環時間 (秒; 最低30)'];
 				var lineLabels = ['無', '底部', '中間'];
 				var lyricsScrollMethodLabels = ['捲動平均時間 (毫秒)', '捲動最大時間 (毫秒)'];
 				var mainImgLabels = ['懸停時放大', '平穩過渡', '自動循環時間 (秒)'];
 				var metricsLabels = ['圖片和文字之間的邊距', '線條填充'];
-				var miscLabels = ['專輯名稱自動清潔', '評論相冊高品質', '顯示控制台訊息', '搜尋：包括部分匹配。 匹配等級 (%):', '自動更新時間間隔 (天: 最小 28)', '類似的藝術家：選單上的數量 (0-10)', '多位藝術家'];
+				var miscLabels = ['專輯名稱自動清潔', '評論相冊高品質', '顯示控制台訊息', '搜尋：包括部分匹配。 匹配等級 (%):', '自動更新時間間隔 (天: 最小 28)', '類似的表演者：選單上的數量 (0-10)', '多位表演者'];
 				var overlayLabels = ['漸變', '平面', '有邊框的平面', '圓角', '有邊框的圓角', '強度 % [shift + wheel]', '漸變階級 %', '邊框寬度 (像素)'];
 				var ratingLabels = ['AllMusic', 'Last.fm', '傾向於標題', '傾向於文字', 'AllMusic', 'Last.fm'];
 				var ratingTextPosLabels = ['自動', '嵌入', '自己的路線'];
@@ -1103,7 +1103,7 @@ info is an object:
 				var seekerLabels = ['計數器', '搜尋列', '霸條', '點狀物'];
 				var siteNameLabels = ['AllMusic', 'Last.fm', 'Wikipedia'];
 				var summaryLabels = ['音樂類型', '日期', '地區*', '現在流行 (last.fm)', '最新發布的 (wikipedia)', '其他'];
-				var tagLabel = ['專輯 音樂類型', '專輯 情調', '專輯 評分', '專輯 主題', '藝術家 音樂類型', '專輯 音樂類型', '專輯 統計資料', '藝術家 音樂類型', '藝術家 統計資料', '地區', '類似的藝術家', '專輯 音樂類型', '藝術家 音樂類型', '', '當前曲目'];
+				var tagLabel = ['專輯 音樂類型', '專輯 情調', '專輯 評分', '專輯 主題', '表演者 音樂類型', '專輯 音樂類型', '專輯 統計資料', '表演者 音樂類型', '表演者 統計資料', '地區', '類似的表演者', '專輯 音樂類型', '表演者 音樂類型', '', '當前曲目'];
 				var textStyleLabels = ['頂部對齊', '展開列表', '如果顯示多個項目，自動最佳化'];
 				var tfLabels = ['傳記', '評論', '標題', '歌詞', '標題'];
 				var tfServLabels = ['%BIO_ALBUMARTIST%', '%BIO_ARTIST%', '%BIO_ALBUM%', '%BIO_TITLE%', '組成標籤'];

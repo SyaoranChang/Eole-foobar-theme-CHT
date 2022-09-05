@@ -294,8 +294,8 @@ oTagSwitcherBar = function() {
 		);
 		this.items_width = new Array(0, 0, 0, 0);
 		this.items_x = new Array(0, 0, 0, 0);
-		this.items_txt = new Array("媒體櫃樹狀欄","專輯", "演出者", "音樂類型");
-		this.items_tooltips = new Array("媒體櫃樹狀欄","專輯 篩選器", "演出者 篩選器", "音樂類型 篩選器");
+		this.items_txt = new Array("媒體櫃樹狀欄","專輯", "表演者", "音樂類型");
+		this.items_tooltips = new Array("媒體櫃樹狀欄","專輯 篩選器", "表演者 篩選器", "音樂類型 篩選器");
 		properties.album_label = this.items_txt[1];
 		properties.artist_label = this.items_txt[2];
 		properties.genre_label = this.items_txt[3];		
@@ -1366,9 +1366,9 @@ function panel_operations() {
 	{
 		window.SetProperty("View by Folder Structure: Name // Pattern", "按文件夾結構檢視 // 模式不可配置");
 		
-		window.SetProperty("View 01: Name // Pattern", "按 演出者 檢視 // %artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
-		window.SetProperty("View 02: Name // Pattern", "按 專輯 演出者 檢視 // %album artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
-		window.SetProperty("View 03: Name // Pattern", "按 專輯 演出者 - 專輯 檢視 // [%album artist% - ]['['%date%']' ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
+		window.SetProperty("View 01: Name // Pattern", "按 表演者 檢視 // %artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
+		window.SetProperty("View 02: Name // Pattern", "按 專輯 表演者 檢視 // %album artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
+		window.SetProperty("View 03: Name // Pattern", "按 專輯 表演者 - 專輯 檢視 // [%album artist% - ]['['%date%']' ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
 		window.SetProperty("View 04: Name // Pattern", "按 專輯 檢視 // %album%[ '['%album artist%']']|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
 		window.SetProperty("View 05: Name // Pattern", "按 音樂類型 檢視 // %genre%|[%album artist% - ][(%date%) ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
 		window.SetProperty("View 06: Name // Pattern", "按 年份 檢視 // %date%|[%album artist% - ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%");
@@ -1400,9 +1400,9 @@ function panel_operations() {
         i = 0,
         sort = "";
     var view_ppt = [
-        window.GetProperty("View 01: Name // Pattern", "按 演出者 檢視 // %artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
-        window.GetProperty("View 02: Name // Pattern", "按 專輯 演出者 檢視 // %album artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
-        window.GetProperty("View 03: Name // Pattern", "按 專輯 演出者 - 專輯 檢視 // [%album artist% - ]['['%date%']' ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
+        window.GetProperty("View 01: Name // Pattern", "按 表演者 檢視 // %artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
+        window.GetProperty("View 02: Name // Pattern", "按 專輯 表演者 檢視 // %album artist%|%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
+        window.GetProperty("View 03: Name // Pattern", "按 專輯 表演者 - 專輯 檢視 // [%album artist% - ]['['%date%']' ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
         window.GetProperty("View 04: Name // Pattern", "按 專輯 檢視 // %album%[ '['%album artist%']']|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
         window.GetProperty("View 05: Name // Pattern", "按 音樂類型 檢視 // %genre%|[%album artist% - ][(%date%) ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%"),
         window.GetProperty("View 06: Name // Pattern", "按 年份 檢視 // %date%|[%album artist% - ]%album%|[[%discnumber%.]%tracknumber%. ][%track artist% - ]%title%")

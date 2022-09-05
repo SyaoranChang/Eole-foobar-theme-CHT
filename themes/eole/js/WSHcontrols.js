@@ -2268,7 +2268,7 @@ function randomPlayMenu(x, y){
 			if(properties.random_function=='200_tracks') checked_item_menu=3;
         _menu.AppendMenuItem(MF_STRING, 2, "專輯");
 			if(properties.random_function=='20_albums') checked_item_menu=2;
-        _menu.AppendMenuItem(MF_STRING, 5, "演出者");
+        _menu.AppendMenuItem(MF_STRING, 5, "表演者");
 			if(properties.random_function=='1_artist') checked_item_menu=5;
 		var genreValue=parseInt(properties.random_function);
 			_menu.AppendMenuItem(MF_STRING, 4, "音樂類型");
@@ -2379,7 +2379,7 @@ function moreMenu(x, y){
 			}
 			var quickSearchMenu = window.CreatePopupMenu();
 			quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
-			quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的表演者");
 			quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
 			quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
 			quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
@@ -2440,7 +2440,7 @@ function moreMenu(x, y){
 				if(properties.random_function=='200_tracks') checked_item_menu=503;
 			_playRandom.AppendMenuItem(MF_STRING, 502, "專輯");
 				if(properties.random_function=='20_albums') checked_item_menu=502;
-			_playRandom.AppendMenuItem(MF_STRING, 505, "演出者");
+			_playRandom.AppendMenuItem(MF_STRING, 505, "表演者");
 				if(properties.random_function=='1_artist') checked_item_menu=505;
 
 			var genreValue=parseInt(properties.random_function);
@@ -2970,7 +2970,7 @@ function draw_controls_menu(x,y){
 			_menu.AppendMenuSeparator();
 			var _quickSearchMenu = window.CreatePopupMenu();
 			_quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
-			_quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
+			_quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的表演者");
 			_quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
 			_quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
 			_quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");

@@ -2063,7 +2063,7 @@ oHeaderbar = function(name) {
 			SortMenu.AppendTo(basemenu, MF_STRING, "排序");
 
 			SortMenu.AppendMenuItem(MF_STRING, 3000, "不要排序（播放中的排序訂單）");
-			SortMenu.AppendMenuItem(MF_STRING, 3001, "演出者 / 專輯 / 音軌編號");
+			SortMenu.AppendMenuItem(MF_STRING, 3001, "表演者 / 專輯 / 音軌編號");
 			SortMenu.AppendMenuItem(MF_STRING, 3002, "曲目名稱");
 			SortMenu.AppendMenuItem(MF_STRING, 3003, "音軌編號");
 			SortMenu.AppendMenuItem(MF_STRING, 3004, "日期");
@@ -2109,7 +2109,7 @@ oHeaderbar = function(name) {
 		var GroupMenu = window.CreatePopupMenu(); //Custom Entries
 		GroupMenu.AppendTo(basemenu, MF_STRING, "群組");
 
-		GroupMenu.AppendMenuItem(MF_STRING, 4000, "預設 (專輯, 演出者)");
+		GroupMenu.AppendMenuItem(MF_STRING, 4000, "預設 (專輯, 表演者)");
 		GroupMenu.AppendMenuItem(MF_STRING, 4001, "自定義曲目名稱格式化...");
 
 		checked_item=0;
@@ -2303,7 +2303,7 @@ function draw_settings_menu(x,y){
 
 	_menuTracklist.AppendMenuItem(MF_STRING, 11, "啟用曲目清單");
 	_menuTracklist.CheckMenuItem(11, properties.expandInPlace);
-	_menuTracklist.AppendMenuItem(MF_STRING, 28, "顯示每首曲目的演出者的名稱");
+	_menuTracklist.AppendMenuItem(MF_STRING, 28, "顯示每首曲目的表演者的名稱");
 	_menuTracklist.CheckMenuItem(28, properties.showArtistName);
 	_menuTracklist.AppendMenuItem(MF_STRING, 13, "開啟動畫");
 	_menuTracklist.CheckMenuItem(13, properties.smooth_expand_value>0);
@@ -5218,7 +5218,7 @@ function on_mouse_rbtn_down(x, y){
 			metadblist_selection = brw.groups_draw[check__].pl;
 
 			var quickSearchMenu = window.CreatePopupMenu();
-			quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
+			quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的表演者");
 			quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
 			quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
 			quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");
@@ -5262,7 +5262,7 @@ function on_mouse_rbtn_down(x, y){
 
 								var quickSearchMenu = window.CreatePopupMenu();
 								quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
-								quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
+								quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的表演者");
 								quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
 								quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
 								quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");

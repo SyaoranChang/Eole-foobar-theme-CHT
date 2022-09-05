@@ -1297,14 +1297,14 @@ function draw_layout_menu(x,y){
 	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4032, "重置");
 
 	if(layout_state.isEqual(1)){
-		basemenu.AppendMenuItem(MF_GRAYED, 0, "袖珍播放器版面設計");
+		basemenu.AppendMenuItem(MF_GRAYED, 0, "袖珍播放器佈局");
 		basemenu.AppendMenuSeparator();		
 		basemenu.AppendMenuItem(MF_STRING, 3990, "灰暗主題");
 		basemenu.CheckMenuItem(3990, properties.minimode_dark_theme);
 		wallpaper_visibility.AppendTo(basemenu,MF_STRING, "壁紙可見性");
 		wallpaper_blur.AppendTo(basemenu,MF_STRING, "壁紙模糊");
 	} else if(main_panel_state.isEqual(0)){
-		basemenu.AppendMenuItem(MF_GRAYED, 0, "媒體櫃版面設計");
+		basemenu.AppendMenuItem(MF_GRAYED, 0, "媒體櫃佈局");
 		basemenu.AppendMenuSeparator();				
 		nowplaying.AppendTo(basemenu,MF_STRING, "右側邊欄播放清單");
 		left_menu = window.CreatePopupMenu();
@@ -1322,7 +1322,7 @@ function draw_layout_menu(x,y){
 		wallpaper_visibility.AppendTo(basemenu,MF_STRING, "壁紙可見性");
 		wallpaper_blur.AppendTo(basemenu,MF_STRING, "壁紙模糊");
 	} else if(main_panel_state.isEqual(1)){
-		basemenu.AppendMenuItem(MF_GRAYED, 0, "播放清單版面設計");
+		basemenu.AppendMenuItem(MF_GRAYED, 0, "播放清單佈局");
 		basemenu.AppendMenuSeparator();				
 		nowplaying.AppendTo(basemenu,MF_STRING, "右側邊欄播放清單");
 		playlistpanel_menu = window.CreatePopupMenu();
@@ -1341,7 +1341,7 @@ function draw_layout_menu(x,y){
 		FiltersMenu.AppendMenuSeparator();
 		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "啟用第1個篩選器 - 音樂類型");
 		FiltersMenu.CheckMenuItem(4993, (filter1_state.isActive()));
-		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 演出者");
+		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 表演者");
 		FiltersMenu.CheckMenuItem(4994, (filter2_state.isActive()));
 		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4995, "啟用第3個篩選器 - 專輯");
 		FiltersMenu.CheckMenuItem(4995, (filter3_state.isActive()));
@@ -1354,7 +1354,7 @@ function draw_layout_menu(x,y){
 		wallpaper_visibility.AppendTo(basemenu,MF_STRING, "壁紙可見性");
 		wallpaper_blur.AppendTo(basemenu,MF_STRING, "壁紙模糊");
 	} else if(main_panel_state.isEqual(2)){
-		basemenu.AppendMenuItem(MF_GRAYED, 0, "正在播放版面設計");
+		basemenu.AppendMenuItem(MF_GRAYED, 0, "正在播放佈局");
 		basemenu.AppendMenuSeparator();				
 		nowplaying.AppendTo(basemenu,MF_STRING, "右側邊欄播放清單");
 
@@ -1377,7 +1377,7 @@ function draw_layout_menu(x,y){
 		wallpaper_visibility.AppendTo(basemenu,MF_STRING, "壁紙可見性");
 		wallpaper_blur.AppendTo(basemenu,MF_STRING, "壁紙模糊");
 	} else if(main_panel_state.isEqual(3)){
-		basemenu.AppendMenuItem(MF_GRAYED, 0, "視覺效果版面設計");
+		basemenu.AppendMenuItem(MF_GRAYED, 0, "視覺效果佈局");
 		basemenu.AppendMenuSeparator();				
 		nowplaying.AppendTo(basemenu,MF_STRING, "右側邊欄播放清單");
 		basemenu.AppendMenuSeparator();
@@ -1660,13 +1660,13 @@ function draw_main_menu(x,y){
 	nowplaying.AppendMenuItem((now_playing_state?MF_STRING:MF_GRAYED), 4032, "重置");
 
 	if(layout_state.isEqual(1)){
-		minimode_menu.AppendTo(skin_settings_menu,MF_STRING, "面板版面設計");
+		minimode_menu.AppendTo(skin_settings_menu,MF_STRING, "面板佈局");
 		minimode_menu.AppendMenuItem(MF_STRING, 3990, "灰暗主題");
 		minimode_menu.CheckMenuItem(3990, properties.minimode_dark_theme);
 		wallpaper_visibility.AppendTo(minimode_menu,MF_STRING, "壁紙可見性");
 		wallpaper_blur.AppendTo(minimode_menu,MF_STRING, "壁紙模糊");
 	} else if(main_panel_state.isEqual(0)){
-		library_menu.AppendTo(skin_settings_menu,MF_STRING, "面板版面設計");
+		library_menu.AppendTo(skin_settings_menu,MF_STRING, "面板佈局");
 		nowplaying.AppendTo(library_menu,MF_STRING, "右側邊欄播放清單");
 		left_menu = window.CreatePopupMenu();
 		left_menu.AppendTo(library_menu,MF_STRING, "右側邊欄選單");
@@ -1683,7 +1683,7 @@ function draw_main_menu(x,y){
 		wallpaper_visibility.AppendTo(library_menu,MF_STRING, "壁紙可見性");
 		wallpaper_blur.AppendTo(library_menu,MF_STRING, "壁紙模糊");
 	} else if(main_panel_state.isEqual(1)){
-		playlists_menu.AppendTo(skin_settings_menu,MF_STRING, "面板版面設計");
+		playlists_menu.AppendTo(skin_settings_menu,MF_STRING, "面板佈局");
 		nowplaying.AppendTo(playlists_menu,MF_STRING, "右側邊欄播放清單");
 		playlistpanel_menu = window.CreatePopupMenu();
 		playlistpanel_menu.AppendTo(playlists_menu,MF_STRING, "播放列表");
@@ -1701,7 +1701,7 @@ function draw_main_menu(x,y){
 		FiltersMenu.AppendMenuSeparator();
 		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4993, "啟用第1個篩選器 - 音樂類型");
 		FiltersMenu.CheckMenuItem(4993, (filter1_state.isActive()));
-		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 演出者");
+		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4994, "啟用第2個篩選器 - 表演者");
 		FiltersMenu.CheckMenuItem(4994, (filter2_state.isActive()));
 		FiltersMenu.AppendMenuItem((filters_panel_state.isActive() ? MF_STRING : MF_GRAYED | MF_DISABLED), 4995, "啟用第3個篩選器 - 專輯");
 		FiltersMenu.CheckMenuItem(4995, (filter3_state.isActive()));
@@ -1714,7 +1714,7 @@ function draw_main_menu(x,y){
 		wallpaper_visibility.AppendTo(playlists_menu,MF_STRING, "壁紙可見性");
 		wallpaper_blur.AppendTo(playlists_menu,MF_STRING, "壁紙模糊");
 	} else if(main_panel_state.isEqual(2)){
-		bio_menu.AppendTo(skin_settings_menu,MF_STRING, "面板版面設計");
+		bio_menu.AppendTo(skin_settings_menu,MF_STRING, "面板佈局");
 
 		nowplaying.AppendTo(bio_menu,MF_STRING, "右側邊欄播放清單");
 
@@ -1735,14 +1735,14 @@ function draw_main_menu(x,y){
 		wallpaper_visibility.AppendTo(bio_menu,MF_STRING, "壁紙可見性");
 		wallpaper_blur.AppendTo(bio_menu,MF_STRING, "壁紙模糊");
 	} else if(main_panel_state.isEqual(3)){
-		visu_menu.AppendTo(skin_settings_menu,MF_STRING, "面板版面設計");
+		visu_menu.AppendTo(skin_settings_menu,MF_STRING, "面板佈局");
 		nowplaying.AppendTo(visu_menu,MF_STRING, "右側邊欄播放清單");
 		visu_menu.AppendMenuSeparator();
 		visu_menu.AppendMenuItem(MF_STRING, 4003, "灰暗主題");
 		visu_menu.CheckMenuItem(4003, properties.visualization_dark_theme);
 	}
 
-	appearance_menu.AppendTo(skin_settings_menu, MF_STRING, "全局版面設計");
+	appearance_menu.AppendTo(skin_settings_menu, MF_STRING, "全局佈局");
 	nowplayinglobal = window.CreatePopupMenu();
 	nowplayinglobal.AppendMenuItem(MF_STRING, 4072, "隱藏");
 	nowplayinglobal.AppendMenuItem(MF_STRING, 4073, "顯示");

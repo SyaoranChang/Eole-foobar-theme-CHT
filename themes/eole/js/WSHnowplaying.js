@@ -1655,7 +1655,7 @@ function on_mouse_rbtn_up(x, y){
 		main_menu.AppendMenuItem(MF_STRING, 8, "更新此圖片");
 		var quickSearchMenu = window.CreatePopupMenu();
 		quickSearchMenu.AppendMenuItem(MF_STRING, 34,"相同的曲目名稱");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的演出者");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 30,"相同的表演者");
 		quickSearchMenu.AppendMenuItem(MF_STRING, 31,"相同的專輯");
 		quickSearchMenu.AppendMenuItem(MF_STRING, 32,"相同的音樂類型");
 		quickSearchMenu.AppendMenuItem(MF_STRING, 33,"相同的日期");

@@ -4007,7 +4007,7 @@ oBrowser = function(name) {
 			var SortMenu = window.CreatePopupMenu(); //Custom Entries
 			SortMenu.AppendTo(_menu, MF_STRING, "排序方式");
 
-			SortMenu.AppendMenuItem(MF_STRING, 1036, "演出者 / 專輯 / 音軌編號");
+			SortMenu.AppendMenuItem(MF_STRING, 1036, "表演者 / 專輯 / 音軌編號");
 			SortMenu.AppendMenuItem(MF_STRING, 1037, "專輯 / 音軌編號");
 			SortMenu.AppendMenuItem(MF_STRING, 1043, "音軌編號");
 			SortMenu.AppendMenuItem(MF_STRING, 1044, "檔案路徑");
@@ -4022,7 +4022,7 @@ oBrowser = function(name) {
 
 		var quickSearchMenu = window.CreatePopupMenu();
 		quickSearchMenu.AppendMenuItem(MF_STRING, 1029,"相同的曲目名稱");
-		quickSearchMenu.AppendMenuItem(MF_STRING, 1030,"相同的演出者");
+		quickSearchMenu.AppendMenuItem(MF_STRING, 1030,"相同的表演者");
 		quickSearchMenu.AppendMenuItem(MF_STRING, 1031,"相同的專輯");
 		quickSearchMenu.AppendMenuItem(MF_STRING, 1032,"相同的音樂類型");
 		quickSearchMenu.AppendMenuItem(MF_STRING, 1033,"相同的日期");
@@ -4284,7 +4284,7 @@ oBrowser = function(name) {
 			_menu_title.CheckMenuItem(908, properties.showCodec);
             _menu_title.AppendMenuItem(MF_STRING, 907, "顯示位元速率");
 			_menu_title.CheckMenuItem(907, properties.showBitrate);
-            _menu_title.AppendMenuItem((!properties.doubleRowText ? (!properties.showGroupHeaders ? MF_GRAYED | MF_DISABLED : MF_STRING) : MF_GRAYED | MF_DISABLED), 111, "始終將演出者附加到標題");
+            _menu_title.AppendMenuItem((!properties.doubleRowText ? (!properties.showGroupHeaders ? MF_GRAYED | MF_DISABLED : MF_STRING) : MF_GRAYED | MF_DISABLED), 111, "始終將表演者附加到標題");
             _menu_title.CheckMenuItem(111, properties.showArtistAlways);
 			_menu_title.AppendTo(_menu,MF_STRING, "音軌資料");
 
